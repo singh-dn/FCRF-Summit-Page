@@ -1,0 +1,613 @@
+ /* PREFIX: mo-u- 
+           Use this prefix to avoid conflicts with your existing page styles.
+        */
+
+        /* --- CORE WRAPPER & RESET --- */
+        .mo-u-wrapper {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 4rem 1.5rem;
+            overflow: hidden; 
+            color: #1f2937;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 6rem; /* Space between the major rows */
+        }
+
+        .mo-u-wrapper *, 
+        .mo-u-wrapper *::before, 
+        .mo-u-wrapper *::after {
+            box-sizing: border-box;
+        }
+
+        /* --- GRID LAYOUT --- */
+        .mo-u-row {
+            max-width: 80rem; 
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* --- LOGOS & DIVIDERS --- */
+        .mo-u-logos-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        .mo-u-logo-box {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mo-u-logo-img {
+            height: 40px; 
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        
+        .mo-u-logo-img:hover { transform: scale(1.05); }
+
+        .mo-u-x-divider {
+            font-size: 1.25rem;
+            color: #9ca3af;
+            font-weight: 300;
+        }
+
+        /* --- TEXT STYLES --- */
+        .mo-u-col-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; 
+            text-align: center;
+            /* Fix: Ensure words break properly to avoid cutting off */
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto; 
+            width: 100%; /* Ensure it takes full width of container */
+            padding: 0 5px; /* Tiny buffer */
+        }
+
+        .mo-u-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin: 0 0 1.5rem 0;
+            color: #111827;
+            word-break: break-word; /* Prevent long words from breaking layout */
+        }
+
+        .mo-u-description {
+            color: #4b5563;
+            font-size: 1.125rem;
+            line-height: 1.7;
+            margin: 0 0 2rem 0;
+            max-width: 60ch;
+        }
+
+        /* --- GRADIENTS --- */
+        .mo-u-gradient-nielit {
+            background: linear-gradient(135deg, #2563eb 0%, #9333ea 50%, #db2777 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .mo-u-gradient-gt {
+            background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* --- BUTTON --- */
+        .mo-u-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .mo-u-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 2rem;
+            border-radius: 0.5rem;
+            border: 2px solid #9333ea;
+            color: #9333ea;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            background-color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .mo-u-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background-color: #9333ea;
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .mo-u-btn:hover { color: white; box-shadow: 0 10px 15px -3px rgba(147, 51, 234, 0.3); }
+        .mo-u-btn:hover::before { width: 100%; }
+        .mo-u-btn svg { width: 1.25rem; height: 1.25rem; transition: transform 0.3s ease; }
+        .mo-u-btn:hover svg { transform: translateX(4px); }
+
+        /* --- IMAGE COLUMN (Standard) --- */
+        .mo-u-col-image {
+            position: relative;
+            width: 100%;
+            /* Removed fixed aspect-ratio here to allow flexibility on mobile */
+            /* aspect-ratio: 16 / 10; */
+            /* max-height: 500px; */
+            display: flex;
+            justify-content: center;
+        }
+
+        .mo-u-image-frame {
+            width: 100%;
+            height: auto;
+            /* Default landscape */
+            max-height: 500px;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+            background-color: #e5e7eb;
+            
+            /* Animation Base State */
+            /* opacity: 0; */ /* Commented out for preview visibility */
+            transition: opacity 1s ease-out, transform 1s cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+        }
+
+        /* --- IMAGE COLUMN (Poster/Portrait Style) --- */
+        /* Keeping this class in case you want to revert later, but not using it now */
+        .mo-u-image-frame1 {
+            width: 100%;
+            max-width: 260px;       
+            height: auto;           
+            aspect-ratio: 3 / 4;    
+            margin: 0 auto;         
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                        0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+            background-color: #ffffff;
+            transition: opacity 1s ease-out,
+                        transform 1s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        }
+
+        .mo-u-image1 {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;   
+            display: block;
+        }
+        .mo-u-image-frame1:hover .mo-u-image1 {
+            transform: scale(1.03);
+        }
+
+        .mo-u-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;    
+            object-position: center;
+            transition: transform 0.7s ease;
+            background-color: #fff;  
+        }
+
+        .mo-u-image-frame:hover .mo-u-image { transform: scale(1.05); }
+
+        /* --- DECORATIVE BLOBS --- */
+        .mo-u-blob {
+            position: absolute;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.6;
+            animation: mo-pulse 4s infinite alternate;
+        }
+        .mo-u-blob-purple { background-color: #e9d5ff; width: 10rem; height: 10rem; }
+        .mo-u-blob-blue { background-color: #bfdbfe; width: 12rem; height: 12rem; }
+        .mo-u-blob-green { background-color: #d1fae5; width: 11rem; height: 11rem; }
+        
+        .mo-u-blob-tr { top: -2rem; right: -2rem; }
+        .mo-u-blob-bl { bottom: -2rem; left: -2rem; }
+        .mo-u-blob-tl { top: -2rem; left: -2rem; }
+        .mo-u-blob-br { bottom: -2rem; right: -2rem; }
+
+        @keyframes mo-pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        /* =========================================
+           FEATURE SECTION STYLES (Used for Row 2)
+           ========================================= */
+        
+        .mo-u-feature-header-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Subheadline: Above, #5135ff, Smaller */
+        .mo-u-subheadline {
+            color: #5135ff;
+            font-weight: 800;
+            font-size: 1.125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        /* Headline: Below, Black, Bigger */
+        .mo-u-main-headline {
+            color: #000000;
+            font-weight: 900;
+            font-size: 2.25rem;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        /* ANIMATION CLASSES */
+        .mo-u-slide-up {
+            opacity: 1; /* For preview */
+            /* opacity: 0; */
+            transform: translateY(0); /* For preview */
+            /* transform: translateY(30px); */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .mo-u-slide-down {
+            opacity: 1;
+            /* opacity: 0; */
+            transform: translateY(0);
+            /* transform: translateY(-30px); */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .mo-u-slide-from-right {
+            opacity: 1;
+            /* opacity: 0; */
+            transform: translateX(0);
+            /* transform: translateX(50px); */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .mo-u-slide-from-left {
+            opacity: 1;
+            /* opacity: 0; */
+            transform: translateX(0);
+            /* transform: translateX(-50px); */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .mo-u-visible {
+            opacity: 1;
+            transform: translate(0, 0) !important;
+        }
+
+        /* Delays */
+        .mo-u-delay-100 { transition-delay: 0.1s; }
+        .mo-u-delay-200 { transition-delay: 0.2s; }
+        .mo-u-delay-300 { transition-delay: 0.3s; }
+
+        /* --- RESPONSIVE FIXES --- */
+
+        /* 1. TABLET/DESKTOP */
+        @media (min-width: 1024px) {
+            .mo-u-row { grid-template-columns: 1.1fr 0.9fr; }
+            .mo-u-row.mo-u-reverse { grid-template-columns: 0.9fr 1.1fr; direction: rtl; }
+            .mo-u-row.mo-u-reverse > * { direction: ltr; }
+
+            .mo-u-col-text { align-items: flex-start; text-align: left; padding-right: 2rem; }
+            .mo-u-row.mo-u-reverse .mo-u-col-text { padding-right: 0; padding-left: 2rem; }
+
+            .mo-u-logos-container { justify-content: flex-start; }
+            .mo-u-title { font-size: 2.5rem; }
+            .mo-u-btn-wrapper { justify-content: flex-start; }
+
+            .mo-u-feature-header-group { align-items: flex-start; text-align: left; }
+            .mo-u-main-headline { font-size: 3rem; }
+        }
+
+        /* 2. MOBILE SPECIFIC FIXES (Reduce Image Sizes) */
+        @media (max-width: 768px) {
+            .mo-u-wrapper {
+                padding: 3rem 1.5rem; /* Ensure standard padding */
+                gap: 5rem;
+            }
+            
+            /* -- ROW RESET -- */
+            /* Force rows to be block/flex stacks on mobile to prevent grid blowout */
+            .mo-u-row {
+                display: flex;
+                flex-direction: column;
+                gap: 2.5rem; /* Space between Text and Image in stack */
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            /* Fix Text Cut-off: Ensure safe padding and word wrapping */
+            .mo-u-col-text {
+                padding: 0; /* Remove extra padding since container has padding */
+                width: 100%;
+                max-width: 100%;
+                text-align: center;
+                overflow: visible; /* Let text flow normally */
+            }
+            
+            /* Reduce Title Sizes */
+            .mo-u-title { font-size: 1.5rem; }
+            .mo-u-main-headline { font-size: 1.8rem; }
+            
+            /* Fix Image Sizes so they don't cover full screen */
+            .mo-u-col-image {
+                padding: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            /* For landscape images (Row 1 & 2), limit width */
+            .mo-u-image-frame {
+                max-width: 100%;
+                width: 100%;
+                height: auto;
+                /* Make it slightly less tall on mobile */
+                aspect-ratio: 16/9; 
+            }
+        }
+
+
+
+
+        
+/* Component Wrapper - Scopes variables and base styles */
+.st-section {
+  /* Local Variables */
+  --st-navy: #1e3a8a;
+  --st-bright-blue: #3b82f6;
+  --st-bg: #ffffff;
+  --st-border: #e5e7eb;
+  --st-text-main: #374151;
+  
+  /* Layout & Reset */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--st-bg);
+  padding: 60px 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure box-sizing for all children */
+.st-section * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== GRID CONTAINER ===== */
+.st-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  /* Default: 4 columns + 1 highlight column */
+  grid-template-columns: repeat(4, 1fr) 1.4fr;
+  gap: 20px;
+}
+
+/* ===== CARD ===== */
+.st-card {
+  background: #ffffff;
+  border: 1px solid var(--st-border);
+  border-radius: 22px;
+  padding: 24px 20px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  /* Removed hover transition/transform */
+}
+
+/* ===== MOVING LIGHT SHIMMER ===== */
+.st-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(59, 130, 246, 0.08), 
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  /* UPDATED: FAST ANIMATION (2 seconds) */
+  animation: st-shimmer 2s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes st-shimmer {
+  0% { transform: translateX(-100%); }
+  /* Faster pass-through */
+  50% { transform: translateX(100%); } 
+  100% { transform: translateX(100%); }
+}
+
+/* ===== NUMBER ===== */
+.st-value {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  background: linear-gradient(
+    270deg,
+    var(--st-bright-blue),
+    var(--st-navy),
+    var(--st-bright-blue)
+  );
+  background-size: 400% 400%;
+  /* UPDATED: FASTER GRADIENT (3 seconds) */
+  animation: st-gradient-move 2s ease infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes st-gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== LABEL ===== */
+.st-label {
+  font-size: 13px;
+  color: var(--st-text-main);
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  line-height: 1.5;
+  font-weight: 600;
+  word-wrap: break-word; 
+  overflow-wrap: break-word;
+}
+
+/* ===== HIGHLIGHT CARD (Last One) ===== */
+.st-card.st-highlight {
+  background: linear-gradient(
+    135deg,
+    var(--st-navy),
+    var(--st-bright-blue)
+  );
+  border: none;
+  grid-column: auto; 
+}
+
+.st-card.st-highlight::before { display: none; }
+
+.st-card.st-highlight .st-value {
+  font-size: 42px;
+  background: linear-gradient(270deg, #ffffff, #bfdbfe, #ffffff);
+  background-size: 300% 300%;
+  /* UPDATED: FASTER GRADIENT (3 seconds) */
+  animation: st-gradient-move 3s ease infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.st-card.st-highlight .st-label {
+  color: #eff6ff;
+  opacity: 0.9;
+}
+
+/* ===== BAR GRAPH ===== */
+.st-bars {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.st-bars span {
+  width: 8px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #93c5fd, var(--st-bright-blue));
+  /* UPDATED: FAST PULSE (1 second) */
+  animation: st-bar-pulse 1s ease-in-out infinite;
+}
+
+.st-bars span:nth-child(1) { height: 20px; background: rgba(255,255,255,0.3); }
+.st-bars span:nth-child(2) { height: 30px; animation-delay: .1s; background: rgba(255,255,255,0.6); }
+.st-bars span:nth-child(3) { height: 45px; animation-delay: .2s; background: #ffffff; }
+
+@keyframes st-bar-pulse {
+  0%,100% { transform: scaleY(0.9); }
+  50% { transform: scaleY(1.1); }
+}
+
+/* =========================================
+   RESPONSIVE BREAKPOINTS
+   ========================================= */
+
+/* Tablet / Small Laptop */
+@media (max-width: 1200px) {
+  .st-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .st-card.st-highlight {
+    grid-column: span 1; 
+  }
+}
+
+/* Tablet Portrait */
+@media (max-width: 900px) {
+  .st-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .st-card.st-highlight {
+    grid-column: span 2;
+  }
+  .st-value {
+    font-size: 32px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 550px) {
+  .st-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2x2 grid */
+    gap: 12px;
+  }
+  
+  .st-card.st-highlight {
+    grid-column: span 2; /* Highlight card spans bottom */
+  }
+  
+  .st-card {
+    padding: 16px;
+    min-height: auto; 
+  }
+  
+  .st-value {
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+
+  .st-label {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+}

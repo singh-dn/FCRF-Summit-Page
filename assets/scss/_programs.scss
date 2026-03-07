@@ -1,0 +1,634 @@
+@keyframes scalss {
+	0% {
+		transform: translate(-50%, -50%) scale(0.4);
+		opacity: 1;
+	}
+	20% {
+		transform: translate(-50%, -50%) scale(1.1);
+		opacity: 0.1;
+	}
+	20% {
+		transform: translate(-50%, -50%) scale(1.1);
+		opacity: 0.2;
+	}
+	20% {
+		transform: translate(-50%, -50%) scale(1.1);
+		opacity: 0.3;
+	}
+	20% {
+		transform: translate(-50%, -50%) scale(1.2);
+		opacity: 0.4;
+	}
+	100% {
+		transform: translate(-50%, -50%) scale(1.3);
+		opacity: 0;
+	}
+}
+
+//ticket-booking-widget
+.ticket-booking-content {
+	border-radius: 20px;
+	padding: 40px;
+	background: $p1-clr;
+	.ticket-booking-widget {
+		textarea,
+		.nice-select {
+			background: rgb(255, 255, 255, 0.1);
+			border-radius: 20px;
+			padding: 12px 20px;
+			width: 100%;
+			border: unset;
+			outline: none;
+			&::after {
+				right: 20px;
+				top: initial;
+			}
+			.list {
+				right: initial;
+				left: 0;
+				background: $white;
+				padding: 8px;
+				li {
+					border: unset;
+				}
+			}
+		}
+		::placeholder {
+			color: $pra;
+		}
+	}
+	@include breakpoint(max-sm) {
+		padding: 19px;
+	}
+}
+.ticket-booking-thumb {
+	@include breakpoint(max-lg) {
+		width: 100%;
+		img {
+			width: 100%;
+		}
+	}
+}
+
+//business-items
+.business-items {
+	&:hover {
+		h5 {
+			a {
+				color: $p1-clr;
+			}
+		}
+	}
+}
+.business-thumbnail {
+	margin-left: -50px;
+	.line-card,
+	.box-card {
+		position: absolute;
+	}
+	.box-card {
+		position: absolute;
+		left: 0;
+		top: 120px;
+		animation: updown 2s linear infinite;
+	}
+	.line-card {
+		bottom: -50px;
+		right: 10px;
+		animation: lr 2s linear infinite;
+	}
+	@include breakpoint(max-xxl) {
+		margin-left: -50px;
+		width: 600px;
+		.mimg {
+			width: 100%;
+		}
+		.box-card {
+			left: 0;
+			top: 120px;
+			width: 180px;
+		}
+		.line-card {
+			bottom: -50px;
+			right: 10px;
+			width: 200px;
+		}
+	}
+	@include breakpoint(max-xl) {
+		margin-left: -50px;
+		width: 500px;
+		.mimg {
+			width: 100%;
+		}
+		.box-card {
+			left: 0;
+			top: 120px;
+			width: 180px;
+		}
+		.line-card {
+			bottom: -50px;
+			right: 10px;
+			width: 200px;
+		}
+	}
+	@include breakpoint(max-lg) {
+		margin-left: -0px;
+		max-width: 500px;
+		width: 100%;
+		margin: 0 auto;
+		.mimg {
+			width: 100%;
+		}
+		.box-card {
+			left: 0;
+			top: 120px;
+			width: 180px;
+		}
+		.line-card {
+			bottom: -50px;
+			right: 10px;
+			width: 200px;
+		}
+	}
+	@include breakpoint(max-sm) {
+		margin-left: -0px;
+		max-width: 500px;
+		width: 100%;
+		margin: 0 auto;
+		.mimg {
+			width: 100%;
+		}
+		.box-card {
+			left: 0;
+			top: 120px;
+			width: 120px;
+		}
+		.line-card {
+			bottom: -50px;
+			right: 10px;
+			width: 150px;
+		}
+	}
+}
+
+//wirefram-content
+.wirefram-content {
+	max-width: 655px;
+	padding-left: 100px;
+	.business-items {
+		p {
+			max-width: 216px;
+		}
+	}
+	@include breakpoint(max-xxl) {
+		padding-left: 30px;
+	}
+	@include breakpoint(max-lg) {
+		margin: 0 auto 30px;
+		max-width: 605px;
+		padding-left: 0px;
+		.business-items {
+			p {
+				max-width: 216px;
+				margin: 0 auto;
+			}
+		}
+	}
+}
+.tesology-info-box {
+	background: $p3-clr;
+	border-radius: 12px;
+	padding: 40px;
+	position: absolute;
+	right: 70px;
+	bottom: 40px;
+	.content {
+		span {
+			font-size: 46px;
+			font-weight: 700;
+			color: $white;
+		}
+	}
+	p {
+		font-size: 20px;
+		font-weight: 400;
+		color: $white;
+		max-width: 205px;
+	}
+	@media screen and (max-width: 550px) {
+		right: 10px;
+		bottom: 10px;
+		padding: 18px;
+		.content {
+			span {
+				font-size: 29px;
+				font-weight: 700;
+				color: $white;
+			}
+		}
+		p {
+			font-size: 14px;
+			line-height: 17px;
+			max-width: 150px;
+		}
+	}
+}
+
+//industry-section
+.industry-section {
+	background: #031740;
+	.section-title-area {
+		p {
+			max-width: 400px;
+		}
+	}
+}
+.industry-icon {
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	padding: 28px 14px;
+	transition: all 0.4s;
+	&:hover {
+		background: $p1-clr;
+		span {
+			color: $white;
+		}
+	}
+}
+.industry-thumb-inner {
+	@include breakpoint(max-sm) {
+		.thumb {
+			width: 100%;
+			img {
+				width: 100%;
+			}
+		}
+	}
+}
+
+//Program Solutio
+.solutio-section {
+	background: #181c2c;
+	.solutio-thumb {
+		.contents {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+		h5 {
+			max-width: 205px;
+		}
+	}
+	.nav-tabs {
+		border-bottom: 2px solid rgb(255, 255, 255, 8%);
+		display: flex;
+		align-items: center;
+		.nav-item {
+			.nav-link {
+				background: transparent;
+				border: unset;
+				font-size: 16px;
+				font-weight: 600;
+				color: #8e8f92;
+				padding: 0;
+				position: relative;
+				padding-bottom: 16px;
+				&::before {
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					width: 140px;
+					height: 0px;
+					background: rgb(255, 255, 255, 8%);
+					content: "";
+					transition: all 0.4s;
+				}
+				&.active {
+					color: $white;
+					&::before {
+						background: $white;
+						height: 2px;
+					}
+				}
+			}
+			&:not(:last-child) {
+				padding-right: 150px !important;
+			}
+		}
+		@include breakpoint(max-xl) {
+			flex-wrap: wrap;
+			gap: 10px 24px;
+			.nav-item {
+				.nav-link {
+					font-size: 16px;
+					padding-bottom: 12px;
+					&::before {
+						width: 60px;
+					}
+				}
+				&:not(:last-child) {
+					padding-right: 30px !important;
+				}
+			}
+		}
+	}
+}
+.solutio-content {
+	ul {
+		li {
+			i {
+				font-size: 24px;
+				// color: rgb(255, 255, 255, 10%);
+				color: #fff;
+			}
+		}
+	}
+	@include breakpoint(lg) {
+		h3 {
+			font-size: 57px;
+		}
+	}
+}
+
+//Our vission
+.our-vission-section {
+	padding: 80px 0;
+	position: relative;
+	z-index: 1;
+	.vision-ele {
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: -1;
+	}
+}
+.vission-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	.vission-left {
+		max-width: 410px;
+	}
+	.vission-right {
+		max-width: 490px;
+		.b-title {
+			font-size: 270px;
+			line-height: 70%;
+			color: $white;
+		}
+	}
+	.line {
+		width: 1px;
+		height: 280px;
+		background: #fff;
+		opacity: 25%;
+	}
+	@include breakpoint(max-lg) {
+		gap: 30px;
+		.vission-right {
+			.b-title {
+				font-size: 80px;
+				line-height: 70%;
+				color: $white;
+			}
+		}
+	}
+	@include breakpoint(max-md) {
+		gap: 34px;
+		flex-wrap: wrap;
+		.line {
+			display: none;
+		}
+		.vission-right {
+			.b-title {
+				font-size: 80px;
+				line-height: 70%;
+				color: $white;
+			}
+		}
+	}
+}
+.avatar-customer-wrap {
+	img {
+		border: 3px solid $p1-clr;
+		&:not(:first-child) {
+			margin-left: -16px;
+		}
+	}
+}
+
+//Event Work Style
+.event-work-items {
+	border-radius: 10px;
+	padding: 60px 17px 38px;
+	border: 2px solid rgba(96, 68, 240, 0.1);
+	transition: all 0.4s;
+	.boxes {
+		max-width: 280px;
+		margin: 0 auto;
+	}
+	.arrow-area {
+		.arrow-text {
+			transform: scale(0);
+			margin-left: -110px;
+			transition: all 0.4s;
+		}
+		.arrows {
+			width: 35px;
+			height: 35px;
+			border: 1px solid rgba(96, 68, 240, 0.1);
+			transition: all 0.4s;
+		}
+	}
+	&:hover {
+		border-color: $p1-clr;
+		.arrow-area {
+			.arrow-text {
+				transform: scale(1);
+				margin-left: -0px;
+			}
+			.arrows {
+				background: $p1-clr;
+				border-color: $p1-clr;
+				i {
+					color: $white;
+				}
+			}
+		}
+	}
+}
+
+//Project Planing
+.project-planing-wrap {
+	border-radius: 10px;
+	background: linear-gradient(92deg, #5135ff 0.32%, #ff5455 99.68%);
+	padding: 60px 60px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	.project-planing-item {
+		.serial {
+			width: 80px;
+			height: 80px;
+			min-width: 80px;
+			color: $white;
+			background: rgba(255, 255, 255, 0.06);
+			transition: all 0.5s;
+		}
+		.cont {
+			max-width: 210px;
+		}
+		&:hover {
+			.serial {
+				background: $white;
+				color: $p1-clr;
+			}
+		}
+	}
+	@include breakpoint(max-xl) {
+		padding: 30px 26px;
+		.project-planing-item {
+			.serial {
+				width: 60px;
+				height: 60px;
+				min-width: 60px;
+			}
+			.cont {
+				max-width: 210px;
+			}
+		}
+	}
+	@include breakpoint(max-lg) {
+		padding: 30px 26px;
+		justify-content: center;
+		flex-wrap: wrap;
+		.project-planing-item {
+			display: grid !important;
+			flex-wrap: wrap;
+			justify-content: center;
+			text-align: center;
+			.serial {
+				width: 60px;
+				height: 60px;
+				min-width: 60px;
+				margin: 0 auto;
+			}
+			.cont {
+				max-width: 210px;
+			}
+		}
+	}
+}
+
+.project-section{
+	position: relative;
+	z-index: 1;
+	background: url(../../assets/img/services/project-bg2.webp) no-repeat center center;
+	background-size: cover;
+	background-attachment: fixed;
+	&::before{
+		position: absolute;
+		top: 0;
+		left: 0;
+		content: "";
+		width: 100%;
+		height: 100%;
+		z-index: -1;
+		background: rgb(3, 23, 64, 45%);
+	}
+	.project-items04{
+		height: 600px;
+	}
+	@include breakpoint(max-xxl){
+		.project-items04{
+			height: 500px;
+		}
+	}
+	@include breakpoint(max-xl){
+		.project-items04{
+			height: 400px;
+		}
+	}
+	@include breakpoint(max-lg){
+		.project-items04{
+			height: 300px;
+		}
+	}
+}
+.project-items04{
+	transition: all 0.4s;
+	.arrows{
+		width: 60px;
+		height: 60px;
+		min-width: 60px;
+		border: 1px solid rgb(255, 255, 255, 30%);
+		transition: all 0.4s;
+	}
+	.box{
+		padding-bottom: 60px;
+		padding-left: 50px;
+		p{
+			max-width: 275px;
+			transform: rotateX(90deg);
+			height: 0;
+			transition: all 0.4s;
+		}
+	}
+	&:hover{
+		background: $p1-clr;
+		.box{
+			p{
+				height: initial;
+				transform: rotateX(0deg);
+			}
+		}
+		.arrows{
+			background: $p3-clr;
+			i{
+				color: $white;
+			}
+		}
+	}
+	@include breakpoint(max-xxl){
+		.box{
+			padding-bottom: 20px;
+			padding-left: 16px;
+			padding-right: 10px;
+		}
+		.arrows{
+			width: 48px;
+			height: 48px;
+			min-width: 48px;
+		}
+	}
+}
+
+//Project Details
+.portfolio-details-info{
+	display: flex;
+	gap: 57px;
+	.item{
+		max-width: 193px;
+	}
+	.line{
+		width: 1px;
+		height: 74px;
+		background: rgba(3, 23, 64, 0.14);
+	}
+	@include breakpoint(max-xxl){
+		gap: 30px;
+	}
+	@include breakpoint(max-lg){
+		gap: 30px;
+		.line{
+			display: none;
+		}
+	}
+	@include breakpoint(max-md){
+		gap: 20px 24px;
+		flex-wrap: wrap;
+		.line{
+			display: none;
+		}
+	}
+}

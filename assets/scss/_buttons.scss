@@ -1,0 +1,120 @@
+//>>>>> Component Button Here <<<<<//
+
+//Btn Theme
+.common-btn {
+	position: relative;
+	padding: 16px 30px 18px;
+	line-height: 18px;
+	font-weight: 600;
+	transition: all 0.5s;
+	font-family: "Plus Jakarta Sans", serif;
+	font-size: 16px;
+	i {
+		transition: all 0.5s;
+		z-index: 1;
+	}
+	&:hover {
+		color: $white;
+	}
+	@include breakpoint(max-xxl) {
+		padding: 18px 25px;
+	}
+}
+
+//Custom ANis
+@keyframes storm {
+	0% {
+		transform: translate3d(0, 0, 0) translateZ(0);
+	}
+	25% {
+		transform: translate3d(4px, 0, 0) translateZ(0);
+	}
+	50% {
+		transform: translate3d(-3px, 0, 0) translateZ(0);
+	}
+	75% {
+		transform: translate3d(2px, 0, 0) translateZ(0);
+	}
+	100% {
+		transform: translate3d(0, 0, 0) translateZ(0);
+	}
+}
+.box-style {
+	position: relative;
+	overflow: hidden;
+	z-index: 0;
+	text-align: center;
+	&:hover {
+		&::before {
+			width: 400%;
+			height: 400%;
+		}
+	}
+	&::before {
+		content: "";
+		position: absolute;
+		top: var(--y);
+		left: var(--x);
+		transform: translate(-50%, -50%);
+		width: 0;
+		height: 0;
+		border-radius: 100%;
+		background-color: $p1-clr;
+		transition: all 0.7s ease;
+		z-index: -1;
+	}
+	&.cmn-style1 {
+		&::before {
+			background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+			transition: all 0.7s ease;
+			z-index: -1;
+		}
+	}
+}
+.box-style.first-box {
+	&::before {
+		background-color: $p2-clr;
+	}
+	&:hover {
+		i {
+			color: $n700-clr;
+		}
+		span {
+			color: $n700-clr;
+		}
+	}
+}
+
+.box-bg{
+	background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+}
+//cmn tag
+.cmn-tag {
+	font-size: 18px;
+	color: $n700-clr;
+	padding: 10px 30px;
+	border-radius: 100px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	@include breakpoint(max-xxl) {
+		padding: 8px 22px;
+	}
+}
+.read-more {
+	font-size: 18px;
+	font-weight: 600;
+	font-family: "Space Grotesk", sans-serif;
+	color: $black;
+	gap: 14px;
+	i {
+		transition: all 0.4s;
+	}
+	&:hover {
+		color: $p1-clr;
+		i {
+			padding-left: 10px;
+		}
+	}
+}
+//>>>>> Component Button End <<<<<//

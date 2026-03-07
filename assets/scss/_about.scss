@@ -1,0 +1,286 @@
+//about one
+.about-section {
+	.about-thumb {
+		background: rgb(255, 255, 255, 0.5);
+		border-radius: 30px;
+		z-index: 1;
+		.about-ele {
+			position: absolute;
+			right: 100px;
+			top: 70px;
+			z-index: -1;
+			animation: updown 2s linear infinite;
+		}
+		@include breakpoint(max-md) {
+			padding: 16px 16px;
+			.about-ele {
+				right: 0;
+				top: 0;
+			}
+		}
+	}
+	&.style2 {
+		.about-thumb {
+			.about-ele {
+				position: absolute;
+				right: 100px;
+				top: 70px;
+				z-index: -1;
+				animation: updown 2s linear infinite;
+			}
+			.about-ele2 {
+				position: absolute;
+				top: 70px;
+				right: 60px;
+				animation: updown 4s linear infinite;
+			}
+			@include breakpoint(max-md) {
+				padding: 16px 16px;
+				.about-ele {
+					right: 0;
+					top: 0;
+				}
+			}
+		}
+	}
+}
+//check circle progress bar
+.custom-circle-progress-bar {
+	display: flex;
+	align-items: center;
+	gap: 60px;
+	.card-custom {
+		width: 100px;
+		height: 100px;
+	}
+	.circle {
+		position: relative;
+		width: 100px;
+		height: 100px;
+		.bar {
+			canvas {
+				width: 100px;
+				height: 100px;
+			}
+		}
+		.box {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			span {
+				font-size: 20px;
+				font-weight: 600;
+				color: var(--black);
+			}
+		}
+	}
+	@include breakpoint(max-xxl) {
+		gap: 16px 24px;
+	}
+	@include breakpoint(max-lg) {
+		gap: 16px 24px;
+		justify-content: center;
+	}
+	@media screen and (max-width: 450px) {
+		.inner {
+			display: grid !important;
+			justify-content: center;
+			text-align: center;
+			.card-custom {
+				margin: 0 auto;
+			}
+		}
+	}
+}
+.about-content {
+	.about-information {
+		margin-bottom: 34px;
+		.about-info {
+			.icon {
+				width: 54px;
+				min-width: 54px;
+				height: 54px;
+				border-radius: 50%;
+				box-shadow: 0px 10px 30px 0px rgba(13, 18, 30, 0.12);
+			}
+		}
+	}
+	.about-list {
+		margin-bottom: 40px;
+		.icon {
+			background: #f0f4fd;
+			width: 21px;
+			height: 21px;
+			min-width: 21px;
+			border-radius: 50%;
+			box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+				rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+		}
+	}
+	@media screen and (max-width: 1399px) {
+		.about-information {
+			margin-bottom: 24px;
+		}
+		.about-list {
+			margin-bottom: 24px;
+		}
+	}
+}
+.about-call {
+	.icon {
+		width: 54px;
+		height: 54px;
+		min-width: 54px;
+	}
+}
+.about-list {
+	.icon {
+		background: #f0f4fd;
+		width: 21px;
+		height: 21px;
+		min-width: 21px;
+		border-radius: 50%;
+		box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+			rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+	}
+}
+.quote-box1{
+	background: #F0F4FD;
+	border-radius: 12px;
+	padding: 50px 50px;
+	display: flex;
+	gap: 60px;
+	.quote{
+		width: 60px;
+		height: 50px;
+		object-fit: contain;
+	}
+	@include breakpoint(max-lg){
+		gap: 24px;
+		padding: 28px 28px;
+	}
+	@include breakpoint(max-lg){
+		gap: 24px;
+		display: grid;
+		padding: 24px 20px;
+	}
+}
+
+@keyframes updown {
+	50% {
+		transform: translateY(-15px);
+	}
+}
+@keyframes rots {
+	50% {
+		transform: rotate(7deg);
+	}
+}
+
+//Company Benifit
+.company-infowrapper {
+	background: $bg-color;
+	border-radius: 10px 0 0 10px;
+	padding: 140px 0 140px 100px;
+	margin-top: 120px;
+	.box {
+		max-width: 590px;
+	}
+	.progress_bar_item .item_bar {
+		background: #d9e0ef;
+		border-radius: 100px;
+		height: 10px;
+	}
+	.progress_bar_item .item_bar .progress {
+		border-radius: 100px;
+		background: linear-gradient(90deg, #5135ff 0%, #ff5455 100%);
+		height: 10px;
+	}
+}
+
+.company-benifit-section {
+	@media screen and (max-width: 1500px) {
+		.company-thumb {
+			width: 100%;
+			margin: 0 10px;
+			img {
+				border-radius: 10px;
+				width: 100%;
+			}
+		}
+		.company-infowrapper {
+			background: $bg-color;
+			border-radius: 10px 0 0 10px;
+			padding: 40px 20px 40px 20px;
+			margin-top: 0;
+			.box {
+				max-width: 590px;
+			}
+			.progress_bar_item .item_bar {
+				background: #d9e0ef;
+				border-radius: 100px;
+				height: 10px;
+			}
+			.progress_bar_item .item_bar .progress {
+				border-radius: 100px;
+				background: linear-gradient(90deg, #5135ff 0%, #ff5455 100%);
+				height: 10px;
+			}
+		}
+	}
+}
+
+//About Section04
+.about-counter4 {
+	gap: 120px;
+	.counter-items {
+		.content {
+			span {
+				font-size: 80px;
+				font-weight: 800;
+				color: $p1-clr;
+				line-height: 120%;
+			}
+		}
+	}
+	@include breakpoint(max-xl) {
+		gap: 14px 30px;
+		.counter-items {
+			.content {
+				span {
+					font-size: 38px;
+					line-height: 120%;
+				}
+			}
+		}
+	}
+	@include breakpoint(max-sm) {
+		gap: 14px 20px;
+		.counter-items {
+			.content {
+				span {
+					font-size: 30px;
+					line-height: 120%;
+				}
+			}
+		}
+	}
+}
+.about-thumb4 {
+	.counter-box {
+		position: absolute;
+		.cont {
+			span {
+				font-size: 50px;
+				color: $white;
+				line-height: 120%;
+				font-weight: 700;
+			}
+		}
+	}
+}
+//About Section04
+
+
+

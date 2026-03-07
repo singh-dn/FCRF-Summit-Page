@@ -1,0 +1,325 @@
+/* --------------------------------------------
+    Template Default Fonts & Fonts Styles
+ ---------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+$heading-font: "Plus Jakarta Sans", sans-serif;
+$sub-font: "Plus Jakarta Sans", sans-serif;
+$body-font: "Inter", sans-serif;
+
+.heading-font {
+	font-family: $heading-font;
+}
+.sub-font {
+	font-family: $sub-font;
+}
+.body-font {
+	font-family: $body-font;
+}
+
+//font-family: "Font Awesome 6 Free";
+$fa: "Font Awesome 6 Free";
+
+html {
+	scroll-behavior: initial !important;
+}
+
+body {
+	font-family: $body-font;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 28px;
+	color: $text-color;
+	background-color: $white;
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+button {
+	border: none;
+	background-color: transparent;
+	padding: 0;
+}
+
+input:focus {
+	color: $white;
+	outline: none;
+}
+
+input {
+	color: $white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: $heading-font;
+	margin: 0px;
+	padding: 0;
+	color: $header-color;
+	@include transition;
+	font-weight: 700;
+}
+
+h1 {
+	font-size: 60px;
+	line-height: 72px;
+	@include breakpoint(max-xxl) {
+		font-size: 50px;
+		line-height: 62px;
+	}
+	@include breakpoint(max-xl) {
+		font-size: 42px;
+		line-height: 52px;
+	}
+	@include breakpoint(max-lg) {
+		font-size: 38px;
+		line-height: 48px;
+	}
+	@include breakpoint(max-md) {
+		font-size: 36px;
+		line-height: 44px;
+	}
+	@include breakpoint(max-sm) {
+		font-size: 28px;
+		line-height: 36px;
+	}
+}
+
+.fs-two,h2 {					
+	font-size: 50px;
+	line-height: 116%;
+	@include breakpoint(max-xl) {
+		font-size: 42px;
+	}
+	@include breakpoint(max-md) {
+		font-size: 36px;
+	}
+	@include breakpoint(max-sm) {
+		font-size: 28px;
+	}
+}
+h3 {
+	font-size: 30px;
+	line-height: 130%;
+	@include breakpoint(max-xxl) {
+		font-size: 27px;
+	}
+	@include breakpoint(max-xl) {
+		font-size: 22px;
+	}
+	@include breakpoint(max-sm) {
+		font-size: 22px;
+	}
+}
+
+h4 {
+	font-size: 25px;
+	line-height: 130%;
+	@include breakpoint(max-xxl) {
+		font-size: 22px;
+	}
+	@include breakpoint(max-xl) {
+		font-size: 20px;
+	}
+}
+
+h5 {
+	font-size: 20px;
+}
+
+h6 {
+	font-size: 18px;
+	line-height: 145%;
+}
+.fs-five{
+	font-size: 24px !important;
+	@include breakpoint(max-xl){
+		font-size: 20px !important;
+	}
+	@include breakpoint(max-lg){
+		font-size: 19px !important;
+	}
+	@include breakpoint(max-md){
+		font-size: 18px !important;
+	}
+}
+
+a {
+	text-decoration: none;
+	outline: none !important;
+	cursor: pointer;
+	color: $header-color;
+	@include transition;
+}
+
+p {
+	margin: 0px;
+	@include transition;
+	font-family: $body-font;
+	font-size: 16px;
+	line-height: 25.6px;
+}
+
+span {
+	font-size: 16px;
+	line-height: 25.6px;
+	letter-spacing: 1.2px;
+	margin: 0px;
+	@include transition;
+	@include breakpoint(max-xl){
+		letter-spacing: 1px;
+	}
+}
+
+// Custom Container
+.container {
+	// max-width: 1340px;
+	// margin: 0 auto;
+}
+// Custom Container
+
+// Section Hidden
+section,
+footer {
+	overflow: hidden;
+}
+// Section Hidden
+
+.p1-clr {
+	color: var(--p1-clr) !important;
+}
+.p1-bg {
+	background: var(--p1-clr) !important;
+}
+.p2-clr {
+	color: var(--p2-clr) !important;
+}
+.p2-bg {
+	background: var(--p2-clr) !important;
+}
+.p3-clr {
+	color: var(--p3-clr) !important;
+}
+.p3-bg {
+	background: var(--p3-clr) !important;
+}
+.p4-clr {
+	color: var(--p4-clr) !important;
+}
+.p4-bg {
+	background: var(--p4-clr) !important;
+}
+.p5-clr {
+	color: var(--p5-clr) !important;
+}
+.p5-bg {
+	background: var(--p5-clr) !important;
+}
+.cmn-bg {
+	background: var(--cmnbg);
+}
+.bg-color{
+	background: $bg-color;
+}
+.bg-color2{
+	background: $bg-color-2;
+}
+.bg-color3{
+	background: $bg-color-3;
+}
+.bg-color4{
+	background: $bg-color-4;
+}
+.n100-clr {
+	color: var(--n100-clr);
+}
+.n100-bg {
+	background: var(--n100-clr);
+}
+.n200-clr {
+	color: var(--n200-clr);
+}
+.n700-clr {
+	color: var(--n700-clr);
+}
+.n700-bg {
+	background: var(--n700-clr);
+}
+.n800-clr {
+	color: var(--n800-clr);
+}
+.n900-clr {
+	color: var(--n900-clr);
+}
+
+//radius
+.rounded100 {
+	border-radius: 100px;
+}
+
+//GLobal Center
+.d-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+//GLobal Center
+
+
+//Border
+.n0-border{
+	border: 1px solid $white;
+}
+//Border
+
+.trns {
+	transition: all 0.4s;
+}
+.black {
+	color: $black;
+}
+.blackbg {
+	background: $black;
+}
+.white {
+	color: $white;
+}
+.whitebg {
+	background: $white;
+}
+.white75{
+	color: $white75;
+}
+.white65{
+	color: $white65;
+}
+.theme {
+	color: $theme;
+}
+.theme2 {
+	color: $theme2;
+}
+.header {
+	color: $header;
+}
+.pra {
+	color: $pra;
+}
+.pra2 {
+	color: $pra2 !important;
+}
+.text {
+	color: $pra;
+}

@@ -1,0 +1,335 @@
+ /* PREFIX: mo-grid- 
+           Scoped styles to prevent conflicts with your existing site.
+        */
+
+        /* --- SECTION CONTAINER --- */
+        .mo-grid-section {
+            padding: 80px 20px;
+            background-color: #f8f9fa; /* Light gray background */
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden; /* Prevents scrollbars during animation */
+        }
+
+        .mo-grid-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- HEADER --- */
+        .mo-grid-header {
+            text-align: center;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .mo-grid-header.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mo-grid-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 16px;
+            /* Updated to Red and Blue Gradient */
+            background: linear-gradient(93deg, #FF5455 0%, #5135FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .mo-grid-subtitle {
+            font-size: 1.1rem;
+            color: #718096;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- GRID LAYOUT --- */
+        .mo-grid-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 Columns on Desktop */
+            gap: 30px;
+            perspective: 1000px; /* Adds 3D depth for animations */
+        }
+
+        /* --- CARD STYLE --- */
+        .mo-grid-card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        box-shadow 0.4s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            opacity: 0; /* Hidden initially for animation */
+            will-change: transform, opacity;
+        }
+
+        /* Hover Effect: Lift & Glow */
+        .mo-grid-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            z-index: 10;
+        }
+
+        /* Updated Wrapper for Emojis */
+        .mo-grid-img-wrapper {
+            height: 150px; /* Height for icon area */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8fafc; /* Very light background for contrast */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Emoji Style */
+        .mo-grid-emoji {
+            font-size: 4.5rem;
+            line-height: 1;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .mo-grid-card:hover .mo-grid-emoji {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .mo-grid-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: center; /* Center text since icons are centered */
+        }
+
+        .mo-grid-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .mo-grid-card-text {
+            font-size: 0.95rem;
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .mo-grid-link {
+            margin-top: auto;
+            margin-left: auto;
+            margin-right: auto; /* Center button */
+            color: #3182ce;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mo-grid-link svg {
+            transition: transform 0.3s ease;
+        }
+
+        .mo-grid-card:hover .mo-grid-link svg {
+            transform: translateX(5px);
+        }
+
+        /* --- SCROLL ANIMATIONS (The "Fly In" Effect) --- */
+        
+        /* 1. From Left */
+        .from-left {
+            transform: translateX(-100px);
+        }
+
+        /* 2. From Right */
+        .from-right {
+            transform: translateX(100px);
+        }
+
+        /* 3. From Bottom */
+        .from-bottom {
+            transform: translateY(100px);
+        }
+        
+        /* 4. From Top */
+        .from-top {
+            transform: translateY(-100px);
+        }
+
+        /* Active State (Triggered by JS) */
+        .mo-grid-card.is-visible {
+            opacity: 1;
+            transform: translate(0, 0); /* Reset to original position */
+        }
+
+
+        /* --- RESPONSIVE DESIGN --- */
+
+        /* Tablet (2 Columns) */
+        @media (max-width: 992px) {
+            .mo-grid-layout {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        /* Mobile (1 Column - Stacked) */
+        @media (max-width: 768px) {
+            .mo-grid-section {
+                padding: 60px 15px;
+            }
+
+            .mo-grid-title {
+                font-size: 2rem;
+            }
+
+            .mo-grid-layout {
+                grid-template-columns: 1fr; /* Stack vertically */
+                gap: 25px;
+            }
+
+            /* On mobile, reduce animation distance for smoother feel */
+            .from-left, .from-right, .from-bottom, .from-top {
+                transform: translateY(50px); /* Just slide up on mobile for simplicity */
+            }
+            
+            .mo-grid-card {
+                /* Ensure it looks good on small screens */
+                border-radius: 15px;
+            }
+            
+            .mo-grid-img-wrapper {
+                height: 140px;
+            }
+        }
+
+
+
+
+        /* scroll and pauch */
+
+
+                /* =========================================
+           MARQUEE COMPONENT STYLES
+           ========================================= */
+        
+        /* Scoped Variables & Container */
+        .logo-marquee-section {
+            /* ISOLATED VARIABLES */
+            --lm-bg: #ffffff;
+            --lm-text: #64748b;
+            --lm-border: #e2e8f0;
+            --lm-logo-height: 60px; 
+            --lm-gap: 60px; 
+            --lm-duration: 30s; 
+
+            width: 100%;
+            background: var(--lm-bg);
+            padding: 3rem 0;
+            border-top: 1px solid var(--lm-border);
+            border-bottom: 1px solid var(--lm-border);
+            overflow: hidden;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Headers Container */
+        .marquee-header-group {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 0 1rem;
+        }
+
+        /* Small Purple Headline */
+        .marquee-subheadline {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #5135FF; 
+            margin-bottom: 0.5rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        /* Main Gradient Headline */
+        .marquee-headline {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1.6;
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media (max-width: 600px) {
+            .marquee-headline {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* The Scrolling Track */
+        .marquee-track {
+            display: flex;
+            align-items: center;
+            gap: var(--lm-gap);
+            width: max-content;
+            animation: scroll-left var(--lm-duration) linear infinite;
+            /* No pause on hover */
+        }
+
+        /* The Logo Item */
+        .logo-item {
+            height: var(--lm-logo-height);
+            width: auto;
+            object-fit: contain;
+            /* No transitions or hover effects */
+            display: block;
+        }
+
+        /* Animation Keyframes */
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - (var(--lm-gap) / 2))); }
+        }
+
+        /* =========================================
+           FADE MASKS
+           ========================================= */
+        .logo-marquee-section::before,
+        .logo-marquee-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .logo-marquee-section::before {
+            left: 0;
+            background: linear-gradient(to right, var(--lm-bg), transparent);
+        }
+
+        .logo-marquee-section::after {
+            right: 0;
+            background: linear-gradient(to left, var(--lm-bg), transparent);
+        }

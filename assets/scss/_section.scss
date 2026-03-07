@@ -1,0 +1,332 @@
+//>>>>> Section Title Start <<<<<//
+
+.section-title {
+	position: relative;
+	.cmn-tag {
+		margin-bottom: 10px;
+	}
+	h2 {
+		font-weight: 500;
+	}
+}
+.sub-badge {
+	letter-spacing: 2px;
+	@include breakpoint(max-lg) {
+		font-size: 13px;
+		letter-spacing: 1.2px;
+	}
+}
+.sub-badge4 {
+	background: linear-gradient(90deg, #5135ff 0%, #ff5455 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.section-title-area {
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	z-index: 9;
+
+	@include breakpoint(max-md) {
+		flex-wrap: wrap;
+		gap: 20px;
+	}
+}
+
+//gsap animation
+.reveal-left,
+.reveal-bottom {
+	visibility: hidden;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+//>>>>> Section Title End <<<<<//
+
+//>>>>> Basic Css Start <<<<<//
+
+.center {
+	text-align: center;
+	margin: 0 auto;
+}
+.mb-60 {
+	margin-bottom: 60px;
+	@include breakpoint(max-xxl) {
+		margin-bottom: 50px;
+	}
+	@include breakpoint(max-xl) {
+		margin-bottom: 40px;
+	}
+	@include breakpoint(max-lg) {
+		margin-bottom: 30px;
+	}
+}
+
+.section-bg {
+	background-color: $bg-color;
+}
+
+.section-bg-2 {
+	background-color: $bg-color-2;
+}
+
+.section-bg-3 {
+	background-color: $theme-color-2;
+}
+
+.section-padding {
+	padding: 120px 0;
+
+	@include breakpoint(max-xl) {
+		padding: 100px 0;
+	}
+
+	@include breakpoint(max-lg) {
+		padding: 80px 0;
+	}
+}
+.space-top {
+	padding-top: 120px;
+	@include breakpoint(max-xl) {
+		padding-top: 100px;
+	}
+	@include breakpoint(max-lg) {
+		padding-top: 80px;
+	}
+}
+.space-bottom {
+	padding-bottom: 120px;
+	@include breakpoint(max-xl) {
+		padding-bottom: 100px;
+	}
+	@include breakpoint(max-lg) {
+		padding-bottom: 80px;
+	}
+}
+//>>>>> Basic Css End <<<<<//
+
+//Challenge Style
+.challenge-section {
+	z-index: 1;
+	.challenge-ele1 {
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: -1;
+	}
+	.challenge-ele2 {
+		position: absolute;
+		right: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: -1;
+	}
+}
+.challenge-wrapper {
+	gap: 24px;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	@include breakpoint(max-xxl) {
+		gap: 14px;
+	}
+	@include breakpoint(max-xl) {
+		gap: 14px;
+		grid-template-columns: repeat(3, 1fr);
+	}
+	@include breakpoint(max-xs) {
+		gap: 14px;
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+.challenge-item {
+	&:hover {
+		background: $p1-clr;
+		img {
+			filter: brightness(25) invert(0);
+		}
+		span {
+			color: $white;
+		}
+	}
+	position: relative;
+	&::before{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 85%;
+		height: 87%;
+		border: 1px solid rgb(255, 255, 255, 20%);
+		content: "";
+		border-radius: 10px;
+		transform: translate(-50%, -50%);
+	}
+}
+//Challenge Style
+
+//Watch Full Style
+.watch-full-section {
+	background: url(../../assets/img/watch/watch-full.webp) no-repeat center
+		center;
+	background-size: cover;
+	// background-attachment: fixed;
+	padding: 220px 0;
+	position: relative;
+	z-index: 1;
+	.portfolio-video {
+		position: relative;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: linear-gradient(93deg, #5135ff 10.65%, #ff5455 89.35%);
+		i {
+			color: $white;
+		}
+	}
+	h2 {
+		font-size: 64px;
+	}
+	.watch-full-content {
+		max-width: 1000px;
+		margin: 0 auto;
+	}
+	&::before {
+		position: absolute;
+		top: -120px;
+		left: -120px;
+		width: 750px;
+		height: 750px;
+		content: "";
+		border-radius: 943px;
+		background: linear-gradient(
+			141deg,
+			rgba(255, 84, 85, 0.8) 4.17%,
+			rgba(81, 53, 255, 0.8) 95.83%
+		);
+		filter: blur(320px);
+		z-index: -1;
+	}
+	@include breakpoint(max-xl) {
+		padding: 150px 0;
+		h2 {
+			font-size: 48px;
+		}
+		.portfolio-video {
+			width: 80px;
+			height: 80px;
+		}
+	}
+	@include breakpoint(max-sm) {
+		padding: 100px 0;
+		h2 {
+			font-size: 36px;
+		}
+		.portfolio-video {
+			width: 70px;
+			height: 70px;
+			i {
+				font-size: 18px;
+			}
+		}
+	}
+}
+//Watch Full Style
+
+//counter Style
+.counter-area1 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border: 1px solid rgb(3, 23, 64, 10%);
+	border-radius: 10px;
+	padding: 50px 58px;
+	gap: 8px 32px;
+	position: relative;
+	background: $white;
+	.counter-items {
+		.content {
+			span {
+				font-size: 60px;
+				font-style: normal;
+				font-weight: 800;
+				color: $black;
+				line-height: 55px;
+				font-family: $heading-font;
+			}
+		}
+		p {
+			max-width: 173px;
+		}
+		&:hover {
+			.content {
+				span {
+					color: $p1-clr;
+				}
+			}
+		}
+	}
+	&::before {
+		border: 1px solid rgb(3, 23, 64, 10%);
+		position: absolute;
+		bottom: -20px;
+		width: 90%;
+		height: 100%;
+		content: "";
+		border-radius: 10px;
+		z-index: -1;
+	}
+	@include breakpoint(max-xl) {
+		padding: 32px 30px;
+		gap: 8px 24px;
+		.counter-items {
+			.content {
+				span {
+					font-size: 40px;
+					font-weight: 800;
+				}
+			}
+			p {
+				max-width: 173px;
+			}
+		}
+	}
+	@include breakpoint(max-lg) {
+		padding: 32px 30px;
+		gap: 8px 24px;
+		flex-wrap: wrap;
+		justify-content: center;
+		.counter-items {
+			.content {
+				span {
+					font-size: 40px;
+					font-weight: 800;
+				}
+			}
+			p {
+				max-width: 173px;
+			}
+		}
+	}
+	@include breakpoint(max-md) {
+		padding: 28px 24px 32px;
+		gap: 8px 24px;
+		flex-wrap: wrap;
+		justify-content: center;
+		.counter-items {
+			.content {
+				span {
+					font-size: 24px;
+					font-weight: 700;
+				}
+			}
+			p {
+				max-width: 173px;
+			}
+		}
+	}
+}
+//counter Style

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block sensitive folders if any (optional)
+# Disallow: /admin/
+# Disallow: /private/
+
+Sitemap: https://futurecrime.org/sitemap.xml

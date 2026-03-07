@@ -1,0 +1,41 @@
+RewriteEngine On
+
+# ==============================
+# 301 REDIRECTS (OLD → NEW)
+# ==============================
+
+Redirect 301 /about-us/ https://futurecrime.org/About-Us
+Redirect 301 /fcrf/ https://futurecrime.org/
+Redirect 301 /future-crime-summit-2025/ https://futurecrime.org/FutureCrime-Summit
+Redirect 301 /join-fcrf-academy-as-an-empaneled-trainer-and-course-creator/ https://futurecrime.org/Join-Us
+Redirect 301 /careers/ https://futurecrime.org/Join-Us
+Redirect 301 /join-fcrf-academy-as-a-campus-ambassador/ https://futurecrime.org/Join-Us
+Redirect 301 /fcrf-warrior/ https://futurecrime.org/CyberSafe-UP
+
+
+# ==============================
+# YOUR EXISTING RULES
+# ==============================
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redirect index.html or index.php to /
+RewriteCond %{THE_REQUEST} \s/+index\.(html|php) [NC]
+RewriteRule ^index\.(html|php)$ / [R=301,L]
+
+# Redirect .html or .php URLs to clean URLs
+RewriteCond %{THE_REQUEST} \s/+(.*)\.(html|php) [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# Internally serve .php first
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+
+# Otherwise serve .html
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# Security
+Options -Indexes

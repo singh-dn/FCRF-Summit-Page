@@ -1,0 +1,29 @@
+
+
+//Ranking
+
+@keyframes leftr {
+	50% {
+		transform: translateX(-10px);
+	}
+}
+//Ranking
+
+
+.global-feature-items{
+	transition: all 0.5s;
+	border: 1px solid $bg-color;
+	.common-btn{
+		opacity: 0;
+		transition: all 0.5s;
+		margin-top: -120px;
+	}
+	&:hover{
+		background: $white;
+		border-color: $p1-clr;
+		.common-btn{
+			opacity: 1;
+			margin-top: 24px;
+		}
+	}
+}

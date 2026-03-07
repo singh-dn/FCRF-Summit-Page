@@ -1,0 +1,129 @@
+/* =============================
+   BROAD FOCUS AREA – PARALLAX
+   ============================= */
+
+.fcrf-focus {
+  font-family: 'Inter', sans-serif;
+  /* Premium Dark Gradient Background */
+  background: radial-gradient(circle at center top, #1e3a8a, #0f172a 60%, #020617 100%);
+  padding: 100px 0;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+}
+
+.fcrf-focus__title {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 70px;
+  background: linear-gradient(to right, #ffffff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  animation: fcrfFadeDown 1s ease-out forwards;
+}
+
+/* VIEWPORT CONTAINER */
+.fcrf-focus__viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  
+  /* Create fade effect on left and right edges */
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+/* SCROLLING TRACK */
+.fcrf-focus__track {
+  display: flex;
+  gap: 30px;
+  width: max-content; /* Critical for smooth looping */
+  padding: 20px 0; /* Space for hover scaling */
+  
+  /* Adjusted time for smoother flow */
+  animation: fcrfAutoScroll 40s linear infinite;
+}
+
+/* Pause scroll on hover for readability */
+.fcrf-focus__track:hover {
+  animation-play-state: paused;
+}
+
+/* CARD STYLING */
+.fcrf-focus__card {
+  min-width: 300px;
+  height: 200px;
+  border-radius: 24px;
+  
+  /* Glassmorphism Effect */
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: default;
+}
+
+.fcrf-focus__card span {
+  font-size: 48px;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+  transition: transform 0.3s ease;
+}
+
+.fcrf-focus__card p {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: #e2e8f0;
+}
+
+/* ACTIVE / HOVER STATE */
+/* We use a specific class for JS highlighting, OR hover for user interaction */
+.fcrf-focus__card.active,
+.fcrf-focus__card:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(56, 189, 248, 0.5); /* Light Blue Border */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+              0 0 30px rgba(56, 189, 248, 0.2); /* Glow */
+  z-index: 10;
+}
+
+.fcrf-focus__card.active span,
+.fcrf-focus__card:hover span {
+  transform: scale(1.2) rotate(5deg);
+}
+
+/* ANIMATIONS */
+@keyframes fcrfAutoScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 15px)); } /* -50% - half gap */
+}
+
+@keyframes fcrfFadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .fcrf-focus { padding: 60px 0; }
+  .fcrf-focus__card {
+    min-width: 260px;
+    height: 180px;
+  }
+  .fcrf-focus__card span { font-size: 36px; }
+  /* Speed up slightly on mobile */
+  .fcrf-focus__track { animation-duration: 30s; }
+}

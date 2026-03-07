@@ -1,0 +1,290 @@
+.team-items {
+	background: $white;
+	border-radius: 10px;
+	overflow: hidden;
+	.thumb{
+		border-radius: 10px;
+		overflow: hidden;
+		position: relative;
+		z-index: 1;
+		&::before{
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 0%;
+			content: "";
+			background: linear-gradient(180deg, rgba(3, 23, 64, 0.00) 35%, #031740 100%);
+			z-index: 1;
+			transition: all 0.4s;
+		}
+		img{
+			border-radius: 10px;
+			overflow: hidden;
+			transition: all 0.4s;
+		}
+		.social-wrapper2{
+			padding: 10px;
+			background: $p1-clr;
+			border-radius: 10px;
+			position: absolute;
+			bottom: -200px;
+			transition: all 0.4s;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 2;
+			a{
+				width: 36px;
+				height: 36px;
+				border-radius: 6px;
+				border: 2px solid rgba(255, 255, 255, 0.15);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				i{
+					color: $white;
+				}
+				svg{
+					path{
+						stroke: $white;
+						transition: all 0.4s;
+					}
+				}
+				&:hover{
+					background: $white;
+					i{
+						color: $p1-clr;
+					}
+					svg{
+						path{
+							stroke: $p1-clr;
+						}
+					}
+				}
+			}
+		}
+	}
+	&:hover{
+		.social-wrapper2{
+			bottom: 20px;
+		}
+		.thumb{
+			img{
+				transform: scale(1.05);
+			}
+			&::before{
+				height: 100%;
+			}
+		}
+	}
+	&.style4{
+		.plus-icon{
+			.icons{
+				border: 1px solid rgba(3, 23, 64, 0.20);
+			}
+			.social-wrapper{
+				width: 55px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				top: initial;
+				bottom: 110%;
+				a{
+					border: 1px solid rgba(3, 23, 64, 0.20);
+					i{
+						color: $white;
+					}
+				}
+				&::before{
+					position: absolute;
+					bottom: -14px;
+					left: 50%;
+					transform: translateX(-50%);
+					width: 20px;
+					height: 15px;
+					content: "";
+					background: $p1-clr;
+					clip-path: polygon(47% 100%, 0 0, 100% 0);
+
+				}
+			}
+		}
+
+	}
+}
+.plus-icon {
+	position: absolute;
+	top: 35px;
+	left: 35px;
+	width: 60px;
+	z-index: 2;
+	.social-wrapper {
+		a {
+			svg {
+				path {
+					stroke: $black !important;
+				}
+			}
+			i {
+				color: $white;
+			}
+			&:hover {
+				background: $p3-clr;
+				i {
+					color: $white;
+				}
+				svg {
+					path {
+						stroke: $white !important;
+					}
+				}
+			}
+		}
+	}
+	.icons {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		i {
+			font-size: 18px;
+		}
+	}
+	.social-wrapper {
+		position: absolute;
+		top: 110%;
+		left: 38%;
+		transform: translateX(-50%) rotateX(90deg);
+		transition: all 0.4s;
+		a {
+			i {
+				color: $black;
+			}
+		}
+	}
+	&:hover {
+		cursor: pointer;
+		.social-wrapper {
+			transform: translateX(-50%);
+		}
+	}
+}
+
+//Team Details 
+.team-details-content{
+	.more-details{
+		ul{
+			li{
+				display: flex;
+				align-items: center;
+				gap: 14px;
+				.title{
+					font-size: 16px;
+					color: #49577A;
+					letter-spacing: 0px;
+					width: 130px;
+				}
+				.text{
+					font-size: 16px;
+					font-weight: 500;
+					color: $black;
+					letter-spacing: 0px;
+				}
+			}
+		}
+	}
+	.social-icon{
+		a{
+			background: #F0F4FD;
+			border-radius: 50%;
+			i{
+				color: #49577A;
+			}
+			&:hover{
+				background: $p1-clr;
+				i{
+					color: $white;
+				}
+			}
+		}
+	}
+}
+.share-cmn-icon{
+	background: #F0F4FD;
+	padding: 5px 16px 6px;
+}
+.teco-mail-box{
+	.icon{
+		width: 50px;
+		height: 50px;
+		background: rgba(3, 23, 64, 0.10);
+	}
+}
+//Team Details 
+
+//Story Section
+.story-section {
+	.testimonial-items2 {
+		margin: 0;
+		.thumb {
+			max-width: 360px;
+			height: 360px;
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		&:not(:last-child) {
+			margin-bottom: 40px;
+		}
+		@include breakpoint(max-xl) {
+			.thumb {
+				max-width: 360px;
+				height: 320px;
+				img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+			&:not(:last-child) {
+				margin-bottom: 10px;
+			}
+		}
+	}
+}
+//Story Section
+
+//Story Details Section
+.story-section-details {
+	.testimonial-items2 {
+		padding: 50px 60px 60px;
+		margin: 0;
+		.quote2 {
+			margin-top: 0;
+		}
+		h3 {
+			font-size: 42px;
+		}
+		@include breakpoint(max-lg) {
+			flex-wrap: wrap;
+			gap: 24px;
+			padding: 24px 20px 30px;
+			h3 {
+				font-size: 24px;
+			}
+			.thumb {
+				width: 100%;
+				img {
+					width: 100%;
+				}
+			}
+		}
+	}
+}
+//Story Details Section
+
+
+//error-thumb
+.error-thumb{
+	max-width: 777px;
+	margin: 0 auto;
+}
+//error-thumb

@@ -1,0 +1,114 @@
+//Pricing
+.pricing-table {
+	.switch {
+		width: 50px;
+		height: 25px;
+		background: linear-gradient(90deg, #5135FF 0%, #FF5455 100%);
+		border-radius: 25px;
+		position: relative;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+	}
+
+	.toggle {
+		width: 23px;
+		height: 23px;
+		background-color: #fff;
+		border-radius: 50%;
+		position: absolute;
+		top: 1px;
+		left: 1px;
+		transition: all 0.3s ease;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	}
+
+	.switch.active {
+		background-color: #4caf50;
+	}
+
+	.switch.active .toggle {
+		left: calc(100% - 24px);
+	}
+}
+
+.pricing-items {
+	border-radius: 10px;
+	background: $white;
+	box-shadow: 0px 10px 60px 0px rgba(24, 35, 51, 0.10);
+	padding: 50px 0;
+	.heading{
+		max-width: 270px;
+		margin: 0 auto;
+	}
+	h2{
+		span{
+			font-size: 42px;
+		}
+	}
+	.price-list {
+		.line{
+			width: 100%;
+			height: 1px;
+			background: rgba(3, 23, 64, 0.08);
+		}
+	}
+	&.active,
+	&:hover{
+		.box-style{
+			background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%) !important;
+			color: $white;
+		}
+		h2{
+			color: $p1-clr;
+			span{
+				color: $p1-clr;
+			}
+		}
+	}
+}
+@keyframes cir360 {
+	0% {
+		transform: rotate(360deg);
+	}
+}
+.price-element{
+	position: absolute;
+	top: -60px;
+	left: -60px;
+	animation: updown 2s linear infinite;
+}
+
+//Not Useing Table
+.pricing-tabbing {
+	border-radius: 100px;
+	overflow: hidden;
+	border: unset;
+	.nav-item {
+		border: unset;
+		.nav-link {
+			padding: 9px 28px;
+			font-size: 19px;
+			font-weight: 700;
+			background: $n100-clr;
+			border: unset;
+			transition: all 0.4s;
+			color: $black;
+			font-family: "Space Grotesk";
+			&.active {
+				background: $p1-clr;
+				color: $black;
+				border-radius: 0;
+			}
+			@include breakpoint(max-xxl) {
+				padding: 8px 24px;
+			}
+		}
+	}
+	@include breakpoint(max-sm) {
+		margin: 0 auto;
+		.nav-link {
+			margin: 0 auto;
+		}
+	}
+}
+//Pricing
