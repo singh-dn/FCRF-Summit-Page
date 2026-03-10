@@ -109,25 +109,22 @@
 
 
         // bg javascript 
-  (function initFutureCrimeHero() {
-      // 1. Module configuration data
+      (function initFutureCrimeHero() {
+      // Updated the text array to feature the exact text from the new image in Slide 1
       const slidesData = [
         {
-          videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-          text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF)",
-          color: "#E2B6D4", 
+          videoUrl: "assets/video/summit-video.mp4",
+          text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF), is India's largest conference focused on tackling technology-driven crime.",
           overlayTint: "rgba(20, 83, 45, 0.3)" 
         },
         {
           videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-          text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF)",
-          color: "#B6E2C3", 
+          text: "Join industry experts, innovators, and policy-makers to uncover groundbreaking strategies against next-generation threats.",
           overlayTint: "rgba(30, 58, 138, 0.3)"
         },
         {
           videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-          text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF)",
-          color: "#B6CDE2", 
+          text: "Organized by the Future Crime Research Foundation (FCRF), driving actionable intelligence for a safer digital ecosystem.",
           overlayTint: "rgba(88, 28, 135, 0.3)" 
         }
       ];
@@ -143,11 +140,11 @@
 
       const videoLayer = moduleContainer.querySelector('#fc-video-layer');
       const dotsLayer = moduleContainer.querySelector('#fc-dots-layer');
-      const middleText = moduleContainer.querySelector('#fc-middle-text');
-      const summitText = moduleContainer.querySelector('#fc-summit-text');
+      const descText = moduleContainer.querySelector('#fc-desc-text');
       const header = moduleContainer.querySelector('#fc-main-header');
+      const mobileToggle = moduleContainer.querySelector('#fc-mobile-toggle');
+      const mobileMenu = moduleContainer.querySelector('#fc-mobile-menu');
 
-      // 2. Build DOM Elements efficiently
       function buildSlider() {
         const videoFragment = document.createDocumentFragment();
         const dotFragment = document.createDocumentFragment();
@@ -167,7 +164,6 @@
           dotBtn.className = "fc-dot-btn";
           dotBtn.setAttribute('aria-label', `Go to slide ${index + 1}`);
           
-          // Replaced span with strong per user request
           const dotStrong = document.createElement('strong');
           dotStrong.className = `fc-dot-strong ${index === 0 ? 'fc-active' : ''}`;
           
@@ -200,12 +196,13 @@
       }
 
       function updateTypography(index) {
-        middleText.style.opacity = '0';
-        setTimeout(() => {
-          middleText.innerText = slidesData[index].text;
-          middleText.style.opacity = '1';
-        }, 200);
-        summitText.style.color = slidesData[index].color;
+        if(descText) {
+          descText.style.opacity = '0';
+          setTimeout(() => {
+            descText.innerText = slidesData[index].text;
+            descText.style.opacity = '1';
+          }, 200);
+        }
       }
 
       function startAutoSlide() {
@@ -215,7 +212,7 @@
         }, 8000); 
       }
 
-      function initScrollListener() {
+      function initInteractions() {
         let ticking = false;
         window.addEventListener('scroll', () => {
           if (!ticking) {
@@ -230,11 +227,18 @@
             ticking = true;
           }
         });
+
+        mobileToggle.addEventListener('click', () => {
+          mobileMenu.classList.toggle('fc-open');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!header.contains(e.target) && mobileMenu.classList.contains('fc-open')) {
+            mobileMenu.classList.remove('fc-open');
+          }
+        });
       }
 
-      /* ========================================================================
-         PRELOADER & ANIMATION SEQUENCE
-         ======================================================================== */
       function runPreloaderAndInit() {
         var timeline = gsap.timeline();
 
@@ -250,14 +254,12 @@
             opacity: 0, y: '-30', duration: 0.5
         }, "+=0.3");
 
-        // Fixed Reveal Box Animation to perfectly sweep left to right
-        timeline.fromTo(".mil-reveal-box", { opacity: 0, x: -30 }, { duration: 0.1, opacity: 1, x: 0 });
-        timeline.to(".mil-reveal-box", { duration: 0.45, width: "100%" }, "+=0.1");
+        timeline.set(".mil-reveal-box", { scaleX: 0, transformOrigin: "left center" });
+        timeline.to(".mil-reveal-box", { duration: 0.45, scaleX: 1, opacity: 1, ease: "power2.inOut" });
         
-        // This is the correct GSAP way to change alignment mid-animation without breaking layout!
-        timeline.set(".mil-reveal-box", { left: "auto", right: 0 }); 
+        timeline.set(".mil-reveal-box", { transformOrigin: "right center" }); 
         
-        timeline.to(".mil-reveal-box", { duration: 0.3, width: "0%" });
+        timeline.to(".mil-reveal-box", { duration: 0.45, scaleX: 0, ease: "power2.inOut" });
         
         timeline.fromTo(".mil-animation-2 .mil-h3", { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.5");
         timeline.to(".mil-animation-2 .mil-h3", { duration: 0.6, opacity: 0, y: '-30' }, "+=0.5");
@@ -268,15 +270,11 @@
             opacity: 0, y: 40, scale: 0.98
         }, {
             duration: 0.8, y: 0, opacity: 1, scale: 1, ease: 'sine',
-            
-            // CRITICAL FIX: Removes the CSS Transform from the wrapper when done.
-            // This prevents GSAP from breaking the fixed position of your Navbar!
             clearProps: "transform", 
-            
             onComplete: function () {
                 document.querySelector('.mil-preloader').classList.add("mil-hidden");
                 buildSlider();
-                initScrollListener();
+                initInteractions();
             }
         }, "-=1");
       }

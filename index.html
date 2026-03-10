@@ -75,12 +75,13 @@ html.lenis, html.lenis body {
    <!-- =========================================================================
        PRELOADER HTML
        ========================================================================= -->
+  <!-- PRELOADER -->
   <div class="mil-preloader">
       <div class="mil-preloader-animation">
           <div class="mil-pos-abs mil-animation-1">
-              <p class="mil-h3 mil-muted mil-thin">Future</p>
-              <p class="mil-h3 mil-muted">Crime</p>
-              <p class="mil-h3 mil-muted mil-thin">Summit</p>
+              <p class="mil-h3 mil-thin fc-color-blue">Future</p>
+              <p class="mil-h3 fc-color-blue">Crime</p>
+              <p class="mil-h3 mil-thin fc-color-orange">Summit</p>
           </div>
           <div class="mil-pos-abs mil-animation-2">
               <div class="mil-reveal-frame">
@@ -94,49 +95,228 @@ html.lenis, html.lenis body {
   <!-- Main Website Wrapper -->
   <div class="mil-up">
 
-    <!-- ISOLATED HTML MODULE -->
     <div id="fc-hero-module">
+      
+      <!-- PILL HEADER -->
       <header id="fc-main-header" class="fc-header">
-        <div class="fc-header-left fc-logo-container">
-          <svg class="fc-logo-svg" viewBox="0 0 100 100">
-            <path d="M 50 10 A 40 40 0 1 1 10 50" />
-            <rect x="15" y="15" width="15" height="15" fill="white" stroke="none" />
-          </svg>
-          <strong class="fc-logo-text">Your Logo</strong>
-        </div>
-        <div class="fc-header-right fc-pill-nav">
-          <button class="fc-nav-btn fc-active">Home</button>
-          <button class="fc-nav-btn fc-inactive">About Us</button>
-          <button class="fc-nav-btn fc-cta">
-            <strong class="fc-nav-text-desktop">Watch Highlights</strong>
-            <strong class="fc-nav-text-mobile">Watch</strong>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M7 17L17 7"></path>
-              <path d="M7 7h10v10"></path>
+        <div class="fc-wide-nav-pill">
+          <div class="fc-nav-logo">
+            <svg viewBox="0 0 100 100">
+              <path d="M 50 10 A 40 40 0 1 1 10 50" />
+              <rect x="15" y="15" width="15" height="15" fill="white" stroke="none" />
             </svg>
-          </button>
+            <span>FCRF</span>
+          </div>
+
+          <div class="fc-nav-links fc-desktop-only">
+            <span class="fc-nav-link">Home</span>
+            <span class="fc-nav-link">Resources</span>
+            <span class="fc-nav-link">Features</span>
+            <span class="fc-nav-link">Community</span>
+            <span class="fc-nav-link">Pricing</span>
+          </div>
+
+          <div class="fc-nav-actions">
+            <span class="fc-nav-login fc-desktop-only">Login</span>
+            <button class="fc-nav-cta fc-desktop-only">Get Started</button>
+            <button id="fc-mobile-toggle" class="fc-mobile-toggle fc-mobile-only">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="fc-mobile-menu" class="fc-mobile-menu">
+          <span class="fc-nav-link">Home</span>
+          <span class="fc-nav-link">Resources</span>
+          <span class="fc-nav-link">Features</span>
+          <span class="fc-nav-link">Community</span>
+          <span class="fc-nav-link">Pricing</span>
+          <span class="fc-nav-login">Login</span>
+          <button class="fc-nav-cta">Get Started</button>
         </div>
       </header>
 
       <section class="fc-hero">
         <div id="fc-video-layer"></div>
-        <div class="fc-markers">
-          <strong>+</strong><strong>+</strong><strong>+</strong>
-        </div>
         <div id="fc-dots-layer" class="fc-dots-container"></div>
-        <div class="fc-middle-text-container">
-          <div class="fc-middle-text-inner">
-            <p id="fc-middle-text" class="fc-middle-text"></p>
+        
+        <!-- NEW CENTERED CONTENT (Above massive text) -->
+        <div class="fc-hero-center-content">
+          
+          <!-- Location Tag (Matched to image) -->
+          <div class="fc-location-tag">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3" fill="#ffffff"></circle>
+            </svg>
+            <span>Dr. Ambedkar International Centre</span>
           </div>
+
+          <!-- Dynamic Description -->
+          <p id="fc-desc-text" class="fc-desc-text"></p>
+          
+          <!-- Matched Image Buttons -->
+          <div class="fc-hero-buttons">
+            <button class="fc-btn-primary">
+              Registrations Start Soon
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+            <button class="fc-btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polygon points="10 8 16 12 10 16 10 8"/>
+              </svg>
+              Watch Highlights
+            </button>
+          </div>
+          
         </div>
-        <div class="fc-massive-text-container">
-          <h1 id="fc-summit-text" class="fc-massive-text">SUMMIT</h1>
+
+        <!-- NEW FULL-WIDTH BOTTOM TEXT -->
+        <div class="fc-massive-bottom-text">
+          FUTURE CRIME SUMMIT 2026
         </div>
+
       </section>
     </div>
 
-  </div> <!-- End of .mil-up Main Wrapper -->
+  </div>
 
+      <!-- About Section Start -->
+    <section class="about-section fix">
+        <div class="about-wrapper section-padding">
+            <div class="container">
+                <div
+                    class="row flex-row-reverse justify-content-lg-between justify-content-center g-4 align-items-center">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="about-content">
+                            <div class="section-title text-lg-start text-center mb-xl-5 mb-md-4 mb-3">
+                                <span class="sub-badge p1-clr fw-semibold fs-seven text-uppercase d-block mb-3">
+                                    KNOW ABOUT OUR ORGANIZATION
+                                </span>
+                                <h2 class="mb-xxl-4 mb-3 wow fadeInUp black fw-bold visible-slowly-right"
+                                    data-wow-delay=".3s">
+                                    Building a Cyber-Safe & Future-Ready India
+                                </h2>
+                                <p class="pra fs-seven">
+                                    Future Crime Research Foundation (FCRF) is an IIT Kanpur–incubated, non-profit organization dedicated to advancing research, awareness, and capacity building in cybersecurity, digital crime, and cyber forensics. We work closely with governments, industries, institutions, and society to address emerging digital threats and strengthen cyber resilience.
+                                </p>
+                            </div>
+                            <ul
+                                class="about-list border-bottom pb-xl-5 pb-4 d-grid justify-content-center justify-content-lg-start gap-1">
+                                <li class="d-flex align-items-center gap-2">
+                                    <span class="icon d-center">
+                                        <i class="fa-solid fa-check p1-clr fs-eight"></i>
+                                    </span>
+                                    <div class="fw-semibold black">
+                                        Conduct in-depth research on emerging cyber threats, digital crime trends, and technology-driven risks.
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center gap-2">
+                                    <span class="icon d-center">
+                                        <i class="fa-solid fa-check p1-clr fs-eight"></i>
+                                    </span>
+                                    <div class="fw-semibold black">
+                                       Build cyber capacity and awareness through conferences, workshops, training programs, and public outreach initiatives.
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center gap-2">
+                                    <span class="icon d-center">
+                                        <i class="fa-solid fa-check p1-clr fs-eight"></i>
+                                    </span>
+                                    <div class="fw-semibold black">
+                                       Deliver customized cyber and digital solutions to support secure digital transformation across sectors.
+                                    </div>
+                                </li>
+                            </ul>
+                            <div
+                                class="d-flex flex-sm-nowrap flex-wrap justify-content-lg-start justify-content-center align-items-center gap-xxl-4 gap-xl-3 gap-2">
+                                <div class="">
+                                    <a href="about.html"
+                                        class="common-btn box-style cmn-style1 box-bg w-100 white d-inline-flex justify-content-center align-items-center gap-xxl-2 gap-2 overflow-hidden rounded-5">
+                                        Discover More
+                                    </a>
+                                </div>
+                                <div class="about-call d-flex align-items-center gap-3">
+                                    <div class="icon bg-color d-center rounded-circle">
+                                        <i class="fa-solid fa-phone-volume fs-six p1-clr"></i>
+                                    </div>
+                                    <div class="cont">
+                                        <span class="fs-seven pra d-block">Call us free</span>
+                                        <a href="#0" class="fs-six black fw-semibold">
+                                            +91 93055 05449
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 pe-lg-5">
+                        <div class="about-thumb5 position-relative reveal-left w-100">
+                            <img src="assets/img/banner/about.webp" alt="img" class="w-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+         <!-- Counter Section Start -->
+   <section id="number">
+    <div class="st-section">
+  <div class="st-grid">
+
+    <div class="st-card">
+      <div class="st-value">1800+</div>
+      <div class="st-label">
+       DELEGATES & SECURITY PROFESSIONALS
+      </div>
+    </div>
+
+    <div class="st-card">
+      <div class="st-value">120+</div>
+      <div class="st-label">
+      GLOBAL SPEAKERS & CYBER EXPERTS
+      </div>
+    </div>
+
+    <div class="st-card">
+      <div class="st-value">50+</div>
+      <div class="st-label">
+       ORGANIZATIONS REPRESENTED
+      </div>
+    </div>
+
+    <div class="st-card">
+      <div class="st-value">30+</div>
+      <div class="st-label">
+       PANELS, TALKS & WORKSHOPS
+      </div>
+    </div>
+
+    <div class="st-card st-highlight">
+      <div class="st-value">100%</div>
+      <div class="st-label">
+       FOCUSED ON THE FUTURE OF CYBERCRIME DEFENSE
+      </div>
+
+      <div class="st-bars">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+  </section>
+    <!-- Counter Section Start -->
 
 
 <section class="fcrf-key-highlights">
@@ -229,215 +409,161 @@ html.lenis, html.lenis body {
         <div class="ss-marquee-row slant-up">
             <div class="ss-marquee-strip">
                 <div class="ss-marquee-content-block">
-                    <div class="ss-marquee-item">Empowering Innovation</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Smarter Tomorrow</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Think Forward</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Cognitive Shift</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Future Now</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">CYBERCRIME</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">DATA PRIVACY</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">DIGITAL FORENSICS</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">DFIR</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">CYBER POLICING</div><div class="ss-marquee-divider">/</div>
                 </div>
                 <div class="ss-marquee-content-block">
-                    <div class="ss-marquee-item">Empowering Innovation</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Smarter Tomorrow</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Think Forward</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Cognitive Shift</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Future Now</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">CYBER POLICING</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">DFIR</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">DIGITAL FORENSICS</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">DATA PRIVACY</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">CYBERCRIME</div><div class="ss-marquee-divider">/</div>
                 </div>
             </div>
         </div>
         <div class="ss-marquee-row slant-down">
             <div class="ss-marquee-strip ss-marquee-strip-reverse">
                 <div class="ss-marquee-content-block">
-                    <div class="ss-marquee-item">Next Intelligence</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Future Now</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Smarter Tomorrow</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Empowering Innovation</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Cognitive Shift</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">CYBERSECURITY</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">THREAT INTELLIGENCE</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">INCIDENT RESPONSE</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">MALWARE ANALYSIS</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">RANSOMWARE</div><div class="ss-marquee-divider">/</div>
                 </div>
                 <div class="ss-marquee-content-block">
-                    <div class="ss-marquee-item">Next Intelligence</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Future Now</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Smarter Tomorrow</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Empowering Innovation</div><div class="ss-marquee-divider">/</div>
-                    <div class="ss-marquee-item">Cognitive Shift</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">FINANCIAL FRAUD</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">DIGITAL INVESTIGATION</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">DARK WEB</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">CRYPTOCURRENCY CRIME</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">BLOCKCHAIN FORENSICS</div><div class="ss-marquee-divider">/</div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Who Should Attend Section -->
-  <!-- ==========================================
-         COPY EVERYTHING BELOW THIS LINE TO YOUR PROJECT
-         ========================================== -->
 
-    <div class="ai-summit-wsa-widget">
-        <div class="ss-wsa-inner">
-            
-            <!-- Header with Shadow Headline -->
-            <div class="ss-section-header">
-                <div class="ss-shadow-text">ATTENDEES</div>
-                <div class="ss-header-content">
-                    <div class="ss-header-accent-line"></div>
-                    <h2 class="ss-header-title">
-                        Who Should Attend?
-                    </h2>
-                </div>
+<div class="ai-summit-wsa-widget">
+    <div class="ss-wsa-inner">
+        
+        <!-- Header with Shadow Headline -->
+        <div class="ss-section-header">
+            <div class="ss-shadow-text">ATTENDEES</div>
+            <div class="ss-header-content">
+                <div class="ss-header-accent-line"></div>
+                <h2 class="ss-header-title">
+                    Who Should Attend?
+                </h2>
             </div>
-
-            <!-- Grid Container -->
-            <div class="ss-animate-content">
-                <div class="ss-attend-grid">
-                    
-                    <!-- Col 1 -->
-                    <div class="ss-attend-col">
-                        <div>
-                            <strong class="ss-attend-category-header">C-Level Executives</strong>
-                            <ul class="ss-attend-list">
-                                <li>Chief Executive Officers</li>
-                                <li>Chief Info Security Officers</li>
-                                <li>Chief Technology Officers</li>
-                                <li>Chief Digital Officers</li>
-                                <li>Chief Privacy Officers</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Col 2 -->
-                    <div class="ss-attend-col">
-                        <div>
-                            <strong class="ss-attend-category-header">Policy & Govt</strong>
-                            <ul class="ss-attend-list">
-                                <li>Public Policy Makers</li>
-                                <li>Think Tanks & Regulators</li>
-                            </ul>
-                        </div>
-                        <div class="ss-sub-category-wrap">
-                            <strong class="ss-attend-category-header">Government</strong>
-                            <ul class="ss-attend-list">
-                                <li>Government CISOs</li>
-                                <li>Research Scientists</li>
-                                <li>Security Teams</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Col 3 -->
-                    <div class="ss-attend-col">
-                        <div>
-                            <strong class="ss-attend-category-header">Security Pros</strong>
-                            <ul class="ss-attend-list">
-                                <li>Heads of InfoSec</li>
-                                <li>Forensic Experts</li>
-                                <li>Solution Architects</li>
-                                <li>Tech Consultants</li>
-                                <li>Implementers</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Col 4 -->
-                    <div class="ss-attend-col">
-                        <div>
-                            <strong class="ss-attend-category-header">Academia</strong>
-                            <ul class="ss-attend-list">
-                                <li>Security Researchers</li>
-                                <li>Academic Leaders</li>
-                                <li>Scholars</li>
-                            </ul>
-                        </div>
-                        <div class="ss-sub-category-wrap">
-                            <strong class="ss-attend-category-header">Innovation</strong>
-                            <ul class="ss-attend-list">
-                                <li>Transformation Experts</li>
-                                <li>AI Data Scientists</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
+
+        <!-- Grid Container -->
+        <div class="ss-animate-content">
+            <div class="ss-attend-grid">
+                
+                <!-- Col 1 -->
+                <div class="ss-attend-col">
+                    <div>
+                        <strong class="ss-attend-category-header">C-Level Executives</strong>
+                        <ul class="ss-attend-list">
+                            <li>Chief Executive Officers</li>
+                            <li>Chief Information Security Officers (CISOs)</li>
+                            <li>Chief Technology Officers (CTOs)</li>
+                            <li>Chief Digital Officers</li>
+                            <li>Chief Privacy Officers</li>
+                            <li>Chief Risk Officers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div class="ss-attend-col">
+                    <div>
+                        <strong class="ss-attend-category-header">Policy & Governance</strong>
+                        <ul class="ss-attend-list">
+                            <li>Public Policy Makers</li>
+                            <li>Regulators & Government Advisors</li>
+                            <li>Think Tanks & Policy Institutions</li>
+                            <li>Digital Governance Experts</li>
+                            <li>Cybersecurity Policy Leaders</li>
+                        </ul>
+                    </div>
+
+                    <div class="ss-sub-category-wrap">
+                        <strong class="ss-attend-category-header">Government & Law Enforcement</strong>
+                        <ul class="ss-attend-list">
+                            <li>Cybercrime Police Units</li>
+                            <li>Digital Forensics Experts</li>
+                            <li>Law Enforcement Agencies</li>
+                            <li>National Security & Intelligence Officials</li>
+                            <li>Defence Cyber Units</li>
+                            <li>Government Cybersecurity Teams</li>
+                            <li>Investigation Agencies</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Col 3 -->
+                <div class="ss-attend-col">
+                    <div>
+                        <strong class="ss-attend-category-header">Cybersecurity & DFIR Professionals</strong>
+                        <ul class="ss-attend-list">
+                            <li>Heads of Information Security</li>
+                            <li>Digital Forensics & Incident Response Experts</li>
+                            <li>Threat Intelligence Analysts</li>
+                            <li>SOC & Security Operations Teams</li>
+                            <li>Malware Analysts</li>
+                            <li>Cyber Threat Researchers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Col 4 -->
+                <div class="ss-attend-col">
+                    <div>
+                        <strong class="ss-attend-category-header">Financial Crime & Fraud Investigators</strong>
+                        <ul class="ss-attend-list">
+                            <li>Financial Crime Investigators</li>
+                            <li>Fraud Risk Professionals</li>
+                            <li>AML & Compliance Officers</li>
+                            <li>Banking & FinTech Security Teams</li>
+                            <li>Cryptocurrency Crime Investigators</li>
+                        </ul>
+                    </div>
+
+                    <div class="ss-sub-category-wrap">
+                        <strong class="ss-attend-category-header">Technology & Innovation</strong>
+                        <ul class="ss-attend-list">
+                            <li>AI Security Researchers</li>
+                            <li>Technology Architects</li>
+                            <li>Cybersecurity Consultants</li>
+                            <li>Digital Transformation Leaders</li>
+                            <li>Security Product Developers</li>
+                        </ul>
+                    </div>
+
+                    <div class="ss-sub-category-wrap">
+                        <strong class="ss-attend-category-header">Academia & Research</strong>
+                        <ul class="ss-attend-list">
+                            <li>Security Researchers</li>
+                            <li>Academic Leaders</li>
+                            <li>Scholars & Professors</li>
+                            <li>Cybersecurity Students</li>
+                            <li>Research Institutions</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </div>
 
-    <!-- About Section Start -->
-    <section class="about-section fix">
-        <div class="about-wrapper section-padding">
-            <div class="container">
-                <div
-                    class="row flex-row-reverse justify-content-lg-between justify-content-center g-4 align-items-center">
-                    <div class="col-xl-6 col-lg-6">
-                        <div class="about-content">
-                            <div class="section-title text-lg-start text-center mb-xl-5 mb-md-4 mb-3">
-                                <span class="sub-badge p1-clr fw-semibold fs-seven text-uppercase d-block mb-3">
-                                    KNOW ABOUT OUR ORGANIZATION
-                                </span>
-                                <h2 class="mb-xxl-4 mb-3 wow fadeInUp black fw-bold visible-slowly-right"
-                                    data-wow-delay=".3s">
-                                    Building a Cyber-Safe & Future-Ready India
-                                </h2>
-                                <p class="pra fs-seven">
-                                    Future Crime Research Foundation (FCRF) is an IIT Kanpur–incubated, non-profit organization dedicated to advancing research, awareness, and capacity building in cybersecurity, digital crime, and cyber forensics. We work closely with governments, industries, institutions, and society to address emerging digital threats and strengthen cyber resilience.
-                                </p>
-                            </div>
-                            <ul
-                                class="about-list border-bottom pb-xl-5 pb-4 d-grid justify-content-center justify-content-lg-start gap-1">
-                                <li class="d-flex align-items-center gap-2">
-                                    <span class="icon d-center">
-                                        <i class="fa-solid fa-check p1-clr fs-eight"></i>
-                                    </span>
-                                    <div class="fw-semibold black">
-                                        Conduct in-depth research on emerging cyber threats, digital crime trends, and technology-driven risks.
-                                    </div>
-                                </li>
-                                <li class="d-flex align-items-center gap-2">
-                                    <span class="icon d-center">
-                                        <i class="fa-solid fa-check p1-clr fs-eight"></i>
-                                    </span>
-                                    <div class="fw-semibold black">
-                                       Build cyber capacity and awareness through conferences, workshops, training programs, and public outreach initiatives.
-                                    </div>
-                                </li>
-                                <li class="d-flex align-items-center gap-2">
-                                    <span class="icon d-center">
-                                        <i class="fa-solid fa-check p1-clr fs-eight"></i>
-                                    </span>
-                                    <div class="fw-semibold black">
-                                       Deliver customized cyber and digital solutions to support secure digital transformation across sectors.
-                                    </div>
-                                </li>
-                            </ul>
-                            <div
-                                class="d-flex flex-sm-nowrap flex-wrap justify-content-lg-start justify-content-center align-items-center gap-xxl-4 gap-xl-3 gap-2">
-                                <div class="">
-                                    <a href="about.html"
-                                        class="common-btn box-style cmn-style1 box-bg w-100 white d-inline-flex justify-content-center align-items-center gap-xxl-2 gap-2 overflow-hidden rounded-5">
-                                        Discover More
-                                    </a>
-                                </div>
-                                <div class="about-call d-flex align-items-center gap-3">
-                                    <div class="icon bg-color d-center rounded-circle">
-                                        <i class="fa-solid fa-phone-volume fs-six p1-clr"></i>
-                                    </div>
-                                    <div class="cont">
-                                        <span class="fs-seven pra d-block">Call us free</span>
-                                        <a href="#0" class="fs-six black fw-semibold">
-                                            +91 93055 05449
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 pe-lg-5">
-                        <div class="about-thumb5 position-relative reveal-left w-100">
-                            <img src="assets/img/banner/about.webp" alt="img" class="w-100">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <div id="summit-app-root">
     <section class="ss-location-wrapper">
@@ -533,7 +659,7 @@ html.lenis, html.lenis body {
                     <div class="growth-path-item text-md-start text-center">
                         <div class="section-title">
                             <span class="sub-badge p1-clr fw-semibold fs-seven text-uppercase d-block mb-3">
-                                FUTURE CRIME SUMMIT 2025
+                                FUTURE CRIME SUMMIT 2026
                             </span>
                             <h2 class="wow fadeInUp black fw-bold visible-slowly-right" data-wow-delay=".3s">
                                 SUMMIT 2025 success stories.
@@ -1040,57 +1166,6 @@ largest conference focused on tackling technology-driven crime.
     </div>
   </div>
 </section>
-
-     <!-- Counter Section Start -->
-   <section id="number">
-    <div class="st-section">
-  <div class="st-grid">
-
-    <div class="st-card">
-      <div class="st-value">14,565+</div>
-      <div class="st-label">
-        Law Enforcement & Cybersecurity Professionals Trained
-      </div>
-    </div>
-
-    <div class="st-card">
-      <div class="st-value">500+</div>
-      <div class="st-label">
-        Awareness Programs, Technical Workshops & Sessions
-      </div>
-    </div>
-
-    <div class="st-card">
-      <div class="st-value">350+</div>
-      <div class="st-label">
-        National & International Speakers & Subject Matter Experts
-      </div>
-    </div>
-
-    <div class="st-card">
-      <div class="st-value">94%</div>
-      <div class="st-label">
-        Satisfaction Rate of Learners & Course Participants
-      </div>
-    </div>
-
-    <div class="st-card st-highlight">
-      <div class="st-value">100%</div>
-      <div class="st-label">
-        FCRF Impact & Outcomes Delivered
-      </div>
-
-      <div class="st-bars">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-
-  </div>
-</div>
-  </section>
-    <!-- Counter Section Start -->
 
     <!-- JOin Trusting Section Start -->
  <section class="partner-scroller-section">
@@ -1897,26 +1972,23 @@ class GlobeSection extends HTMLElement {
             </div>
             <h1 class="heading">
               Future Crime<br>
-              <span class="gradient-text">Summit<span class="year">2025</span></span>
+              <span class="gradient-text">Summit<span class="year">2026</span></span>
             </h1>
             <p class="desc">
-              The Future Crime Summit 2025, organized by the Future Crime Research
-              Foundation (FCRF), is India's largest conference focused on tackling
-              technology-driven crime and bringing together global experts, law
-              enforcement agencies, and industry leaders.
+              The Future Crime Summit 2026, organized by the Future Crime Research Foundation (FCRF), is India’s premier platform for addressing the rapidly evolving world of cybercrime, financial fraud, digital investigations, and emerging technology threats.
             </p>
             <div class="stats">
               <div class="stat-item">
-                <div class="stat-value">1500+</div>
+                <div class="stat-value">2000+</div>
                 <div class="stat-label">Attendees</div>
               </div>
               <div class="stat-item">
-                <div class="stat-value">50+</div>
+                <div class="stat-value">120+</div>
                 <div class="stat-label">Speakers</div>
               </div>
               <div class="stat-item">
-                <div class="stat-value">99+</div>
-                <div class="stat-label">Organizations</div>
+                <div class="stat-value">50+</div>
+                <div class="stat-label">PARTNER ORGANIZATIONS</div>
               </div>
             </div>
           </div>

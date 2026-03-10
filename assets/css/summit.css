@@ -1,4 +1,4 @@
-    /* ==========================================================================
+      /* ==========================================================================
        PRELOADER STYLES
        ========================================================================== */
     .mil-preloader {
@@ -28,9 +28,9 @@
     .mil-preloader .mil-preloader-animation .mil-pos-abs p {
       opacity: 0;
       margin-right: 15px;
-      margin-bottom: 0; /* Ensures consistent margin */
+      margin-bottom: 0; 
+      white-space: nowrap; /* Prevents text from breaking */
     }
-    /* Added proper line-height and padding to prevent text chopping */
     .mil-h3 {
       font-size: 2.5rem;
       font-weight: 700;
@@ -42,24 +42,32 @@
     .mil-thin {
       font-weight: 300;
     }
-    .mil-muted {
-      color: rgba(255, 255, 255, 0.7);
-    }
+    
+    /* Preloader Custom Colors */
+    .fc-color-blue { color: #3b82f6; }
+    .fc-color-orange { color: #f97316; }
+
     @media screen and (max-width: 992px) {
       .mil-preloader .mil-preloader-animation .mil-pos-abs {
-        flex-direction: column;
+        flex-direction: row; 
       }
       .mil-preloader .mil-preloader-animation .mil-pos-abs p {
-        margin-right: 0;
-        margin-bottom: 10px;
+        margin-right: 8px; 
+        margin-bottom: 0;
       }
       .mil-h3 {
-        font-size: 2rem;
+        font-size: 1.5rem; 
       }
     }
+    @media screen and (max-width: 480px) {
+      .mil-h3 {
+        font-size: 1.15rem; 
+      }
+    }
+
     .mil-preloader .mil-preloader-animation .mil-pos-abs .mil-reveal-frame {
       position: relative;
-      padding: 10px 30px; /* Added vertical padding for breathing room */
+      padding: 10px 30px; 
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -67,12 +75,13 @@
     .mil-preloader .mil-preloader-animation .mil-pos-abs .mil-reveal-frame .mil-reveal-box {
       z-index: 4;
       position: absolute;
-      top: 0;
+      top: 15%; 
       left: 0;
-      opacity: 0;
-      width: 0%;
-      height: 100%;
-      background-color: #ffffff; 
+      width: 100%;
+      height: 70%; 
+      background-color: #d4af37; /* Dark Yellow */
+      transform: scaleX(0); 
+      will-change: transform;
     }
     .mil-preloader.mil-hidden {
       pointer-events: none;
@@ -90,6 +99,7 @@
       --fc-text-color: #ffffff;
       --fc-font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       --fc-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --fc-brand-cyan: #a1e6ec;
       font-family: var(--fc-font-sans);
       color: var(--fc-text-color);
       width: 100%;
@@ -98,25 +108,64 @@
 
     #fc-hero-module *, #fc-hero-module *::before, #fc-hero-module *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* --- HEADER & NAVIGATION --- */
+    /* --- WIDE PILL NAVIGATION HEADER --- */
     #fc-hero-module .fc-header {
-      position: fixed; top: 0; left: 0; width: 100%; z-index: 50; display: flex; justify-content: space-between; align-items: flex-start; padding: 2rem; pointer-events: none; transition: padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      z-index: 50; 
+      display: flex; 
+      justify-content: center; 
+      padding: 2rem 2rem; 
+      pointer-events: none; 
+      transition: padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    #fc-hero-module .fc-header.fc-scrolled { padding: 1rem; }
-    #fc-hero-module .fc-header-left, #fc-hero-module .fc-header-right { pointer-events: auto; }
-    #fc-hero-module .fc-logo-container { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
-    #fc-hero-module .fc-logo-svg { fill: none; stroke: white; stroke-width: 6; width: 2.5rem; height: 2.5rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-    #fc-hero-module .fc-header.fc-scrolled .fc-logo-svg { width: 1.5rem; height: 1.5rem; }
-    #fc-hero-module .fc-logo-text { font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.875rem; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
-    #fc-hero-module .fc-pill-nav { display: flex; align-items: center; background: rgba(21, 21, 21, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 9999px; border: 1px solid rgba(255, 255, 255, 0.1); padding: 0.375rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
-    #fc-hero-module .fc-pill-nav::-webkit-scrollbar { display: none; }
-    #fc-hero-module .fc-nav-btn { border: none; cursor: pointer; border-radius: 9999px; font-weight: 600; font-size: 0.875rem; transition: background-color 0.2s, color 0.2s; white-space: nowrap; font-family: inherit; }
-    #fc-hero-module .fc-nav-btn.fc-active { background-color: #333333; color: white; padding: 0.625rem 1.5rem; }
-    #fc-hero-module .fc-nav-btn.fc-inactive { background-color: transparent; color: rgba(255, 255, 255, 0.7); padding: 0.625rem 1.5rem; font-weight: 500; }
-    #fc-hero-module .fc-nav-btn.fc-inactive:hover { color: white; }
-    #fc-hero-module .fc-nav-btn.fc-cta { background-color: white; color: black; padding: 0.625rem 1.5rem; margin-left: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
-    #fc-hero-module .fc-nav-btn.fc-cta:hover { background-color: #e5e5e5; }
-    #fc-hero-module .fc-nav-btn.fc-cta svg { width: 14px; height: 14px; }
+    #fc-hero-module .fc-header.fc-scrolled { 
+      padding: 1rem 2rem; 
+    }
+    
+    #fc-hero-module .fc-wide-nav-pill {
+      pointer-events: auto; 
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(25, 25, 25, 0.7); 
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 9999px;
+      padding: 0.5rem 0.5rem 0.5rem 1.5rem; 
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    #fc-hero-module .fc-nav-logo { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+    #fc-hero-module .fc-nav-logo svg { fill: none; stroke: white; stroke-width: 6; width: 1.8rem; height: 1.8rem; }
+    #fc-hero-module .fc-nav-logo span { font-weight: 700; letter-spacing: 0.05em; font-size: 1.1rem; color: white; }
+
+    #fc-hero-module .fc-nav-links { display: flex; gap: 2.5rem; align-items: center; }
+    #fc-hero-module .fc-nav-link { color: rgba(255, 255, 255, 0.65); font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: color 0.2s ease; }
+    #fc-hero-module .fc-nav-link:hover { color: rgba(255, 255, 255, 1); }
+
+    #fc-hero-module .fc-nav-actions { display: flex; align-items: center; gap: 1.5rem; }
+    #fc-hero-module .fc-nav-login { color: rgba(255, 255, 255, 0.8); font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: color 0.2s ease; }
+    #fc-hero-module .fc-nav-login:hover { color: white; }
+
+    #fc-hero-module .fc-nav-cta { 
+      background-color: #eeeeee; color: #111111; border: none; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; padding: 0.8rem 1.75rem; cursor: pointer; transition: background-color 0.2s ease; white-space: nowrap; font-family: inherit; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    #fc-hero-module .fc-nav-cta:hover { background-color: #ffffff; }
+
+    #fc-hero-module .fc-mobile-toggle { background: transparent; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0.5rem; }
+
+    #fc-hero-module .fc-mobile-menu {
+      position: absolute; top: calc(100% + 1rem); right: 2rem; left: 2rem; background: rgba(21, 21, 21, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.5rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; opacity: 0; pointer-events: none; transform: translateY(-10px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    #fc-hero-module .fc-mobile-menu.fc-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    #fc-hero-module .fc-mobile-menu .fc-nav-link, #fc-hero-module .fc-mobile-menu .fc-nav-login { font-size: 1.1rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    #fc-hero-module .fc-mobile-menu .fc-nav-cta { margin-top: 0.5rem; text-align: center; width: 100%; }
 
     /* --- HERO SECTION --- */
     #fc-hero-module .fc-hero { position: relative; width: 100%; height: 100vh; overflow: hidden; background-color: var(--fc-bg-color); }
@@ -124,40 +173,177 @@
     #fc-hero-module .fc-slide.fc-active { opacity: 1; z-index: 10; }
     #fc-hero-module .fc-slide video { width: 100%; height: 100%; object-fit: cover; }
     #fc-hero-module .fc-slide-overlay-tint { position: absolute; inset: 0; mix-blend-mode: multiply; }
-    #fc-hero-module .fc-slide-overlay-grad { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent, rgba(0,0,0,0.6)); }
-    #fc-hero-module .fc-markers { position: absolute; left: 1.5rem; top: 33.33%; bottom: 33.33%; display: flex; flex-direction: column; justify-content: space-between; color: rgba(255, 255, 255, 0.5); font-size: 0.75rem; font-family: var(--fc-font-mono); z-index: 40; }
-    #fc-hero-module .fc-dots-container { position: absolute; z-index: 40; display: flex; gap: 1rem; }
-    #fc-hero-module .fc-dot-btn { background: transparent; border: none; cursor: pointer; width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center; }
+    #fc-hero-module .fc-slide-overlay-grad { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 50%), linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 40%, rgba(0,0,0,0.85) 100%); }
     
-    /* Updated all span references to strong */
+    #fc-hero-module .fc-dots-container { position: absolute; z-index: 40; display: flex; gap: 1rem; right: 2rem; top: 50%; transform: translateY(-50%); flex-direction: column; }
+    #fc-hero-module .fc-dot-btn { background: transparent; border: none; cursor: pointer; width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center; }
     #fc-hero-module .fc-dot-strong { display: block; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.8); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background: transparent; width: 0.5rem; height: 0.5rem; }
     #fc-hero-module .fc-dot-btn:hover .fc-dot-strong:not(.fc-active) { background: rgba(255, 255, 255, 0.5); }
     #fc-hero-module .fc-dot-strong.fc-active { width: 0.75rem; height: 0.75rem; background: white; }
+
+    /* ==========================================================================
+       NEW LAYOUT: CENTERED CONTENT + MASSIVE BOTTOM TEXT
+       ========================================================================== */
     
-    #fc-hero-module .fc-middle-text-container { position: absolute; top: 55%; left: 0; width: 100%; display: flex; justify-content: center; z-index: 30; mix-blend-mode: screen; pointer-events: none; text-align: center; padding: 0 1rem; }
-    #fc-hero-module .fc-middle-text-inner { max-width: 48rem; }
-    #fc-hero-module .fc-middle-text { font-family: var(--fc-font-mono); font-size: 1rem; font-weight: 600; letter-spacing: 0.025em; color: white; line-height: 1.625; text-shadow: 0 10px 15px rgba(0,0,0,0.3); transition: opacity 0.5s ease; }
-    #fc-hero-module .fc-massive-text-container { position: absolute; bottom: 8%; left: 0; width: 100%; display: flex; justify-content: center; z-index: 30; user-select: none; pointer-events: none; mix-blend-mode: hard-light; opacity: 0.9; }
-    #fc-hero-module .fc-massive-text { white-space: nowrap; font-weight: bold; font-size: 18vw; line-height: 0.75; letter-spacing: -0.05em; text-transform: uppercase; transition: color 1.2s ease-in-out; }
+    /* 1. Centered Content Block */
+    #fc-hero-module .fc-hero-center-content {
+      position: absolute;
+      bottom: calc(9vw + 4rem); /* Anchored just above the massive text */
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 90%;
+      max-width: 800px;
+      z-index: 30;
+      gap: 1.5rem;
+    }
+
+    #fc-hero-module .fc-location-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #ffffff;
+      letter-spacing: 0.05em;
+    }
+
+    #fc-hero-module .fc-desc-text {
+      font-family: var(--fc-font-sans);
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.95);
+      line-height: 1.6;
+      margin: 0;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+      transition: opacity 0.5s ease;
+    }
+
+    #fc-hero-module .fc-hero-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+
+    #fc-hero-module .fc-btn-primary,
+    #fc-hero-module .fc-btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.6rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    #fc-hero-module .fc-btn-primary {
+      background-color: #e5e7eb;
+      color: #0a0a0a;
+      border: none;
+    }
+    #fc-hero-module .fc-btn-primary:hover {
+      background-color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    #fc-hero-module .fc-btn-secondary {
+      background-color: rgba(10, 10, 10, 0.5);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    #fc-hero-module .fc-btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* 2. Massive Full-Width Bottom Text */
+    #fc-hero-module .fc-massive-bottom-text {
+      position: absolute;
+      bottom: -0.5vw; /* Flushed perfectly to the bottom edge */
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-family: Impact, "Arial Narrow", sans-serif;
+      font-size: 8.2vw; 
+      letter-spacing: 0.02em;
+      line-height: 1;
+      white-space: nowrap;
+      text-transform: uppercase;
+      user-select: none;
+      pointer-events: none;
+      z-index: 30;
+      
+      /* Chromatic Colored Glass Effect */
+      background: linear-gradient(93deg, rgba(81, 53, 255, 0.4) 10.65%, rgba(255, 84, 85, 0.4) 89.35%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      
+      /* Sharp white outline to define the glass edges */
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+      
+      /* Hard-light makes the tinted text interact vividly with the video pixels behind it */
+      mix-blend-mode: hard-light; 
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+    }
+
+    @media (max-width: 992px) {
+      #fc-hero-module .fc-desktop-only { display: none !important; }
+      #fc-hero-module .fc-mobile-only { display: flex !important; }
+    }
 
     @media (max-width: 768px) {
       #fc-hero-module .fc-header { padding: 1.5rem; }
-      #fc-hero-module .fc-header.fc-scrolled { padding: 0.75rem; }
-      #fc-hero-module .fc-logo-text { display: none; }
-      #fc-hero-module .fc-nav-btn.fc-active, #fc-hero-module .fc-nav-btn.fc-inactive, #fc-hero-module .fc-nav-btn.fc-cta { font-size: 0.75rem; padding: 0.5rem 1rem; }
-      #fc-hero-module .fc-nav-text-desktop { display: none; }
-      #fc-hero-module .fc-nav-text-mobile { display: inline; }
-      #fc-hero-module .fc-markers { display: none; }
-      #fc-hero-module .fc-dots-container { bottom: 20%; left: 50%; transform: translateX(-50%); flex-direction: row; }
-      #fc-hero-module .fc-middle-text-container { top: 40%; }
-      #fc-hero-module .fc-middle-text { font-size: 0.875rem; }
-      #fc-hero-module .fc-massive-text-container { bottom: 5%; }
-      #fc-hero-module .fc-massive-text { font-size: 15.5vw; }
+      #fc-hero-module .fc-header.fc-scrolled { padding: 0.75rem 1.5rem; }
+      
+      #fc-hero-module .fc-wide-nav-pill { padding: 0.4rem 0.4rem 0.4rem 1rem; }
+      #fc-hero-module .fc-nav-logo span { font-size: 1rem; }
+      
+      #fc-hero-module .fc-dots-container { right: auto; left: 1.5rem; top: 35%; transform: translateY(0); }
+      
+      /* Mobile Centered Content Adjustments */
+      #fc-hero-module .fc-hero-center-content {
+        bottom: calc(8.5vw + 3rem);
+        width: 95%;
+        gap: 1.25rem;
+      }
+      
+      #fc-hero-module .fc-desc-text {
+        font-size: 1.1rem;
+      }
+
+      #fc-hero-module .fc-hero-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      #fc-hero-module .fc-btn-primary,
+      #fc-hero-module .fc-btn-secondary {
+        width: 100%;
+      }
+
+      /* Massive Bottom Text Mobile Adjustment */
+      #fc-hero-module .fc-massive-bottom-text {
+        font-size: 8.5vw; 
+        -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.4); /* Thinner stroke for mobile */
+      }
     }
-    @media (min-width: 769px) {
-      #fc-hero-module .fc-nav-text-mobile { display: none; }
-      #fc-hero-module .fc-nav-text-desktop { display: inline; }
-      #fc-hero-module .fc-dots-container { right: 1.5rem; top: 50%; transform: translateY(-50%); flex-direction: column; }
+    
+    @media (min-width: 993px) {
+      #fc-hero-module .fc-desktop-only { display: flex !important; }
+      #fc-hero-module .fc-mobile-only { display: none !important; }
+      #fc-hero-module .fc-mobile-menu { display: none !important; }
     }
     /* end of bg css  */
 
