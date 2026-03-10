@@ -33,6 +33,9 @@
     <link rel="stylesheet" href="assets/css/index-5.css?v=1.0.1">
     <link rel="stylesheet" href="assets/css/animation-html-5.css?v=1.0.1">
     <link rel="stylesheet" href="assets/css/summit.css?v=1.0.1">
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
     <style>
          /* ================= SMOOTH SCROLL CSS (LENIS) ================= */
 html.lenis, html.lenis body {
@@ -68,127 +71,75 @@ html.lenis, html.lenis body {
         <span class="cursor-outline"></span>
         <span class="cursor-dot"></span>
     </div>
-       <!-- 
-      =========================================
-      HTML STRUCTURE (index.html)
-      ========================================= 
-    -->
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <!-- Logo -->
-            <a href="index.html" class="logo" aria-label="Home"></a>
+   <!-- =========================================================================
+       PRELOADER HTML
+       ========================================================================= -->
+  <div class="mil-preloader">
+      <div class="mil-preloader-animation">
+          <div class="mil-pos-abs mil-animation-1">
+              <p class="mil-h3 mil-muted mil-thin">Future</p>
+              <p class="mil-h3 mil-muted">Crime</p>
+              <p class="mil-h3 mil-muted mil-thin">Summit</p>
+          </div>
+          <div class="mil-pos-abs mil-animation-2">
+              <div class="mil-reveal-frame">
+                  <p class="mil-reveal-box"></p>
+                  <p class="mil-h3 mil-muted mil-thin">FCRF 2026</p>
+              </div>
+          </div>
+      </div>
+  </div>
 
-            <!-- Desktop Nav -->
-            <nav class="nav-desktop">
-                <div class="nav-pill">
-                    <a href="index.html" class="nav-link active">Home</a>
-                    <a href="About-Us.html" class="nav-link">About Us</a>
-                    <a href="#video-part" class="btn-reserve">
-                        Watch Highlights
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M7 7h10v10" />
-                            <path d="M7 17 17 7" />
-                        </svg>
-                    </a>
-                </div>
-            </nav>
+  <!-- Main Website Wrapper -->
+  <div class="mil-up">
 
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="btn-mobile-menu" aria-label="Toggle menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 6h16" />
-                    <path d="M4 12h16" />
-                    <path d="M4 18h16" />
-                </svg>
-            </button>
+    <!-- ISOLATED HTML MODULE -->
+    <div id="fc-hero-module">
+      <header id="fc-main-header" class="fc-header">
+        <div class="fc-header-left fc-logo-container">
+          <svg class="fc-logo-svg" viewBox="0 0 100 100">
+            <path d="M 50 10 A 40 40 0 1 1 10 50" />
+            <rect x="15" y="15" width="15" height="15" fill="white" stroke="none" />
+          </svg>
+          <strong class="fc-logo-text">Your Logo</strong>
         </div>
-    </header>
+        <div class="fc-header-right fc-pill-nav">
+          <button class="fc-nav-btn fc-active">Home</button>
+          <button class="fc-nav-btn fc-inactive">About Us</button>
+          <button class="fc-nav-btn fc-cta">
+            <strong class="fc-nav-text-desktop">Watch Highlights</strong>
+            <strong class="fc-nav-text-mobile">Watch</strong>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"></path>
+              <path d="M7 7h10v10"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
 
-    <!-- Mobile Menu Dropdown -->
-    <div id="mobile-menu" class="mobile-menu-dropdown">
-        <nav>
-            <a href="index.html" class="mobile-link">Home</a>
-            <a href="#" class="mobile-link">Missions</a>
-            <a href="#" class="mobile-btn-reserve">mobile-menu</a>
-        </nav>
+      <section class="fc-hero">
+        <div id="fc-video-layer"></div>
+        <div class="fc-markers">
+          <strong>+</strong><strong>+</strong><strong>+</strong>
+        </div>
+        <div id="fc-dots-layer" class="fc-dots-container"></div>
+        <div class="fc-middle-text-container">
+          <div class="fc-middle-text-inner">
+            <p id="fc-middle-text" class="fc-middle-text"></p>
+          </div>
+        </div>
+        <div class="fc-massive-text-container">
+          <h1 id="fc-summit-text" class="fc-massive-text">SUMMIT</h1>
+        </div>
+      </section>
     </div>
 
-    <!-- Main Wrapper with Background Image -->
-    <section class="wrapper">
-        <!-- Background Image (Absolute to wrapper, scrolls with page) -->
-        <img
-            src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/0e2dbea0-c0a9-413f-a57b-af279633c0df_3840w.jpg"
-            alt="Space Background"
-            class="bg-image"
-        />
-        
-        <!-- Overlay -->
-        <div class="overlay"></div>
-
-        <!-- Hero Content -->
-        <div class="container hero-section">
-            <div class="hero-inner">
-                
-                <!-- Badge -->
-                <div class="badge anim-1">
-                    <span class="badge-label">6th and 7th August,2026</span>
-                    <!-- <span class="badge-text">SUMMIT</span> -->
-                </div>
-
-                <!-- Title -->
-                <h1 class="hero-title anim-2">
-                    FUTURE CRIME SUMMIT 2026
-                </h1>
-                <br class="desktop-br"/>
-                    <span class="hero-subtitle">📍 Dr. Ambedkar International Centre</span>
-
-                <!-- Description -->
-                <p class="hero-desc anim-3">
-                    The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF), is India’s largest conference focused on tackling technology-driven crime.
-                </p>
-
-                <!-- Buttons -->
-                <div class="cta-group anim-4">
-                    <a href="#" class="btn-primary">
-                        Registrations Start Soon
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14" />
-                            <path d="m12 5 7 7-7 7" />
-                        </svg>
-                    </a>
-                    <a href="#video-part" class="btn-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none" />
-                        </svg>
-                        Watch Highlights
-                    </a>
-                </div>
-            </div>
-
-            <!-- Partners -->
-            <div class="partners-section">
-                <p class="partners-title anim-1">
-                    Partnering with leading space agencies worldwide
-                </p>
-                <div class="partners-grid anim-2">
-                    <a href="#" class="partner-logo" style="background-image: url('assets/img/partner-service/image12.webp')" aria-label="Partner Logo"></a>
-                    <a href="#" class="partner-logo" style="background-image: url('assets/img/partner-service/image25.webp')" aria-label="Partner Logo"></a>
-                    <a href="#" class="partner-logo" style="background-image: url('assets/img/partner-service/certin.webp')" aria-label="Partner Logo"></a>
-                    <a href="#" class="partner-logo" style="background-image: url('assets/img/partner-service/i4cpng.webp')" aria-label="Partner Logo"></a>
-                    <a href="#" class="partner-logo" style="background-image: url('assets/img/partner-service/IIT\ KAnpur\ AIIDe.webp')" aria-label="Partner Logo"></a>
-                </div>
-            </div>
-            
-         
-        </div>
-    </section>
+  </div> <!-- End of .mil-up Main Wrapper -->
 
 
 
-    <section class="fcrf-key-highlights">
+<section class="fcrf-key-highlights">
 <h2 class="fcrf-key-highlights__title"><strong class="brand-gradient-text1">Highlights</strong></h2>
 
 
@@ -226,7 +177,188 @@ html.lenis, html.lenis body {
 </div>
 </section>
 
+<div id="summit-app-root">
+    <!-- Header Section with Refined Shadow Headline -->
+    <div class="ss-section-header ss-container">
+        <div class="ss-shadow-text">AGENDA</div>
+        <div class="ss-header-content">
+            <div class="ss-header-accent-line"></div>
+            <h1 class="ss-header-title">
+                <strong class="ss-text-gradient">Summit Schedule</strong>
+            </h1>
+            <p class="ss-header-subtitle">
+                Join industry leaders for an immersive journey through the next decade of AI innovation.
+            </p>
+        </div>
+    </div>
 
+    <main class="ss-container">
+        <!-- Navigation Tabs -->
+        <nav class="ss-day-nav" id="day-nav">
+            <button onclick="switchDay(1)" id="btn-day-1" class="ss-day-tab active">
+                <small class="ss-tab-sub">Day 01</small>
+                <div class="ss-tab-date">Oct 24</div>
+                <small class="ss-tab-sub">Foundation</small>
+            </button>
+            <button onclick="switchDay(2)" id="btn-day-2" class="ss-day-tab">
+                <small class="ss-tab-sub">Day 02</small>
+                <div class="ss-tab-date">Oct 25</div>
+                <small class="ss-tab-sub">Security</small>
+            </button>
+            <button onclick="switchDay(3)" id="btn-day-3" class="ss-day-tab">
+                <small class="ss-tab-sub">Day 03</small>
+                <div class="ss-tab-date">Oct 26</div>
+                <small class="ss-tab-sub">Cloud</small>
+            </button>
+        </nav>
+
+        <!-- Current Date Indicator -->
+        <div class="ss-date-indicator">
+            <div class="ss-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5135FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <div id="display-date" class="ss-display-date-text">Oct 24, 2026</div>
+        </div>
+
+        <!-- Schedule Container -->
+        <div id="schedule-container" class="ss-schedule-list"></div>
+    </main>
+
+    <!-- Seamless Infinite Marquee Section -->
+    <div class="ss-marquee-container">
+        <div class="ss-marquee-row slant-up">
+            <div class="ss-marquee-strip">
+                <div class="ss-marquee-content-block">
+                    <div class="ss-marquee-item">Empowering Innovation</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Smarter Tomorrow</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Think Forward</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Cognitive Shift</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Future Now</div><div class="ss-marquee-divider">/</div>
+                </div>
+                <div class="ss-marquee-content-block">
+                    <div class="ss-marquee-item">Empowering Innovation</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Smarter Tomorrow</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Think Forward</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Cognitive Shift</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Future Now</div><div class="ss-marquee-divider">/</div>
+                </div>
+            </div>
+        </div>
+        <div class="ss-marquee-row slant-down">
+            <div class="ss-marquee-strip ss-marquee-strip-reverse">
+                <div class="ss-marquee-content-block">
+                    <div class="ss-marquee-item">Next Intelligence</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Future Now</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Smarter Tomorrow</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Empowering Innovation</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Cognitive Shift</div><div class="ss-marquee-divider">/</div>
+                </div>
+                <div class="ss-marquee-content-block">
+                    <div class="ss-marquee-item">Next Intelligence</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Future Now</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Smarter Tomorrow</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Empowering Innovation</div><div class="ss-marquee-divider">/</div>
+                    <div class="ss-marquee-item">Cognitive Shift</div><div class="ss-marquee-divider">/</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Who Should Attend Section -->
+  <!-- ==========================================
+         COPY EVERYTHING BELOW THIS LINE TO YOUR PROJECT
+         ========================================== -->
+
+    <div class="ai-summit-wsa-widget">
+        <div class="ss-wsa-inner">
+            
+            <!-- Header with Shadow Headline -->
+            <div class="ss-section-header">
+                <div class="ss-shadow-text">ATTENDEES</div>
+                <div class="ss-header-content">
+                    <div class="ss-header-accent-line"></div>
+                    <h2 class="ss-header-title">
+                        Who Should Attend?
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Grid Container -->
+            <div class="ss-animate-content">
+                <div class="ss-attend-grid">
+                    
+                    <!-- Col 1 -->
+                    <div class="ss-attend-col">
+                        <div>
+                            <strong class="ss-attend-category-header">C-Level Executives</strong>
+                            <ul class="ss-attend-list">
+                                <li>Chief Executive Officers</li>
+                                <li>Chief Info Security Officers</li>
+                                <li>Chief Technology Officers</li>
+                                <li>Chief Digital Officers</li>
+                                <li>Chief Privacy Officers</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Col 2 -->
+                    <div class="ss-attend-col">
+                        <div>
+                            <strong class="ss-attend-category-header">Policy & Govt</strong>
+                            <ul class="ss-attend-list">
+                                <li>Public Policy Makers</li>
+                                <li>Think Tanks & Regulators</li>
+                            </ul>
+                        </div>
+                        <div class="ss-sub-category-wrap">
+                            <strong class="ss-attend-category-header">Government</strong>
+                            <ul class="ss-attend-list">
+                                <li>Government CISOs</li>
+                                <li>Research Scientists</li>
+                                <li>Security Teams</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Col 3 -->
+                    <div class="ss-attend-col">
+                        <div>
+                            <strong class="ss-attend-category-header">Security Pros</strong>
+                            <ul class="ss-attend-list">
+                                <li>Heads of InfoSec</li>
+                                <li>Forensic Experts</li>
+                                <li>Solution Architects</li>
+                                <li>Tech Consultants</li>
+                                <li>Implementers</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Col 4 -->
+                    <div class="ss-attend-col">
+                        <div>
+                            <strong class="ss-attend-category-header">Academia</strong>
+                            <ul class="ss-attend-list">
+                                <li>Security Researchers</li>
+                                <li>Academic Leaders</li>
+                                <li>Scholars</li>
+                            </ul>
+                        </div>
+                        <div class="ss-sub-category-wrap">
+                            <strong class="ss-attend-category-header">Innovation</strong>
+                            <ul class="ss-attend-list">
+                                <li>Transformation Experts</li>
+                                <li>AI Data Scientists</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
     <!-- About Section Start -->
     <section class="about-section fix">
@@ -306,6 +438,92 @@ html.lenis, html.lenis body {
             </div>
         </div>
     </section>
+
+    <div id="summit-app-root">
+    <section class="ss-location-wrapper">
+        <div class="ss-container">
+            <!-- Section Header -->
+            <div class="ss-section-header">
+                <div class="ss-shadow-text">LOCATION</div>
+                <div class="ss-header-content">
+                    <div class="ss-header-accent-line"></div>
+                    <h2 class="ss-header-title">
+                        <strong class="ss-text-gradient">Summit Venue & Access</strong>
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Highly Interactive Clickable Venue Images -->
+            <div class="ss-venue-images">
+                <!-- Venue Image 1 -->
+                <a href="https://www.google.com/maps/search/?api=1&query=Times+Square+Convention+Center" target="_blank" class="ss-image-card">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1000" alt="Innovation Hall">
+                    <div class="ss-image-overlay">
+                        <div class="ss-overlay-tag">Convention Center</div>
+                        <strong class="ss-overlay-title">Global Innovation Hall</strong>
+                        <div class="ss-click-indicator">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            View on Google Maps
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Venue Image 2 -->
+                <a href="https://www.google.com/maps/search/?api=1&query=Sky+Lounge+New+Delhi" target="_blank" class="ss-image-card">
+                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=1000" alt="Networking Plaza">
+                    <div class="ss-image-overlay">
+                        <div class="ss-overlay-tag">Networking Zone</div>
+                        <strong class="ss-overlay-title">Sky Lounge & Tech Plaza</strong>
+                        <div class="ss-click-indicator">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            Get Directions
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Detail Cards -->
+            <div class="ss-info-grid">
+                <div class="ss-detail-card">
+                    <div class="ss-card-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <strong class="ss-card-title">Main Address</strong>
+                    <div class="ss-card-desc">
+                        123 Future Avenue, Sector 5<br>
+                        Business Innovation District<br>
+                        New Delhi, India 110001
+                    </div>
+                </div>
+
+                <div class="ss-detail-card">
+                    <div class="ss-card-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h10c.6 0 1.1-.2 1.4-.6l1.6-1.4"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="15.5" cy="17.5" r="2.5"/></svg>
+                    </div>
+                    <strong class="ss-card-title">How to Travel</strong>
+                    <div class="ss-card-desc">
+                        Complimentary shuttle runs every 20 mins from Central Metro. Secure on-site parking available for registered attendees.
+                    </div>
+                </div>
+
+                <div class="ss-detail-card">
+                    <div class="ss-card-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <strong class="ss-card-title">Contact Desk</strong>
+                    <div class="ss-card-desc">
+                        Support Hotline: +91 987 654 3210<br>
+                        Email: info@summit2026.ai<br>
+                        Front Desk: Level 1 East
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<globe-section></globe-section>
 
     <!-- studies section  -->
     <section class="studies-section section-padding1 bg-color fix">
@@ -1279,6 +1497,8 @@ FCRF is registered under Section 8 of the Companies Act, 2013 and Section 12A & 
 <script src="assets/js/vanilla-tilt.min.js?v=1.0.1"></script>
 <!--<< Main.js >>-->
 <script src="assets/js/main.js?v=1.0.1"></script>
+<script src="assets/js/summit.js?v=1.0.1"></script>
+
 
     <script>
         const lenis = new Lenis({
@@ -1419,6 +1639,482 @@ updateActiveCard();
             });
         })();
     </script>  
+
+
+<script>
+class GlobeSection extends HTMLElement {
+  connectedCallback() {
+    const shadow = this.attachShadow({ mode: 'open' });
+
+    const style = document.createElement('style');
+    style.textContent = `
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :host {
+        display: block;
+        width: 100%;
+        font-family: 'DM Sans', sans-serif;
+      }
+
+      /* Outer wrapper — padding on all sides */
+      .wrap {
+        width: 100%;
+        padding: clamp(12px, 2vw, 24px);
+      }
+
+      /* Card */
+      .card {
+        position: relative;
+        width: 100%;
+        max-width: 1300px;
+        height: 521px;
+        margin: 0 auto;
+        background: #0b1120;
+        border: 1px solid rgba(100,180,255,0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        box-shadow:
+          0 0 0 1px rgba(100,180,255,0.03),
+          0 32px 80px rgba(0,0,0,0.6),
+          inset 0 1px 0 rgba(255,255,255,0.04);
+      }
+
+      /* Ambient glow — top right of card */
+      .card::before {
+        content: '';
+        position: absolute;
+        top: -60px; right: 20%;
+        width: 360px; height: 360px;
+        background: radial-gradient(circle, rgba(60,140,255,0.07) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Subtle grid */
+      .card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(100,180,255,0.02) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(100,180,255,0.02) 1px, transparent 1px);
+        background-size: 48px 48px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ── Left panel ── */
+      .left {
+        flex: 1 1 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(2rem, 5vw, 3.5rem) clamp(2rem, 5vw, 3.5rem);
+        position: relative;
+        z-index: 2;
+        min-width: 0;
+      }
+
+      /* Badge */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(100,180,255,0.06);
+        border: 1px solid rgba(100,180,255,0.15);
+        border-radius: 999px;
+        padding: 5px 14px;
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        color: rgba(180,200,240,0.6);
+        margin-bottom: clamp(16px, 2.5vw, 24px);
+        width: fit-content;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+
+      .badge-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #34d399;
+        box-shadow: 0 0 7px #34d399;
+        flex-shrink: 0;
+        animation: pulse-dot 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse-dot {
+        0%,100% { opacity:1; transform:scale(1); }
+        50%      { opacity:.45; transform:scale(.72); }
+      }
+
+      /* Heading */
+      .heading {
+        font-family: 'Syne', sans-serif;
+        font-size: clamp(2rem, 4.5vw, 3.2rem);
+        font-weight: 800;
+        line-height: 1.06;
+        letter-spacing: -0.025em;
+        color: #e8f0ff;
+        margin-bottom: clamp(12px, 1.8vw, 18px);
+      }
+
+      .gradient-text {
+        background: linear-gradient(100deg, #4eb4ff, #7de8ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .year {
+        font-size: 0.52em;
+        font-weight: 600;
+        vertical-align: super;
+        -webkit-text-fill-color: #4eb4ff;
+        color: #4eb4ff;
+        letter-spacing: 0;
+      }
+
+      /* Description */
+      .desc {
+        font-size: clamp(12.5px, 1.35vw, 14px);
+        line-height: 1.85;
+        color: rgba(180,200,240,0.5);
+        max-width: 400px;
+        margin-bottom: clamp(22px, 3.5vw, 36px);
+        font-weight: 300;
+      }
+
+      /* Stats */
+      .stats {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        flex-wrap: wrap;
+        row-gap: 12px;
+      }
+
+      .stat-item {
+        padding-right: clamp(14px, 2.5vw, 24px);
+      }
+      .stat-item + .stat-item {
+        padding-left: clamp(14px, 2.5vw, 24px);
+        border-left: 1px solid rgba(100,180,255,0.15);
+      }
+
+      .stat-value {
+        font-family: 'Syne', sans-serif;
+        font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+        font-weight: 800;
+        color: #e8f0ff;
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+
+      .stat-label {
+        font-size: 10px;
+        color: rgba(180,200,240,0.45);
+        letter-spacing: 0.07em;
+        margin-top: 5px;
+        text-transform: uppercase;
+        font-weight: 400;
+      }
+
+      /* ── Right globe panel ── */
+      .right {
+        flex: 1 1 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+        min-height: 380px;
+        /* Clip so globe stays contained within card */
+        overflow: hidden;
+      }
+
+      /* Left fade — blends globe left edge into card */
+      .right::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 80px;
+        background: linear-gradient(to right, #0b1120, transparent);
+        z-index: 3;
+        pointer-events: none;
+      }
+
+      canvas {
+        display: block;
+        cursor: grab;
+        touch-action: none;
+        /* Canvas is sized by JS to fit the right panel */
+        max-width: 100%;
+        max-height: 100%;
+      }
+      canvas:active { cursor: grabbing; }
+
+      /* ── Tablet / Mobile ── */
+      @media (max-width: 680px) {
+        .card {
+          flex-direction: column;
+          height: auto;
+          min-height: unset;
+          border-radius: 16px;
+        }
+        .left {
+          flex: none;
+          padding: clamp(1.75rem, 6vw, 2.25rem) clamp(1.25rem, 5vw, 1.75rem);
+        }
+        .right {
+          flex: none;
+          width: 100%;
+          height: 280px;
+          min-height: unset;
+        }
+        .right::before { display: none; }
+        .desc { max-width: 100%; }
+      }
+
+      @media (max-width: 380px) {
+        .heading { font-size: 1.75rem; }
+        .stat-item { padding-right: 10px; }
+        .stat-item + .stat-item { padding-left: 10px; }
+        .right { height: 240px; }
+      }
+    `;
+
+    const tmpl = document.createElement('div');
+    tmpl.innerHTML = `
+      <div class="wrap">
+        <div class="card">
+
+          <div class="left">
+            <div class="badge">
+              <span class="badge-dot"></span>
+              Future Crime Summit
+            </div>
+            <h1 class="heading">
+              Future Crime<br>
+              <span class="gradient-text">Summit<span class="year">2025</span></span>
+            </h1>
+            <p class="desc">
+              The Future Crime Summit 2025, organized by the Future Crime Research
+              Foundation (FCRF), is India's largest conference focused on tackling
+              technology-driven crime and bringing together global experts, law
+              enforcement agencies, and industry leaders.
+            </p>
+            <div class="stats">
+              <div class="stat-item">
+                <div class="stat-value">1500+</div>
+                <div class="stat-label">Attendees</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">50+</div>
+                <div class="stat-label">Speakers</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">99+</div>
+                <div class="stat-label">Organizations</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="right">
+            <canvas id="globe"></canvas>
+          </div>
+
+        </div>
+      </div>
+    `;
+
+    shadow.appendChild(style);
+    shadow.appendChild(tmpl);
+
+    /* ── Globe engine — fully scoped, zero globals ── */
+    const canvas = shadow.getElementById('globe');
+    const ctx    = canvas.getContext('2d');
+
+    const MARKERS = [
+      { lat: 37.78,  lng: -122.42, label: 'San Francisco' },
+      { lat: 51.51,  lng: -0.13,   label: 'London' },
+      { lat: 35.68,  lng: 139.69,  label: 'Tokyo' },
+      { lat: -33.87, lng: 151.21,  label: 'Sydney' },
+      { lat: 1.35,   lng: 103.82,  label: 'Singapore' },
+      { lat: 55.76,  lng: 37.62,   label: 'Moscow' },
+      { lat: -23.55, lng: -46.63,  label: 'São Paulo' },
+      { lat: 19.43,  lng: -99.13,  label: 'Mexico City' },
+      { lat: 28.61,  lng: 77.21,   label: 'Delhi' },
+      { lat: 36.19,  lng: 44.01,   label: 'Erbil' },
+    ];
+
+    const CONNECTIONS = [
+      { from: [37.78,-122.42], to: [51.51,-0.13] },
+      { from: [51.51,-0.13],   to: [35.68,139.69] },
+      { from: [35.68,139.69],  to: [-33.87,151.21] },
+      { from: [37.78,-122.42], to: [1.35,103.82] },
+      { from: [51.51,-0.13],   to: [28.61,77.21] },
+      { from: [37.78,-122.42], to: [-23.55,-46.63] },
+      { from: [1.35,103.82],   to: [-33.87,151.21] },
+      { from: [28.61,77.21],   to: [36.19,44.01] },
+      { from: [51.51,-0.13],   to: [36.19,44.01] },
+    ];
+
+    /* Fibonacci sphere dots */
+    const NUM_DOTS = 1200, dots = [];
+    const GR = (1 + Math.sqrt(5)) / 2;
+    for (let i = 0; i < NUM_DOTS; i++) {
+      const th = (2 * Math.PI * i) / GR;
+      const ph = Math.acos(1 - (2*(i+0.5)) / NUM_DOTS);
+      dots.push([Math.cos(th)*Math.sin(ph), Math.cos(ph), Math.sin(th)*Math.sin(ph)]);
+    }
+
+    let rotY = 0.4, rotX = 0.3, time = 0;
+    let drag = { active:false, startX:0, startY:0, startRotY:0, startRotX:0 };
+    const FOV = 600;
+
+    const ll2xyz = (lat, lng, r) => {
+      const p=((90-lat)*Math.PI)/180, t=((lng+180)*Math.PI)/180;
+      return [-(r*Math.sin(p)*Math.cos(t)), r*Math.cos(p), r*Math.sin(p)*Math.sin(t)];
+    };
+    const rx3 = (x,y,z,a) => { const c=Math.cos(a),s=Math.sin(a); return [x,y*c-z*s,y*s+z*c]; };
+    const ry3 = (x,y,z,a) => { const c=Math.cos(a),s=Math.sin(a); return [x*c+z*s,y,-x*s+z*c]; };
+    const prj = (x,y,z,cx,cy) => { const sc=FOV/(FOV+z); return [x*sc+cx,y*sc+cy]; };
+
+    /* Size canvas to fill the .right container snugly */
+    const syncSize = () => {
+      const rightEl = shadow.querySelector('.right');
+      if (!rightEl) return 400;
+      const rw = rightEl.clientWidth;
+      const rh = rightEl.clientHeight;
+      /* On desktop: globe = right panel height (fits inside, maybe slight crop top/bottom).
+         On mobile: globe = container height * 1.1 so it fills nicely */
+      const isMobile = window.innerWidth <= 680;
+      const gs = isMobile
+        ? Math.min(rh * 1.15, rw * 1.0)
+        : Math.min(rh, rw * 0.95);
+      return Math.max(gs, 200);
+    };
+
+    const draw = () => {
+      const gs  = syncSize();
+      const dpr = window.devicePixelRatio || 1;
+
+      canvas.style.width  = gs + 'px';
+      canvas.style.height = gs + 'px';
+      canvas.width  = Math.round(gs * dpr);
+      canvas.height = Math.round(gs * dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+
+      const w=gs, h=gs, cx=w/2, cy=h/2;
+      const R = Math.min(w,h) * 0.42;
+
+      if (!drag.active) rotY += 0.002;
+      time += 0.015;
+      ctx.clearRect(0,0,w,h);
+
+      /* Outer glow */
+      const glow = ctx.createRadialGradient(cx,cy,R*0.7,cx,cy,R*1.55);
+      glow.addColorStop(0,'rgba(60,140,255,0.05)');
+      glow.addColorStop(1,'rgba(60,140,255,0)');
+      ctx.fillStyle=glow; ctx.fillRect(0,0,w,h);
+
+      /* Atmosphere */
+      const atmo = ctx.createRadialGradient(cx-R*.2,cy-R*.2,R*.08,cx,cy,R);
+      atmo.addColorStop(0,'rgba(80,155,255,0.04)');
+      atmo.addColorStop(.7,'rgba(28,72,195,0.02)');
+      atmo.addColorStop(1,'rgba(8,22,75,0.07)');
+      ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
+      ctx.fillStyle=atmo; ctx.fill();
+
+      /* Rim */
+      ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
+      ctx.strokeStyle='rgba(100,180,255,0.07)'; ctx.lineWidth=1; ctx.stroke();
+
+      const ry=rotY, rx=rotX;
+
+      /* Dots */
+      for (let i=0;i<dots.length;i++) {
+        let [x,y,z]=dots[i]; x*=R;y*=R;z*=R;
+        [x,y,z]=rx3(x,y,z,rx); [x,y,z]=ry3(x,y,z,ry);
+        if (z>0) continue;
+        const [sx,sy]=prj(x,y,z,cx,cy);
+        const da=Math.max(0.08,1-(z+R)/(2*R));
+        ctx.beginPath(); ctx.arc(sx,sy,0.9+da*0.85,0,Math.PI*2);
+        ctx.fillStyle=`rgba(100,178,255,${da.toFixed(2)})`; ctx.fill();
+      }
+
+      /* Connections */
+      for (const c of CONNECTIONS) {
+        const [la1,lo1]=c.from, [la2,lo2]=c.to;
+        let [x1,y1,z1]=ll2xyz(la1,lo1,R), [x2,y2,z2]=ll2xyz(la2,lo2,R);
+        [x1,y1,z1]=rx3(x1,y1,z1,rx); [x1,y1,z1]=ry3(x1,y1,z1,ry);
+        [x2,y2,z2]=rx3(x2,y2,z2,rx); [x2,y2,z2]=ry3(x2,y2,z2,ry);
+        if (z1>R*0.3&&z2>R*0.3) continue;
+        const [sx1,sy1]=prj(x1,y1,z1,cx,cy), [sx2,sy2]=prj(x2,y2,z2,cx,cy);
+        const mX=(x1+x2)/2,mY=(y1+y2)/2,mZ=(z1+z2)/2;
+        const mL=Math.sqrt(mX*mX+mY*mY+mZ*mZ), aH=R*1.25;
+        const [scx,scy]=prj((mX/mL)*aH,(mY/mL)*aH,(mZ/mL)*aH,cx,cy);
+
+        ctx.beginPath(); ctx.moveTo(sx1,sy1); ctx.quadraticCurveTo(scx,scy,sx2,sy2);
+        ctx.strokeStyle='rgba(100,178,255,0.38)'; ctx.lineWidth=1.1; ctx.stroke();
+
+        /* Traveling dot */
+        const t=(Math.sin(time*1.2+la1*0.1)+1)/2;
+        const tx=(1-t)*(1-t)*sx1+2*(1-t)*t*scx+t*t*sx2;
+        const ty=(1-t)*(1-t)*sy1+2*(1-t)*t*scy+t*t*sy2;
+        const g2=ctx.createRadialGradient(tx,ty,0,tx,ty,6);
+        g2.addColorStop(0,'rgba(100,220,255,0.35)'); g2.addColorStop(1,'rgba(100,220,255,0)');
+        ctx.beginPath(); ctx.arc(tx,ty,6,0,Math.PI*2); ctx.fillStyle=g2; ctx.fill();
+        ctx.beginPath(); ctx.arc(tx,ty,2,0,Math.PI*2); ctx.fillStyle='rgba(120,230,255,1)'; ctx.fill();
+      }
+
+      /* Markers */
+      for (const m of MARKERS) {
+        let [x,y,z]=ll2xyz(m.lat,m.lng,R);
+        [x,y,z]=rx3(x,y,z,rx); [x,y,z]=ry3(x,y,z,ry);
+        if (z>R*0.1) continue;
+        const [sx,sy]=prj(x,y,z,cx,cy);
+        const pulse=Math.sin(time*2+m.lat)*0.5+0.5;
+
+        ctx.beginPath(); ctx.arc(sx,sy,4+pulse*4,0,Math.PI*2);
+        ctx.strokeStyle=`rgba(100,220,255,${(0.2+pulse*0.15).toFixed(2)})`; ctx.lineWidth=1; ctx.stroke();
+
+        const cg=ctx.createRadialGradient(sx,sy,0,sx,sy,3.5);
+        cg.addColorStop(0,'rgba(165,242,255,1)'); cg.addColorStop(1,'rgba(100,200,255,0.8)');
+        ctx.beginPath(); ctx.arc(sx,sy,2.5,0,Math.PI*2); ctx.fillStyle=cg; ctx.fill();
+
+        if (m.label) {
+          ctx.font='500 9px "DM Sans",sans-serif';
+          ctx.fillStyle='rgba(140,210,255,0.68)';
+          ctx.fillText(m.label,sx+9,sy+3.5);
+        }
+      }
+
+      requestAnimationFrame(draw);
+    };
+
+    /* Pointer / touch events */
+    canvas.addEventListener('pointerdown', e => {
+      drag={active:true,startX:e.clientX,startY:e.clientY,startRotY:rotY,startRotX:rotX};
+      canvas.setPointerCapture(e.pointerId);
+    });
+    canvas.addEventListener('pointermove', e => {
+      if (!drag.active) return;
+      rotY=drag.startRotY+(e.clientX-drag.startX)*0.005;
+      rotX=Math.max(-1,Math.min(1,drag.startRotX+(e.clientY-drag.startY)*0.005));
+    });
+    canvas.addEventListener('pointerup',     () => { drag.active=false; });
+    canvas.addEventListener('pointercancel', () => { drag.active=false; });
+    canvas.addEventListener('touchstart',    e  => e.preventDefault(), {passive:false});
+
+    draw();
+  }
+}
+
+customElements.define('globe-section', GlobeSection);
+</script>
 </body>
 
 </html>

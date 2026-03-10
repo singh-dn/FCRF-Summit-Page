@@ -1,0 +1,286 @@
+  const scheduleData = {
+            1: {
+                date: "Saturday, Oct 24, 2026",
+                sessions: [
+                    {
+                        time: "09:00 AM",
+                        location: "Hall of Vision",
+                        title: "Opening Keynote: The Intelligence Revolution",
+                        description: "Kick off the event with an insightful overview of where artificial intelligence is headed. We explore breakthroughs, global shifts, and the ethics of AGI.",
+                        type: "Keynote",
+                        speakers: [{ name: "Dr. Sarah Chen", role: "Chief Scientist, NeuralPath", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop" }]
+                    },
+                    {
+                        time: "11:00 AM",
+                        location: "Workshop Room B",
+                        title: "Building Human-Centered AI Products",
+                        description: "This session covers how to design AI solutions that prioritize usability, fairness, and real-world impact. Hands-on UX exercises included.",
+                        type: "Workshop",
+                        speakers: [{ name: "Marcus Thorne", role: "Product Lead, Google", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" }]
+                    }
+                ]
+            },
+            2: {
+                date: "Sunday, Oct 25, 2026",
+                sessions: [
+                    {
+                        time: "10:00 AM",
+                        location: "Security Hub",
+                        title: "Fortifying Trust: Cybersecurity in AI",
+                        description: "Building India's cybersecurity resilience in the generative AI age. Understanding threat exposure and continuous management.",
+                        type: "Core Session",
+                        speakers: [{ name: "Dev Singh", role: "Security Architect", img: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop" }]
+                    }
+                ]
+            },
+            3: {
+                date: "Monday, Oct 26, 2026",
+                sessions: [
+                    {
+                        time: "02:00 PM",
+                        location: "Main Stage",
+                        title: "AI Policy & Global Regulation",
+                        description: "Learn how nations and organizations are approaching AI governance, including frameworks for data privacy and accountability.",
+                        type: "Panel",
+                        speakers: [{ name: "Sonia Ghandi", role: "Policy Advisor, UN", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop" }]
+                    }
+                ]
+            }
+        };
+
+        function switchDay(day) {
+            // UI Update: Active Tab
+            document.querySelectorAll('.ss-day-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(`btn-day-${day}`).classList.add('active');
+            
+            // UI Update: Date Display
+            document.getElementById('display-date').innerText = scheduleData[day].date;
+
+            // Render List
+            const container = document.getElementById('schedule-container');
+            container.innerHTML = '';
+
+            scheduleData[day].sessions.forEach((session, idx) => {
+                const card = document.createElement('div');
+                card.className = 'ss-schedule-card';
+                card.style.animationDelay = `${idx * 0.1}s`;
+
+                const speakerHTML = session.speakers.map(s => `
+                    <div class="ss-speaker-item">
+                        <div class="ss-avatar-wrap">
+                            <img src="${s.img}" class="ss-avatar">
+                            <div class="ss-status-dot"></div>
+                        </div>
+                        <div class="ss-speaker-info">
+                            <h4>${s.name}</h4>
+                            <p>${s.role}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div class="ss-card-left">
+                        <div class="ss-time-row">
+                            <div class="ss-time-accent"></div>
+                            <span class="ss-time-text">${session.time}</span>
+                        </div>
+                        <div class="ss-card-info-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            ${session.location}
+                        </div>
+                        <span class="ss-session-tag">${session.type}</span>
+                    </div>
+                    <div class="ss-card-content">
+                        <h3>${session.title}</h3>
+                        <p>${session.description}</p>
+                        <div class="ss-speaker-row">
+                            ${speakerHTML}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Initialize
+        window.onload = () => switchDay(1);
+
+
+
+
+        // bg javascript 
+  (function initFutureCrimeHero() {
+      // 1. Module configuration data
+      const slidesData = [
+        {
+          videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+          text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF)",
+          color: "#E2B6D4", 
+          overlayTint: "rgba(20, 83, 45, 0.3)" 
+        },
+        {
+          videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+          text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF)",
+          color: "#B6E2C3", 
+          overlayTint: "rgba(30, 58, 138, 0.3)"
+        },
+        {
+          videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF)",
+          color: "#B6CDE2", 
+          overlayTint: "rgba(88, 28, 135, 0.3)" 
+        }
+      ];
+
+      let currentSlideIndex = 0;
+      let slideInterval;
+      
+      const cachedSlides = [];
+      const cachedDots = [];
+
+      const moduleContainer = document.getElementById('fc-hero-module');
+      if (!moduleContainer) return;
+
+      const videoLayer = moduleContainer.querySelector('#fc-video-layer');
+      const dotsLayer = moduleContainer.querySelector('#fc-dots-layer');
+      const middleText = moduleContainer.querySelector('#fc-middle-text');
+      const summitText = moduleContainer.querySelector('#fc-summit-text');
+      const header = moduleContainer.querySelector('#fc-main-header');
+
+      // 2. Build DOM Elements efficiently
+      function buildSlider() {
+        const videoFragment = document.createDocumentFragment();
+        const dotFragment = document.createDocumentFragment();
+
+        slidesData.forEach((slide, index) => {
+          const videoDiv = document.createElement('div');
+          videoDiv.className = `fc-slide ${index === 0 ? 'fc-active' : ''}`;
+          videoDiv.innerHTML = `
+            <video src="${slide.videoUrl}" autoplay loop muted playsinline></video>
+            <div class="fc-slide-overlay-tint" style="background-color: ${slide.overlayTint};"></div>
+            <div class="fc-slide-overlay-grad"></div>
+          `;
+          cachedSlides.push(videoDiv);
+          videoFragment.appendChild(videoDiv);
+
+          const dotBtn = document.createElement('button');
+          dotBtn.className = "fc-dot-btn";
+          dotBtn.setAttribute('aria-label', `Go to slide ${index + 1}`);
+          
+          // Replaced span with strong per user request
+          const dotStrong = document.createElement('strong');
+          dotStrong.className = `fc-dot-strong ${index === 0 ? 'fc-active' : ''}`;
+          
+          dotBtn.appendChild(dotStrong);
+          dotBtn.addEventListener('click', () => goToSlide(index));
+          
+          cachedDots.push(dotStrong);
+          dotFragment.appendChild(dotBtn);
+        });
+
+        videoLayer.appendChild(videoFragment);
+        dotsLayer.appendChild(dotFragment);
+
+        updateTypography(0);
+      }
+
+      function goToSlide(index) {
+        clearInterval(slideInterval); 
+        
+        cachedSlides[currentSlideIndex].classList.remove('fc-active');
+        cachedDots[currentSlideIndex].classList.remove('fc-active');
+
+        cachedSlides[index].classList.add('fc-active');
+        cachedDots[index].classList.add('fc-active');
+
+        updateTypography(index);
+        
+        currentSlideIndex = index;
+        startAutoSlide();
+      }
+
+      function updateTypography(index) {
+        middleText.style.opacity = '0';
+        setTimeout(() => {
+          middleText.innerText = slidesData[index].text;
+          middleText.style.opacity = '1';
+        }, 200);
+        summitText.style.color = slidesData[index].color;
+      }
+
+      function startAutoSlide() {
+        slideInterval = setInterval(() => {
+          const nextIndex = (currentSlideIndex + 1) % slidesData.length;
+          goToSlide(nextIndex);
+        }, 8000); 
+      }
+
+      function initScrollListener() {
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              if (window.scrollY > 50) {
+                header.classList.add('fc-scrolled');
+              } else {
+                header.classList.remove('fc-scrolled');
+              }
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+      }
+
+      /* ========================================================================
+         PRELOADER & ANIMATION SEQUENCE
+         ======================================================================== */
+      function runPreloaderAndInit() {
+        var timeline = gsap.timeline();
+
+        timeline.to(".mil-preloader-animation", { opacity: 1 });
+
+        timeline.fromTo(".mil-animation-1 .mil-h3", {
+            y: "30px", opacity: 0
+        }, {
+            y: "0px", opacity: 1, stagger: 0.4, duration: 0.5
+        });
+
+        timeline.to(".mil-animation-1 .mil-h3", {
+            opacity: 0, y: '-30', duration: 0.5
+        }, "+=0.3");
+
+        // Fixed Reveal Box Animation to perfectly sweep left to right
+        timeline.fromTo(".mil-reveal-box", { opacity: 0, x: -30 }, { duration: 0.1, opacity: 1, x: 0 });
+        timeline.to(".mil-reveal-box", { duration: 0.45, width: "100%" }, "+=0.1");
+        
+        // This is the correct GSAP way to change alignment mid-animation without breaking layout!
+        timeline.set(".mil-reveal-box", { left: "auto", right: 0 }); 
+        
+        timeline.to(".mil-reveal-box", { duration: 0.3, width: "0%" });
+        
+        timeline.fromTo(".mil-animation-2 .mil-h3", { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.5");
+        timeline.to(".mil-animation-2 .mil-h3", { duration: 0.6, opacity: 0, y: '-30' }, "+=0.5");
+        
+        timeline.to(".mil-preloader", { duration: 0.8, opacity: 0, ease: 'sine' }, "+=0.2");
+
+        timeline.fromTo(".mil-up", {
+            opacity: 0, y: 40, scale: 0.98
+        }, {
+            duration: 0.8, y: 0, opacity: 1, scale: 1, ease: 'sine',
+            
+            // CRITICAL FIX: Removes the CSS Transform from the wrapper when done.
+            // This prevents GSAP from breaking the fixed position of your Navbar!
+            clearProps: "transform", 
+            
+            onComplete: function () {
+                document.querySelector('.mil-preloader').classList.add("mil-hidden");
+                buildSlider();
+                initScrollListener();
+            }
+        }, "-=1");
+      }
+
+      runPreloaderAndInit();
+
+    })();
