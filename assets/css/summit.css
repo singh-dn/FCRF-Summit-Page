@@ -1484,123 +1484,585 @@
 
 
 
-          /* ==========================================================================
-           ISOLATED CONTACT & MAP WIDGET STYLES
-           ========================================================================== */
-        .ai-summit-contact-widget {
-            font-family: 'Inter', sans-serif;
-            position: relative;
-            width: 100%;
-            background-color: #f8fafc;
-            padding-bottom: 80px;
-            box-sizing: border-box;
-        }
 
-        .ai-summit-contact-widget *,
-        .ai-summit-contact-widget *::before,
-        .ai-summit-contact-widget *::after {
-            box-sizing: inherit;
-            margin: 0;
-            padding: 0;
-        }
+        /* location css  */
 
-        .ai-contact-map-container {
-            width: 100%;
-            height: 550px;
-            background-color: #e2e8f0;
-        }
+.location-link{
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
 
-        .ai-contact-map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
+.location-link:hover{
+  color: #e11d48;
+  text-decoration: underline;
+  cursor: pointer;
+}
 
-        .ai-contact-form-wrapper {
-            max-width: 1000px;
-            margin: -120px auto 0;
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 60px;
-            position: relative;
-            z-index: 10;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        }
 
-        .ai-contact-title {
-            text-align: center;
-            color: #0b0e37;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 40px;
-            letter-spacing: -0.02em;
-        }
 
-        .ai-contact-images {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 40px;
-        }
+/* hightlight css  */
 
-        .ai-contact-img-box {
-            border-radius: 16px;
-            overflow: hidden;
-            height: 240px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
+    /* ==========================================================================
+       ISOLATED CSS SCOPE (#fc-fcrf-module)
+       ========================================================================== */
+    
+    /* Module Reset & Base Styles */
+    #fc-fcrf-module {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #ffffff; /* Soft light background */
+      color: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      /* min-height: 100vh; */
+      /* padding: 6rem 1.5rem 2rem 1.5rem; */
+      /* FIX: Prevent horizontal scroll but allow vertical visibility */
+      /* overflow-x: hidden; */
+      overflow-y: visible;
+      position: relative;
+    }
 
-        .ai-contact-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
+    #fc-fcrf-module *,
+    #fc-fcrf-module *::before,
+    #fc-fcrf-module *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .ai-contact-img-box:hover img {
-            transform: scale(1.05);
-        }
+    .fc-container {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+      position: relative;
+      z-index: 10;
+    }
 
-        .ai-contact-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 40px;
-        }
+    /* --- HEADER AREA --- */
+    .fc-header-block {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      z-index: 10;
+    }
 
-        .ai-cd-item {
-            display: flex;
-            gap: 20px;
-        }
+    .fc-title {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #0f172a;
+      margin: 0;
+    }
 
-        .ai-cd-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(81, 53, 255, 0.1);
-            color: #5135FF;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+    .fc-title strong {
+      background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      font-weight: inherit;
+    }
 
-        .ai-cd-text h4 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: #0b0e37;
-            margin-bottom: 8px;
-        }
+    /* --- THE HOVER HINT --- */
+    .fc-hover-hint {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #ffffff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 9999px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+      color: #64748b;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      animation: fc-bounce 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+      will-change: transform;
+    }
 
-        .ai-cd-text p {
-            font-size: 0.95rem;
-            color: #64748b;
-            line-height: 1.6;
-        }
+    .fc-hover-hint svg {
+      width: 18px;
+      height: 18px;
+      stroke: #5135FF;
+      fill: none;
+      stroke-width: 2;
+    }
 
-        @media (max-width: 768px) {
-            .ai-contact-images, .ai-contact-details { grid-template-columns: 1fr; }
-            .ai-contact-form-wrapper { padding: 40px 24px; margin: -80px 20px 0; border-radius: 16px; }
-            .ai-contact-img-box { height: 180px; }
-        }
+    .fc-hover-hint p {
+      margin: 0;
+      padding: 0;
+    }
+
+    @keyframes fc-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* --- MASSIVE INTERACTIVE LETTERS --- */
+    .fc-word-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3vw;
+      position: relative;
+      margin-top: 2rem;
+      width: 100%;
+      padding-bottom: 300px; 
+    }
+
+    .fc-letter-group {
+      position: relative;
+      cursor: crosshair; 
+      -webkit-tap-highlight-color: transparent; 
+    }
+
+    .fc-letter {
+      font-size: clamp(5rem, 20vw, 18rem);
+      font-family: Impact, "Arial Narrow", sans-serif;
+      font-weight: 900;
+      line-height: 1;
+      padding: 0.1em;
+      margin: -0.1em;
+      text-transform: uppercase;
+      
+      color: transparent;
+      -webkit-text-stroke: 2px #cbd5e1;
+      
+      will-change: transform, color, -webkit-text-stroke, filter;
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+    }
+
+    .fc-letter-group.is-hovered .fc-letter {
+      -webkit-text-stroke: 0px transparent;
+      background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transform: translateY(-15px) scale(1.05);
+      filter: drop-shadow(0 20px 30px rgba(81, 53, 255, 0.3));
+      z-index: 20;
+    }
+
+    .fc-word-container.has-hover .fc-letter-group:not(.is-hovered) .fc-letter {
+      opacity: 0.2;
+      transform: scale(0.95);
+      filter: blur(2px);
+    }
+
+    /* --- THE POP-UP HIGHLIGHT CARDS --- */
+    .fc-popup-card {
+      position: absolute;
+      top: calc(100% + 1rem); 
+      width: 420px; 
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 24px;
+      padding: 2.5rem; 
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.02);
+      
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(30px) scale(0.95);
+      will-change: transform, opacity, visibility;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.6s;
+      z-index: 50;
+      pointer-events: none; 
+    }
+
+    .fc-letter-group.is-hovered .fc-popup-card {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    @media (min-width: 769px) {
+      .fc-letter-group:nth-child(1) .fc-popup-card { left: -5%; } 
+      .fc-letter-group:nth-child(2) .fc-popup-card { left: 50%; transform: translateX(-50%) translateY(30px) scale(0.95); } 
+      .fc-letter-group:nth-child(2).is-hovered .fc-popup-card { transform: translateX(-50%) translateY(0) scale(1); }
+      .fc-letter-group:nth-child(3) .fc-popup-card { left: 50%; transform: translateX(-50%) translateY(30px) scale(0.95); } 
+      .fc-letter-group:nth-child(3).is-hovered .fc-popup-card { transform: translateX(-50%) translateY(0) scale(1); }
+      .fc-letter-group:nth-child(4) .fc-popup-card { right: -5%; } 
+    }
+
+    .fc-popup-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: rgba(81, 53, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .fc-popup-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: #5135FF;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fc-popup-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+      margin-top: 0;
+    }
+
+    .fc-popup-desc {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* --- BACKDROP OVERLAY --- */
+    .fc-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(248, 250, 252, 0.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 5;
+      opacity: 0;
+      visibility: hidden;
+      will-change: opacity;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
+      pointer-events: none; /* Ensure backdrop doesn't trap mouse events */
+    }
+
+    .fc-backdrop.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE & MOBILE DESIGN
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .fc-letter-group:nth-child(1) .fc-popup-card { left: 0; }
+      .fc-letter-group:nth-child(4) .fc-popup-card { right: 0; }
+    }
+
+    @media (max-width: 768px) {
+      #fc-fcrf-module {
+        /* padding: 4rem 1rem; */
+      }
+      
+      .fc-word-container {
+        gap: 1.5vw;
+        margin-top: 1rem;
+        padding-bottom: 2rem; /* Shorter padding on mobile since popup centers */
+      }
+
+      .fc-letter {
+        -webkit-text-stroke: 1.5px #cbd5e1;
+      }
+
+      .fc-hover-hint { font-size: 0.75rem; padding: 0.5rem 1rem; }
+      .fc-hover-hint p { display: none; }
+      .fc-hover-hint::after { content: 'Tap letters to explore'; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;}
+
+      /* Mobile Popup Card: Center screen perfectly */
+      .fc-popup-card {
+        position: fixed;
+        top: 50%;
+        left: 50% !important; 
+        right: auto !important;
+        width: calc(100vw - 2rem);
+        max-width: 420px;
+        padding: 2rem 1.5rem; 
+        transform: translate(-50%, -40%) scale(0.95) !important;
+        z-index: 100;
+        pointer-events: auto; 
+      }
+
+      .fc-letter-group.is-hovered .fc-popup-card {
+        transform: translate(-50%, -50%) scale(1) !important;
+      }
+      
+      .fc-backdrop {
+        background: rgba(248, 250, 252, 0.8);
+      }
+    }
+
+
+
+    /* who attend  */
+
+        /* ==========================================================================
+       ISOLATED CSS SCOPE (#fc-attendees-module)
+       ========================================================================== */
+    
+    #fc-attendees-module {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      /* UPDATED: Deep dark blue background matching the reference image */
+      background-color: #0a0f25; 
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      min-height: 100vh;
+      padding: 6rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #fc-attendees-module *,
+    #fc-attendees-module *::before,
+    #fc-attendees-module *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .fc-attendees-container {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* --- HEADER AREA --- */
+    .fc-header-wrapper {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .fc-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      background: rgba(81, 53, 255, 0.1);
+      border: 1px solid rgba(81, 53, 255, 0.3);
+      color: #a78bfa;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .fc-section-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    /* NO SPANS USED! Using strong for gradient text */
+    .fc-section-title strong {
+      background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      font-weight: inherit;
+    }
+
+    .fc-section-desc {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* --- BENTO GRID LAYOUT --- */
+    .fc-bento-grid {
+      display: grid;
+      /* 3 Column Layout for Desktop */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    /* --- BENTO CARDS --- */
+    .fc-bento-card {
+      /* UPDATED: Changed to a transparent white tint so the new dark blue background shines through the glass beautifully */
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      /* INCREASED PADDING for more breathing room */
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Mouse Spotlight Hover Effect Layer */
+    .fc-bento-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        800px circle at var(--mouse-x) var(--mouse-y), 
+        rgba(81, 53, 255, 0.06),
+        transparent 40%
+      );
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .fc-bento-card:hover::before {
+      opacity: 1;
+    }
+
+    .fc-bento-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-4px);
+    }
+
+    /* Bento Grid Spanning Logistics */
+    .fc-span-2 { grid-column: span 2; }
+    .fc-span-1 { grid-column: span 1; }
+
+    /* --- CARD HEADER --- */
+    .fc-card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .fc-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fc-card-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #a1e6ec; /* Cyber Cyan */
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .fc-card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    /* --- CHIPS CONTAINER (Roles) --- */
+    .fc-chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* The "Pill" design for each role instead of boring text lists */
+    .fc-role-chip {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: default;
+      display: inline-flex;
+      align-items: center;
+      /* FIX: Ensures long text wraps inside the chip instead of touching the card edges */
+      max-width: 100%;
+      white-space: normal;
+      line-height: 1.4;
+      text-align: left;
+    }
+
+    .fc-role-chip:hover {
+      background: linear-gradient(93deg, rgba(81, 53, 255, 0.8) 10.65%, rgba(255, 84, 85, 0.8) 89.35%);
+      color: #ffffff;
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(81, 53, 255, 0.4);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .fc-bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      /* Reset spans for tablet */
+      .fc-span-2 { grid-column: span 1; }
+      
+      /* Make specific cards span 2 on tablet to keep grid full */
+      .fc-bento-card:nth-child(7) { grid-column: span 2; }
+    }
+
+    @media (max-width: 768px) {
+      #fc-attendees-module {
+        padding: 4rem 1rem;
+      }
+      .fc-bento-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+      }
+      .fc-bento-card:nth-child(7) { grid-column: span 1; }
+      
+      .fc-bento-card {
+        /* INCREASED MOBILE PADDING so it doesn't touch the edges */
+        padding: 2rem;
+      }
+      
+      .fc-role-chip {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.9rem;
+      }
+    }

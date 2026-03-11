@@ -116,16 +116,6 @@
           videoUrl: "assets/video/summit-video.mp4",
           text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF), is India's largest conference focused on tackling technology-driven crime.",
           overlayTint: "rgba(20, 83, 45, 0.3)" 
-        },
-        {
-          videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-          text: "Join industry experts, innovators, and policy-makers to uncover groundbreaking strategies against next-generation threats.",
-          overlayTint: "rgba(30, 58, 138, 0.3)"
-        },
-        {
-          videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-          text: "Organized by the Future Crime Research Foundation (FCRF), driving actionable intelligence for a safer digital ecosystem.",
-          overlayTint: "rgba(88, 28, 135, 0.3)" 
         }
       ];
 
@@ -281,4 +271,93 @@
 
       runPreloaderAndInit();
 
+    })();
+
+
+
+    // hightlight js 
+
+        (function initInteractiveFCRF() {
+      const letters = document.querySelectorAll('.fc-letter-group');
+      const container = document.getElementById('fc-word-container');
+      const backdrop = document.getElementById('fc-backdrop');
+      
+      // Much safer way to check if we should behave like mobile (Click) or Desktop (Hover)
+      function isMobileView() {
+        return window.innerWidth <= 768;
+      }
+
+      function clearAll() {
+        letters.forEach(l => l.classList.remove('is-hovered'));
+        container.classList.remove('has-hover');
+        backdrop.classList.remove('is-active');
+      }
+
+      letters.forEach(group => {
+        // --- DESKTOP LOGIC (Hover) ---
+        group.addEventListener('mouseenter', () => {
+          if (!isMobileView()) {
+            clearAll();
+            group.classList.add('is-hovered');
+            container.classList.add('has-hover');
+            backdrop.classList.add('is-active');
+          }
+        });
+
+        group.addEventListener('mouseleave', () => {
+          if (!isMobileView()) {
+            clearAll();
+          }
+        });
+
+        // --- MOBILE LOGIC (Click/Tap) ---
+        group.addEventListener('click', (e) => {
+          if (isMobileView()) {
+            e.stopPropagation(); 
+            
+            if (group.classList.contains('is-hovered')) {
+              clearAll(); // Click again to close
+            } else {
+              clearAll(); // Close others, open this one
+              group.classList.add('is-hovered');
+              container.classList.add('has-hover');
+              backdrop.classList.add('is-active');
+            }
+          }
+        });
+      });
+
+      // Close the card when clicking anywhere else on the screen (Mobile)
+      document.addEventListener('click', (e) => {
+        if (isMobileView() && !e.target.closest('.fc-popup-card') && !e.target.closest('.fc-letter-group')) {
+           clearAll();
+        }
+      });
+      
+      // Auto-clear states if user resizes window past the mobile breakpoint to prevent bugs
+      window.addEventListener('resize', () => {
+         clearAll(); 
+      });
+
+    })();
+
+
+    // who attend js 
+
+     (function initBentoSpotlight() {
+      const grid = document.getElementById('fc-bento-grid');
+      const cards = grid.querySelectorAll('.fc-bento-card');
+
+      grid.addEventListener('mousemove', (e) => {
+        for (const card of cards) {
+          const rect = card.getBoundingClientRect();
+          // Calculate mouse position relative to the specific card
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          // Set CSS variables that the ::before pseudo-element uses for the gradient
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        }
+      });
     })();

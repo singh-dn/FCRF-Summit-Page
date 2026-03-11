@@ -86,7 +86,7 @@ html.lenis, html.lenis body {
           <div class="mil-pos-abs mil-animation-2">
               <div class="mil-reveal-frame">
                   <p class="mil-reveal-box"></p>
-                  <p class="mil-h3 mil-muted mil-thin">FCRF 2026</p>
+                  <p class="mil-h3 mil-muted mil-thin">SUMMIT 2026</p>
               </div>
           </div>
       </div>
@@ -101,24 +101,24 @@ html.lenis, html.lenis body {
       <header id="fc-main-header" class="fc-header">
         <div class="fc-wide-nav-pill">
           <div class="fc-nav-logo">
-            <svg viewBox="0 0 100 100">
+            <!-- <svg viewBox="0 0 100 100">
               <path d="M 50 10 A 40 40 0 1 1 10 50" />
               <rect x="15" y="15" width="15" height="15" fill="white" stroke="none" />
-            </svg>
+            </svg> -->
             <span>FCRF</span>
           </div>
 
           <div class="fc-nav-links fc-desktop-only">
             <span class="fc-nav-link">Home</span>
-            <span class="fc-nav-link">Resources</span>
-            <span class="fc-nav-link">Features</span>
-            <span class="fc-nav-link">Community</span>
-            <span class="fc-nav-link">Pricing</span>
+           <a href="About-Us.html"><span class="fc-nav-link">About Us</span></a>
+            <span class="fc-nav-link">Schedule</span>
+            <!-- <span class="fc-nav-link">Community</span> -->
+            <!-- <span class="fc-nav-link">Pricing</span> -->
           </div>
 
           <div class="fc-nav-actions">
-            <span class="fc-nav-login fc-desktop-only">Login</span>
-            <button class="fc-nav-cta fc-desktop-only">Get Started</button>
+            <span class="fc-nav-login fc-desktop-only">Location</span>
+            <button class="fc-nav-cta fc-desktop-only">Register Now </button>
             <button id="fc-mobile-toggle" class="fc-mobile-toggle fc-mobile-only">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -148,13 +148,24 @@ html.lenis, html.lenis body {
         <div class="fc-hero-center-content">
           
           <!-- Location Tag (Matched to image) -->
-          <div class="fc-location-tag">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3" fill="#ffffff"></circle>
-            </svg>
-            <span>Dr. Ambedkar International Centre</span>
-          </div>
+<div class="fc-location-tag">
+  
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+    <circle cx="12" cy="10" r="3" fill="#ffffff"></circle>
+  </svg>
+
+  <a 
+    href="https://maps.google.com/?q=Dr+Ambedkar+International+Centre+Delhi" 
+    target="_blank"
+    class="location-link"
+    title="Click to see the location on Google Maps"
+    onclick="showLocationAlert()"
+  >
+    Dr. Ambedkar International Centre
+  </a>
+
+</div>
 
           <!-- Dynamic Description -->
           <p id="fc-desc-text" class="fc-desc-text"></p>
@@ -188,8 +199,100 @@ html.lenis, html.lenis body {
 
   </div>
 
+      <section class="about-section fix">
+        <div class="about-wrapper section-padding">
+            <div class="container">
+                <div
+                    class="row flex-row-reverse justify-content-lg-between justify-content-center g-4 align-items-center">
+                    <div class="col-xl-5 col-lg-7">
+                        <div class="about-content">
+                            <div class="section-title text-lg-start text-center mb-4">
+                                <span class="sub-badge p1-clr fw-semibold fs-seven text-uppercase d-block mb-3">
+                                    KNOW ABOUT FCRF
+                                </span>
+                                <h2 class="mb-xxl-4 mb-3 wow fadeInUp black fw-bold visible-slowly-right"
+                                    data-wow-delay=".3s">
+                                    Researching Tomorrow’s Threats, Securing Today
+                                </h2>
+                                <p class="pra fs-seven">
+                                    Future Crime Research Foundation (FCRF) is an IIT Kanpur–incubated AIIDE-CoE Start-Up 
+                                    (Non-Profit NGO) dedicated to advancing India’s cybersecurity and digital-risk ecosystem.
+We specialise in Cyber Security, Digital Crime, Fraud Risk Management, Cyber Laws, Cyber Forensics, and Policy Research.<br><br>
+
+FCRF is registered under Section 8 of the Companies Act, 2013 and Section 12A & 80G of the Income Tax Act, 1961.
+                                </p>
+                            </div>
+                            <div
+                                class="about-information d-grid justify-content-lg-start justify-content-center  gap-xl-3 gap-3 white-bg">
+                                <div class="about-info d-flex align-items-start gap-lg-3 gap-2">
+                                    <div class="icon d-center white-bg">
+                                        <svg width="18" height="22" viewBox="0 0 18 22" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M9.00172 21.7501C8.40172 21.7501 7.81172 21.6101 7.33172 21.3401L2.60172 18.6101C0.641719 17.2901 0.511719 17.0501 0.511719 14.9801V10.0201C0.511719 7.95006 0.641719 7.71006 2.56172 6.42006L7.34172 3.66006C8.29172 3.11006 9.72172 3.11006 10.6717 3.66006L15.4017 6.39006C17.3617 7.71006 17.4917 7.95006 17.4917 10.0201V14.9801C17.4917 17.0501 17.3617 17.2901 15.4417 18.5801L10.6617 21.3401C10.1917 21.6201 9.59172 21.7501 9.00172 21.7501ZM9.00172 4.75006C8.66172 4.75006 8.32172 4.82006 8.08172 4.96006L3.35172 7.69006C2.01172 8.60006 2.01172 8.60006 2.01172 10.0201V14.9801C2.01172 16.4001 2.01172 16.4001 3.40172 17.3401L8.09172 20.0401C8.57172 20.3201 9.44172 20.3201 9.92172 20.0401L14.6517 17.3101C15.9917 16.4001 15.9917 16.4001 15.9917 14.9801V10.0201C15.9917 8.60006 15.9917 8.60006 14.6017 7.66006L9.91172 4.96006C9.68172 4.82006 9.34172 4.75006 9.00172 4.75006Z"
+                                                fill="#5135FF" />
+                                            <path
+                                                d="M14.5 7.38C14.09 7.38 13.75 7.04 13.75 6.63V4C13.75 2.42 13.08 1.75 11.5 1.75H6.5C4.92 1.75 4.25 2.42 4.25 4V6.56C4.25 6.97 3.91 7.31 3.5 7.31C3.09 7.31 2.75 6.98 2.75 6.56V4C2.75 1.58 4.08 0.25 6.5 0.25H11.5C13.92 0.25 15.25 1.58 15.25 4V6.63C15.25 7.04 14.91 7.38 14.5 7.38Z"
+                                                fill="#5135FF" />
+                                            <path
+                                                d="M10.6283 16.6301C10.4183 16.6301 10.1983 16.5901 9.97828 16.5001L8.99828 16.1201L8.01828 16.5101C7.48828 16.7201 6.94828 16.6701 6.54828 16.3801C6.14828 16.0901 5.93828 15.5901 5.96828 15.0201L6.02828 13.9701L5.35828 13.1601C4.99828 12.7101 4.87828 12.1901 5.03828 11.7101C5.18828 11.2401 5.59828 10.8801 6.14828 10.7401L7.16828 10.4801L7.73828 9.59012C8.34828 8.63012 9.65828 8.63012 10.2683 9.59012L10.8383 10.4801L11.8583 10.7401C12.4083 10.8801 12.8183 11.2401 12.9683 11.7101C13.1183 12.1801 12.9983 12.7101 12.6383 13.1501L11.9683 13.9601L12.0283 15.0101C12.0583 15.5801 11.8483 16.0701 11.4483 16.3701C11.2083 16.5401 10.9283 16.6301 10.6283 16.6301ZM6.51828 12.2001L7.18828 13.0101C7.41828 13.2801 7.54828 13.7101 7.52828 14.0601L7.46828 15.1101L8.44828 14.7201C8.77828 14.5901 9.21828 14.5901 9.54828 14.7201L10.5283 15.1101L10.4683 14.0601C10.4483 13.7101 10.5783 13.2901 10.8083 13.0101L11.4783 12.2001L10.4583 11.9401C10.1183 11.8501 9.75828 11.5901 9.56828 11.3001L9.00828 10.4201L8.43828 11.3001C8.24828 11.6001 7.88828 11.8601 7.54828 11.9501L6.51828 12.2001Z"
+                                                fill="#5135FF" />
+                                        </svg>
+                                    </div>
+                                    <div class="cont">
+                                        <h4 class="black fs-six mb-1 fw-bold">Leadership in Cyber Innovation</h4>
+                                        <p class="fs-seven pra">
+                                           Fully committed to strengthening India’s digital future through research, training, capacity-building, and national-level collaborations.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="about-list d-grid justify-content-center justify-content-lg-start gap-1">
+                                <li class="d-flex align-items-center gap-2">
+                                    <span class="icon d-center"><i class="fa-solid fa-check p1-clr fs-eight"></i></span>
+                                    <p class="fw-semibold black">Turning complex cyber challenges into actionable intelligence for India’s digital safety.</p>
+                                </li>
+                                <li class="d-flex align-items-center gap-2">
+                                    <span class="icon d-center"><i class="fa-solid fa-check p1-clr fs-eight"></i></span>
+                                    <p class="fw-semibold black">Transforming cybersecurity awareness into resilience, readiness, and national capability.</p>
+                                </li>
+                            </ul>
+                            <div
+                                class="d-flex flex-sm-nowrap flex-wrap justify-content-lg-start justify-content-center align-items-center gap-xxl-4 gap-xl-3 gap-2">
+                                <div class="">
+                                    <a href="about.html"
+                                        class="common-btn box-style cmn-style1 box-bg w-100 white d-inline-flex justify-content-center align-items-center gap-xxl-2 gap-2 overflow-hidden rounded-5">
+                                        Discover More
+                                    </a>
+                                </div>
+                                <div class="about-call d-flex align-items-center gap-3">
+                                    <div class="icon bg-color d-center rounded-circle">
+                                        <i class="fa-solid fa-phone-volume fs-six p1-clr"></i>
+                                    </div>
+                                    <div class="cont">
+                                        <span class="fs-seven pra d-block">Call us free</span>
+                                        <a href="#0" class="fs-six black fw-semibold">
+                                            +91 93055 05449
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-5">
+                        <div class="about-thumb position-relative reveal-left w-100">
+                            <img src="assets/img/about/about-1.webp" alt="img" class="w-100">
+                            <!-- Ele -->
+                            <img src="assets/img/element/dot-grp1.webp" alt="img" class="about-ele">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
       <!-- About Section Start -->
-    <section class="about-section fix">
+    <!-- <section class="about-section fix">
         <div class="about-wrapper section-padding">
             <div class="container">
                 <div
@@ -265,7 +368,7 @@ html.lenis, html.lenis body {
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
          <!-- Counter Section Start -->
    <section id="number">
@@ -319,7 +422,7 @@ html.lenis, html.lenis body {
     <!-- Counter Section Start -->
 
 
-<section class="fcrf-key-highlights">
+<!-- <section class="fcrf-key-highlights">
 <h2 class="fcrf-key-highlights__title"><strong class="brand-gradient-text1">Highlights</strong></h2>
 
 
@@ -355,8 +458,88 @@ html.lenis, html.lenis body {
 
 
 </div>
-</section>
+</section> -->
 
+  <div id="fc-fcrf-module">
+    
+    <!-- Background focus layer -->
+    <div class="fc-backdrop" id="fc-backdrop"></div>
+
+    <div class="fc-container">
+      
+      <!-- Header & Hint -->
+      <div class="fc-header-block">
+        <h2 class="fc-title">Discover the <strong>Highlights</strong></h2>
+        
+        <div class="fc-hover-hint">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path>
+            <path d="M13 13l6 6"></path>
+          </svg>
+          <p>Hover over the letters to explore</p>
+        </div>
+      </div>
+
+      <!-- Massive Interactive Acronym (Always Inline) -->
+      <div class="fc-word-container" id="fc-word-container">
+        
+        <!-- F: Cutting Edge Discussions -->
+        <div class="fc-letter-group">
+          <div class="fc-letter">F</div>
+          
+          <div class="fc-popup-card">
+            <div class="fc-popup-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <h4 class="fc-popup-title">Cutting Edge Discussions</h4>
+            <p class="fc-popup-desc">Gain insights into emerging cyber threats like crypto crime, NFT fraud, and AI-driven attacks. Sessions provide practical knowledge to stay ahead.</p>
+          </div>
+        </div>
+
+        <!-- C: Breakout Sessions -->
+        <div class="fc-letter-group">
+          <div class="fc-letter">C</div>
+          
+          <div class="fc-popup-card">
+            <div class="fc-popup-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><path d="M20 10l-4-4-4 4"></path></svg>
+            </div>
+            <h4 class="fc-popup-title">Focused Breakout Sessions</h4>
+            <p class="fc-popup-desc">Explore targeted topics including ransomware-as-a-service, IoT security, and cross-border cybercrime with actionable defense strategies.</p>
+          </div>
+        </div>
+
+        <!-- R: Awards -->
+        <div class="fc-letter-group">
+          <div class="fc-letter">R</div>
+          
+          <div class="fc-popup-card">
+            <div class="fc-popup-icon">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <h4 class="fc-popup-title">FCRF Awards for Excellence</h4>
+            <p class="fc-popup-desc">Honoring individuals and organizations for pioneering contributions in cyber policing, digital forensics, and national cybersecurity.</p>
+          </div>
+        </div>
+
+        <!-- F: CISO -->
+        <div class="fc-letter-group">
+          <div class="fc-letter">F</div>
+          
+          <div class="fc-popup-card">
+            <div class="fc-popup-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <h4 class="fc-popup-title">CISO Roundtable</h4>
+            <p class="fc-popup-desc">An exclusive forum bringing together top security leaders to discuss effective defense strategies and innovative solutions for modern challenges.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  
 <div id="summit-app-root">
     <!-- Header Section with Refined Shadow Headline -->
     <div class="ss-section-header ss-container">
@@ -563,6 +746,146 @@ html.lenis, html.lenis body {
     </div>
 </div>
 
+ <div id="fc-attendees-module">
+    
+    <div class="fc-attendees-container">
+      
+      <!-- Header -->
+      <div class="fc-header-wrapper">
+        <div class="fc-eyebrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Target Audience
+        </div>
+        <h2 class="fc-section-title">Who Should <strong>Attend?</strong></h2>
+        <p class="fc-section-desc">Join a global network of leaders, innovators, and defenders dedicated to fighting the next generation of technology-driven crime.</p>
+      </div>
+
+      <!-- Bento Grid -->
+      <div class="fc-bento-grid" id="fc-bento-grid">
+        
+        <!-- CARD 1: C-Level (Spans 2 columns) -->
+        <div class="fc-bento-card fc-span-2">
+          <div class="fc-card-header">
+            <div class="fc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>
+            </div>
+            <h3 class="fc-card-title">C-Level Executives</h3>
+          </div>
+          <div class="fc-chips-container">
+            <div class="fc-role-chip">Chief Executive Officers</div>
+            <div class="fc-role-chip">Chief Info Security Officers (CISOs)</div>
+            <div class="fc-role-chip">Chief Technology Officers (CTOs)</div>
+            <div class="fc-role-chip">Chief Digital Officers</div>
+            <div class="fc-role-chip">Chief Privacy Officers</div>
+            <div class="fc-role-chip">Chief Risk Officers</div>
+          </div>
+        </div>
+
+        <!-- CARD 2: Policy -->
+        <div class="fc-bento-card fc-span-1">
+          <div class="fc-card-header">
+            <div class="fc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+            </div>
+            <h3 class="fc-card-title">Policy & Governance</h3>
+          </div>
+          <div class="fc-chips-container">
+            <div class="fc-role-chip">Public Policy Makers</div>
+            <div class="fc-role-chip">Gov Advisors & Regulators</div>
+            <div class="fc-role-chip">Think Tanks</div>
+            <div class="fc-role-chip">Digital Governance Experts</div>
+          </div>
+        </div>
+
+        <!-- CARD 3: Cyber Pro -->
+        <div class="fc-bento-card fc-span-1">
+          <div class="fc-card-header">
+            <div class="fc-card-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <h3 class="fc-card-title">Cybersecurity & DFIR</h3>
+          </div>
+          <div class="fc-chips-container">
+            <div class="fc-role-chip">Heads of InfoSec</div>
+            <div class="fc-role-chip">Digital Forensics Experts</div>
+            <div class="fc-role-chip">Threat Intel Analysts</div>
+            <div class="fc-role-chip">SOC & Security Teams</div>
+            <div class="fc-role-chip">Malware Analysts</div>
+          </div>
+        </div>
+
+        <!-- CARD 4: Gov & Law (Spans 2 columns) -->
+        <div class="fc-bento-card fc-span-2">
+          <div class="fc-card-header">
+            <div class="fc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <h3 class="fc-card-title">Government & Law Enforcement</h3>
+          </div>
+          <div class="fc-chips-container">
+            <div class="fc-role-chip">Cybercrime Police Units</div>
+            <div class="fc-role-chip">Law Enforcement Agencies</div>
+            <div class="fc-role-chip">National Security Officials</div>
+            <div class="fc-role-chip">Defence Cyber Units</div>
+            <div class="fc-role-chip">Investigation Agencies</div>
+          </div>
+        </div>
+
+        <!-- CARD 5: FinCrime -->
+        <div class="fc-bento-card fc-span-1">
+          <div class="fc-card-header">
+            <div class="fc-card-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <h3 class="fc-card-title">Financial Crime</h3>
+          </div>
+          <div class="fc-chips-container">
+            <div class="fc-role-chip">FinCrime Investigators</div>
+            <div class="fc-role-chip">Fraud Risk Professionals</div>
+            <div class="fc-role-chip">AML & Compliance</div>
+            <div class="fc-role-chip">Banking Security Teams</div>
+            <div class="fc-role-chip">Crypto Investigators</div>
+          </div>
+        </div>
+
+        <!-- CARD 6: Tech & Innovation -->
+        <div class="fc-bento-card fc-span-1">
+          <div class="fc-card-header">
+            <div class="fc-card-icon">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+            <h3 class="fc-card-title">Technology & Innovation</h3>
+          </div>
+          <div class="fc-chips-container">
+            <div class="fc-role-chip">AI Security Researchers</div>
+            <div class="fc-role-chip">Technology Architects</div>
+            <div class="fc-role-chip">Cyber Consultants</div>
+            <div class="fc-role-chip">Digital Transformation</div>
+            <div class="fc-role-chip">Product Developers</div>
+          </div>
+        </div>
+
+        <!-- CARD 7: Academia -->
+        <div class="fc-bento-card fc-span-1">
+          <div class="fc-card-header">
+            <div class="fc-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M2 17l10 5 10-5M2 12l10 5 10-5M12 2L2 7l10 5 10-5-10-5z"></path></svg>
+            </div>
+            <h3 class="fc-card-title">Academia & Research</h3>
+          </div>
+          <div class="fc-chips-container">
+            <div class="fc-role-chip">Security Researchers</div>
+            <div class="fc-role-chip">Academic Leaders</div>
+            <div class="fc-role-chip">Scholars & Professors</div>
+            <div class="fc-role-chip">Cybersecurity Students</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
 
 
     <div id="summit-app-root">
@@ -647,59 +970,6 @@ html.lenis, html.lenis body {
         </div>
     </section>
 </div>
-
- <!-- ==========================================================================
-         CONTACT & MAP SECTION
-         ========================================================================== -->
-    <div class="ai-summit-contact-widget">
-        <!-- Background Map -->
-        <div class="ai-contact-map-container">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224346.54005086885!2d77.0441712411966!3d28.52725273760361!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x37205b715389640!2sDelhi%2C%20India!5e0!3m2!1sen!2sus!4v1698765432109!5m2!1sen!2sus" 
-                allowfullscreen="" 
-                loading="lazy">
-            </iframe>
-        </div>
-
-        <!-- Overlapping Info Container -->
-        <div class="ai-contact-form-wrapper">
-            <h2 class="ai-contact-title">Venue & Contact Details</h2>
-            
-            <!-- Side by Side Images -->
-            <div class="ai-contact-images">
-                <div class="ai-contact-img-box">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800" alt="Venue Exterior">
-                </div>
-                <div class="ai-contact-img-box">
-                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800" alt="Networking Lounge">
-                </div>
-            </div>
-
-            <!-- Address and Contact info below -->
-            <div class="ai-contact-details">
-                <div class="ai-cd-item">
-                    <div class="ai-cd-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    </div>
-                    <div class="ai-cd-text">
-                        <h4>Summit Venue</h4>
-                        <p>The Global Innovation Center<br>123 Future Avenue, Sector 5<br>New Delhi, India 110001</p>
-                    </div>
-                </div>
-
-                <div class="ai-cd-item">
-                    <div class="ai-cd-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    </div>
-                    <div class="ai-cd-text">
-                        <h4>Help Desk</h4>
-                        <p>Support: +91 987 654 3210<br>Email: info@summit2026.ai<br>24/7 Concierge: Level 1 Lobby</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 <globe-section></globe-section>
 
@@ -1348,97 +1618,7 @@ largest conference focused on tackling technology-driven crime.
     </section>
 
      <!-- About Section Start -->
-    <section class="about-section fix">
-        <div class="about-wrapper section-padding">
-            <div class="container">
-                <div
-                    class="row flex-row-reverse justify-content-lg-between justify-content-center g-4 align-items-center">
-                    <div class="col-xl-5 col-lg-7">
-                        <div class="about-content">
-                            <div class="section-title text-lg-start text-center mb-4">
-                                <span class="sub-badge p1-clr fw-semibold fs-seven text-uppercase d-block mb-3">
-                                    KNOW ABOUT OUR FCRF
-                                </span>
-                                <h2 class="mb-xxl-4 mb-3 wow fadeInUp black fw-bold visible-slowly-right"
-                                    data-wow-delay=".3s">
-                                    Researching Tomorrow’s Threats, Securing Today
-                                </h2>
-                                <p class="pra fs-seven">
-                                    Future Crime Research Foundation (FCRF) is an IIT Kanpur–incubated AIIDE-CoE Start-Up 
-                                    (Non-Profit NGO) dedicated to advancing India’s cybersecurity and digital-risk ecosystem.
-We specialise in Cyber Security, Digital Crime, Fraud Risk Management, Cyber Laws, Cyber Forensics, and Policy Research.<br><br>
 
-FCRF is registered under Section 8 of the Companies Act, 2013 and Section 12A & 80G of the Income Tax Act, 1961.
-                                </p>
-                            </div>
-                            <div
-                                class="about-information d-grid justify-content-lg-start justify-content-center  gap-xl-3 gap-3 white-bg">
-                                <div class="about-info d-flex align-items-start gap-lg-3 gap-2">
-                                    <div class="icon d-center white-bg">
-                                        <svg width="18" height="22" viewBox="0 0 18 22" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M9.00172 21.7501C8.40172 21.7501 7.81172 21.6101 7.33172 21.3401L2.60172 18.6101C0.641719 17.2901 0.511719 17.0501 0.511719 14.9801V10.0201C0.511719 7.95006 0.641719 7.71006 2.56172 6.42006L7.34172 3.66006C8.29172 3.11006 9.72172 3.11006 10.6717 3.66006L15.4017 6.39006C17.3617 7.71006 17.4917 7.95006 17.4917 10.0201V14.9801C17.4917 17.0501 17.3617 17.2901 15.4417 18.5801L10.6617 21.3401C10.1917 21.6201 9.59172 21.7501 9.00172 21.7501ZM9.00172 4.75006C8.66172 4.75006 8.32172 4.82006 8.08172 4.96006L3.35172 7.69006C2.01172 8.60006 2.01172 8.60006 2.01172 10.0201V14.9801C2.01172 16.4001 2.01172 16.4001 3.40172 17.3401L8.09172 20.0401C8.57172 20.3201 9.44172 20.3201 9.92172 20.0401L14.6517 17.3101C15.9917 16.4001 15.9917 16.4001 15.9917 14.9801V10.0201C15.9917 8.60006 15.9917 8.60006 14.6017 7.66006L9.91172 4.96006C9.68172 4.82006 9.34172 4.75006 9.00172 4.75006Z"
-                                                fill="#5135FF" />
-                                            <path
-                                                d="M14.5 7.38C14.09 7.38 13.75 7.04 13.75 6.63V4C13.75 2.42 13.08 1.75 11.5 1.75H6.5C4.92 1.75 4.25 2.42 4.25 4V6.56C4.25 6.97 3.91 7.31 3.5 7.31C3.09 7.31 2.75 6.98 2.75 6.56V4C2.75 1.58 4.08 0.25 6.5 0.25H11.5C13.92 0.25 15.25 1.58 15.25 4V6.63C15.25 7.04 14.91 7.38 14.5 7.38Z"
-                                                fill="#5135FF" />
-                                            <path
-                                                d="M10.6283 16.6301C10.4183 16.6301 10.1983 16.5901 9.97828 16.5001L8.99828 16.1201L8.01828 16.5101C7.48828 16.7201 6.94828 16.6701 6.54828 16.3801C6.14828 16.0901 5.93828 15.5901 5.96828 15.0201L6.02828 13.9701L5.35828 13.1601C4.99828 12.7101 4.87828 12.1901 5.03828 11.7101C5.18828 11.2401 5.59828 10.8801 6.14828 10.7401L7.16828 10.4801L7.73828 9.59012C8.34828 8.63012 9.65828 8.63012 10.2683 9.59012L10.8383 10.4801L11.8583 10.7401C12.4083 10.8801 12.8183 11.2401 12.9683 11.7101C13.1183 12.1801 12.9983 12.7101 12.6383 13.1501L11.9683 13.9601L12.0283 15.0101C12.0583 15.5801 11.8483 16.0701 11.4483 16.3701C11.2083 16.5401 10.9283 16.6301 10.6283 16.6301ZM6.51828 12.2001L7.18828 13.0101C7.41828 13.2801 7.54828 13.7101 7.52828 14.0601L7.46828 15.1101L8.44828 14.7201C8.77828 14.5901 9.21828 14.5901 9.54828 14.7201L10.5283 15.1101L10.4683 14.0601C10.4483 13.7101 10.5783 13.2901 10.8083 13.0101L11.4783 12.2001L10.4583 11.9401C10.1183 11.8501 9.75828 11.5901 9.56828 11.3001L9.00828 10.4201L8.43828 11.3001C8.24828 11.6001 7.88828 11.8601 7.54828 11.9501L6.51828 12.2001Z"
-                                                fill="#5135FF" />
-                                        </svg>
-                                    </div>
-                                    <div class="cont">
-                                        <h4 class="black fs-six mb-1 fw-bold">Leadership in Cyber Innovation</h4>
-                                        <p class="fs-seven pra">
-                                           Fully committed to strengthening India’s digital future through research, training, capacity-building, and national-level collaborations.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul class="about-list d-grid justify-content-center justify-content-lg-start gap-1">
-                                <li class="d-flex align-items-center gap-2">
-                                    <span class="icon d-center"><i class="fa-solid fa-check p1-clr fs-eight"></i></span>
-                                    <p class="fw-semibold black">Turning complex cyber challenges into actionable intelligence for India’s digital safety.</p>
-                                </li>
-                                <li class="d-flex align-items-center gap-2">
-                                    <span class="icon d-center"><i class="fa-solid fa-check p1-clr fs-eight"></i></span>
-                                    <p class="fw-semibold black">Transforming cybersecurity awareness into resilience, readiness, and national capability.</p>
-                                </li>
-                            </ul>
-                            <div
-                                class="d-flex flex-sm-nowrap flex-wrap justify-content-lg-start justify-content-center align-items-center gap-xxl-4 gap-xl-3 gap-2">
-                                <div class="">
-                                    <a href="about.html"
-                                        class="common-btn box-style cmn-style1 box-bg w-100 white d-inline-flex justify-content-center align-items-center gap-xxl-2 gap-2 overflow-hidden rounded-5">
-                                        Discover More
-                                    </a>
-                                </div>
-                                <div class="about-call d-flex align-items-center gap-3">
-                                    <div class="icon bg-color d-center rounded-circle">
-                                        <i class="fa-solid fa-phone-volume fs-six p1-clr"></i>
-                                    </div>
-                                    <div class="cont">
-                                        <span class="fs-seven pra d-block">Call us free</span>
-                                        <a href="#0" class="fs-six black fw-semibold">
-                                            +91 93055 05449
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-5">
-                        <div class="about-thumb position-relative reveal-left w-100">
-                            <img src="assets/img/about/about-1.webp" alt="img" class="w-100">
-                            <!-- Ele -->
-                            <img src="assets/img/element/dot-grp1.webp" alt="img" class="about-ele">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
           <!-- BUTTON HTML -->
     <button id="scrollUpBtn" aria-label="Scroll to top">
@@ -2239,6 +2419,12 @@ class GlobeSection extends HTMLElement {
 
 customElements.define('globe-section', GlobeSection);
 </script>
+<!-- <script>
+function showLocationAlert(){
+  alert("Opening location on Google Maps 📍");
+}
+</script> -->
+
 </body>
 
 </html>
