@@ -361,3 +361,45 @@
         }
       });
     })();
+
+
+
+    // count down 
+
+      document.addEventListener('DOMContentLoaded', () => {
+            // Set the target date for the launch
+            const targetDate = new Date("October 1, 2026 00:00:00").getTime();
+
+            const elDays = document.getElementById("ai-cd-days");
+            const elHours = document.getElementById("ai-cd-hours");
+            const elMinutes = document.getElementById("ai-cd-minutes");
+            const elSeconds = document.getElementById("ai-cd-seconds");
+
+            const updateTimer = () => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    elDays.innerText = "00";
+                    elHours.innerText = "00";
+                    elMinutes.innerText = "00";
+                    elSeconds.innerText = "00";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Update UI with padded numbers (e.g., "04" instead of "4")
+                elDays.innerText = days.toString().padStart(2, '0');
+                elHours.innerText = hours.toString().padStart(2, '0');
+                elMinutes.innerText = minutes.toString().padStart(2, '0');
+                elSeconds.innerText = seconds.toString().padStart(2, '0');
+            };
+
+            // Initialize immediately and update every second
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        });

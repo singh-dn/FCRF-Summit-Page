@@ -31,11 +31,14 @@
       margin-bottom: 0; 
       white-space: nowrap; /* Prevents text from breaking */
     }
-    .mil-h3 {
-      font-size: 2.5rem;
-      font-weight: 700;
+.mil-h3 {
+      font-family: 'Aquire', sans-serif !important; /* Added Aquire font */
+      font-size: 1.5rem;           /* Increased text size (was 2.5rem) */
+      font-weight: 900 !important; /* Made it maximum bold (was 700) */
+      letter-spacing: -0.02em;     /* Lowered the spacing (was 0.05em) */
+      
+      /* Kept your original settings below */
       text-transform: uppercase;
-      letter-spacing: 0.05em;
       line-height: 1.2;
       padding: 0.1em 0; 
     }
@@ -175,11 +178,11 @@
     #fc-hero-module .fc-slide-overlay-tint { position: absolute; inset: 0; mix-blend-mode: multiply; }
     #fc-hero-module .fc-slide-overlay-grad { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 50%), linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 40%, rgba(0,0,0,0.85) 100%); }
     
-    #fc-hero-module .fc-dots-container { position: absolute; z-index: 40; display: flex; gap: 1rem; right: 2rem; top: 50%; transform: translateY(-50%); flex-direction: column; }
+    /* #fc-hero-module .fc-dots-container { position: absolute; z-index: 40; display: flex; gap: 1rem; right: 2rem; top: 50%; transform: translateY(-50%); flex-direction: column; }
     #fc-hero-module .fc-dot-btn { background: transparent; border: none; cursor: pointer; width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center; }
     #fc-hero-module .fc-dot-strong { display: block; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.8); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background: transparent; width: 0.5rem; height: 0.5rem; }
     #fc-hero-module .fc-dot-btn:hover .fc-dot-strong:not(.fc-active) { background: rgba(255, 255, 255, 0.5); }
-    #fc-hero-module .fc-dot-strong.fc-active { width: 0.75rem; height: 0.75rem; background: white; }
+    #fc-hero-module .fc-dot-strong.fc-active { width: 0.75rem; height: 0.75rem; background: white; } */
 
     /* ==========================================================================
        NEW LAYOUT: CENTERED CONTENT + MASSIVE BOTTOM TEXT
@@ -267,15 +270,20 @@
     }
 
     /* 2. Massive Full-Width Bottom Text */
-    #fc-hero-module .fc-massive-bottom-text {
+#fc-hero-module .fc-massive-bottom-text {
       position: absolute;
       bottom: -0.5vw; /* Flushed perfectly to the bottom edge */
       left: 0;
       width: 100%;
       text-align: center;
-      font-family: Impact, "Arial Narrow", sans-serif;
-      font-size: 8.2vw; 
-      letter-spacing: 0.02em;
+      font-family: 'Aquire', sans-serif !important;
+      
+      /* --- YOUR NEW CHANGES HERE --- */
+      font-size: 7.2vw;             /* Increased text size */
+      font-weight: 900 !important; /* Made it bold */
+      letter-spacing: -0.05em;     /* Lowered the spacing between letters */
+      /* ----------------------------- */
+
       line-height: 1;
       white-space: nowrap;
       text-transform: uppercase;
@@ -335,7 +343,7 @@
 
       /* Massive Bottom Text Mobile Adjustment */
       #fc-hero-module .fc-massive-bottom-text {
-        font-size: 8.5vw; 
+        font-size: 7.2vw; 
         -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.4); /* Thinner stroke for mobile */
       }
     }
@@ -1262,10 +1270,10 @@
         /* RESPONSIVE BREAKPOINTS */
         @media (min-width: 768px) {
             #summit-app-root .ss-venue-images {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(1, 1fr);
             }
             #summit-app-root .ss-info-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(1, 1fr);
             }
         }
 
@@ -1508,6 +1516,9 @@
        ISOLATED CSS SCOPE (#fc-fcrf-module)
        ========================================================================== */
     
+         /* Import Aquire Font */
+    @import url('https://fonts.cdnfonts.com/css/aquire');
+
     /* Module Reset & Base Styles */
     #fc-fcrf-module {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -1629,7 +1640,7 @@
 
     .fc-letter {
       font-size: clamp(5rem, 20vw, 18rem);
-      font-family: Impact, "Arial Narrow", sans-serif;
+      font-family: 'Aquire', sans-serif;
       font-weight: 900;
       line-height: 1;
       padding: 0.1em;
@@ -1837,7 +1848,7 @@
     #fc-attendees-module *::after {
       box-sizing: border-box;
       margin: 0;
-      padding: 0;
+      padding: 1.6px;
     }
 
     .fc-attendees-container {
@@ -2066,3 +2077,244 @@
         padding: 0.5rem 0.9rem;
       }
     }
+
+
+
+    /* count down timer  */
+
+      /* ==========================================================================
+           ISOLATED SCOPE: Scoped to .ai-coming-soon-widget
+           ========================================================================== */
+        
+        /* Container used just for previewing the card on a page */
+        .page-preview-wrapper {
+            background-color: #ffffff;
+            /* min-height: 100vh; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .ai-coming-soon-widget {
+            /* Brand Variables matching your theme */
+            --bg-gradient: linear-gradient(135deg, #5135FF 0%, #FF5455 100%);
+            --brand-gradient: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+            --text-dark: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.9);
+            --text-bg: rgba(255, 255, 255, 0.15);
+            --white: #ffffff;
+            
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            
+            /* Card/Cart Sizing strictly set to 1300 x 521 for Desktop */
+            width: 100%;
+            max-width: 1300px;
+            height: 521px; 
+            border-radius: 32px;
+            box-shadow: 0 30px 60px rgba(81, 53, 255, 0.15);
+            
+            background: var(--bg-gradient);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: 40px 20px;
+        }
+
+        .ai-coming-soon-widget *,
+        .ai-coming-soon-widget *::before,
+        .ai-coming-soon-widget *::after {
+            box-sizing: inherit;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- BACKGROUND MASSIVE TEXT --- */
+        .ai-cs-bg-text {
+            position: absolute;
+            bottom: -5%; /* Clips at the bottom like the image */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(8rem, 19vw, 14rem);
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--text-bg);
+            white-space: nowrap;
+            line-height: 0.8;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+            letter-spacing: -0.02em;
+        }
+
+        /* --- MAIN CONTENT CONTAINER --- */
+        .ai-cs-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* --- SPONSOR PARTNERS SECTION --- */
+        .ai-cs-sponsors {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .ai-cs-sponsors small {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 700;
+        }
+
+        .ai-cs-sponsor-logos {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            opacity: 0.9;
+        }
+
+        .ai-cs-sponsor-logos img {
+            max-height: 35px; /* Restrict height to keep it elegant */
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .ai-cs-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            font-weight: 300;
+            color: var(--text-muted);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.4;
+            margin-bottom: 35px;
+        }
+
+        /* --- COUNTDOWN TIMER GRID --- */
+        .ai-cs-timer-wrapper {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+            gap: 10px 15px;
+            align-items: start;
+            width: 100%;
+            margin-bottom: 45px;
+        }
+
+        /* Numbers */
+        .ai-cs-num {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 500;
+            color: var(--text-dark);
+            text-align: center;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.02em;
+        }
+
+        /* Colons */
+        .ai-cs-colon {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 500;
+            color: var(--text-dark);
+            line-height: 1;
+            transform: translateY(-5%);
+            user-select: none;
+        }
+
+        /* Labels (Days, Hours, etc.) */
+        .ai-cs-label {
+            font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+            font-weight: 300;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Empty grid cells under colons */
+        .ai-cs-spacer {
+            display: block;
+        }
+
+        /* --- JOIN BUTTON --- */
+        .ai-cs-btn {
+            background: var(--white);
+            color: #5135FF;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.95rem;
+            padding: 14px 56px;
+            border-radius: 100px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .ai-cs-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            color: #FF5455;
+        }
+
+        /* --- FOOTER --- */
+        .ai-cs-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            z-index: 2;
+        }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            .ai-coming-soon-widget {
+                /* Let it shrink naturally on mobile to save space */
+                height: auto;
+                min-height: auto; 
+                padding: 50px 20px 60px; /* Tighter padding */
+                border-radius: 20px;
+            }
+            .ai-cs-bg-text {
+                font-size: clamp(5rem, 15vw, 10rem); /* Smaller background text */
+                bottom: 0;
+            }
+            .ai-cs-sponsor-logos img {
+                max-height: 25px; /* Smaller sponsor image on mobile */
+            }
+            .ai-cs-subtitle {
+                margin-bottom: 25px;
+            }
+            .ai-cs-timer-wrapper {
+                gap: 8px 5px;
+                margin-bottom: 30px;
+            }
+            .ai-cs-num, .ai-cs-colon {
+                font-size: clamp(2rem, 8vw, 3.5rem); /* Scaled down timer */
+            }
+            .ai-cs-label {
+                margin-top: 5px;
+                font-size: 0.7rem;
+            }
+            .ai-cs-btn {
+                padding: 12px 40px;
+                font-size: 0.9rem;
+            }
+        }
