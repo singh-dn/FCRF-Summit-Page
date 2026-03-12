@@ -403,3 +403,89 @@
             updateTimer();
             setInterval(updateTimer, 1000);
         });
+
+
+
+        // galary js 
+
+
+          document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Define the Data Array (Included Lucide-style SVG icons)
+            const options = [
+                {
+                    title: "Luxury Tent",
+                    description: "Cozy glamping under the stars",
+                    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+                    icon: `<svg class="is-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M12 3v18"/><path d="m3 21 9-18 9 18"/><path d="m12 9-4.5 12"/><path d="m12 9 4.5 12"/></svg>`
+                },
+                {
+                    title: "Campfire Feast",
+                    description: "Gourmet s'mores & stories",
+                    image: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80",
+                    icon: `<svg class="is-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`
+                },
+                {
+                    title: "Lakeside Retreat",
+                    description: "Private dock & canoe rides",
+                    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+                    icon: `<svg class="is-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>`
+                },
+                {
+                    title: "Mountain Spa",
+                    description: "Outdoor sauna & hot tub",
+                    image: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80",
+                    icon: `<svg class="is-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M20 12v3a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6v-3"/><path d="M10 5v2"/><path d="M14 4v3"/><path d="M6 6v1"/></svg>`
+                },
+                {
+                    title: "Guided Adventure",
+                    description: "Expert-led nature tours",
+                    image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=80",
+                    icon: `<svg class="is-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>`
+                }
+            ];
+
+            const container = document.getElementById('is-gallery-container');
+            let activeIndex = 0; // First item active by default
+
+            // 2. Generate HTML for Cards
+            options.forEach((option, index) => {
+                const card = document.createElement('div');
+                card.className = `is-card ${index === activeIndex ? 'active' : ''}`;
+                card.style.backgroundImage = `url('${option.image}')`;
+                card.dataset.index = index;
+
+                card.innerHTML = `
+                    <div class="is-card-shadow"></div>
+                    <div class="is-card-content">
+                        <div class="is-icon">${option.icon}</div>
+                        <div class="is-text-wrap">
+                            <div class="is-title">${option.title}</div>
+                            <div class="is-desc">${option.description}</div>
+                        </div>
+                    </div>
+                `;
+
+                // Add Click Event Listener
+                card.addEventListener('click', () => {
+                    if (activeIndex === index) return;
+                    
+                    // Remove active class from old
+                    container.children[activeIndex].classList.remove('active');
+                    
+                    // Update index and add active class to new
+                    activeIndex = index;
+                    card.classList.add('active');
+                });
+
+                container.appendChild(card);
+            });
+
+            // 3. Staggered Entrance Animation
+            const cards = container.querySelectorAll('.is-card');
+            cards.forEach((card, i) => {
+                setTimeout(() => {
+                    card.classList.add('entered');
+                }, 180 * i); // 180ms delay between each card matching the React code
+            });
+        });
