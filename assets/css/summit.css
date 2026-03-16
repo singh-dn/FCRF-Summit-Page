@@ -1054,7 +1054,7 @@
         /* --- SHADOW HEADLINE STYLING --- */
         #summit-app-root .ss-section-header {
             position: relative;
-            padding: 120px 0 60px;
+            padding: 110px 0 10px;
             margin-bottom: 20px;
             display: flex;
             flex-direction: column;
@@ -1069,7 +1069,26 @@
             top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: clamp(5rem, 15vw, 12rem);
+            font-size: clamp(4.5rem, 15vw, 12rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+            -webkit-text-stroke: 1.5px rgba(15, 23, 42, 0.1); 
+            color: transparent;
+            display: block;
+            opacity: 0.8;
+            padding-bottom: 35px;
+        }
+        #summit-app-root .ss-shadow-text1 {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(3.5rem, 15vw, 12rem);
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.1em;

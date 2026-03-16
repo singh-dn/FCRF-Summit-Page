@@ -1,52 +1,112 @@
   const scheduleData = {
-            1: {
-                date: "Saturday, Oct 24, 2026",
-                sessions: [
-                    {
-                        time: "09:00 AM",
-                        location: "Hall of Vision",
-                        title: "Opening Keynote: The Intelligence Revolution",
-                        description: "Kick off the event with an insightful overview of where artificial intelligence is headed. We explore breakthroughs, global shifts, and the ethics of AGI.",
-                        type: "Keynote",
-                        speakers: [{ name: "Dr. Sarah Chen", role: "Chief Scientist, NeuralPath", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop" }]
-                    },
-                    {
-                        time: "11:00 AM",
-                        location: "Workshop Room B",
-                        title: "Building Human-Centered AI Products",
-                        description: "This session covers how to design AI solutions that prioritize usability, fairness, and real-world impact. Hands-on UX exercises included.",
-                        type: "Workshop",
-                        speakers: [{ name: "Marcus Thorne", role: "Product Lead, Google", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" }]
-                    }
-                ]
+           1: {
+        date: "Day 1",
+        sessions: [
+            {
+                time: "11:30 AM - 12:30 PM",
+                location: "Main Conference Hall",
+                title: "National Cyber Security: Policy, Preparedness and AI-Enabled Threats",
+                description: "Discussion on national cybersecurity strategy, AI-enabled threats, and policy preparedness.",
+                type: "Conference Session",
+                speakers: []
             },
-            2: {
-                date: "Sunday, Oct 25, 2026",
-                sessions: [
-                    {
-                        time: "10:00 AM",
-                        location: "Security Hub",
-                        title: "Fortifying Trust: Cybersecurity in AI",
-                        description: "Building India's cybersecurity resilience in the generative AI age. Understanding threat exposure and continuous management.",
-                        type: "Core Session",
-                        speakers: [{ name: "Dev Singh", role: "Security Architect", img: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop" }]
-                    }
-                ]
+            {
+                time: "2:15 PM - 3:00 PM",
+                location: "Main Conference Hall",
+                title: "Digital Forensics and Cyber Investigations",
+                description: "Tracing criminals in a borderless digital ecosystem using modern digital forensics techniques.",
+                type: "Conference Session",
+                speakers: []
             },
-            3: {
-                date: "Monday, Oct 26, 2026",
-                sessions: [
-                    {
-                        time: "02:00 PM",
-                        location: "Main Stage",
-                        title: "AI Policy & Global Regulation",
-                        description: "Learn how nations and organizations are approaching AI governance, including frameworks for data privacy and accountability.",
-                        type: "Panel",
-                        speakers: [{ name: "Sonia Ghandi", role: "Policy Advisor, UN", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop" }]
-                    }
-                ]
+            {
+                time: "3:00 PM - 3:45 PM",
+                location: "Main Conference Hall",
+                title: "Securing Critical Infrastructure",
+                description: "Cyber resilience strategies for protecting essential national services and infrastructure.",
+                type: "Conference Session",
+                speakers: []
+            },
+            {
+                time: "3:45 PM - 4:30 PM",
+                location: "Main Conference Hall",
+                title: "Blockchain, Cryptocurrency and Web3 Investigations",
+                description: "Investigating crypto-related crimes and challenges in decentralized ecosystems.",
+                type: "Conference Session",
+                speakers: []
+            },
+            {
+                time: "4:30 PM - 5:15 PM",
+                location: "Main Conference Hall",
+                title: "Securing the Internet of Things",
+                description: "Security risks and protection strategies for IoT, smart devices, and connected ecosystems.",
+                type: "Conference Session",
+                speakers: []
             }
-        };
+        ]
+    },
+
+    2: {
+        date: "Day 2",
+        sessions: [
+            {
+                time: "10:00 AM - 10:45 AM",
+                location: "Main Conference Hall",
+                title: "Combating Digital Threats",
+                description: "Addressing sextortion, digital arrest scams, identity fraud and AI-driven deception.",
+                type: "Conference Session",
+                speakers: []
+            },
+            {
+                time: "11:30 AM - 12:15 PM",
+                location: "Main Conference Hall",
+                title: "BFSI Crime in 2026",
+                description: "Financial frauds, payment abuse and trust exploitation in the banking ecosystem.",
+                type: "Conference Session",
+                speakers: []
+            },
+            {
+                time: "12:15 PM - 1:00 PM",
+                location: "Main Conference Hall",
+                title: "Fighting Ransomware, Malware and Data Breaches",
+                description: "Strategies for prevention, detection and response to modern cyber attacks.",
+                type: "Conference Session",
+                speakers: []
+            },
+            {
+                time: "2:00 PM - 2:30 PM",
+                location: "Main Conference Hall",
+                title: "CISO Forum",
+                description: "Governance, crisis readiness and securing the AI-enabled enterprise.",
+                type: "Panel",
+                speakers: []
+            },
+            {
+                time: "2:30 PM - 3:00 PM",
+                location: "Main Conference Hall",
+                title: "Synthetic Threats",
+                description: "Deepfakes, voice cloning and AI-generated scams in the modern threat landscape.",
+                type: "Conference Session",
+                speakers: []
+            },
+            {
+                time: "3:00 PM - 3:30 PM",
+                location: "Main Conference Hall",
+                title: "Combating CSAM and Online Abuse",
+                description: "Addressing online harms and protecting digital communities.",
+                type: "Conference Session",
+                speakers: []
+            },
+            {
+                time: "3:30 PM - 4:00 PM",
+                location: "Main Conference Hall",
+                title: "Privacy, Data Protection and Compliance",
+                description: "Understanding DPDP, IT Act regulations and the future of responsible innovation.",
+                type: "Conference Session",
+                speakers: []
+            }
+        ]
+    }
+};
 
         function switchDay(day) {
             // UI Update: Active Tab
@@ -67,10 +127,6 @@
 
                 const speakerHTML = session.speakers.map(s => `
                     <div class="ss-speaker-item">
-                        <div class="ss-avatar-wrap">
-                            <img src="${s.img}" class="ss-avatar">
-                            <div class="ss-status-dot"></div>
-                        </div>
                         <div class="ss-speaker-info">
                             <h4>${s.name}</h4>
                             <p>${s.role}</p>

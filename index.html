@@ -3,16 +3,75 @@
 <!--<< Header Area >>-->
 
 <head>
-    <!-- ========== Meta Tags ========== -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="authorName">
-    <meta name="description" content="FutureCrime Research Foundation">
-    <!-- ======== Page title ============ -->
-    <title>Summit | FCRF</title>
+<!-- ========== Meta Tags ========== -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="FutureCrime Research Foundation">
+
+<!-- ================== Primary SEO ================== -->
+
+<title>FutureCrime Summit 2026 | Cybercrime, AI, DFIR & National Security</title>
+
+<meta name="description" content="FutureCrime Summit 2026 is India’s premier platform on cyber security, cybercrime investigation, artificial intelligence threats, digital forensics, cyber law, fraud prevention and national security. Join global experts, investigators, policymakers and industry leaders shaping the future of cyber defense.">
+
+<meta name="keywords" content="FutureCrime Summit, Cyber Security Conference India, Cybercrime Summit 2026, Digital Forensics Conference, DFIR Summit, AI Security Conference, Cyber Law India, Fraud Prevention Summit, National Security Cyber Conference">
+
+<meta name="robots" content="index, follow">
+
+<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+<link rel="canonical" href="https://summit.futurecrime.org/">
+
+<!-- ================== Favicon ================== -->
+<link rel="shortcut icon" href="assets/img/logo/favs.jpeg">
+
+<!-- ================== Open Graph (LinkedIn / WhatsApp / Facebook) ================== -->
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="FutureCrime Summit 2026 | Cybercrime, AI, DFIR & National Security">
+<meta property="og:description" content="India’s premier summit on cyber security, digital forensics, AI threats, cyber law and national security hosted by FutureCrime Research Foundation.">
+<meta property="og:url" content="https://summit.futurecrime.org">
+<meta property="og:image" content="https://summit.futurecrime.org/assets/img/og/summit-og.png">
+<meta property="og:site_name" content="FutureCrime Summit 2026">
+
+<!-- ================== Twitter Preview ================== -->
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FutureCrime Summit 2026 | Cybercrime & AI Security">
+<meta name="twitter:description" content="India’s leading summit on cybercrime investigation, AI threats, digital forensics and national security.">
+<meta name="twitter:image" content="https://summit.futurecrime.org/assets/img/og/summit-og.png">
+
+<!-- ================== Structured Data (Google Event SEO) ================== -->
+
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Event",
+ "name": "FutureCrime Summit 2026",
+ "description": "India’s premier summit on cyber security, cybercrime investigation, artificial intelligence threats, digital forensics, fraud prevention and national security.",
+ "startDate": "2026-10-24",
+ "endDate": "2026-10-25",
+ "eventStatus": "https://schema.org/EventScheduled",
+ "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+ "location": {
+   "@type": "Place",
+   "name": "FutureCrime Summit Venue",
+   "address": {
+     "@type": "PostalAddress",
+     "addressCountry": "India"
+   }
+ },
+ "organizer": {
+   "@type": "Organization",
+   "name": "FutureCrime Research Foundation",
+   "url": "https://futurecrime.org"
+ }
+}
+</script>
     <!--<< Favcion >>-->
-    <link rel="shortcut icon" href="assets/img/logo/favs.png">
+    <!-- <link rel="shortcut icon" href="assets/img/logo/favs.jpeg"> -->
     <!--<< Bootstrap min.css >>-->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.0.1">
     <!--<< All Min Css >>-->
@@ -36,7 +95,7 @@
 
     <link href="https://fonts.cdnfonts.com/css/aquire" rel="stylesheet">
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
          /* ================= SMOOTH SCROLL CSS (LENIS) ================= */
@@ -61,13 +120,9 @@ html.lenis, html.lenis body {
 }
 
     </style>
-
-
 </head>
 
 <body>
-
-
     <!-- Start Cursor Pointer -->
     <div class="mouse-follower">
         <span class="cursor-outline"></span>
@@ -192,9 +247,9 @@ html.lenis, html.lenis body {
         </div>
 
         <!-- NEW FULL-WIDTH BOTTOM TEXT -->
-        <div class="fc-massive-bottom-text">
+        <!-- <div class="fc-massive-bottom-text">
           FUTURECRIME SUMMIT 2026
-        </div>
+        </div> -->
 
       </section>
     </div>
@@ -635,11 +690,11 @@ FCRF is registered under Section 8 of the Companies Act, 2013 and Section 12A & 
                 <div class="ss-tab-date">Oct 25</div>
                 <small class="ss-tab-sub">Security</small>
             </button>
-            <button onclick="switchDay(3)" id="btn-day-3" class="ss-day-tab">
+            <!-- <button onclick="switchDay(3)" id="btn-day-3" class="ss-day-tab">
                 <small class="ss-tab-sub">Day 03</small>
                 <div class="ss-tab-date">Oct 26</div>
                 <small class="ss-tab-sub">Cloud</small>
-            </button>
+            </button> -->
         </nav>
 
         <!-- Current Date Indicator -->
@@ -843,7 +898,7 @@ FCRF is registered under Section 8 of the Companies Act, 2013 and Section 12A & 
         <div class="ss-container">
             <!-- Section Header -->
             <div class="ss-section-header">
-                <div class="ss-shadow-text">LOCATION</div>
+                <div class="ss-shadow-text1">LOCATION</div>
                 <div class="ss-header-content">
                     <div class="ss-header-accent-line"></div>
                     <h2 class="ss-header-title">
@@ -858,8 +913,8 @@ FCRF is registered under Section 8 of the Companies Act, 2013 and Section 12A & 
                 <a href="https://www.google.com/maps?q=Dr+Ambedkar+International+Centre+Delhi" target="_blank" class="ss-image-card">
                     <img src="assets/img/watch/aic.webp" alt="Innovation Hall">
                     <div class="ss-image-overlay">
-                        <div class="ss-overlay-tag">Convention Center</div>
-                        <strong class="ss-overlay-title">Global Innovation Hall</strong>
+                        <div class="ss-overlay-tag">Conference center in New Delhi</div>
+                        <strong class="ss-overlay-title">Dr Ambedkar International Centre</strong>
                         <div class="ss-click-indicator">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                             View on Google Maps
@@ -896,82 +951,7 @@ FCRF is registered under Section 8 of the Companies Act, 2013 and Section 12A & 
     </section>
 </div>
 
-<globe-section></globe-section>
-
-    <!-- studies section  -->
-    <section class="studies-section section-padding1 bg-color fix">
-        <div class="container">
-            <div class="row g-4 justify-content-between align-items-end mb-md-5 mb-4">
-                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8">
-                    <div class="growth-path-item text-md-start text-center">
-                        <div class="section-title">
-                            <span class="sub-badge p1-clr fw-semibold fs-seven text-uppercase d-block mb-3">
-                                FUTURE CRIME SUMMIT 2026
-                            </span>
-                            <h2 class="wow fadeInUp black fw-bold visible-slowly-right" data-wow-delay=".3s">
-                                SUMMIT 2025 success stories.
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="col-lg-3 col-md-4">
-                    <div class="text-md-end text-center">
-                        <a href="portfolio.html"
-                            class="common-btn box-style cmn-style1 d-inline-flex justify-content-center align-items-center gap-xxl-2 gap-2 fs18 fw-semibold black overflow-hidden rounded-5 white-bg border">
-                            See All Works
-                        </a>
-                    </div>
-                </div> -->
-            </div>
-            <div class="row g-lg-4 g-3 mb-sm-5 mb-4">
-                <div class="col-lg-8 col-md-7 wow fadeInUp" data-wow-delay=".3s">
-                    <div class="studies-right-inner h-100 rounded-3 p-xxl-5 p-xl-4 p-3">
-                        <div class="boxes">
-                            <span
-                                class="d-inline-flex align-items-center justify-content-center fs-eight text-uppercase black whitebg rounded-5 py-2 px-4 fw_500">
-                                SUMMIT
-                            </span>
-                            <div class="cont-area d-flex align-items-end justify-content-between">
-                                <div class="cont">
-                                    <span class="d-block fs-seven white mb-md-3 mb-2">14 Feb, 2025</span>
-                                    <h4>
-                                        <a href="blog.html" class="white">
-                                            The <strong>FutureCrime Summit 2025</strong>, organized by the
-<strong>Future Crime Research Foundation (FCRF)</strong>, is India’s
-largest conference focused on tackling technology-driven crime.
-                                        </a>
-                                    </h4>
-                                </div>
-                                <a href="blog.html" class="studies-arrows rounded-circle d-center">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay=".5s">
-                    <div class="studies-right-box p1-bg rounded-3 p-xxl-5 p-xl-4 p-3">
-                        <span class="d-block fs-seven white mb-xxl-4 mb-xl-3 mb-2">14 Feb, 2024</span>
-                        <h4>
-                            <a href="blog.html" class="white">
-                                India’s largest platform dedicated to addressing technology-driven crime.
-                            </a>
-                        </h4>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <span
-                                class="d-inline-flex align-items-center justify-content-center fs-eight text-uppercase black whitebg rounded-5 py-2 px-4 fw_500">
-                                SUMMIT 2024
-                            </span>
-                            <a href="about.html" class="studies-arrows rounded-circle d-center">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-           
-        </div>
-    </section>
+<!-- <globe-section></globe-section> -->
 
       <section class="speakers-section">
         
@@ -2098,7 +2078,6 @@ class GlobeSection extends HTMLElement {
         touch-action: none;
         /* Canvas is sized by JS to fit the right panel */
         max-width: 100%;
-        max-height: 100%;
       }
       canvas:active { cursor: grabbing; }
 
