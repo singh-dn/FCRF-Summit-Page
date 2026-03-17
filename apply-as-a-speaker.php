@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $brief = trim($_POST['brief']);
 
         // --- STRICT VALIDATION LOGIC ---
-        if (empty($first_name) || empty($last_name) || empty($phone) || empty($email) || empty($qualification) || empty($experience) || empty($designation) || empty($organization) || empty($district) || empty($state) || empty($country) || empty($brief)) {
+        if (empty($first_name) || empty($last_name) || empty($phone) || empty($email)) {
             throw new Exception("All fields marked with * are mandatory.");
         }
 
@@ -396,7 +396,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="form-group">
                                     <label>Country *</label>
                                     <select name="country" >
-                                        <option value="" disabled selected>Select Country</option>
+                                        <option value="India" disabled selected>Select Country</option>
                                         <?php 
                                             $countries = ["India", "USA", "UK", "Canada", "Australia", "Other"];
                                             $selected_c = isset($_POST['country']) ? $_POST['country'] : '';
