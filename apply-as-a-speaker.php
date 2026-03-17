@@ -289,8 +289,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="main-viewport" id="viewport">
             <div id="form-container">
                 <header class="header-branding">
-                    <h1>Registration Portal</h1>
-                    <p>Enter your professional details. All fields with * are required.</p>
+                    <h1>Speaker Registration Portal</h1>
+                    <p>Register your details here. Our team will review your submission and get back to you shortly.</p>
                 </header>
 
                 <div class="form-content">
