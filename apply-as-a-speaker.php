@@ -76,8 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // 4. File Upload Logic
-        $target_dir = "uploads/professionals/";
-        if (!file_exists($target_dir)) { mkdir($target_dir, 0755, true); }
+        // $target_dir = "uploads/professionals/";
+        // if (!file_exists($target_dir)) { mkdir($target_dir, 0755, true); }
         
         // Handle Photo
         if (empty($_FILES["photo"]["name"])) { throw new Exception("Please upload your photo."); }
@@ -88,12 +88,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $photoPath)) { throw new Exception("Failed to upload photo."); }
 
         // Handle CV
-        if (empty($_FILES["cv"]["name"])) { throw new Exception("Please upload your CV/Bio."); }
-        $cvName = time() . "_cv_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["cv"]["name"]));
-        $cvPath = $target_dir . $cvName;
-        $cvType = strtolower(pathinfo($cvPath, PATHINFO_EXTENSION));
-        if (!in_array($cvType, ['pdf', 'doc', 'docx'])) { throw new Exception("CV must be PDF, DOC, or DOCX."); }
-        if (!move_uploaded_file($_FILES["cv"]["tmp_name"], $cvPath)) { throw new Exception("Failed to upload CV."); }
+if (!empty($_FILES["cv"]["name"])) {
+
+    $cvName = time() . "_cv_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["cv"]["name"]));
+    $cvPath = $target_dir . $cvName;
+    $cvType = strtolower(pathinfo($cvPath, PATHINFO_EXTENSION));
+
+    if (!in_array($cvType, ['pdf', 'doc', 'docx'])) {
+        throw new Exception("CV must be PDF, DOC, or DOCX.");
+    }
+
+    if (!move_uploaded_file($_FILES["cv"]["tmp_name"], $cvPath)) {
+        throw new Exception("Failed to upload CV.");
+    }
+}
 
 
         // 5. Insert into Database
