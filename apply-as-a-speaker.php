@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // --- STRICT VALIDATION LOGIC ---
         if (empty($first_name) || empty($last_name) || empty($phone) || empty($email)) {
-            throw new Exception("All fields marked with * are mandatory.");
+            throw new Exception("First Name, Last Name, Phone, and Email are mandatory.");
         }
 
         if (!preg_match("/^[a-zA-Z\s\.]+$/", $first_name) || !preg_match("/^[a-zA-Z\s\.]+$/", $last_name)) {
@@ -75,41 +75,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("Invalid email format.");
         }
 
- // 4. File Upload Logic
-$target_dir = "uploads/professionals/";
-if (!file_exists($target_dir)) { mkdir($target_dir, 0755, true); }
+        // 4. File Upload Logic
+        $target_dir = "uploads/professionals/";
+        if (!file_exists($target_dir)) { mkdir($target_dir, 0755, true); }
+        
+        // Handle Photo (Optional)
+        $photoPath = "";
+        if (!empty($_FILES["photo"]["name"])) {
+            $photoName = time() . "_photo_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["photo"]["name"]));
+            $photoPath = $target_dir . $photoName;
+            $photoType = strtolower(pathinfo($photoPath, PATHINFO_EXTENSION));
+            if (!in_array($photoType, ['jpg', 'jpeg', 'png'])) { throw new Exception("Photo must be JPG, JPEG, or PNG."); }
+            if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $photoPath)) { throw new Exception("Failed to upload photo."); }
+        }
 
-// Handle Photo (optional now)
-if (!empty($_FILES["photo"]["name"])) {
-
-    $photoName = time() . "_photo_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["photo"]["name"]));
-    $photoPath = $target_dir . $photoName;
-    $photoType = strtolower(pathinfo($photoPath, PATHINFO_EXTENSION));
-
-    if (!in_array($photoType, ['jpg', 'jpeg', 'png'])) {
-        throw new Exception("Photo must be JPG, JPEG, or PNG.");
-    }
-
-    if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $photoPath)) {
-        throw new Exception("Failed to upload photo.");
-    }
-}
-
-        // Handle CV
-if (!empty($_FILES["cv"]["name"])) {
-
-    $cvName = time() . "_cv_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["cv"]["name"]));
-    $cvPath = $target_dir . $cvName;
-    $cvType = strtolower(pathinfo($cvPath, PATHINFO_EXTENSION));
-
-    if (!in_array($cvType, ['pdf', 'doc', 'docx'])) {
-        throw new Exception("CV must be PDF, DOC, or DOCX.");
-    }
-
-    if (!move_uploaded_file($_FILES["cv"]["tmp_name"], $cvPath)) {
-        throw new Exception("Failed to upload CV.");
-    }
-}
+        // Handle CV (Optional)
+        $cvPath = "";
+        if (!empty($_FILES["cv"]["name"])) {
+            $cvName = time() . "_cv_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["cv"]["name"]));
+            $cvPath = $target_dir . $cvName;
+            $cvType = strtolower(pathinfo($cvPath, PATHINFO_EXTENSION));
+            if (!in_array($cvType, ['pdf', 'doc', 'docx'])) { throw new Exception("CV must be PDF, DOC, or DOCX."); }
+            if (!move_uploaded_file($_FILES["cv"]["tmp_name"], $cvPath)) { throw new Exception("Failed to upload CV."); }
+        }
 
 
         // 5. Insert into Database
@@ -305,8 +293,8 @@ if (!empty($_FILES["cv"]["name"])) {
         <div class="main-viewport" id="viewport">
             <div id="form-container">
                 <header class="header-branding">
-                    <h1>Speaker Registration Portal</h1>
-                    <p>Register your details here. Our team will review your submission and get back to you shortly.</p>
+                    <h1>Registration Portal</h1>
+                    <p>Enter your professional details. All fields with * are required.</p>
                 </header>
 
                 <div class="form-content">
@@ -329,13 +317,13 @@ if (!empty($_FILES["cv"]["name"])) {
                             <div class="grid-row">
                                 <div class="form-group">
                                     <label>First Name *</label>
-                                    <input type="text" name="firstName"  placeholder="John"
+                                    <input type="text" name="firstName" required placeholder="John"
                                            pattern="[a-zA-Z\s\.]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.]/g, '')"
                                            value="<?php echo isset($_POST['firstName']) ? htmlspecialchars($_POST['firstName']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Last Name *</label>
-                                    <input type="text" name="lastName"  placeholder="Doe"
+                                    <input type="text" name="lastName" required placeholder="Doe"
                                            pattern="[a-zA-Z\s\.]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.]/g, '')"
                                            value="<?php echo isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : ''; ?>">
                                 </div>
@@ -343,13 +331,13 @@ if (!empty($_FILES["cv"]["name"])) {
                             <div class="grid-row">
                                 <div class="form-group">
                                     <label>Phone/Mobile *</label>
-                                    <input type="tel" name="phone"  placeholder="10-digit number"
+                                    <input type="tel" name="phone" required placeholder="10-digit number"
                                            pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                            value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Email *</label>
-                                    <input type="email" name="email"  placeholder="john@example.com"
+                                    <input type="email" name="email" required placeholder="john@example.com"
                                            value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                                 </div>
                             </div>
@@ -359,29 +347,29 @@ if (!empty($_FILES["cv"]["name"])) {
                         <section>
                             <div class="section-header">
                                 <div class="icon-box"><i data-lucide="briefcase" size="20"></i></div>
-                                <h2>Professional Details</h2>
+                                <h2>Professional Details *</h2>
                             </div>
                             <div class="grid-row">
                                 <div class="form-group">
                                     <label>Educational Qualification *</label>
-                                    <input type="text" name="qualification"  placeholder="e.g. MBA"
+                                    <input type="text" name="qualification" placeholder="e.g. MCA Student"
                                            value="<?php echo isset($_POST['qualification']) ? htmlspecialchars($_POST['qualification']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Years of Experience *</label>
-                                    <input type="number" name="experience"  min="0" placeholder="e.g. 2"
+                                    <input type="number" name="experience" min="0" placeholder="e.g. 2"
                                            value="<?php echo isset($_POST['experience']) ? htmlspecialchars($_POST['experience']) : ''; ?>">
                                 </div>
                             </div>
                             <div class="grid-row">
                                 <div class="form-group">
                                     <label>Designation *</label>
-                                    <input type="text" name="designation"  placeholder="e.g. Lead Developer"
+                                    <input type="text" name="designation" placeholder="e.g. Lead Developer"
                                            value="<?php echo isset($_POST['designation']) ? htmlspecialchars($_POST['designation']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Name of Organization *</label>
-                                    <input type="text" name="organization"  placeholder="e.g. Tech Solutions Inc."
+                                    <input type="text" name="organization" placeholder="e.g. Tech Solutions Inc."
                                            value="<?php echo isset($_POST['organization']) ? htmlspecialchars($_POST['organization']) : ''; ?>">
                                 </div>
                             </div>
@@ -391,28 +379,28 @@ if (!empty($_FILES["cv"]["name"])) {
                         <section>
                             <div class="section-header">
                                 <div class="icon-box"><i data-lucide="globe" size="20"></i></div>
-                                <h2>Presence & Location</h2>
+                                <h2>Presence & Location *</h2>
                             </div>
                             <div class="form-group">
-                                <label>Website URL (if any)</label>
+                                <label>Website URL *</label>
                                 <input type="text" name="websiteUrl" placeholder="https://yourproduct.com"
                                        value="<?php echo isset($_POST['websiteUrl']) ? htmlspecialchars($_POST['websiteUrl']) : ''; ?>">
                             </div>
                             <div class="grid-row" style="grid-template-columns: repeat(3, 1fr);">
                                 <div class="form-group">
                                     <label>District *</label>
-                                    <input type="text" name="district"  placeholder="e.g. Ulhasnagar"
+                                    <input type="text" name="district" placeholder="e.g. Ulhasnagar"
                                            value="<?php echo isset($_POST['district']) ? htmlspecialchars($_POST['district']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>State *</label>
-                                    <input type="text" name="state"  placeholder="e.g. Maharashtra"
+                                    <input type="text" name="state" placeholder="e.g. Maharashtra"
                                            value="<?php echo isset($_POST['state']) ? htmlspecialchars($_POST['state']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Country *</label>
-                                    <select name="country" >
-                                        <option value="India" disabled selected>Select Country</option>
+                                    <select name="country">
+                                        <option value="" disabled selected>Select Country</option>
                                         <?php 
                                             $countries = ["India", "USA", "UK", "Canada", "Australia", "Other"];
                                             $selected_c = isset($_POST['country']) ? $_POST['country'] : '';
@@ -435,30 +423,30 @@ if (!empty($_FILES["cv"]["name"])) {
                         <section>
                             <div class="section-header">
                                 <div class="icon-box"><i data-lucide="paperclip" size="20"></i></div>
-                                <h2>Attachments</h2>
+                                <h2>Attachments </h2>
                             </div>
                             <div class="upload-grid">
                                 <label class="upload-box">
                                     <i data-lucide="camera"></i>
                                     <div class="upload-label">Upload your latest photo *</div>
-                                    <input type="file" name="photo"  class="hidden" accept="image/jpeg, image/png, image/jpg" id="photo-input" style="display:none;">
+                                    <input type="file" name="photo" class="hidden" accept="image/jpeg, image/png, image/jpg" id="photo-input" style="display:none;">
                                     <div id="photo-file" class="file-indicator">✓ Photo Selected</div>
                                 </label>
                                 <label class="upload-box">
                                     <i data-lucide="file-up"></i>
-                                    <div class="upload-label">Upload your CV/ Bio *<br>(PDF, Doc)</div>
-                                    <input type="file" name="cv"  class="hidden" accept=".pdf,.doc,.docx" id="cv-input" style="display:none;">
+                                    <div class="upload-label">Upload your CV/ Bio<br>(PDF, Doc) *</div>
+                                    <input type="file" name="cv" class="hidden" accept=".pdf,.doc,.docx" id="cv-input" style="display:none;">
                                     <div id="cv-file" class="file-indicator">✓ CV Selected</div>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>Area of Expertise / Brief of Work Experience *</label>
-                                <textarea name="brief"  rows="4" placeholder="Tell us about your background..."><?php echo isset($_POST['brief']) ? htmlspecialchars($_POST['brief']) : ''; ?></textarea>
+                                <textarea name="brief" rows="4" placeholder="Tell us about your background..."><?php echo isset($_POST['brief']) ? htmlspecialchars($_POST['brief']) : ''; ?></textarea>
                             </div>
                         </section>
 
                         <div class="confirmation-card">
-                            <input type="checkbox" id="confirm" >
+                            <input type="checkbox" id="confirm">
                             <label for="confirm">I confirm that the information provided is accurate and true to my knowledge.</label>
                         </div>
 
@@ -486,7 +474,7 @@ if (!empty($_FILES["cv"]["name"])) {
             <p style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.5; font-size: 0.95rem;">
                 Hello <?php echo htmlspecialchars($successName); ?>, your registration has been successfully saved.
             </p>
-            <button onclick="closeModal()" class="submit-btn" style="margin-top: 0; background: #0f172a; box-shadow: none;">Back to Portal</button>
+            <button onclick="closeModal()" class="submit-btn" style="margin-top: 0; background: #0f172a; box-shadow: none;">Continue to Summit</button>
         </div>
     </div>
 
@@ -513,8 +501,15 @@ if (!empty($_FILES["cv"]["name"])) {
 
         function closeModal() {
             document.getElementById('success-modal').classList.remove('active');
-            window.location.href = window.location.href; // Refresh page to clear
+            window.location.href = "https://summit.futurecrime.org"; // Redirect on click
         }
+        
+        // Auto-redirect after 4 seconds
+        <?php if ($showSuccessModal): ?>
+        setTimeout(function() {
+            window.location.href = "https://summit.futurecrime.org";
+        }, 4000);
+        <?php endif; ?>
     </script>
 </body>
 </html>
