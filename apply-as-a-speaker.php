@@ -463,14 +463,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <!-- SUCCESS POPUP MODAL -->
-    <div class="modal-overlay <?php echo $showSuccessModal ? 'active' : 'https://summit.futurecrime.org'; ?>" id="success-modal">
+    <div class="modal-overlay <?php echo $showSuccessModal ? 'active' : ''; ?>" id="success-modal">
         <div class="modal-content">
             <div class="success-icon-popup"><i data-lucide="check" size="40"></i></div>
             <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; color:#1e293b;">Success!</h2>
             <p style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.5; font-size: 0.95rem;">
                 Hello <?php echo htmlspecialchars($successName); ?>, your registration has been successfully saved.
             </p>
-            <button onclick="closeModal()" class="submit-btn" style="margin-top: 0; background: #0f172a; box-shadow: none;">Back to Portal</button>
+            <button onclick="https://summit.futurecrime.org" class="submit-btn" style="margin-top: 0; background: #0f172a; box-shadow: none;">Back to Portal</button>
         </div>
     </div>
 
