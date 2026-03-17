@@ -75,17 +75,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("Invalid email format.");
         }
 
-        // 4. File Upload Logic
-        // $target_dir = "uploads/professionals/";
-        // if (!file_exists($target_dir)) { mkdir($target_dir, 0755, true); }
-        
-        // Handle Photo
-        if (empty($_FILES["photo"]["name"])) { throw new Exception("Please upload your photo."); }
-        $photoName = time() . "_photo_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["photo"]["name"]));
-        $photoPath = $target_dir . $photoName;
-        $photoType = strtolower(pathinfo($photoPath, PATHINFO_EXTENSION));
-        if (!in_array($photoType, ['jpg', 'jpeg', 'png'])) { throw new Exception("Photo must be JPG, JPEG, or PNG."); }
-        if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $photoPath)) { throw new Exception("Failed to upload photo."); }
+ // 4. File Upload Logic
+$target_dir = "uploads/professionals/";
+if (!file_exists($target_dir)) { mkdir($target_dir, 0755, true); }
+
+// Handle Photo (optional now)
+if (!empty($_FILES["photo"]["name"])) {
+
+    $photoName = time() . "_photo_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["photo"]["name"]));
+    $photoPath = $target_dir . $photoName;
+    $photoType = strtolower(pathinfo($photoPath, PATHINFO_EXTENSION));
+
+    if (!in_array($photoType, ['jpg', 'jpeg', 'png'])) {
+        throw new Exception("Photo must be JPG, JPEG, or PNG.");
+    }
+
+    if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $photoPath)) {
+        throw new Exception("Failed to upload photo.");
+    }
+}
 
         // Handle CV
 if (!empty($_FILES["cv"]["name"])) {
