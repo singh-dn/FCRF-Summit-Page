@@ -470,7 +470,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.5; font-size: 0.95rem;">
                 Hello <?php echo htmlspecialchars($successName); ?>, your registration has been successfully saved.
             </p>
-            <button onclick="https://summit.futurecrime.org" class="submit-btn" style="margin-top: 0; background: #0f172a; box-shadow: none;">Back to Portal</button>
+            <button onclick="closeModal()" class="submit-btn" style="margin-top: 0; background: #0f172a; box-shadow: none;">Back to Portal</button>
         </div>
     </div>
 
