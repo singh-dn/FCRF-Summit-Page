@@ -348,7 +348,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="grid-row">
                                 <div class="form-group">
                                     <label>Educational Qualification *</label>
-                                    <input type="text" name="qualification" required placeholder="e.g. MCA Student"
+                                    <input type="text" name="qualification" required placeholder="e.g. MBA"
                                            value="<?php echo isset($_POST['qualification']) ? htmlspecialchars($_POST['qualification']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
@@ -378,7 +378,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <h2>Presence & Location</h2>
                             </div>
                             <div class="form-group">
-                                <label>Website URL</label>
+                                <label>Website URL (if any)</label>
                                 <input type="url" name="websiteUrl" placeholder="https://yourproduct.com"
                                        value="<?php echo isset($_POST['websiteUrl']) ? htmlspecialchars($_POST['websiteUrl']) : ''; ?>">
                             </div>

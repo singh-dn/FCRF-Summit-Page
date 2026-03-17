@@ -191,7 +191,7 @@
     /* 1. Centered Content Block */
     #fc-hero-module .fc-hero-center-content {
       position: absolute;
-      bottom: calc(9vw + 4rem); /* Anchored just above the massive text */
+      bottom: calc(6vw + 1rem); /* Anchored just above the massive text */
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -203,6 +203,43 @@
       z-index: 30;
       gap: 1.5rem;
     }
+    /* ===== Future Crime Summit Image Enhancement (Adjusted Size) ===== */
+
+.fc-hero-top-png {
+  /* Smaller size */
+  width: 70%;          /* reduced from 100% */
+  max-width: 700px;    /* control max size */
+  height: auto;
+  display: block;
+  margin: 0 auto;      /* keep it centered */
+
+  object-fit: contain;
+
+  /* Improve rendering quality */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+
+  /* Visual enhancement */
+  filter: contrast(1.1) brightness(1.05) saturate(1.1);
+
+  /* Smooth scaling */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+
+  /* Depth */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+
+  /* Corners */
+  border-radius: 8px;
+
+  /* Layer */
+  position: relative;
+  z-index: 2;
+
+  transition: all 0.3s ease;
+}
+
+
 
     #fc-hero-module .fc-location-tag {
       display: flex;
@@ -213,6 +250,8 @@
       color: #ffffff;
       letter-spacing: 0.05em;
     }
+
+
 
     #fc-hero-module .fc-desc-text {
       font-family: var(--fc-font-sans);
