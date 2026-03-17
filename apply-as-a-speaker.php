@@ -382,7 +382,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <h2>Presence & Location *</h2>
                             </div>
                             <div class="form-group">
-                                <label>Website URL *</label>
+                                <label>Website URL</label>
                                 <input type="text" name="websiteUrl" placeholder="https://yourproduct.com"
                                        value="<?php echo isset($_POST['websiteUrl']) ? htmlspecialchars($_POST['websiteUrl']) : ''; ?>">
                             </div>
