@@ -379,7 +379,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="form-group">
                                 <label>Website URL (if any)</label>
-                                <input type="url" name="websiteUrl" placeholder="https://yourproduct.com"
+                                <input type="text" name="websiteUrl" placeholder="https://yourproduct.com"
                                        value="<?php echo isset($_POST['websiteUrl']) ? htmlspecialchars($_POST['websiteUrl']) : ''; ?>">
                             </div>
                             <div class="grid-row" style="grid-template-columns: repeat(3, 1fr);">
