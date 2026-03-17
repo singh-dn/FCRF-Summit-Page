@@ -313,13 +313,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="grid-row">
                                 <div class="form-group">
                                     <label>First Name *</label>
-                                    <input type="text" name="firstName" required placeholder="John"
+                                    <input type="text" name="firstName"  placeholder="John"
                                            pattern="[a-zA-Z\s\.]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.]/g, '')"
                                            value="<?php echo isset($_POST['firstName']) ? htmlspecialchars($_POST['firstName']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Last Name *</label>
-                                    <input type="text" name="lastName" required placeholder="Doe"
+                                    <input type="text" name="lastName"  placeholder="Doe"
                                            pattern="[a-zA-Z\s\.]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.]/g, '')"
                                            value="<?php echo isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : ''; ?>">
                                 </div>
@@ -327,13 +327,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="grid-row">
                                 <div class="form-group">
                                     <label>Phone/Mobile *</label>
-                                    <input type="tel" name="phone" required placeholder="10-digit number"
+                                    <input type="tel" name="phone"  placeholder="10-digit number"
                                            pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                            value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Email *</label>
-                                    <input type="email" name="email" required placeholder="john@example.com"
+                                    <input type="email" name="email"  placeholder="john@example.com"
                                            value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                                 </div>
                             </div>
@@ -348,24 +348,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="grid-row">
                                 <div class="form-group">
                                     <label>Educational Qualification *</label>
-                                    <input type="text" name="qualification" required placeholder="e.g. MBA"
+                                    <input type="text" name="qualification"  placeholder="e.g. MBA"
                                            value="<?php echo isset($_POST['qualification']) ? htmlspecialchars($_POST['qualification']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Years of Experience *</label>
-                                    <input type="number" name="experience" required min="0" placeholder="e.g. 2"
+                                    <input type="number" name="experience"  min="0" placeholder="e.g. 2"
                                            value="<?php echo isset($_POST['experience']) ? htmlspecialchars($_POST['experience']) : ''; ?>">
                                 </div>
                             </div>
                             <div class="grid-row">
                                 <div class="form-group">
                                     <label>Designation *</label>
-                                    <input type="text" name="designation" required placeholder="e.g. Lead Developer"
+                                    <input type="text" name="designation"  placeholder="e.g. Lead Developer"
                                            value="<?php echo isset($_POST['designation']) ? htmlspecialchars($_POST['designation']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Name of Organization *</label>
-                                    <input type="text" name="organization" required placeholder="e.g. Tech Solutions Inc."
+                                    <input type="text" name="organization"  placeholder="e.g. Tech Solutions Inc."
                                            value="<?php echo isset($_POST['organization']) ? htmlspecialchars($_POST['organization']) : ''; ?>">
                                 </div>
                             </div>
@@ -385,17 +385,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="grid-row" style="grid-template-columns: repeat(3, 1fr);">
                                 <div class="form-group">
                                     <label>District *</label>
-                                    <input type="text" name="district" required placeholder="e.g. Ulhasnagar"
+                                    <input type="text" name="district"  placeholder="e.g. Ulhasnagar"
                                            value="<?php echo isset($_POST['district']) ? htmlspecialchars($_POST['district']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>State *</label>
-                                    <input type="text" name="state" required placeholder="e.g. Maharashtra"
+                                    <input type="text" name="state"  placeholder="e.g. Maharashtra"
                                            value="<?php echo isset($_POST['state']) ? htmlspecialchars($_POST['state']) : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Country *</label>
-                                    <select name="country" required>
+                                    <select name="country" >
                                         <option value="" disabled selected>Select Country</option>
                                         <?php 
                                             $countries = ["India", "USA", "UK", "Canada", "Australia", "Other"];
@@ -425,24 +425,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label class="upload-box">
                                     <i data-lucide="camera"></i>
                                     <div class="upload-label">Upload your latest photo *</div>
-                                    <input type="file" name="photo" required class="hidden" accept="image/jpeg, image/png, image/jpg" id="photo-input" style="display:none;">
+                                    <input type="file" name="photo"  class="hidden" accept="image/jpeg, image/png, image/jpg" id="photo-input" style="display:none;">
                                     <div id="photo-file" class="file-indicator">✓ Photo Selected</div>
                                 </label>
                                 <label class="upload-box">
                                     <i data-lucide="file-up"></i>
                                     <div class="upload-label">Upload your CV/ Bio *<br>(PDF, Doc)</div>
-                                    <input type="file" name="cv" required class="hidden" accept=".pdf,.doc,.docx" id="cv-input" style="display:none;">
+                                    <input type="file" name="cv"  class="hidden" accept=".pdf,.doc,.docx" id="cv-input" style="display:none;">
                                     <div id="cv-file" class="file-indicator">✓ CV Selected</div>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>Area of Expertise / Brief of Work Experience *</label>
-                                <textarea name="brief" required rows="4" placeholder="Tell us about your background..."><?php echo isset($_POST['brief']) ? htmlspecialchars($_POST['brief']) : ''; ?></textarea>
+                                <textarea name="brief"  rows="4" placeholder="Tell us about your background..."><?php echo isset($_POST['brief']) ? htmlspecialchars($_POST['brief']) : ''; ?></textarea>
                             </div>
                         </section>
 
                         <div class="confirmation-card">
-                            <input type="checkbox" id="confirm" required>
+                            <input type="checkbox" id="confirm" >
                             <label for="confirm">I confirm that the information provided is accurate and true to my knowledge.</label>
                         </div>
 
