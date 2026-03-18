@@ -1,0 +1,101 @@
+# ===============================
+# FutureCrime Summit .htaccess
+# SEO + Security + Clean URLs
+# ===============================
+
+RewriteEngine On
+
+# -------------------------------
+# Force HTTPS
+# -------------------------------
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://summit.futurecrime.org%{REQUEST_URI} [L,R=301]
+
+# -------------------------------
+# Remove www
+# -------------------------------
+RewriteCond %{HTTP_HOST} ^www\.summit\.futurecrime\.org [NC]
+RewriteRule ^ https://summit.futurecrime.org%{REQUEST_URI} [L,R=301]
+
+# -------------------------------
+# Remove .html extension
+# example: /about.html → /about
+# -------------------------------
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# -------------------------------
+# Remove .php extension
+# example: /contact.php → /contact
+# -------------------------------
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# -------------------------------
+# Internally map clean URLs
+# example: /about → /about.html
+# -------------------------------
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# -------------------------------
+# Internally map PHP clean URLs
+# example: /api → /api.php
+# -------------------------------
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+
+# -------------------------------
+# Disable directory browsing
+# -------------------------------
+Options -Indexes
+
+# -------------------------------
+# Protect sensitive files
+# -------------------------------
+<FilesMatch "(^\.|composer\.json|package\.json|\.env|\.git)">
+Order allow,deny
+Deny from all
+</FilesMatch>
+
+# -------------------------------
+# Security Headers
+# -------------------------------
+<IfModule mod_headers.c>
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# -------------------------------
+# Browser Caching
+# -------------------------------
+<IfModule mod_expires.c>
+ExpiresActive On
+
+ExpiresByType image/jpg "access plus 1 year"
+ExpiresByType image/jpeg "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType image/webp "access plus 1 year"
+
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+
+</IfModule>
+
+# -------------------------------
+# GZIP Compression
+# -------------------------------
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>
+
+# -------------------------------
+# Custom Error Pages
+# -------------------------------
+ErrorDocument 404 /404.html
+ErrorDocument 403 /403.html

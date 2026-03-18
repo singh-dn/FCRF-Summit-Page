@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Allow important assets
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Block sensitive files
+Disallow: /.git/
+Disallow: /.env
+Disallow: /config/
+Disallow: /private/
+
+# Block system files
+Disallow: /cgi-bin/
+
+# Sitemap location
+Sitemap: https://summit.futurecrime.org/sitemap.xml
