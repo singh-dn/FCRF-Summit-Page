@@ -2349,17 +2349,7 @@ function showLocationAlert(){
 }
 </script> -->
 
-<script>
-  // Remove "index" and hash (#video etc.)
-  if (window.location.pathname.includes("index")) {
-    window.history.replaceState(null, null, "/");
-  }
 
-  // Optional: remove hash too
-  if (window.location.hash) {
-    history.replaceState(null, null, window.location.pathname);
-  }
-</script>
 
 </body>
 

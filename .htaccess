@@ -1,43 +1,38 @@
 RewriteEngine On
 
 # ---------------------------------
-# 1. Force HTTPS
+# 1. Redirect index → /
+# ---------------------------------
+RewriteCond %{THE_REQUEST} \s/+index(\.html)?[\s?] [NC]
+RewriteRule ^index(\.html)?$ / [R=301,L]
+
+# ---------------------------------
+# 2. Force HTTPS
 # ---------------------------------
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # ---------------------------------
-# 2. Redirect index.html → /
-# ---------------------------------
-RewriteCond %{THE_REQUEST} \s/+index\.html [NC]
-RewriteRule ^index\.html$ / [R=301,L]
-
-# ---------------------------------
-# 3. Set default index
-# ---------------------------------
-DirectoryIndex index.html
-
-# ---------------------------------
-# 4. Remove .html extension
+# 3. Remove .html extension
 # ---------------------------------
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
 RewriteRule ^ /%1 [R=301,L]
 
 # ---------------------------------
-# 5. Internal rewrite (HTML)
+# 4. Internal rewrite
 # ---------------------------------
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L]
 
 # ---------------------------------
-# 6. Internal rewrite (PHP)
+# 5. PHP support
 # ---------------------------------
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]
 
 # ---------------------------------
-# 7. Disable directory listing
+# 6. Security
 # ---------------------------------
 Options -Indexes
