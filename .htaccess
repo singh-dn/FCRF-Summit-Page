@@ -3,44 +3,44 @@ RewriteEngine On
 # ---------------------------------
 # 1. Force HTTPS
 # ---------------------------------
-RewriteCond %{HTTPS} off
+RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # ---------------------------------
-# 2. Redirect index.html or index.php to /
+# 2. Set default index
 # ---------------------------------
-RewriteCond %{THE_REQUEST} \s/+index\.(html|php) [NC]
-RewriteRule ^index\.(html|php)$ / [R=301,L]
+DirectoryIndex index.html
 
 # ---------------------------------
-# 3. Redirect .html or .php URLs to clean URLs
+# 3. Remove .html extension from URL
+# (redirect /about-us.html → /about-us)
 # ---------------------------------
-RewriteCond %{THE_REQUEST} \s/+(.*)\.(html|php) [NC]
-RewriteRule ^ %1 [R=301,L]
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
+RewriteRule ^ /%1 [R=301,L]
 
 # ---------------------------------
-# 4. Handle Clean URLs (IMPORTANT FOR YOUR FILES)
+# 4. Internal rewrite (clean URL → file)
+# (/about-us → about-us.html)
 # ---------------------------------
-
-# About page
-RewriteRule ^about-us/?$ about-us.html [L]
-
-# Apply speaker (PHP)
-RewriteRule ^apply-as-a-speaker/?$ apply-as-a-speaker.php [L]
-
-# ---------------------------------
-# 5. Serve PHP files internally
-# ---------------------------------
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^(.+)$ $1.php [L]
-
-# ---------------------------------
-# 6. Serve HTML files internally
-# ---------------------------------
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L]
 
 # ---------------------------------
-# 7. Security: Disable directory listing
+# 5. Handle PHP clean URLs
+# (/apply-as-a-speaker → apply-as-a-speaker.php)
+# ---------------------------------
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+
+# ---------------------------------
+# 6. Prevent direct access to .html (optional SEO)
+# ---------------------------------
+#RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
+#RewriteRule ^ /%1 [R=301,L]
+
+# ---------------------------------
+# 7. Disable directory listing (security)
 # ---------------------------------
 Options -Indexes
