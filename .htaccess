@@ -7,40 +7,37 @@ RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # ---------------------------------
-# 2. Set default index
+# 2. Redirect index.html → /
+# ---------------------------------
+RewriteCond %{THE_REQUEST} \s/+index\.html [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+
+# ---------------------------------
+# 3. Set default index
 # ---------------------------------
 DirectoryIndex index.html
 
 # ---------------------------------
-# 3. Remove .html extension from URL
-# (redirect /about-us.html → /about-us)
+# 4. Remove .html extension
 # ---------------------------------
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
 RewriteRule ^ /%1 [R=301,L]
 
 # ---------------------------------
-# 4. Internal rewrite (clean URL → file)
-# (/about-us → about-us.html)
+# 5. Internal rewrite (HTML)
 # ---------------------------------
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L]
 
 # ---------------------------------
-# 5. Handle PHP clean URLs
-# (/apply-as-a-speaker → apply-as-a-speaker.php)
+# 6. Internal rewrite (PHP)
 # ---------------------------------
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]
 
 # ---------------------------------
-# 6. Prevent direct access to .html (optional SEO)
-# ---------------------------------
-#RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
-#RewriteRule ^ /%1 [R=301,L]
-
-# ---------------------------------
-# 7. Disable directory listing (security)
+# 7. Disable directory listing
 # ---------------------------------
 Options -Indexes
