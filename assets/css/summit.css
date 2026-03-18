@@ -227,7 +227,7 @@
   backface-visibility: hidden;
 
   /* Depth */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25); */
 
   /* Corners */
   border-radius: 8px;
