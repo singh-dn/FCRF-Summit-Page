@@ -470,34 +470,30 @@
             // 1. Define the Data Array (Included Lucide-style SVG icons)
             const options = [
                 {
-                    title: "FutureCrime Summit Opening",
-                    description: "The inaugural ceremony of FutureCrime Summit 2026 bringing together global leaders, investigators, policymakers, and cybersecurity experts.",
+                   
+                   
                     image: "assets/img/sponsor/image01.jpeg",
-                    icon: `<svg class="is-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M12 3v18"/><path d="m3 21 9-18 9 18"/><path d="m12 9-4.5 12"/><path d="m12 9 4.5 12"/></svg>`
+                   
                 },
                 {
-                    title: "Cybersecurity Keynote Session",
-                    description: "Industry experts and thought leaders discussing emerging cyber threats, AI-driven attacks, and the future of global cyber defense.",
+                  
                     image: "assets/img/sponsor/image02.jpeg",
-                    icon: `<svg class="is-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`
+                   
                 },
                 {
-                    title: "Digital Forensics & Investigation",
-                    description: "Specialized sessions exploring digital evidence analysis, cybercrime investigations, and advanced DFIR techniques used by investigators.",
+                  
                     image: "assets/img/sponsor/image03.jpeg",
-                    icon: `<svg class="is-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>`
+                  
                 },
                 {
-                    title: "Expert Panel Discussions",
-                    description: "Interactive discussions on ransomware, financial fraud, cyber law, data protection, and national security challenges.",
+                   
                     image: "assets/img/sponsor/image04.jpeg",
-                    icon: `<svg class="is-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M20 12v3a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6v-3"/><path d="M10 5v2"/><path d="M14 4v3"/><path d="M6 6v1"/></svg>`
+                  
                 },
                 {
-                    title: "Networking & Collaboration",
-                    description: "Professionals, researchers, and cybersecurity leaders collaborating to strengthen global efforts against cybercrime.",
+                  
                     image: "assets/img/sponsor/image05.png",
-                    icon: `<svg class="is-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>`
+                  
                 }
             ];
 
@@ -514,11 +510,6 @@
                 card.innerHTML = `
                     <div class="is-card-shadow"></div>
                     <div class="is-card-content">
-                        <div class="is-icon">${option.icon}</div>
-                        <div class="is-text-wrap">
-                            <div class="is-title">${option.title}</div>
-                            <div class="is-desc">${option.description}</div>
-                        </div>
                     </div>
                 `;
 
