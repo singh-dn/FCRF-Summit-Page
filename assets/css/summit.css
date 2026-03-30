@@ -2135,248 +2135,443 @@
         padding: 0.5rem 0.9rem;
       }
     }
+    
+            /* Scoped Font Imports */
+        @import url('https://fonts.cdnfonts.com/css/aquire');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
 
-
-
-    /* count down timer  */
-
-      /* ==========================================================================
-           ISOLATED SCOPE: Scoped to .ai-coming-soon-widget
-           ========================================================================== */
-        
-        /* Container used just for previewing the card on a page */
-        .page-preview-wrapper {
-            background-color: #ffffff;
-            /* min-height: 100vh; */
+   /* ISOLATION STRATEGY: 
+           All styles are prefixed with #dsc-root and .dsc- to avoid global CSS conflicts.
+        */
+        #dsc-root {
+            --dsc-bg-dark: #0b0910;
+            --dsc-card-grad: linear-gradient(90deg, #13101c 0%, #1e172e 100%);
+            --dsc-border: rgba(255, 255, 255, 0.05);
+            --dsc-text-sec: #7b758a;
+            --dsc-hi-bg: #1c1535;
+            --dsc-hi-border: #483982;
+            --dsc-accent-blue: #7a86f0;
+            --dsc-accent-purp: #c455db;
+            
+            width: 100%;
+            font-family: 'Inter', sans-serif;
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
+            align-items: center;
+            padding: 0.5rem;
+            background-color: transparent;
         }
 
-        .ai-coming-soon-widget {
-            /* Brand Variables matching your theme */
-            --bg-gradient: linear-gradient(135deg, #5135FF 0%, #FF5455 100%);
-            --brand-gradient: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
-            --text-dark: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.9);
-            --text-bg: rgba(255, 255, 255, 0.15);
-            --white: #ffffff;
-            
-            font-family: 'Inter', sans-serif;
+        #dsc-root .dsc-font-aquire {
+            font-family: 'Aquire', sans-serif;
+        }
+
+        /* Widget Container: Responsive Flex */
+        #dsc-root .dsc-card {
             position: relative;
-            
-            /* Card/Cart Sizing strictly set to 1300 x 521 for Desktop */
             width: 100%;
-            max-width: 1300px;
-            height: 521px; 
-            border-radius: 32px;
-            box-shadow: 0 30px 60px rgba(81, 53, 255, 0.15);
-            
-            background: var(--bg-gradient);
+            max-width: 1152px;
+            background: var(--dsc-card-grad);
+            border: 1px solid var(--dsc-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 2rem;
+            padding: 2rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row; /* Desktop: Row */
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        /* Glossy Overlay */
+        #dsc-root .dsc-gloss {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* Title Section */
+        #dsc-root .dsc-title-wrap {
+            flex-shrink: 0;
+        }
+
+        #dsc-root .dsc-main-title {
+            color: white;
+            font-size: 2.25rem;
+            font-weight: 900;
+            letter-spacing: -0.025em;
+            text-transform: uppercase;
+            filter: drop-shadow(0 10px 8px rgba(0,0,0,0.4));
+            display: block;
+        }
+
+        /* Timer Section */
+        #dsc-root .dsc-timer-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        #dsc-root .dsc-box {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            box-sizing: border-box;
-            padding: 40px 20px;
+            border-radius: 1.25rem;
+            width: 85px;
+            height: 95px;
+            border: 1px solid var(--dsc-border);
+            background-color: var(--dsc-bg-dark);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
         }
 
-        .ai-coming-soon-widget *,
-        .ai-coming-soon-widget *::before,
-        .ai-coming-soon-widget *::after {
-            box-sizing: inherit;
+        #dsc-root .dsc-box.dsc-highlight {
+            background-color: var(--dsc-hi-bg);
+            border-color: var(--dsc-hi-border);
+        }
+
+        #dsc-root .dsc-val {
+            font-size: 38px;
+            font-weight: 900;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            background: linear-gradient(to bottom, #ffffff, #87889c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #dsc-root .dsc-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 0.75rem;
+            color: var(--dsc-text-sec);
+        }
+
+        #dsc-root .dsc-box.dsc-highlight .dsc-label {
+            color: #b0a3d6;
+        }
+
+        #dsc-root .dsc-sep {
+            color: #2c2440;
+            font-size: 1.875rem;
+            font-weight: 900;
+            padding-bottom: 1.5rem;
+        }
+
+        /* Info Section */
+        #dsc-root .dsc-info-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            flex-shrink: 0;
+            width: 256px;
+        }
+
+        #dsc-root .dsc-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background-color: var(--dsc-bg-dark);
+            border-radius: 1.25rem;
+            padding: 0.75rem;
+            border: 1px solid var(--dsc-border);
+        }
+
+        #dsc-root .dsc-icon-box {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #dsc-root .dsc-ic-date { background-color: #1c1a3b; color: var(--dsc-accent-blue); }
+        #dsc-root .dsc-ic-loc { background-color: #32163d; color: var(--dsc-accent-purp); }
+
+        #dsc-root .dsc-info-txt {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        #dsc-root .dsc-info-hdr {
+            font-size: 10px;
+            color: var(--dsc-text-sec);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.2;
+        }
+
+        #dsc-root .dsc-info-val {
+            font-size: 0.875rem;
+            color: white;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Tablet Scaling */
+        @media (max-width: 1024px) {
+            #dsc-root .dsc-card { padding: 1.5rem; gap: 1.5rem; }
+            #dsc-root .dsc-main-title { font-size: 1.75rem; }
+            #dsc-root .dsc-box { width: 70px; height: 80px; }
+            #dsc-root .dsc-val { font-size: 28px; }
+            #dsc-root .dsc-info-col { width: 200px; }
+        }
+
+        /* MOBILE REDESIGN (Responsive Shift) */
+        @media (max-width: 768px) {
+            #dsc-root .dsc-card { 
+                flex-direction: column; /* Stack vertically on phone */
+                padding: 1.5rem;
+                gap: 1.5rem;
+                border-radius: 1.5rem;
+                text-align: center;
+            }
+
+            #dsc-root .dsc-title-wrap {
+                order: 1; /* Summit at top */
+            }
+
+            #dsc-root .dsc-timer-row {
+                order: 2; /* Timer in middle */
+                gap: 0.75rem;
+            }
+
+            #dsc-root .dsc-info-col {
+                order: 3; /* Info at bottom */
+                width: 100%;
+                flex-direction: row; /* Horizontal cards on phone */
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            #dsc-root .dsc-info-item {
+                flex: 1;
+                max-width: 160px;
+                padding: 0.5rem;
+                border-radius: 0.75rem;
+                justify-content: center;
+            }
+
+            #dsc-root .dsc-main-title { font-size: 1.5rem; }
+            #dsc-root .dsc-box { width: 60px; height: 70px; border-radius: 0.75rem; }
+            #dsc-root .dsc-val { font-size: 24px; }
+            #dsc-root .dsc-label { font-size: 7px; margin-top: 0.25rem; }
+            #dsc-root .dsc-sep { font-size: 1.25rem; padding-bottom: 1rem; }
+            #dsc-root .dsc-icon-box { padding: 0.35rem; }
+            #dsc-root .dsc-icon-box svg { width: 14px; height: 14px; }
+            #dsc-root .dsc-info-val { font-size: 0.7rem; }
+            #dsc-root .dsc-info-hdr { font-size: 6px; }
+        }
+
+        /* VERY SMALL DEVICES */
+        @media (max-width: 480px) {
+            #dsc-root .dsc-card { padding: 1rem; gap: 1rem; }
+            #dsc-root .dsc-main-title { font-size: 1.25rem; }
+            #dsc-root .dsc-box { width: 48px; height: 58px; }
+            #dsc-root .dsc-val { font-size: 18px; }
+            #dsc-root .dsc-timer-row { gap: 0.35rem; }
+            #dsc-root .dsc-info-item { max-width: 140px; }
+        }
+
+
+
+        /* --------------------------------------------   sponsor css */
+
+
+
+          /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
+        #dev-sponsors-section {
+            --dss-primary-grad: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+            --dss-platinum-grad: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            --dss-text-main: #111827;
+            --dss-text-gray: #6b7280;
+            --dss-bg-white: #ffffff;
+            --dss-card-bg: #ffffff;
+            --dss-border-light: rgba(0, 0, 0, 0.06);
+            
+            width: 100%;
+            padding: 5rem 1.5rem;
+            background-color: var(--dss-bg-white);
+            font-family: 'Inter', -apple-system, sans-serif;
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #dev-sponsors-section *,
+        #dev-sponsors-section *::before,
+        #dev-sponsors-section *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* --- BACKGROUND MASSIVE TEXT --- */
-        .ai-cs-bg-text {
+        /* Subtle Background Decoration */
+        #dev-sponsors-section .dss-bg-glow {
             position: absolute;
-            bottom: -5%; /* Clips at the bottom like the image */
+            top: 0;
             left: 50%;
             transform: translateX(-50%);
-            font-size: clamp(8rem, 19vw, 14rem);
-            font-weight: 900;
-            color: transparent;
-            -webkit-text-stroke: 2px var(--text-bg);
-            white-space: nowrap;
-            line-height: 0.8;
-            z-index: 1;
-            user-select: none;
+            width: 100%;
+            max-width: 1400px;
+            height: 500px;
+            background: radial-gradient(circle at 50% 0%, rgba(81, 53, 255, 0.04) 0%, transparent 70%);
             pointer-events: none;
-            letter-spacing: -0.02em;
         }
 
-        /* --- MAIN CONTENT CONTAINER --- */
-        .ai-cs-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        /* --- SPONSOR PARTNERS SECTION --- */
-        .ai-cs-sponsors {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .ai-cs-sponsors small {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 700;
-        }
-
-        .ai-cs-sponsor-logos {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            opacity: 0.9;
-        }
-
-        .ai-cs-sponsor-logos img {
-            max-height: 35px; /* Restrict height to keep it elegant */
-            width: auto;
-            max-width: 100%;
-            object-fit: contain;
-        }
-
-        .ai-cs-subtitle {
-            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-            font-weight: 300;
-            color: var(--text-muted);
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            line-height: 1.4;
-            margin-bottom: 35px;
-        }
-
-        /* --- COUNTDOWN TIMER GRID --- */
-        .ai-cs-timer-wrapper {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
-            gap: 10px 15px;
-            align-items: start;
-            width: 100%;
-            margin-bottom: 45px;
-        }
-
-        /* Numbers */
-        .ai-cs-num {
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 500;
-            color: var(--text-dark);
-            text-align: center;
-            line-height: 1;
-            font-variant-numeric: tabular-nums;
-            letter-spacing: -0.02em;
-        }
-
-        /* Colons */
-        .ai-cs-colon {
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 500;
-            color: var(--text-dark);
-            line-height: 1;
-            transform: translateY(-5%);
-            user-select: none;
-        }
-
-        /* Labels (Days, Hours, etc.) */
-        .ai-cs-label {
-            font-size: clamp(0.75rem, 1.5vw, 0.95rem);
-            font-weight: 300;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        /* Empty grid cells under colons */
-        .ai-cs-spacer {
-            display: block;
-        }
-
-        /* --- JOIN BUTTON --- */
-        .ai-cs-btn {
-            background: var(--white);
+        /* Top small headline style */
+        #dev-sponsors-section .dss-sub-headline {
+            font-size: 0.85rem;
             color: #5135FF;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 0.95rem;
-            padding: 14px 56px;
-            border-radius: 100px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
+            display: inline-block;
+            position: relative;
         }
 
-        .ai-cs-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-            color: #FF5455;
+        /* Main Headline */
+        #dev-sponsors-section .dss-main-headline {
+            font-family: 'Aquire', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: var(--dss-primary-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4rem; 
+            letter-spacing: 0.08em;
+            line-height: 1.2;
+            position: relative;
         }
 
-        /* --- FOOTER --- */
-        .ai-cs-footer {
+        #dev-sponsors-section .dss-main-headline::after {
+            content: "";
             position: absolute;
-            bottom: 20px;
-            left: 0;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: var(--dss-primary-grad);
+            border-radius: 2px;
+            opacity: 0.8;
+        }
+
+        /* Logo Grid Container */
+        #dev-sponsors-section .dss-logo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem; 
+            max-width: 1100px;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Individual Logo Card */
+        #dev-sponsors-section .dss-logo-item {
             width: 100%;
-            text-align: center;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.6);
-            z-index: 2;
+            max-width: 380px;
+            height: 180px;
+            background: var(--dss-card-bg);
+            border: 1px solid var(--dss-border-light);
+            border-radius: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02),
+                        0 10px 40px -10px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
         }
 
-        /* --- RESPONSIVE ADJUSTMENTS --- */
+        #dev-sponsors-section .dss-logo-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+            border-color: rgba(81, 53, 255, 0.1);
+        }
+
+        /* Platinum Sheen Overlay */
+        #dev-sponsors-section .dss-logo-item::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 1.5rem;
+            background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%, rgba(240,240,240,0.5) 100%);
+            pointer-events: none;
+        }
+
+        /* Logo Image */
+        #dev-sponsors-section .dss-logo-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive Scaling */
         @media (max-width: 768px) {
-            .ai-coming-soon-widget {
-                /* Let it shrink naturally on mobile to save space */
-                height: auto;
-                min-height: auto; 
-                padding: 50px 20px 60px; /* Tighter padding */
-                border-radius: 20px;
+            #dev-sponsors-section {
+                padding: 2rem 1rem;
             }
-            .ai-cs-bg-text {
-                font-size: clamp(5rem, 15vw, 10rem); /* Smaller background text */
-                bottom: 0;
+            #dev-sponsors-section .dss-main-headline {
+                font-size: 2.25rem;
+                margin-bottom: 3rem;
             }
-            .ai-cs-sponsor-logos img {
-                max-height: 25px; /* Smaller sponsor image on mobile */
+            #dev-sponsors-section .dss-sub-headline {
+                font-size: 0.75rem;
+                letter-spacing: 0.2em;
             }
-            .ai-cs-subtitle {
-                margin-bottom: 25px;
+            
+            /* FORCED SIDE-BY-SIDE ON MOBILE */
+            #dev-sponsors-section .dss-logo-grid {
+                gap: 0.75rem; /* Tighter gap for small screens */
             }
-            .ai-cs-timer-wrapper {
-                gap: 8px 5px;
-                margin-bottom: 30px;
+            
+            #dev-sponsors-section .dss-logo-item {
+                /* Set width to roughly 50% minus the gap to keep them left-right */
+                width: calc(50% - 0.375rem); 
+                max-width: none;
+                height: 110px; /* Scaled down height */
+                padding: 1.25rem;
+                border-radius: 1rem;
             }
-            .ai-cs-num, .ai-cs-colon {
-                font-size: clamp(2rem, 8vw, 3.5rem); /* Scaled down timer */
-            }
-            .ai-cs-label {
-                margin-top: 5px;
-                font-size: 0.7rem;
-            }
-            .ai-cs-btn {
-                padding: 12px 40px;
-                font-size: 0.9rem;
+            
+            #dev-sponsors-section .dss-logo-item::before {
+                border-radius: 1rem;
             }
         }
 
+        @media (max-width: 480px) {
+            #dev-sponsors-section .dss-main-headline {
+                font-size: 1.75rem;
+            }
+            #dev-sponsors-section .dss-logo-item {
+                height: 90px;
+                padding: 0.75rem;
+            }
+        }
 
 
         /* galary css  */

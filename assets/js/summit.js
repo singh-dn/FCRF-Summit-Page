@@ -536,3 +536,48 @@
                 }, 180 * i); // 180ms delay between each card matching the React code
             });
         });
+
+
+
+        // timmer section 
+
+          (function() {
+            // Target Date
+            const TARGET = new Date('2026-08-06T09:00:00').getTime();
+            
+            const elDays = document.getElementById('dsc-days');
+            const elHours = document.getElementById('dsc-hours');
+            const elMins = document.getElementById('dsc-mins');
+            const elSecs = document.getElementById('dsc-secs');
+
+            function update() {
+                const now = new Date().getTime();
+                const diff = TARGET - now;
+
+                if (diff > 0) {
+                    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    const m = Math.floor((diff / (1000 * 60)) % 60);
+                    const s = Math.floor((diff / 1000) % 60);
+
+                    elDays.textContent = String(d).padStart(2, '0');
+                    elHours.textContent = String(h).padStart(2, '0');
+                    elMins.textContent = String(m).padStart(2, '0');
+                    elSecs.textContent = String(s).padStart(2, '0');
+                } else {
+                    elDays.textContent = "00";
+                    elHours.textContent = "00";
+                    elMins.textContent = "00";
+                    elSecs.textContent = "00";
+                }
+            }
+
+            // Initialize Icons
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+
+            // Start Loop
+            update();
+            setInterval(update, 1000);
+        })();
