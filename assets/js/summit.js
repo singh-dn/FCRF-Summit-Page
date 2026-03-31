@@ -541,18 +541,18 @@
 
         // timmer section 
 
-          (function() {
-            // Target Date
-            const TARGET = new Date('2026-08-06T09:00:00').getTime();
+ (function() {
+            // Updated to August 6th, 2026 at 9:00 AM
+            const TARGET_DATE = new Date('2026-08-06T09:00:00').getTime();
             
-            const elDays = document.getElementById('dsc-days');
-            const elHours = document.getElementById('dsc-hours');
-            const elMins = document.getElementById('dsc-mins');
-            const elSecs = document.getElementById('dsc-secs');
+            const elDays = document.getElementById('ct-days');
+            const elHours = document.getElementById('ct-hours');
+            const elMins = document.getElementById('ct-mins');
+            const elSecs = document.getElementById('ct-secs');
 
             function update() {
                 const now = new Date().getTime();
-                const diff = TARGET - now;
+                const diff = TARGET_DATE - now;
 
                 if (diff > 0) {
                     const d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -572,12 +572,64 @@
                 }
             }
 
-            // Initialize Icons
-            if (window.lucide) {
-                window.lucide.createIcons();
-            }
-
-            // Start Loop
             update();
             setInterval(update, 1000);
         })();
+
+
+        // ------------------------------- sponsore 
+
+              // SPONSOR DATA ARRAY
+        const sponsorData = [
+            {
+                name: "Resecurity",
+                logo: "assets/img/sponsors/Resecurity.jpeg",
+                description: "Resecurity is a global cybersecurity company delivering advanced threat intelligence, risk management, and endpoint protection solutions. Leveraging AI, big data, and human-curated intelligence, Resecurity helps enterprises and governments detect, prevent, and respond to sophisticated cyber threats in real time.",
+                website: "https://www.resecurity.com"
+            },
+            {
+                name: "Binary Global",
+                logo: "assets/img/sponsors/Binary.jpeg",
+                description: "Binary Global is a leading technology solutions provider specializing in cloud, cybersecurity, and digital infrastructure. With a strong focus on innovation, scalability, and security, Binary Global empowers enterprises to accelerate digital transformation, strengthen cyber resilience, and optimize IT operations across industries.",
+                website: "https://binaryglobal.com/"
+            }
+        ];
+
+        const overlay = document.getElementById('dss-modal-overlay');
+        const modalContent = document.getElementById('dss-modal-content');
+        const modalLogo = document.getElementById('dss-modal-logo');
+        const modalName = document.getElementById('dss-modal-name');
+        const modalText = document.getElementById('dss-modal-text');
+        const modalUrl = document.getElementById('dss-modal-url');
+
+        // Function to Open Modal
+        window.openSponsorModal = function(index) {
+            const data = sponsorData[index];
+            if (!data) return;
+
+            modalLogo.src = data.logo;
+            modalName.innerText = data.name;
+            modalText.innerText = data.description;
+            modalUrl.href = data.website;
+
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; 
+        };
+
+        // Close when clicking overlay (but not modal content)
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                closeSponsorModal();
+            }
+        });
+
+        // Function to Close Modal
+        window.closeSponsorModal = function() {
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto'; 
+        };
+
+        // Close on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeSponsorModal();
+        });

@@ -2143,265 +2143,190 @@
    /* ISOLATION STRATEGY: 
            All styles are prefixed with #dsc-root and .dsc- to avoid global CSS conflicts.
         */
-        #dsc-root {
-            --dsc-bg-dark: #0b0910;
-            --dsc-card-grad: linear-gradient(90deg, #13101c 0%, #1e172e 100%);
-            --dsc-border: rgba(255, 255, 255, 0.05);
-            --dsc-text-sec: #7b758a;
-            --dsc-hi-bg: #1c1535;
-            --dsc-hi-border: #483982;
-            --dsc-accent-blue: #7a86f0;
-            --dsc-accent-purp: #c455db;
+          /* ISOLATION SCOPE */
+        #cohort-timer-section {
+            --ct-bg-main: #05050a;
+            --ct-card-bg: #090913;
+            --ct-border: rgba(255, 255, 255, 0.05);
+            --ct-text-header: #ffffff;
+            --ct-text-label: #6d73f1;
+            --ct-number-color: #d1d5ff;
+            --ct-glow: rgba(109, 115, 241, 0.3);
             
             width: 100%;
             font-family: 'Inter', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0.5rem;
-            background-color: transparent;
+            padding: 1rem;
+            background: transparent;
+            box-sizing: border-box;
         }
 
-        #dsc-root .dsc-font-aquire {
-            font-family: 'Aquire', sans-serif;
-        }
-
-        /* Widget Container: Responsive Flex */
-        #dsc-root .dsc-card {
+        #cohort-timer-section .ct-card {
             position: relative;
             width: 100%;
-            max-width: 1152px;
-            background: var(--dsc-card-grad);
-            border: 1px solid var(--dsc-border);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            /* Increased max-width for more horizontal "weight" */
+            max-width: 1100px; 
+            background: var(--ct-card-bg);
+            border: 1px solid var(--ct-border);
             border-radius: 2rem;
-            padding: 2rem;
-            overflow: hidden;
+            /* Decreased vertical padding to reduce height */
+            padding: 1.5rem 2.5rem;
             display: flex;
-            flex-direction: row; /* Desktop: Row */
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
+            /* Tightened gap */
+            gap: 0.75rem;
+            box-sizing: border-box;
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
         }
 
-        /* Glossy Overlay */
-        #dsc-root .dsc-gloss {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 50%, transparent 100%);
-            pointer-events: none;
-        }
-
-        /* Title Section */
-        #dsc-root .dsc-title-wrap {
-            flex-shrink: 0;
-        }
-
-        #dsc-root .dsc-main-title {
-            color: white;
-            font-size: 2.25rem;
-            font-weight: 900;
-            letter-spacing: -0.025em;
+        /* Top Header */
+        #cohort-timer-section .ct-header {
+            font-family: 'Aquire', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--ct-text-header);
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            filter: drop-shadow(0 10px 8px rgba(0,0,0,0.4));
+            text-align: center;
             display: block;
+            margin-bottom: 0.25rem;
         }
 
-        /* Timer Section */
-        #dsc-root .dsc-timer-row {
+        /* Timer Block - Always a Row */
+        #cohort-timer-section .ct-timer-wrap {
             display: flex;
             flex-direction: row;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            gap: 1rem;
-            flex-shrink: 0;
+            gap: 2.5rem;
+            margin: 0.25rem 0;
+            width: 100%;
         }
 
-        #dsc-root .dsc-box {
+        #cohort-timer-section .ct-timer-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            border-radius: 1.25rem;
-            width: 85px;
-            height: 95px;
-            border: 1px solid var(--dsc-border);
-            background-color: var(--dsc-bg-dark);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+            min-width: 100px;
         }
 
-        #dsc-root .dsc-box.dsc-highlight {
-            background-color: var(--dsc-hi-bg);
-            border-color: var(--dsc-hi-border);
-        }
-
-        #dsc-root .dsc-val {
-            font-size: 38px;
-            font-weight: 900;
-            line-height: 1;
-            font-variant-numeric: tabular-nums;
-            background: linear-gradient(to bottom, #ffffff, #87889c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        #dsc-root .dsc-label {
-            font-size: 10px;
+        #cohort-timer-section .ct-val {
+            font-size: 4.5rem;
             font-weight: 800;
-            letter-spacing: 0.1em;
+            color: var(--ct-number-color);
+            line-height: 1;
+            text-shadow: 0 0 30px var(--ct-glow);
+            font-variant-numeric: tabular-nums;
+        }
+
+        #cohort-timer-section .ct-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--ct-text-label);
             text-transform: uppercase;
-            margin-top: 0.75rem;
-            color: var(--dsc-text-sec);
+            letter-spacing: 0.12em;
+            margin-top: 0.5rem;
         }
 
-        #dsc-root .dsc-box.dsc-highlight .dsc-label {
-            color: #b0a3d6;
-        }
-
-        #dsc-root .dsc-sep {
-            color: #2c2440;
-            font-size: 1.875rem;
+        #cohort-timer-section .ct-sep {
+            font-size: 2.5rem;
+            color: #1e1e35;
             font-weight: 900;
-            padding-bottom: 1.5rem;
+            padding-top: 0.5rem;
+            opacity: 0.5;
         }
 
-        /* Info Section */
-        #dsc-root .dsc-info-col {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            flex-shrink: 0;
-            width: 256px;
+        /* Divider */
+        #cohort-timer-section .ct-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            margin: 0.5rem 0;
         }
 
-        #dsc-root .dsc-info-item {
+        /* Pills Row - Always Horizontal */
+        #cohort-timer-section .ct-chips-row {
             display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            background-color: var(--dsc-bg-dark);
-            border-radius: 1.25rem;
-            padding: 0.75rem;
-            border: 1px solid var(--dsc-border);
-        }
-
-        #dsc-root .dsc-icon-box {
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
+            flex-direction: row;
             justify-content: center;
+            gap: 1.5rem;
+            width: 100%;
         }
 
-        #dsc-root .dsc-ic-date { background-color: #1c1a3b; color: var(--dsc-accent-blue); }
-        #dsc-root .dsc-ic-loc { background-color: #32163d; color: var(--dsc-accent-purp); }
-
-        #dsc-root .dsc-info-txt {
+        #cohort-timer-section .ct-pill {
             display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            text-align: left;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        #dsc-root .dsc-info-hdr {
-            font-size: 10px;
-            color: var(--dsc-text-sec);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            line-height: 1.2;
+        #cohort-timer-section .ct-pill-icon {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
         }
 
-        #dsc-root .dsc-info-val {
-            font-size: 0.875rem;
-            color: white;
-            font-weight: 700;
+        #cohort-timer-section .ct-pill-text {
+            color: #e2e8f0;
+            font-size: 0.85rem;
+            font-weight: 600;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        /* Tablet Scaling */
-        @media (max-width: 1024px) {
-            #dsc-root .dsc-card { padding: 1.5rem; gap: 1.5rem; }
-            #dsc-root .dsc-main-title { font-size: 1.75rem; }
-            #dsc-root .dsc-box { width: 70px; height: 80px; }
-            #dsc-root .dsc-val { font-size: 28px; }
-            #dsc-root .dsc-info-col { width: 200px; }
-        }
-
-        /* MOBILE REDESIGN (Responsive Shift) */
+        /* Mobile Adjustments: Scaling without Reflowing */
         @media (max-width: 768px) {
-            #dsc-root .dsc-card { 
-                flex-direction: column; /* Stack vertically on phone */
-                padding: 1.5rem;
-                gap: 1.5rem;
+            #cohort-timer-section .ct-card {
+                padding: 1.5rem 1rem;
                 border-radius: 1.5rem;
-                text-align: center;
             }
+            #cohort-timer-section .ct-header { font-size: 1rem; }
+            #cohort-timer-section .ct-timer-wrap { gap: 1rem; }
+            #cohort-timer-section .ct-timer-item { min-width: 65px; }
+            #cohort-timer-section .ct-val { font-size: 3rem; }
+            #cohort-timer-section .ct-sep { font-size: 1.5rem; }
+            #cohort-timer-section .ct-label { font-size: 0.65rem; }
+            #cohort-timer-section .ct-pill { padding: 0.4rem 0.8rem; gap: 0.5rem; }
+            #cohort-timer-section .ct-pill-text { font-size: 0.7rem; }
+        }
 
-            #dsc-root .dsc-title-wrap {
-                order: 1; /* Summit at top */
-            }
-
-            #dsc-root .dsc-timer-row {
-                order: 2; /* Timer in middle */
-                gap: 0.75rem;
-            }
-
-            #dsc-root .dsc-info-col {
-                order: 3; /* Info at bottom */
-                width: 100%;
-                flex-direction: row; /* Horizontal cards on phone */
-                justify-content: center;
+        @media (max-width: 480px) {
+            #cohort-timer-section .ct-card {
+                padding: 1rem 0.5rem;
                 gap: 0.5rem;
             }
-
-            #dsc-root .dsc-info-item {
-                flex: 1;
-                max-width: 160px;
-                padding: 0.5rem;
-                border-radius: 0.75rem;
-                justify-content: center;
-            }
-
-            #dsc-root .dsc-main-title { font-size: 1.5rem; }
-            #dsc-root .dsc-box { width: 60px; height: 70px; border-radius: 0.75rem; }
-            #dsc-root .dsc-val { font-size: 24px; }
-            #dsc-root .dsc-label { font-size: 7px; margin-top: 0.25rem; }
-            #dsc-root .dsc-sep { font-size: 1.25rem; padding-bottom: 1rem; }
-            #dsc-root .dsc-icon-box { padding: 0.35rem; }
-            #dsc-root .dsc-icon-box svg { width: 14px; height: 14px; }
-            #dsc-root .dsc-info-val { font-size: 0.7rem; }
-            #dsc-root .dsc-info-hdr { font-size: 6px; }
+            #cohort-timer-section .ct-header { font-size: 0.8rem; letter-spacing: 0.1em; }
+            #cohort-timer-section .ct-timer-wrap { gap: 0.5rem; }
+            #cohort-timer-section .ct-timer-item { min-width: 42px; }
+            #cohort-timer-section .ct-val { font-size: 2.1rem; }
+            #cohort-timer-section .ct-sep { font-size: 1.2rem; }
+            #cohort-timer-section .ct-label { font-size: 0.55rem; margin-top: 0.25rem; }
+            #cohort-timer-section .ct-chips-row { gap: 0.4rem; }
+            #cohort-timer-section .ct-pill { padding: 0.35rem 0.6rem; gap: 0.3rem; }
+            #cohort-timer-section .ct-pill-text { font-size: 0.5rem; }
+            #cohort-timer-section .ct-pill-icon { font-size: 0.75rem; }
         }
-
-        /* VERY SMALL DEVICES */
-        @media (max-width: 480px) {
-            #dsc-root .dsc-card { padding: 1rem; gap: 1rem; }
-            #dsc-root .dsc-main-title { font-size: 1.25rem; }
-            #dsc-root .dsc-box { width: 48px; height: 58px; }
-            #dsc-root .dsc-val { font-size: 18px; }
-            #dsc-root .dsc-timer-row { gap: 0.35rem; }
-            #dsc-root .dsc-info-item { max-width: 140px; }
-        }
-
 
 
         /* --------------------------------------------   sponsor css */
 
 
 
-          /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
+  /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
         #dev-sponsors-section {
             --dss-primary-grad: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
-            --dss-platinum-grad: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            --dss-text-main: #111827;
-            --dss-text-gray: #6b7280;
+            --dss-modal-light: #ffffff; 
+            --dss-text-main: #000000; /* Black text */
+            --dss-text-gray: #374151; /* Dark gray for subtle text */
             --dss-bg-white: #ffffff;
             --dss-card-bg: #ffffff;
-            --dss-border-light: rgba(0, 0, 0, 0.06);
+            --dss-border-light: rgba(0, 0, 0, 0.08);
             
             width: 100%;
             padding: 5rem 1.5rem;
@@ -2430,14 +2355,14 @@
             width: 100%;
             max-width: 1400px;
             height: 500px;
-            background: radial-gradient(circle at 50% 0%, rgba(81, 53, 255, 0.04) 0%, transparent 70%);
+            background: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.03) 0%, transparent 70%);
             pointer-events: none;
         }
 
-        /* Top small headline style */
+        /* Top small headline style - Set to Black */
         #dev-sponsors-section .dss-sub-headline {
             font-size: 0.85rem;
-            color: #5135FF;
+            color: #000000;
             margin-bottom: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.3em;
@@ -2455,7 +2380,7 @@
             background: var(--dss-primary-grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 4rem; 
+            margin-bottom: 8rem; 
             letter-spacing: 0.08em;
             line-height: 1.2;
             position: relative;
@@ -2478,7 +2403,7 @@
         #dev-sponsors-section .dss-logo-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 2rem; 
+            gap: 4rem; 
             max-width: 1100px;
             margin: 0 auto;
             align-items: center;
@@ -2507,7 +2432,7 @@
         #dev-sponsors-section .dss-logo-item:hover {
             transform: translateY(-5px) scale(1.02);
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
-            border-color: rgba(81, 53, 255, 0.1);
+            border-color: rgba(0, 0, 0, 0.1);
         }
 
         /* Platinum Sheen Overlay */
@@ -2530,49 +2455,148 @@
             z-index: 1;
         }
 
-        /* Responsive Scaling */
+        /* =========================================
+           POPUP MODAL STYLES (Isolated)
+           ========================================= */
+        #dss-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #dss-modal-content {
+            background: #fff;
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            min-height: 380px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            animation: dss-fade-up 0.3s ease-out;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        @keyframes dss-fade-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Close Button - Now Black */
+        #dss-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #000;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 10;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+        #dss-close-btn:hover { opacity: 1; }
+
+        /* Modal Left Side (Logo) */
+        .dss-modal-left {
+            flex: 1;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border-right: 1px solid #f3f4f6;
+        }
+        .dss-modal-left img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+        }
+
+        /* Modal Right Side (Info) - Now White/Light with Black Text */
+        .dss-modal-right {
+            flex: 1.5;
+            background: #ffffff;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #000;
+            text-align: left;
+        }
+
+        .dss-modal-tag {
+            font-size: 14px;
+            color: var(--dss-text-gray);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .dss-modal-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: #000;
+        }
+
+        .dss-modal-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #4b5563; /* Accessible dark gray for description */
+            margin-bottom: 30px;
+        }
+
+        .dss-modal-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+            width: fit-content;
+        }
+        .dss-modal-link:hover { 
+            color: #5135FF;
+            border-bottom-color: #5135FF;
+        }
+        .dss-modal-link svg { width: 18px; height: 18px; }
+
+        /* Responsive Scaling for Mobile */
         @media (max-width: 768px) {
-            #dev-sponsors-section {
-                padding: 2rem 1rem;
-            }
-            #dev-sponsors-section .dss-main-headline {
-                font-size: 2.25rem;
-                margin-bottom: 3rem;
-            }
-            #dev-sponsors-section .dss-sub-headline {
-                font-size: 0.75rem;
-                letter-spacing: 0.2em;
-            }
+            #dev-sponsors-section { padding: 2rem 1rem; }
+            #dev-sponsors-section .dss-main-headline { font-size: 2.25rem; margin-bottom: 3rem; }
             
-            /* FORCED SIDE-BY-SIDE ON MOBILE */
-            #dev-sponsors-section .dss-logo-grid {
-                gap: 0.75rem; /* Tighter gap for small screens */
-            }
-            
+            #dev-sponsors-section .dss-logo-grid { gap: 1rem; }
             #dev-sponsors-section .dss-logo-item {
-                /* Set width to roughly 50% minus the gap to keep them left-right */
-                width: calc(50% - 0.375rem); 
-                max-width: none;
-                height: 110px; /* Scaled down height */
-                padding: 1.25rem;
-                border-radius: 1rem;
+                width: calc(50% - 0.5rem); 
+                height: 110px;
+                padding: 1rem;
             }
-            
-            #dev-sponsors-section .dss-logo-item::before {
-                border-radius: 1rem;
-            }
-        }
 
-        @media (max-width: 480px) {
-            #dev-sponsors-section .dss-main-headline {
-                font-size: 1.75rem;
-            }
-            #dev-sponsors-section .dss-logo-item {
-                height: 90px;
-                padding: 0.75rem;
-            }
+            /* Modal Responsive */
+            #dss-modal-content { flex-direction: column; max-height: 90vh; overflow-y: auto; }
+            .dss-modal-left { padding: 30px; min-height: 150px; border-right: none; border-bottom: 1px solid #f3f4f6; }
+            .dss-modal-right { padding: 30px; }
+            .dss-modal-title { font-size: 24px; }
         }
-
 
         /* galary css  */
 

@@ -84,25 +84,25 @@
     <!--<< Favcion >>-->
     <!-- <link rel="shortcut icon" href="assets/img/logo/favs.jpeg"> -->
     <!--<< Bootstrap min.css >>-->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.0.6">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.0.7">
     <!--<< All Min Css >>-->
-    <link rel="stylesheet" href="assets/css/all.min.css?v=1.0.6">
+    <link rel="stylesheet" href="assets/css/all.min.css?v=1.0.7">
     <!--<< Animate.css >>-->
-    <link rel="stylesheet" href="assets/css/animate.css?v=1.0.6">
+    <link rel="stylesheet" href="assets/css/animate.css?v=1.0.7">
     <!--<< Magnific Popup.css >>-->
-    <link rel="stylesheet" href="assets/css/magnific-popup.css?v=1.0.6">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css?v=1.0.7">
     <!--<< MeanMenu.css >>-->
-    <link rel="stylesheet" href="assets/css/meanmenu.css?v=1.0.6">
+    <link rel="stylesheet" href="assets/css/meanmenu.css?v=1.0.7">
     <!--<< Swiper Bundle.css >>-->
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css?v=1.0.6">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css?v=1.0.7">
     <!--<< Nice Select.css >>-->
-    <link rel="stylesheet" href="assets/css/nice-select.css?v=1.0.6">
+    <link rel="stylesheet" href="assets/css/nice-select.css?v=1.0.7">
     <!--<< Main.css >>-->
-    <link rel="stylesheet" href="assets/css/main.css?v=1.0.6">
+    <link rel="stylesheet" href="assets/css/main.css?v=1.0.7">
 
-    <link rel="stylesheet" href="assets/css/index-5.css?v=1.0.6">
-    <link rel="stylesheet" href="assets/css/animation-html-5.css?v=1.0.6">
-    <link rel="stylesheet" href="assets/css/summit.css?v=1.0.6">
+    <link rel="stylesheet" href="assets/css/index-5.css?v=1.0.7">
+    <link rel="stylesheet" href="assets/css/animation-html-5.css?v=1.0.7">
+    <link rel="stylesheet" href="assets/css/summit.css?v=1.0.7">
 
     <link href="https://fonts.cdnfonts.com/css/aquire" rel="stylesheet">
 
@@ -260,8 +260,6 @@ html.lenis, html.lenis body {
 
   </div>
 
-
-
     <!-- Start of Sponsors Section -->
     <section id="dev-sponsors-section">
         <div class="dss-bg-glow"></div>
@@ -270,75 +268,80 @@ html.lenis, html.lenis body {
         <h1 class="dss-main-headline">Platinum Sponsors</h1>
 
         <div class="dss-logo-grid">
-            <!-- Sponsor 1 -->
-            <div class="dss-logo-item">
-                <!-- Replace with actual logo -->
-                <img src="assets/img/sponsors/resecurity.png" alt="Platinum Sponsor 1" class="dss-logo-img">
+            <!-- Sponsor 1: Resecurity -->
+            <div class="dss-logo-item" onclick="openSponsorModal(0)">
+                <img src="assets/img/sponsors/Resecurity.jpeg" alt="Resecurity" class="dss-logo-img">
             </div>
 
-            <!-- Sponsor 2 -->
-            <div class="dss-logo-item">
-                <!-- Replace with actual logo -->
-                <img src="assets/img/sponsors/Binary Logo Blue.png" alt="Platinum Sponsor 2" class="dss-logo-img">
+            <!-- Sponsor 2: Binary -->
+            <div class="dss-logo-item" onclick="openSponsorModal(1)">
+                <img src="assets/img/sponsors/Binary.jpeg" alt="Binary" class="dss-logo-img">
             </div>
         </div>
-
     </section>
 
-  <div id="dsc-root">
-        <div class="dsc-card">
-            <div class="dsc-gloss"></div>
-
-            <!-- Left: Title -->
-            <div class="dsc-title-wrap">
-                <strong class="dsc-main-title dsc-font-aquire">SUMMIT'26</strong>
+    <!-- Isolated Modal Structure -->
+    <div id="dss-modal-overlay" onclick="closeSponsorModal(event)">
+        <div id="dss-modal-content" onclick="event.stopPropagation()">
+            <button id="dss-close-btn" onclick="closeSponsorModal()">&times;</button>
+            
+            <div class="dss-modal-left">
+                <img id="dss-modal-logo" src="" alt="Sponsor Logo">
             </div>
-
-            <!-- Center: Countdown -->
-            <div class="dsc-timer-row">
-                <div class="dsc-box">
-                    <strong id="dsc-days" class="dsc-val">00</strong>
-                    <strong class="dsc-label">Days</strong>
-                </div>
-                <strong class="dsc-sep">:</strong>
-                <div class="dsc-box">
-                    <strong id="dsc-hours" class="dsc-val">00</strong>
-                    <strong class="dsc-label">Hours</strong>
-                </div>
-                <strong class="dsc-sep">:</strong>
-                <div class="dsc-box">
-                    <strong id="dsc-mins" class="dsc-val">00</strong>
-                    <strong class="dsc-label">Minutes</strong>
-                </div>
-                <strong class="dsc-sep">:</strong>
-                <div class="dsc-box dsc-highlight">
-                    <strong id="dsc-secs" class="dsc-val">00</strong>
-                    <strong class="dsc-label">Seconds</strong>
-                </div>
-            </div>
-
-            <!-- Right: Info -->
-            <div class="dsc-info-col">
-                <div class="dsc-info-item">
-                    <div class="dsc-icon-box dsc-ic-date">
-                        <i data-lucide="calendar"></i>
-                    </div>
-                    <div class="dsc-info-txt">
-                        <strong class="dsc-info-hdr">Date & Time</strong>
-                        <strong class="dsc-info-val">Aug 6, 2026 | 9:00 AM</strong>
-                    </div>
-                </div>
-                <div class="dsc-info-item">
-                    <div class="dsc-icon-box dsc-ic-loc">
-                        <i data-lucide="map-pin"></i>
-                    </div>
-                    <div class="dsc-info-txt">
-                        <strong class="dsc-info-hdr">Venue</strong>
-                        <strong class="dsc-info-val">Dr Ambedkar international center</strong>
-                    </div>
-                </div>
+            
+            <div class="dss-modal-right">
+                <p class="dss-modal-tag">PLATINUM SPONSOR</p>
+                <h2 class="dss-modal-title" id="dss-modal-name">Sponsor Name</h2>
+                <p class="dss-modal-desc" id="dss-modal-text">
+                    Sponsor description goes here.
+                </p>
+                <a href="https://www.binary.com" id="dss-modal-url" class="dss-modal-link" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    Visit Website
+                </a>
             </div>
         </div>
+    </div>
+
+<div id="cohort-timer-section">
+ <div class="ct-card">
+        <strong class="ct-header">FUTURECRIME SUMMIT 2026</strong>
+
+        <div class="ct-timer-wrap">
+            <div class="ct-timer-item">
+                <strong id="ct-days" class="ct-val">00</strong>
+                <strong class="ct-label">Days</strong>
+            </div>
+            <strong class="ct-sep">:</strong>
+            <div class="ct-timer-item">
+                <strong id="ct-hours" class="ct-val">00</strong>
+                <strong class="ct-label">Hours</strong>
+            </div>
+            <strong class="ct-sep">:</strong>
+            <div class="ct-timer-item">
+                <strong id="ct-mins" class="ct-val">00</strong>
+                <strong class="ct-label">Mins</strong>
+            </div>
+            <strong class="ct-sep">:</strong>
+            <div class="ct-timer-item">
+                <strong id="ct-secs" class="ct-val">00</strong>
+                <strong class="ct-label">Secs</strong>
+            </div>
+        </div>
+
+        <div class="ct-divider"></div>
+
+        <div class="ct-chips-row">
+            <div class="ct-pill">
+                <span class="ct-pill-icon">📅</span>
+                <strong class="ct-pill-text">6th August, 2026</strong>
+            </div>
+            <div class="ct-pill">
+                <span class="ct-pill-icon">📍</span>
+                <strong class="ct-pill-text">Dr. Ambedkar International Centre, Delhi</strong>
+            </div>
+        </div>
+    </div>
     </div>
 
       <section class="about-section fix">
@@ -1710,45 +1713,45 @@ FCRF is registered under Section 8 of the Companies Act, 2013 and Section 12A & 
     </footer>
 
    <!--<< All JS Plugins >>-->
-<script src="assets/js/jquery-3.7.1.min.js?v=1.0.6"></script>
+<script src="assets/js/jquery-3.7.1.min.js?v=1.0.7"></script>
 <!--<< Viewport Js >>-->
-<script src="assets/js/viewport.jquery.js?v=1.0.6"></script>
+<script src="assets/js/viewport.jquery.js?v=1.0.7"></script>
 <!--<< Bootstrap Js >>-->
-<script src="assets/js/bootstrap.bundle.min.js?v=1.0.6"></script>
+<script src="assets/js/bootstrap.bundle.min.js?v=1.0.7"></script>
 <!--<< Nice Select Js >>-->
-<script src="assets/js/jquery.nice-select.min.js?v=1.0.6"></script>
+<script src="assets/js/jquery.nice-select.min.js?v=1.0.7"></script>
 <!--<< Waypoints Js >>-->
-<script src="assets/js/jquery.waypoints.js?v=1.0.6"></script>
+<script src="assets/js/jquery.waypoints.js?v=1.0.7"></script>
 <!--<< Counterup Js >>-->
-<script src="assets/js/jquery.counterup.min.js?v=1.0.6"></script>
+<script src="assets/js/jquery.counterup.min.js?v=1.0.7"></script>
 <!--<< Swiper Slider Js >>-->
-<script src="assets/js/swiper-bundle.min.js?v=1.0.6"></script>
+<script src="assets/js/swiper-bundle.min.js?v=1.0.7"></script>
 <!--<< MeanMenu Js >>-->
-<script src="assets/js/jquery.meanmenu.min.js?v=1.0.6"></script>
+<script src="assets/js/jquery.meanmenu.min.js?v=1.0.7"></script>
 <!--<< Magnific Popup Js >>-->
-<script src="assets/js/jquery.magnific-popup.min.js?v=1.0.6"></script>
+<script src="assets/js/jquery.magnific-popup.min.js?v=1.0.7"></script>
 
 <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <!--<< Wow Animation Js >>-->
-<script src="assets/js/wow.min.js?v=1.0.6"></script>
+<script src="assets/js/wow.min.js?v=1.0.7"></script>
 <!--<< Gsap Js >>-->
-<script src="assets/js/gsap.min.js?v=1.0.6"></script>
+<script src="assets/js/gsap.min.js?v=1.0.7"></script>
 <!--<< Lenis Js >>-->
-<script src="assets/js/lenis.min.js?v=1.0.6"></script>
+<script src="assets/js/lenis.min.js?v=1.0.7"></script>
 <!--<< ScrollSmoother Js >>-->
-<script src="assets/js/scrollSmoother.js?v=1.0.6"></script>
+<script src="assets/js/scrollSmoother.js?v=1.0.7"></script>
 <!--<< ScrollTrigger Js >>-->
-<script src="assets/js/ScrollTrigger.min.js?v=1.0.6"></script>
+<script src="assets/js/ScrollTrigger.min.js?v=1.0.7"></script>
 <!--<< Spalit Text Js >>-->
-<script src="assets/js/spilitext-gsap.js?v=1.0.6"></script>
+<script src="assets/js/spilitext-gsap.js?v=1.0.7"></script>
 <!--<< Vanilla Tilt Js >>-->
-<script src="assets/js/vanilla-tilt.min.js?v=1.0.6"></script>
+<script src="assets/js/vanilla-tilt.min.js?v=1.0.7"></script>
 <!--<< Main.js >>-->
-<script src="assets/js/main.js?v=1.0.6"></script>
-<script src="assets/js/summit.js?v=1.0.6"></script>
+<script src="assets/js/main.js?v=1.0.7"></script>
+<script src="assets/js/summit.js?v=1.0.7"></script>
 
 
     <script>
