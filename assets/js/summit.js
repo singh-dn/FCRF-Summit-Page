@@ -668,7 +668,7 @@
 
         // --- Animated Title Setup (Vertical Cut Reveal) ---
         const titleContainer = document.getElementById('animated-title');
-        const text = "Plans that works best for your";
+        const text = "Registration Options for FutureCrime Summit 2026";
         const words = text.split(" ");
         let staggerDuration = 0.15;
 
