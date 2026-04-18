@@ -123,3 +123,543 @@
     padding: 24px 20px;
   }
 }
+
+
+        /* --- SCOPED CSS: All rules prefixed to prevent conflicts --- */
+        .futurecrime-pricing-wrapper {
+             --gradient-color: #8350e8;
+            --sparkles-color: #ffffff;
+            
+            background-color: #000;
+            color: #fff;
+            overflow: hidden;
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            position: relative;
+            width: 100%;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+        }
+
+        .futurecrime-pricing-wrapper *, 
+        .futurecrime-pricing-wrapper *::before, 
+        .futurecrime-pricing-wrapper *::after {
+            box-sizing: border-box;
+        }
+
+        /* Reset strong tag to preserve the original design of spans */
+        .futurecrime-pricing-wrapper strong {
+            font-weight: inherit;
+        }
+
+        /* --- Utility Classes used by JS --- */
+        .futurecrime-pricing-wrapper .text-white { color: #fff !important; }
+        .futurecrime-pricing-wrapper .text-gray-400 { color: #9ca3af !important; }
+
+        /* --- Scroll Reveal Animations --- */
+        .futurecrime-pricing-wrapper .reveal-target {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease-out, filter 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .futurecrime-pricing-wrapper .reveal-target.revealed {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0);
+        }
+
+        /* --- Sparkles Animations --- */
+        @keyframes fc-sparkle-float {
+            0% { 
+                opacity: calc(var(--base-opacity) / 2); 
+                transform: translateY(0); 
+            }
+            50% { 
+                opacity: var(--base-opacity); 
+            }
+            100% { 
+                opacity: calc(var(--base-opacity) / 2); 
+                transform: translateY(-20px); 
+            }
+        }
+        .futurecrime-pricing-wrapper .sparkle-anim {
+            animation: fc-sparkle-float linear infinite;
+        }
+        .futurecrime-pricing-wrapper .sparkle-particle {
+            position: absolute;
+            border-radius: 9999px;
+            background-color: #fff;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+
+        /* --- Text Vertical Cut Reveal Animations --- */
+        @keyframes fc-text-reveal {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .futurecrime-pricing-wrapper .text-reveal-char {
+            display: inline-block;
+            transform: translateY(-100%);
+            opacity: 0;
+            animation: fc-text-reveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        .futurecrime-pricing-wrapper .word-wrapper {
+            display: inline-flex;
+            overflow: hidden;
+            margin-left: 0.25rem;
+            margin-right: 0.25rem;
+        }
+        .futurecrime-pricing-wrapper .char-wrapper {
+            white-space: pre-wrap;
+            position: relative;
+        }
+
+        /* --- Pricing Switch Transition --- */
+        .futurecrime-pricing-wrapper #switch-pill {
+            position: absolute;
+            top: 0.25rem;
+            left: 0.25rem;
+            height: 2rem;
+            width: 90px;
+            border-radius: 9999px;
+            background-color: #2563eb;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 0 10px rgba(37, 99, 235, 0.5);
+            z-index: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        /* --- Custom Scrollbar for Feature List --- */
+        .futurecrime-pricing-wrapper .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .futurecrime-pricing-wrapper .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+        .futurecrime-pricing-wrapper .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        .futurecrime-pricing-wrapper .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- Layout & Sections --- */
+        .futurecrime-pricing-wrapper .main-section {
+            position: relative;
+            min-height: 100vh;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 3rem;
+            padding-bottom: 6rem;
+        }
+
+        .futurecrime-pricing-wrapper .bg-effects-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .futurecrime-pricing-wrapper .glow-1 {
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 60%;
+            height: 70vh;
+            background-color: rgba(29, 53, 255, 0.7);
+            filter: blur(120px);
+            border-radius: 9999px;
+        }
+
+        .futurecrime-pricing-wrapper .glow-2 {
+            position: absolute;
+            top: -10%;
+            right: -20%;
+            width: 70%;
+            height: 80vh;
+            background-color: rgba(12, 24, 166, 0.8);
+            filter: blur(140px);
+            border-radius: 9999px;
+        }
+
+        .futurecrime-pricing-wrapper .glow-3 {
+            position: absolute;
+            top: -40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 80vh;
+            background-color: rgba(24, 48, 214, 0.6);
+            filter: blur(150px);
+            border-radius: 9999px;
+        }
+
+        .futurecrime-pricing-wrapper .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px), 
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 80px 80px;
+            -webkit-mask-image: linear-gradient(to bottom, white 15%, transparent 70%);
+            mask-image: linear-gradient(to bottom, white 15%, transparent 70%);
+        }
+
+        .futurecrime-pricing-wrapper .sparkles-wrapper {
+            position: absolute;
+            top: 0;
+            height: 24rem;
+            width: 100vw;
+            overflow: hidden;
+            -webkit-mask-image: radial-gradient(50% 50% at 50% 50%, white, transparent);
+            mask-image: radial-gradient(50% 50% at 50% 50%, white, transparent);
+        }
+
+        .futurecrime-pricing-wrapper #sparkles-container {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            width: 100%;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(50% 50% at 50% 50%, white, transparent 85%);
+            mask-image: radial-gradient(50% 50% at 50% 50%, white, transparent 85%);
+        }
+
+        /* --- Header Content --- */
+        .futurecrime-pricing-wrapper .header-article {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-top: 5rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .futurecrime-pricing-wrapper .main-title {
+            font-size: 1.875rem;
+            line-height: 2.25rem;
+            font-weight: 500;
+            color: #fff;
+            margin: 0 0 1rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            letter-spacing: -0.025em;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+
+        .futurecrime-pricing-wrapper .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .futurecrime-pricing-wrapper .subtitle-wrapper {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        .futurecrime-pricing-wrapper .subtitle-wrapper p {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            margin: 0;
+        }
+
+        /* --- Toggle Switch --- */
+        .futurecrime-pricing-wrapper .toggle-section {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .futurecrime-pricing-wrapper .toggle-bg {
+            position: relative;
+            z-index: 10;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            width: max-content;
+            border-radius: 9999px;
+            background-color: #111;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.25rem;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        .futurecrime-pricing-wrapper .toggle-btn {
+            position: relative;
+            z-index: 10;
+            width: max-content;
+            height: 2rem;
+            border-radius: 9999px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.15s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* --- Pricing Card --- */
+        .futurecrime-pricing-wrapper .card-container {
+            display: flex;
+            justify-content: center;
+            max-width: 28rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            margin-bottom: 3rem;
+            margin-top: 1.5rem;
+        }
+
+        .futurecrime-pricing-wrapper .card-wrapper-full {
+            width: 100%;
+        }
+
+        .futurecrime-pricing-wrapper .card-border-gradient {
+            position: relative;
+            border-radius: 24px;
+            padding: 2px;
+            background-image: linear-gradient(to bottom, #20c0ff, #1a66ff, #e5e7eb);
+            z-index: 20;
+        }
+
+        .futurecrime-pricing-wrapper .floating-badge {
+            position: absolute;
+            top: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-image: linear-gradient(to right, #20c0ff, #1a66ff);
+            color: #fff;
+            padding: 0.375rem 1.25rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.5), 0 4px 6px -4px rgba(59, 130, 246, 0.5);
+            z-index: 30;
+            white-space: nowrap;
+        }
+        .futurecrime-pricing-wrapper .badge-icon {
+            width: 0.875rem;
+            height: 0.875rem;
+        }
+
+        .futurecrime-pricing-wrapper .card-inner {
+            border-radius: 22px;
+            background-color: #ffffff;
+            color: #111827;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .futurecrime-pricing-wrapper .card-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+            padding: 1.5rem;
+            text-align: left;
+            flex: none;
+            margin-top: 0.5rem;
+        }
+
+        .futurecrime-pricing-wrapper .card-title-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .futurecrime-pricing-wrapper .card-title {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .futurecrime-pricing-wrapper .price-row {
+            display: flex;
+            align-items: baseline;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .futurecrime-pricing-wrapper .price-main {
+            font-size: 2.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.025em;
+        }
+
+        .futurecrime-pricing-wrapper .price-period {
+            color: #6b7280;
+            margin-left: 0.25rem;
+            font-weight: 400;
+            font-size: 0.75rem;
+        }
+
+        .futurecrime-pricing-wrapper .card-desc {
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+            height: auto;
+            margin-top: 0.25rem;
+            line-height: 1.625;
+        }
+
+        .futurecrime-pricing-wrapper .card-body {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 0%;
+        }
+
+        .futurecrime-pricing-wrapper .btn-primary {
+            width: 100%;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: 0.75rem;
+            transition: all 0.15s ease-in-out;
+            background-color: #1a66ff;
+            box-shadow: 0 15px 40px -10px rgba(26, 102, 255, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            display: block;
+        }
+        .futurecrime-pricing-wrapper .btn-primary:hover {
+            background-color: #3b82f6;
+        }
+
+        .futurecrime-pricing-wrapper .features-section {
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            flex: 1 1 0%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .futurecrime-pricing-wrapper .features-title {
+            font-weight: 500;
+            font-size: 0.75rem;
+            color: #111827;
+            margin: 0;
+        }
+
+        .futurecrime-pricing-wrapper .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+            margin: 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        /* Generated via JS but styled here */
+        .futurecrime-pricing-wrapper .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .futurecrime-pricing-wrapper .feature-bullet {
+            height: 5px;
+            width: 5px;
+            background-color: #3b82f6;
+            border-radius: 9999px;
+            flex-shrink: 0;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+        }
+        .futurecrime-pricing-wrapper .feature-text {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.25;
+        }
+
+        /* --- Responsive Media Queries --- */
+        @media (min-width: 640px) {
+            .futurecrime-pricing-wrapper .header-article {
+                margin-bottom: 4rem;
+                padding-top: 8rem;
+            }
+            .futurecrime-pricing-wrapper .main-title {
+                font-size: 2.25rem;
+                line-height: 2.5rem;
+            }
+            .futurecrime-pricing-wrapper .toggle-section {
+                margin-top: 2rem;
+            }
+            .futurecrime-pricing-wrapper .toggle-btn {
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+            }
+            .futurecrime-pricing-wrapper .card-header {
+                padding: 2rem;
+            }
+            .futurecrime-pricing-wrapper .card-title {
+                font-size: 22px;
+            }
+            .futurecrime-pricing-wrapper .price-main {
+                font-size: 44px;
+            }
+            .futurecrime-pricing-wrapper .card-desc {
+                margin-bottom: 1rem;
+                height: 3rem;
+            }
+            .futurecrime-pricing-wrapper .card-body {
+                padding: 0 2rem 2rem 2rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .futurecrime-pricing-wrapper .main-title {
+                font-size: 3rem;
+                line-height: 1;
+            }
+        }

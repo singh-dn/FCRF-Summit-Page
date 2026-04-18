@@ -633,3 +633,178 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeSponsorModal();
         });
+
+
+
+
+
+
+          // price section 
+
+       // --- Feature Lists Data Injection ---
+        const lists = {
+            regular: [
+                "Access to all sessions",
+                "Keynotes",
+                "Meals on both days",
+                "Delegate kit"
+            ]
+        };
+
+        function renderList(id, items) {
+            const ul = document.getElementById(id);
+            items.forEach(item => {
+                // Replaced span with strong in the injected HTML
+                ul.innerHTML += `
+                    <li class="feature-item">
+                        <strong class="feature-bullet"></strong>
+                        <strong class="feature-text">${item}</strong>
+                    </li>
+                `;
+            });
+        }
+        renderList('list-regular', lists.regular);
+
+
+        // --- Animated Title Setup (Vertical Cut Reveal) ---
+        const titleContainer = document.getElementById('animated-title');
+        const text = "Plans that works best for your";
+        const words = text.split(" ");
+        let staggerDuration = 0.15;
+
+        words.forEach((word, wordIndex) => {
+            // Replaced span with strong for word wrappers
+            const wordWrapper = document.createElement('strong');
+            wordWrapper.className = 'word-wrapper';
+            
+            const chars = word.split('');
+            chars.forEach((char, charIndex) => {
+                // Replaced span with strong for char wrappers
+                const charEl = document.createElement('strong');
+                charEl.className = 'char-wrapper';
+                
+                const innerAnimSpan = document.createElement('strong');
+                innerAnimSpan.textContent = char;
+                innerAnimSpan.className = 'text-reveal-char';
+                
+                const delay = (wordIndex * staggerDuration) + (charIndex * 0.02);
+                innerAnimSpan.style.animationDelay = `${delay}s`;
+                
+                charEl.appendChild(innerAnimSpan);
+                wordWrapper.appendChild(charEl);
+            });
+
+            titleContainer.appendChild(wordWrapper);
+        });
+
+
+        // --- Sparkles Background Generation ---
+        const sparklesContainer = document.getElementById('sparkles-container');
+        for (let i = 0; i < 150; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'sparkle-particle sparkle-anim';
+            
+            const size = Math.random() * 2.5 + 1.5; 
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const opacity = Math.random() * 0.6 + 0.4; 
+            const animDuration = Math.random() * 3 + 2;
+            const animDelay = Math.random() * -5;
+
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${x}%`;
+            particle.style.top = `${y}%`;
+            particle.style.setProperty('--base-opacity', opacity);
+            particle.style.animationDuration = `${animDuration}s`;
+            particle.style.animationDelay = `${animDelay}s`;
+
+            sparklesContainer.appendChild(particle);
+        }
+
+
+        // --- Currency Switch Logic ---
+        let currentCurrency = 'inr';
+        function setCurrency(currency) {
+            currentCurrency = currency;
+            
+            const btnInr = document.getElementById('btn-inr');
+            const btnUsd = document.getElementById('btn-usd');
+            const switchPill = document.getElementById('switch-pill');
+            const priceVals = document.querySelectorAll('.price-val');
+            const currencySymbols = document.querySelectorAll('.currency-symbol');
+
+            if (currentCurrency === 'usd') {
+                switchPill.style.transform = `translateX(${btnInr.offsetWidth}px)`;
+                switchPill.style.width = `${btnUsd.offsetWidth}px`;
+                
+                btnUsd.classList.remove('text-gray-400');
+                btnUsd.classList.add('text-white');
+                btnInr.classList.remove('text-white');
+                btnInr.classList.add('text-gray-400');
+            } else {
+                switchPill.style.transform = `translateX(0px)`;
+                switchPill.style.width = `${btnInr.offsetWidth}px`;
+                
+                btnInr.classList.remove('text-gray-400');
+                btnInr.classList.add('text-white');
+                btnUsd.classList.remove('text-white');
+                btnUsd.classList.add('text-gray-400');
+            }
+
+            priceVals.forEach(el => {
+                const startPrice = parseInt(el.textContent);
+                const endPrice = currentCurrency === 'usd' ? parseInt(el.getAttribute('data-usd')) : parseInt(el.getAttribute('data-inr'));
+                
+                animateNumber(el, startPrice, endPrice, 300);
+            });
+
+            currencySymbols.forEach(el => {
+                el.textContent = currentCurrency === 'usd' ? '$' : '₹';
+            });
+        }
+
+        function animateNumber(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                element.textContent = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    element.textContent = end;
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const btnInr = document.getElementById('btn-inr');
+            const switchPill = document.getElementById('switch-pill');
+            switchPill.style.width = `${btnInr.offsetWidth}px`;
+        });
+
+
+        // --- Scroll Reveal Logic (Intersection Observer) ---
+        const revealElements = document.querySelectorAll('.reveal-target');
+        const revealOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.getAttribute('data-delay') || 0;
+                    entry.target.style.transitionDelay = `${delay}s`;
+                    
+                    void entry.target.offsetWidth;
+                    
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => revealObserver.observe(el));

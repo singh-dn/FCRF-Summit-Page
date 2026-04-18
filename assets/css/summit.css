@@ -2832,3 +2832,144 @@
                 padding: 0 15px;
             }
         }
+
+
+
+
+                /* --- Isolated Banner Styles Start Here --- */
+        .pricing-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            /* Requested Gradient Background using CSS variables */
+            background: linear-gradient(to right, #000d31, #014dc8);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999999; /* Maximized to ensure it sits visually above any other bottom elements */
+            padding-bottom: env(safe-area-inset-bottom); /* Ensures it doesn't get hidden under iOS/Android swipe bars */
+        }
+
+        .banner-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 16px; /* Reduced padding for a shorter banner height */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap; /* Prevent wrapping to keep horizontal layout on mobile */
+            gap: 12px;
+        }
+
+        .pricing-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px; /* Tighter gap */
+            flex-wrap: nowrap;
+        }
+
+        /* Replaced spans with divs */
+        .current-price {
+            font-size: 24px; /* Slightly reduced */
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: 0.5px;
+            white-space: nowrap; /* Prevents text from breaking */
+        }
+
+        .original-price {
+            font-size: 14px; /* Slightly reduced */
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: line-through;
+            margin: 0;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .deadline-text {
+            font-size: 12px; /* Slightly reduced */
+            color: rgba(255, 255, 255, 0.95);
+            margin: 4px 0 0 0; /* Tighter margin */
+            white-space: nowrap;
+        }
+
+        .register-btn {
+            padding: 10px 24px; /* Reduced button height */
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%); /* Updated gradient */
+            color: #ffffff; /* White text for better contrast */
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            white-space: nowrap; /* Keeps button text on one line */
+            flex-shrink: 0; /* Prevents the button from being crushed on small screens */
+            
+            /* Required for reflective shine effect */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Moving reflective shine (lightning) effect */
+        .register-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            /* Made the white glare slightly sharper and brighter */
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            animation: shine-sweep 4s infinite; /* 4 second total cycle */
+        }
+
+        @keyframes shine-sweep {
+            0% { left: -100%; }
+            25% { left: 200%; } /* Fast sweep: takes 25% of 4s (exactly 1 second) */
+            100% { left: 200%; } /* Pause between sweeps for the remaining 3 seconds */
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .register-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive adjustments for mobile: Keeps elements horizontal */
+        @media (max-width: 480px) {
+            .banner-container {
+                padding: 8px 12px; /* Even tighter for small mobile screens */
+                gap: 8px;
+            }
+            
+            .current-price {
+                font-size: 20px;
+            }
+            
+            .original-price {
+                font-size: 12px;
+            }
+            
+            .deadline-text {
+                font-size: 11px;
+                margin: 2px 0 0 0;
+            }
+            
+            .register-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }

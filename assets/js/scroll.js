@@ -75,7 +75,6 @@
 
 
 
-    // scrooll and pauch 
-
+  
 
     
