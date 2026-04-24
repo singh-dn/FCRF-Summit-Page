@@ -808,3 +808,106 @@
         }, revealOptions);
 
         revealElements.forEach(el => revealObserver.observe(el));
+
+
+
+
+
+        
+//   question and answer 
+
+
+  (function() {
+    const scope = document.getElementById('faq-component-scope');
+    if(!scope) return;
+
+    // Tabs Logic
+    const tabs = scope.querySelectorAll(".faq-iso-tab");
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("faq-iso-active"));
+        scope.querySelectorAll(".faq-content").forEach(c => c.classList.remove("faq-iso-active"));
+
+        tab.classList.add("faq-iso-active");
+        const targetId = tab.getAttribute('data-tab');
+        const targetContent = scope.querySelector(`#${targetId}`);
+        if(targetContent) targetContent.classList.add("faq-iso-active");
+      });
+    });
+
+    // Accordion Logic
+    const questions = scope.querySelectorAll(".faq-question");
+    questions.forEach(question => {
+      question.addEventListener("click", () => {
+        const item = question.parentElement;
+        const isActive = item.classList.contains("faq-iso-active");
+        
+        // Close siblings
+        const parent = item.parentElement;
+        parent.querySelectorAll('.faq-item').forEach(i => i.classList.remove("faq-iso-active"));
+
+        if(!isActive) {
+            item.classList.add("faq-iso-active");
+        }
+      });
+    });
+
+    // Scroll Animation Logic
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('faq-iso-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    scope.querySelectorAll('.faq-iso-fade').forEach(el => {
+      observer.observe(el);
+    });
+  })();
+
+  // Initialize Icons
+  if(typeof lucide !== 'undefined') lucide.createIcons();
+
+
+   // Initialize Icons
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            /* --- SCROLL UP LOGIC --- */
+            const scrollUpBtn = document.getElementById('scrollUpBtn');
+            let isButtonVisible = false;
+
+            window.addEventListener('scroll', () => {
+                const shouldShow = window.scrollY > 300;
+                if (shouldShow !== isButtonVisible) {
+                    isButtonVisible = shouldShow;
+                    if (isButtonVisible) {
+                        scrollUpBtn.classList.add('show');
+                    } else {
+                        scrollUpBtn.classList.remove('show');
+                    }
+                }
+            }, { passive: true });
+
+            scrollUpBtn.addEventListener('click', () => {
+                const startPosition = window.scrollY;
+                if (startPosition === 0) return;
+
+                const duration = 500; 
+                const startTime = performance.now();
+
+                function scrollAnimation(currentTime) {
+                    const timeElapsed = currentTime - startTime;
+                    const progress = Math.min(timeElapsed / duration, 1);
+                    const ease = 1 - Math.pow(1 - progress, 4); // Immediate feel
+
+                    window.scrollTo(0, startPosition - (startPosition * ease));
+
+                    if (timeElapsed < duration) {
+                        requestAnimationFrame(scrollAnimation);
+                    }
+                }
+                requestAnimationFrame(scrollAnimation);
+            });
+        });
