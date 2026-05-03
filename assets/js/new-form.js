@@ -1,4 +1,5 @@
   // 1. Initialize Lucide Icons
+// 1. Initialize Lucide Icons
         lucide.createIcons();
 
         // 2. Navbar Scroll Effect
