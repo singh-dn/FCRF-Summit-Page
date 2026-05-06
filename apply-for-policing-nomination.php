@@ -81,11 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Summaries & Highlights
         $summary          = sanitize_input($_POST['summary'] ?? '');
-        $major_cases      = sanitize_input($_POST['major_cases'] ?? '');
-        $key_achievements = sanitize_input($_POST['key_achievements'] ?? '');
-        $impact           = sanitize_input($_POST['impact'] ?? '');
-        $innovation       = sanitize_input($_POST['innovation'] ?? '');
-        $outreach         = sanitize_input($_POST['outreach'] ?? '');
         
         // Links
         $linkedin_url     = sanitize_input($_POST['linkedin_url'] ?? '');
@@ -156,13 +151,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!move_uploaded_file($_FILES["support_doc"]["tmp_name"], $supportDocPath)) { throw new Exception("Failed to upload Supporting Document."); }
         }
 
-        // 5. Insert into Database securely (30 Parameters)
-        $sql = "INSERT INTO $table_name (nomination_type, nominee_name, email, phone, department, designation, police_station, city, state, country, rep_name, rep_designation, rep_email, rep_phone, award_category, other_category, experience_years, current_work_area, jurisdiction, summary, major_cases, key_achievements, impact, innovation, outreach, linkedin_url, website_url, supporting_links, cv_path, support_doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // 5. Insert into Database securely (25 Parameters)
+        $sql = "INSERT INTO $table_name (nomination_type, nominee_name, email, phone, department, designation, police_station, city, state, country, rep_name, rep_designation, rep_email, rep_phone, award_category, other_category, experience_years, current_work_area, jurisdiction, summary, linkedin_url, website_url, supporting_links, cv_path, support_doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($sql);
         if (!$stmt) { throw new Exception("Database Error: " . $conn->error); }
 
-        $stmt->bind_param("ssssssssssssssssssssssssssssss", $nomination_type, $nominee_name, $email, $phone, $department, $designation, $police_station, $city, $state, $country, $rep_name, $rep_designation, $rep_email, $rep_phone, $award_category, $other_category, $experience_years, $current_work_area, $jurisdiction, $summary, $major_cases, $key_achievements, $impact, $innovation, $outreach, $linkedin_url, $website_url, $supporting_links, $cvPath, $supportDocPath);
+        $stmt->bind_param("sssssssssssssssssssssssss", $nomination_type, $nominee_name, $email, $phone, $department, $designation, $police_station, $city, $state, $country, $rep_name, $rep_designation, $rep_email, $rep_phone, $award_category, $other_category, $experience_years, $current_work_area, $jurisdiction, $summary, $linkedin_url, $website_url, $supporting_links, $cvPath, $supportDocPath);
         
         if ($stmt->execute()) {
             $showSuccessModal = true;
@@ -195,7 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <meta name="description" content="Apply for Cyber Policing & Law Enforcement Awards. Nominate yourself, another officer, a police unit, or a law enforcement organisation for the FCRF Excellence Awards 2026." />
 
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
-<link rel="shortcut icon" href="assets/img/logo/fcrf-logo.webp">    
+<link rel="shortcut icon" href="assets/img/logo/favs.jpeg">   
 <script src="https://unpkg.com/lucide@latest"></script>    
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -431,7 +426,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="isolated-program-module">
         <header class="main-header">
             <a href="https://fcrf.academy" class="logo-link">
-                <img src="assets/img/logo/FCRF Excellence(vertical).webp" alt="FCRF Academy" class="brand-logo">
+                <img src="assets/img/logo/FCRF Excellence.webp" alt="FCRF Academy" class="brand-logo">
             </a>
         </header>
 
@@ -747,35 +742,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <textarea name="summary" required placeholder="Please provide detailed justification for this nomination..."><?php echo isset($_POST['summary']) ? htmlspecialchars($_POST['summary']) : ''; ?></textarea>
                 </div>
 
-                <div class="section-title"><i data-lucide="target"></i> 6. Operational Highlights</div>
-                <span class="optional-tag mb-4" style="display:block; margin-top:-10px;">Please share the most relevant work, cases, initiatives, reforms, awareness campaigns, operational achievements, or infrastructure/capacity-building efforts supporting this nomination.</span>
-
-                <div class="form-group">
-                    <label>Major Cases / Initiatives / Operations Undertaken <span class="inline-optional">(Optional)</span></label>
-                    <textarea name="major_cases" placeholder="Describe major operations..." style="min-height: 80px;"><?php echo isset($_POST['major_cases']) ? htmlspecialchars($_POST['major_cases']) : ''; ?></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label>Key Achievements / Results <span class="inline-optional">(Optional)</span></label>
-                    <textarea name="key_achievements" placeholder="List key results..." style="min-height: 80px;"><?php echo isset($_POST['key_achievements']) ? htmlspecialchars($_POST['key_achievements']) : ''; ?></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label>Impact on Cybercrime Prevention / Detection / Investigation <span class="inline-optional">(Optional)</span></label>
-                    <textarea name="impact" placeholder="Explain the impact..." style="min-height: 80px;"><?php echo isset($_POST['impact']) ? htmlspecialchars($_POST['impact']) : ''; ?></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label>Innovation / Technology Adoption <span class="inline-optional">(if any)</span></label>
-                    <textarea name="innovation" placeholder="Describe technology use..." style="min-height: 80px;"><?php echo isset($_POST['innovation']) ? htmlspecialchars($_POST['innovation']) : ''; ?></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label>Public Outreach / Awareness Activities <span class="inline-optional">(if any)</span></label>
-                    <textarea name="outreach" placeholder="Describe awareness campaigns..." style="min-height: 80px;"><?php echo isset($_POST['outreach']) ? htmlspecialchars($_POST['outreach']) : ''; ?></textarea>
-                </div>
-
-                <div class="section-title"><i data-lucide="paperclip"></i> 7. Links & Attachments</div>
+                <div class="section-title"><i data-lucide="paperclip"></i> 6. Links & Attachments</div>
 
                 <div class="grid-2">
                     <div class="form-group">
@@ -828,7 +795,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
 
-                <div class="section-title"><i data-lucide="check-square"></i> 8. Declaration</div>
+                <div class="section-title"><i data-lucide="check-square"></i> 7. Declaration</div>
                 
                 <div class="form-group">
                     <label class="radio-label" style="align-items: flex-start; background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
