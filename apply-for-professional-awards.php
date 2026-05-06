@@ -15,8 +15,7 @@ $db_pass = "Summit2026";          // Replace with actual DB password
 $db_name = "u545411682_summit";
 $table_name = "fcrf_award_nominations"; 
 
-
-// 🔴 RECAPTCHA KEYS (Updated)
+// 🔴 RECAPTCHA KEYS
 $recaptcha_site_key = "6LfkXYwsAAAAAO8Vwrhg7KdnocQzL-yQwl8zgTt4";
 $recaptcha_secret = "6LfkXYwsAAAAAOg_C4CYVgNlQOyG9X1RU4Pl576h"; 
 
@@ -72,7 +71,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $rep_email       = sanitize_input($_POST['rep_email'] ?? '');
         $rep_phone       = sanitize_input($_POST['rep_phone'] ?? '');
 
-        $award_category   = sanitize_input($_POST['award_category'] ?? '');
+        // Handle Checkboxes (Award Categories Multi-Select)
+        $award_category_arr = $_POST['award_category'] ?? [];
+        if (empty($award_category_arr)) {
+            throw new Exception("Please select at least one award category.");
+        }
+        $award_category = implode(" | ", sanitize_input($award_category_arr));
+
         $experience_years = sanitize_input($_POST['experience_years'] ?? '');
         $core_domain      = sanitize_input($_POST['core_domain'] ?? '');
         $summary          = sanitize_input($_POST['summary'] ?? '');
@@ -81,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $declaration = isset($_POST['declaration']) ? 'Yes' : '';
 
         // --- STRICT VALIDATION LOGIC ---
-        if (empty($nomination_type) || empty($nominee_name) || empty($email) || empty($phone) || empty($organization) || empty($designation) || empty($city) || empty($state) || empty($country) || empty($award_category) || empty($experience_years) || empty($core_domain) || empty($summary) || empty($declaration)) {
+        if (empty($nomination_type) || empty($nominee_name) || empty($email) || empty($phone) || empty($organization) || empty($designation) || empty($city) || empty($state) || empty($country) || empty($experience_years) || empty($core_domain) || empty($summary) || empty($declaration)) {
             throw new Exception("All fields marked with * are mandatory.");
         }
 
@@ -127,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("Invalid nominee email format.");
         }
 
-        // Validate URL if provided to prevent 'javascript:...' XSS payloads
+        // Validate URL if provided
         if (!empty($linkedin_url) && !filter_var($linkedin_url, FILTER_VALIDATE_URL)) {
             throw new Exception("Please provide a valid LinkedIn URL.");
         }
@@ -190,7 +195,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // 5. Insert into Database securely
-        // Prepared statements inherently protect against SQL Injection
         $sql = "INSERT INTO $table_name (nomination_type, nominee_name, email, phone, organization, designation, city, state, country, rep_name, rep_designation, rep_email, rep_phone, award_category, experience_years, core_domain, summary, linkedin_url, cv_path, support_doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($sql);
@@ -226,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <meta name="author" content="FCRF Academy">
 
 <!-- ================== SEO Meta ================== -->
-<title>Ethical hacking professional instructor enrollment | FCRF Academy</title>
+<title>FCRF Excellence Awards Nominations | FCRF Academy</title>
 
 <meta name="description" content="Join FCRF Academy as an Ethical Hacking Instructor. We are inviting experienced ethical hackers, VAPT professionals, and cybersecurity experts with strong practical knowledge and teaching ability to lead upcoming training programs." />
 
@@ -234,7 +238,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
 <link rel="canonical" href="https://fcrf.academy/ethical-hacking-instructor-enrollment" />
-
 <link rel="shortcut icon" href="assets/img/logo/favs.jpeg">
 
 <!-- ================== Open Graph (LinkedIn, WhatsApp, Facebook) ================== -->
@@ -556,6 +559,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .radio-label:hover { background: white; }
         .radio-label input[type="radio"], .radio-label input[type="checkbox"] { accent-color: var(--primary); width: 1.2rem; height: 1.2rem; cursor: pointer; }
 
+        /* Checkbox Grid for Award Selection */
+        .checkbox-grid { display: grid; grid-template-columns: 1fr; gap: 12px; background: #f8fafc; padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border-color); }
+        .checkbox-label { display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; line-height: 1.4; color: #475569; cursor: pointer; padding: 12px; border-radius: 10px; transition: background 0.2s; }
+        .checkbox-label:hover { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .checkbox-label input[type="checkbox"] { margin-top: 3px; accent-color: var(--primary); width: 1.2rem; height: 1.2rem; flex-shrink: 0; cursor: pointer; }
+
+
         /* Dynamic Section */
         .rep-details-section {
             display: none;
@@ -635,7 +645,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- HEADER / LOGO SECTION -->
         <header class="main-header">
             <a href="https://fcrf.academy" class="logo-link">
-                <img src="assets/img/logo/FCRF Excellence(vertical).webp" alt="FCRF Academy" class="brand-logo">
+                <img src="assets/img/logo/FCRF Excellence.webp" alt="FCRF Academy" class="brand-logo">
             </a>
         </header>
 
@@ -876,35 +886,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
 
-                <!-- Section 3: Award Category -->
+                <!-- Section 3: Award Category (Multi-Select Checkboxes) -->
                 <div class="section-title"><i data-lucide="award"></i> 3. Award Category Selection</div>
                 
                 <div class="form-group">
-                    <label>Select the award category *</label>
-                    <div class="input-wrapper">
-                        <select name="award_category" required>
-                            <option value="" disabled selected>Select an award category</option>
-                            <?php 
-                                $categories = [
-                                    "FCRF Excellence Award in Cybersecurity Leadership",
-                                    "FCRF Excellence Award in Data Protection and Privacy Leadership",
-                                    "FCRF Excellence Award in Cyber Fraud Investigation",
-                                    "FCRF Excellence Award in Digital Forensics and Incident Response",
-                                    "FCRF Excellence Award in Threat Intelligence and OSINT",
-                                    "FCRF Excellence Award in Cyber Crisis Management",
-                                    "FCRF Excellence Award in Cyber Law and Technology Policy",
-                                    "FCRF Excellence Award in Financial Crime Compliance",
-                                    "FCRF Excellence Award in Risk and Compliance",
-                                    "FCRF Excellence Award in Security Innovation"
-                                ];
-                                $selected_cat = $_POST['award_category'] ?? '';
-                                foreach($categories as $cat) {
-                                    $sel = ($cat == $selected_cat) ? 'selected' : '';
-                                    echo "<option value=\"$cat\" $sel>$cat</option>";
-                                }
-                            ?>
-                        </select>
-                        <i data-lucide="list" size="18"></i>
+                    <label>Select the award category * <span class="optional-tag">(Select all that apply)</span></label>
+                    <div class="checkbox-grid">
+                        <?php 
+                            $categories = [
+                                "FCRF Excellence Award in Cybersecurity Leadership",
+                                "FCRF Excellence Award in Data Protection and Privacy Leadership",
+                                "FCRF Excellence Award in Cyber Fraud Investigation",
+                                "FCRF Excellence Award in Digital Forensics and Incident Response",
+                                "FCRF Excellence Award in Threat Intelligence and OSINT",
+                                "FCRF Excellence Award in Cyber Crisis Management",
+                                "FCRF Excellence Award in Cyber Law and Technology Policy",
+                                "FCRF Excellence Award in Financial Crime Compliance",
+                                "FCRF Excellence Award in Risk and Compliance",
+                                "FCRF Excellence Award in Security Innovation"
+                            ];
+                            $selected_cat = isset($_POST['award_category']) ? (array)$_POST['award_category'] : [];
+                            foreach($categories as $cat) {
+                                $checked = in_array($cat, $selected_cat) ? 'checked' : '';
+                                echo "<label class='checkbox-label'>
+                                        <input type='checkbox' name='award_category[]' value=\"$cat\" $checked>
+                                        <span>$cat</span>
+                                      </label>";
+                            }
+                        ?>
                     </div>
                 </div>
 
@@ -1024,49 +1033,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // --- STALWARTS CAROUSEL LOGIC ---
         const juryData = [
-    {
-        name: "Maj Gen Sandeep Sharma",
-        role: "(Retd.)",
-        company: "",
-        topic: "",
-        imgUrl: "assets/img/jury/Maj Gen Sandeep  Sharma (Retd.).webp"
-    },
-    {
-        name: "AVM (Dr.) Devesh Vatsa",
-        role: "Advisor",
-        company: "Data Security Council of India",
-        topic: "",
-        imgUrl: "assets/img/jury/Devesh vatsa.webp"
-    },
-    {
-        name: "Dr. Vikram Singh",
-        role: "Former DGP, UP & Chancellor",
-        company: "Noida International University",
-        topic: "",
-        imgUrl: "assets/img/jury/Vikram singh.webp"
-    },
-    {
-        name: "Arun Kumar",
-        role: "Former DG",
-        company: "Railway Protection Force (RPF)",
-        topic: "",
-        imgUrl: "assets/img/jury/Arun kumar.webp"
-    },
-    {
-        name: "Dr. Gulshan Rai",
-        role: "Former DG",
-        company: "CERT-In",
-        topic: "",
-        imgUrl: "assets/img/jury/Gulshan rai.webp"
-    },
-    {
-        name: "Dr. Pavan Duggal",
-        role: "Advocate",
-        company: "Supreme Court of India",
-        topic: "",
-        imgUrl: "assets/img/jury/Pavan Duggal.webp"
-    }
-];
+            {
+                name: "Maj Gen Sandeep Sharma",
+                role: "(Retd.)",
+                company: "",
+                topic: "",
+                imgUrl: "assets/img/jury/Maj Gen Sandeep  Sharma (Retd.).webp"
+            },
+            {
+                name: "AVM (Dr.) Devesh Vatsa",
+                role: "Advisor",
+                company: "Data Security Council of India",
+                topic: "",
+                imgUrl: "assets/img/jury/Devesh vatsa.webp"
+            },
+            {
+                name: "Dr. Vikram Singh",
+                role: "Former DGP, UP & Chancellor",
+                company: "Noida International University",
+                topic: "",
+                imgUrl: "assets/img/jury/Vikram singh.webp"
+            },
+            {
+                name: "Arun Kumar",
+                role: "Former DG",
+                company: "Railway Protection Force (RPF)",
+                topic: "",
+                imgUrl: "assets/img/jury/Arun kumar.webp"
+            },
+            {
+                name: "Dr. Gulshan Rai",
+                role: "Former DG",
+                company: "CERT-In",
+                topic: "",
+                imgUrl: "assets/img/jury/Gulshan rai.webp"
+            },
+            {
+                name: "Dr. Pavan Duggal",
+                role: "Advocate",
+                company: "Supreme Court of India",
+                topic: "",
+                imgUrl: "assets/img/jury/Pavan Duggal.webp"
+            }
+        ];
         const carousel = document.getElementById('carousel');
 
         function createCard(data) {

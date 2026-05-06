@@ -972,7 +972,7 @@
 
         /* --- MARQUEE SECTION --- */
         #summit-app-root .ss-marquee-container {
-            background-color: #05071a;
+            background-color: #0a0a0a;
             /* padding: 80px 0; */
             overflow: hidden;
             display: flex;
