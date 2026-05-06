@@ -10,8 +10,8 @@ $successName = "";
 
 // ================= CONFIGURATION ================= //
 $db_host = "localhost";
-$db_user = "u545411682_summit"; // Replace with actual DB user
-$db_pass = "Summit2026";          // Replace with actual DB password
+$db_user = "u545411682_summit"; 
+$db_pass = "Summit2026";          
 $db_name = "u545411682_summit";
 $table_name = "fcrf_award_nominations"; 
 
@@ -19,6 +19,18 @@ $table_name = "fcrf_award_nominations";
 // 🔴 RECAPTCHA KEYS (Updated)
 $recaptcha_site_key = "6LfkXYwsAAAAAO8Vwrhg7KdnocQzL-yQwl8zgTt4";
 $recaptcha_secret = "6LfkXYwsAAAAAOg_C4CYVgNlQOyG9X1RU4Pl576h"; 
+
+// --- SECURITY: Input Sanitization Function to prevent XSS ---
+function sanitize_input($data) {
+    if (is_array($data)) {
+        return array_map('sanitize_input', $data);
+    }
+    $data = trim($data);
+    $data = stripslashes($data);
+    // ENT_QUOTES converts both double and single quotes
+    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+    return $data;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -43,28 +55,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         $conn->set_charset("utf8mb4");
 
-        // 3. Process & Validate Inputs
-        $nomination_type = trim($_POST['nomination_type']);
-        $nominee_name = trim($_POST['nominee_name']);
-        $email = trim($_POST['email']);
-        $phone = trim($_POST['phone']);
-        $organization = trim($_POST['organization']);
-        $designation = trim($_POST['designation']);
-        $city = trim($_POST['city']);
-        $state = trim($_POST['state']);
-        $country = trim($_POST['country']);
+        // 3. Process & Validate Inputs Securely
+        $nomination_type = sanitize_input($_POST['nomination_type'] ?? '');
+        $nominee_name    = sanitize_input($_POST['nominee_name'] ?? '');
+        $email           = sanitize_input($_POST['email'] ?? '');
+        $phone           = sanitize_input($_POST['phone'] ?? '');
+        $organization    = sanitize_input($_POST['organization'] ?? '');
+        $designation     = sanitize_input($_POST['designation'] ?? '');
+        $city            = sanitize_input($_POST['city'] ?? '');
+        $state           = sanitize_input($_POST['state'] ?? '');
+        $country         = sanitize_input($_POST['country'] ?? '');
         
         // Representative details (Only if Org/Team)
-        $rep_name = trim($_POST['rep_name'] ?? '');
-        $rep_designation = trim($_POST['rep_designation'] ?? '');
-        $rep_email = trim($_POST['rep_email'] ?? '');
-        $rep_phone = trim($_POST['rep_phone'] ?? '');
+        $rep_name        = sanitize_input($_POST['rep_name'] ?? '');
+        $rep_designation = sanitize_input($_POST['rep_designation'] ?? '');
+        $rep_email       = sanitize_input($_POST['rep_email'] ?? '');
+        $rep_phone       = sanitize_input($_POST['rep_phone'] ?? '');
 
-        $award_category = trim($_POST['award_category']);
-        $experience_years = trim($_POST['experience_years']);
-        $core_domain = trim($_POST['core_domain']);
-        $summary = trim($_POST['summary']);
-        $linkedin_url = trim($_POST['linkedin_url']);
+        $award_category   = sanitize_input($_POST['award_category'] ?? '');
+        $experience_years = sanitize_input($_POST['experience_years'] ?? '');
+        $core_domain      = sanitize_input($_POST['core_domain'] ?? '');
+        $summary          = sanitize_input($_POST['summary'] ?? '');
+        $linkedin_url     = sanitize_input($_POST['linkedin_url'] ?? '');
         
         $declaration = isset($_POST['declaration']) ? 'Yes' : '';
 
@@ -77,10 +89,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if(empty($rep_name) || empty($rep_designation) || empty($rep_email) || empty($rep_phone)) {
                 throw new Exception("Representative details are mandatory for Organization/Team nominations.");
             }
+            if (!filter_var($rep_email, FILTER_VALIDATE_EMAIL)) {
+                throw new Exception("Invalid representative email format.");
+            }
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new Exception("Invalid nominee email format.");
+        }
+
+        // Validate URL if provided to prevent 'javascript:...' XSS payloads
+        if (!empty($linkedin_url) && !filter_var($linkedin_url, FILTER_VALIDATE_URL)) {
+            throw new Exception("Please provide a valid LinkedIn URL.");
         }
 
         // 4. File Upload Logic
@@ -89,13 +109,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!file_exists($target_dir_cv)) { mkdir($target_dir_cv, 0755, true); }
         if (!file_exists($target_dir_docs)) { mkdir($target_dir_docs, 0755, true); }
         
-        // MIME types for PDF, DOC, DOCX, PPT, PPTX
+        // STRICT MIME types for PDF, DOC, DOCX ONLY
         $allowed_mimes = [
             'application/pdf', 
             'application/msword', 
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            'application/vnd.ms-powerpoint',
-            'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         ];
 
         // Handle CV Upload (Optional)
@@ -104,11 +122,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $cvName = time() . "_cv_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["cv"]["name"]));
             $cvPath = $target_dir_cv . $cvName;
             
+            // Extension Check
+            $cvType = strtolower(pathinfo($cvPath, PATHINFO_EXTENSION));
+            if (!in_array($cvType, ['pdf', 'doc', 'docx'])) { 
+                throw new Exception("Invalid CV file extension. Only PDF or Word docs allowed."); 
+            }
+
+            // Advanced MIME Type Check
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mime = finfo_file($finfo, $_FILES["cv"]["tmp_name"]);
             finfo_close($finfo);
             
-            if (!in_array($mime, $allowed_mimes)) { throw new Exception("Invalid CV file. Only PDF or Word docs allowed."); }
+            if (!in_array($mime, $allowed_mimes)) { throw new Exception("Invalid CV file content. Only PDF or Word docs allowed."); }
             if ($_FILES["cv"]["size"] > 5000000) { throw new Exception("CV file size must be less than 5MB."); }
             if (!move_uploaded_file($_FILES["cv"]["tmp_name"], $cvPath)) { throw new Exception("Failed to upload CV."); }
         }
@@ -119,16 +144,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $docName = time() . "_doc_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["support_doc"]["name"]));
             $supportDocPath = $target_dir_docs . $docName;
             
+            // Extension Check
+            $docType = strtolower(pathinfo($supportDocPath, PATHINFO_EXTENSION));
+            if (!in_array($docType, ['pdf', 'doc', 'docx'])) { 
+                throw new Exception("Invalid supporting document extension. Only PDF or Word docs allowed."); 
+            }
+
+            // Advanced MIME Type Check
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mime = finfo_file($finfo, $_FILES["support_doc"]["tmp_name"]);
             finfo_close($finfo);
             
-            if (!in_array($mime, $allowed_mimes)) { throw new Exception("Invalid supporting document. Only PDF, Word, or PPT allowed."); }
+            if (!in_array($mime, $allowed_mimes)) { throw new Exception("Invalid supporting document content. Only PDF or Word docs allowed."); }
             if ($_FILES["support_doc"]["size"] > 10000000) { throw new Exception("Supporting document size must be less than 10MB."); }
             if (!move_uploaded_file($_FILES["support_doc"]["tmp_name"], $supportDocPath)) { throw new Exception("Failed to upload Supporting Document."); }
         }
 
         // 5. Insert into Database securely
+        // Prepared statements inherently protect against SQL Injection
         $sql = "INSERT INTO $table_name (nomination_type, nominee_name, email, phone, organization, designation, city, state, country, rep_name, rep_designation, rep_email, rep_phone, award_category, experience_years, core_domain, summary, linkedin_url, cv_path, support_doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($sql);
@@ -157,15 +190,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FCRF Excellence Awards Nominations</title>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    
-    <!-- Unified Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- ================== Basic Meta ================== -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="FCRF Academy">
+
+<!-- ================== SEO Meta ================== -->
+<title>Ethical hacking professional instructor enrollment | FCRF Academy</title>
+
+<meta name="description" content="Join FCRF Academy as an Ethical Hacking Instructor. We are inviting experienced ethical hackers, VAPT professionals, and cybersecurity experts with strong practical knowledge and teaching ability to lead upcoming training programs." />
+
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+<link rel="canonical" href="https://fcrf.academy/ethical-hacking-instructor-enrollment" />
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<!-- ================== Open Graph (LinkedIn, WhatsApp, Facebook) ================== -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ethical hacking professional instructor enrollment | FCRF Academy">
+<meta property="og:description" content="FCRF Academy is inviting ethical hacking experts, VAPT professionals, and cybersecurity practitioners to join as instructors and contribute to advanced training initiatives." />
+<meta property="og:url" content="https://fcrf.academy/ethical-hacking-instructor-enrollment">
+<meta property="og:image" content="https://fcrf.academy/assets/img/lms/CEH-course.jpeg">
+<meta property="og:site_name" content="FCRF Academy">
+
+<!-- ================== Twitter ================== -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ethical hacking professional instructor enrollment | FCRF Academy">
+<meta name="twitter:description" content="Apply to become an Ethical Hacking Instructor at FCRF Academy. Looking for experienced cybersecurity and VAPT professionals with strong practical and teaching expertise.">
+<meta name="twitter:image" content="https://fcrf.academy/assets/img/lms/CEH-course.jpeg">
+
+<link rel="shortcut icon" href="assets/img/logo/fcrf-logo.webp">    
+<script src="https://unpkg.com/lucide@latest"></script>    
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<!-- Consolidated Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         /* ========================================== */
@@ -187,13 +248,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #ffffff; /* Page Background set to White as requested */
+            background-color: #ffffff;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 0 4rem 0; /* Padding adjusted to allow header to touch the top */
+            padding: 0 0 4rem 0;
         }
 
         /* ========================================== */
@@ -224,7 +285,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             flex-direction: column;
             align-items: center;
             width: 100%;
-            margin-bottom: 3rem; /* Space between stalwarts and the form */
+            margin-bottom: 3rem;
         }
 
         .isolated-program-module a { text-decoration: none; }
@@ -387,7 +448,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 100%;
             max-width: 950px;
             border-radius: 24px;
-            box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15); /* Slightly softened shadow for white background */
+            box-shadow: 0 15px 40px -10px rgba(0,0,0,0.15); 
             overflow: hidden;
             position: relative;
             margin: 0 1rem;
@@ -484,6 +545,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .upload-area:hover, .upload-area.dragover { border-color: var(--primary); background: #f0f9ff; }
         .upload-area i { color: var(--text-muted); margin-bottom: 10px; transition: color 0.3s; }
         .upload-area:hover i { color: var(--primary); }
+        .upload-area.has-error { border-color: var(--error); background: #fef2f2; }
         .file-name { margin-top: 10px; font-size: 0.9rem; color: var(--secondary); font-weight: 600; display: none; word-break: break-all; }
 
         /* Error & Buttons */
@@ -862,11 +924,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <div class="form-group">
-                        <label>Supporting Documents <span class="inline-optional">(Optional - PDF/DOC/PPT up to 10MB)</span></label>
+                        <label>Supporting Documents <span class="inline-optional">(Optional - PDF/DOC up to 10MB)</span></label>
                         <label class="upload-area" for="doc-input" id="drop-area-doc">
                             <i data-lucide="folder-up" size="32"></i>
                             <div style="font-weight: 600; color: #1e293b; font-size:14px;">Browse or drag Portfolio/Docs</div>
-                            <input type="file" name="support_doc" id="doc-input" style="display:none;" accept=".pdf,.doc,.docx,.ppt,.pptx">
+                            <input type="file" name="support_doc" id="doc-input" style="display:none;" accept=".pdf,.doc,.docx">
                             <div id="doc-file-name" class="file-name"></div>
                         </label>
                     </div>
@@ -1055,20 +1117,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         carousel.addEventListener('touchmove', handleMove);
 
 
-        // --- File Upload Visual Feedback ---
+        // --- File Upload Visual Feedback & Client-Side Validation ---
         function setupFileUpload(inputId, fileNameId, dropAreaId) {
             const fileInput = document.getElementById(inputId);
             const fileNameDiv = document.getElementById(fileNameId);
             const dropArea = document.getElementById(dropAreaId);
 
+            // Set validation limits based on the specific input
+            const maxSize = inputId === 'cv-input' ? 5 * 1024 * 1024 : 10 * 1024 * 1024; // 5MB for CV, 10MB for Docs
+            const allowedTypes = [
+                'application/pdf', 
+                'application/msword', 
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ];
+            const allowedExts = ['pdf', 'doc', 'docx'];
+
+            function handleFileValidation(file) {
+                // Clear any previous error styling
+                dropArea.classList.remove('has-error');
+
+                if (!file) return;
+
+                // Validate File Extension as fallback
+                const ext = file.name.split('.').pop().toLowerCase();
+
+                // Check Type & Extension
+                if (!allowedExts.includes(ext) && !allowedTypes.includes(file.type)) {
+                    alert("Invalid file type. Please upload a PDF or Word document only.");
+                    fileInput.value = ''; // Reset input
+                    fileNameDiv.style.display = 'none';
+                    dropArea.classList.add('has-error');
+                    return;
+                }
+
+                // Check Size
+                if (file.size > maxSize) {
+                    alert(`File is too large. Maximum size allowed is ${maxSize / (1024 * 1024)}MB.`);
+                    fileInput.value = ''; // Reset input
+                    fileNameDiv.style.display = 'none';
+                    dropArea.classList.add('has-error');
+                    return;
+                }
+
+                // If Valid
+                fileNameDiv.textContent = '✓ Selected: ' + file.name;
+                fileNameDiv.style.display = 'block';
+                dropArea.style.borderColor = "var(--secondary)";
+            }
+
             fileInput.addEventListener('change', function(e) {
                 if (e.target.files.length > 0) {
-                    fileNameDiv.textContent = '✓ Selected: ' + e.target.files[0].name;
-                    fileNameDiv.style.display = 'block';
-                    dropArea.style.borderColor = "var(--secondary)";
+                    handleFileValidation(e.target.files[0]);
                 } else {
                     fileNameDiv.style.display = 'none';
                     dropArea.style.borderColor = "var(--border-color)";
+                    dropArea.classList.remove('has-error');
                 }
             });
 
@@ -1079,8 +1182,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ['dragleave', 'drop'].forEach(eventName => dropArea.addEventListener(eventName, () => dropArea.classList.remove('dragover'), false));
             
             dropArea.addEventListener('drop', (e) => {
-                fileInput.files = e.dataTransfer.files;
-                fileInput.dispatchEvent(new Event('change'));
+                if(e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileValidation(e.dataTransfer.files[0]);
+                }
             });
         }
 
