@@ -36,50 +36,50 @@
         // speaker section 
 
 
-         const stalwartsData = [
-            {
-                name: "Gopal Iyer",
-                role: "Former Associate Director",
-                company: "EY",
-                topic: "How to work effectively in teams?",
-                imgUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-            },
-            {
-                name: "Divij Bajaj",
-                role: "Data & Applied Scientist",
-                company: "Microsoft",
-                topic: "Build your own AI Chatbot with ChatGPT",
-                imgUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-            },
-            {
-                name: "Jishnu Changkakoti",
-                role: "Former Director, Marketing",
-                company: "SAMSUNG",
-                topic: "Competitive & Pricing Dynamics",
-                imgUrl: "https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-            },
-            {
-                name: "Malthi S S.",
-                role: "Former Director Product Management",
-                company: "Product Strategy Co.",
-                topic: "Advanced Product Strategy",
-                imgUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-            },
-            {
-                name: "Saurabh Sengupta",
-                role: "Former SVP, Sales",
-                company: "Zomato",
-                topic: "Creating a Winner Sales Funnel",
-                imgUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-            },
-            {
-                name: "Akshay Gurnani",
-                role: "Co-founder and CEO",
-                company: "Schbang",
-                topic: "Building a digital agency",
-                imgUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-            }
-        ];
+const stalwartsData = [
+    {
+        name: "Maj Gen Sandeep Sharma (Retd.)",
+        role: "",
+        company: "",
+        topic: "",
+        imgUrl: "assets/img/jury/Maj Gen Sandeep  Sharma (Retd.).webp"
+    },
+    {
+        name: "AVM (Dr.) Devesh Vatsa VSM (Retd.)",
+        role: "Advisor",
+        company: "Data Security Council of India",
+        topic: "",
+        imgUrl: "assets/img/jury/Devesh vatsa.webp"
+    },
+    {
+        name: "Dr. Vikram Singh",
+        role: "Former DGP, UP & Chancellor",
+        company: "Noida International University",
+        topic: "",
+        imgUrl: "assets/img/jury/Vikram singh.webp"
+    },
+    {
+        name: "Arun Kumar",
+        role: "Former DG",
+        company: "Railway Protection Force (RPF)",
+        topic: "",
+        imgUrl: "assets/img/jury/Arun kumar.webp"
+    },
+    {
+        name: "Dr. Gulshan Rai",
+        role: "Former DG",
+        company: "CERT-In",
+        topic: "",
+        imgUrl: "assets/img/jury/Gulshan rai.webp"
+    },
+    {
+        name: "Dr. Pavan Duggal",
+        role: "Advocate",
+        company: "Supreme Court of India",
+        topic: "",
+        imgUrl: "assets/img/jury/Pavan Duggal.webp"
+    }
+];
 
         const carousel = document.getElementById('carousel');
 
@@ -318,3 +318,29 @@
             
             animateArrow();
         }
+
+
+
+        function openAgModal(id) {
+            const modal = document.getElementById(id);
+            modal.style.display = 'flex';
+            // Slight delay ensures the CSS transition triggers
+            setTimeout(() => { modal.classList.add('active'); }, 10);
+            document.body.style.overflow = 'hidden'; // Prevents background scrolling
+        }
+
+        function closeAgModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('active');
+            setTimeout(() => { modal.style.display = 'none'; }, 300); // Waits for transition
+            document.body.style.overflow = ''; 
+        }
+
+        // Close when clicking outside the modal box
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('ag-modal-overlay')) {
+                event.target.classList.remove('active');
+                setTimeout(() => { event.target.style.display = 'none'; }, 300);
+                document.body.style.overflow = '';
+            }
+        });
