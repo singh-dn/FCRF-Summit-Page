@@ -627,7 +627,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <div class="banner">
             <div class="banner-content">
-                <img src="assets/img/logo/FCRF Academy.png" alt="FCRF Academy Logo" class="banner-logo">
+                <img src="assets/img/logo/FCRF Excellence(landscape).webp" alt="FCRF Academy Logo" class="banner-logo">
                 <h1>FCRF Excellence Awards <span>Nominations</span></h1>
                 <p>Recognizing the stalwarts, visionaries, and unsung heroes in the field of cybersecurity, data privacy, and digital trust. Submit your nomination details below.</p>
             </div>
@@ -927,7 +927,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         role: "(Retd.)",
         company: "",
         topic: "",
-        imgUrl: "assets/img/jury/Maj Gen Sandeep Sharma (Retd.).webp"
+        imgUrl: "assets/img/jury/Maj Gen Sandeep  Sharma (Retd.).webp"
     },
     {
         name: "AVM (Dr.) Devesh Vatsa",
