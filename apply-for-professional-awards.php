@@ -10,8 +10,8 @@ $successName = "";
 
 // ================= CONFIGURATION ================= //
 $db_host = "localhost";
-$db_user = "u545411682_summit"; 
-$db_pass = "Summit2026";          
+$db_user = "u545411682_summit"; // Replace with actual DB user
+$db_pass = "Summit2026";          // Replace with actual DB password
 $db_name = "u545411682_summit";
 $table_name = "fcrf_award_nominations"; 
 
@@ -85,9 +85,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("All fields marked with * are mandatory.");
         }
 
+        // --- ADVANCED CHARACTER RESTRICTION (REGEX) ---
+        if (!preg_match("/^[a-zA-Z\s\.]+$/", $nominee_name)) {
+            throw new Exception("Nominee name can only contain letters and spaces.");
+        }
+        if (!preg_match("/^[0-9\+]+$/", $phone) || strlen($phone) < 10) {
+            throw new Exception("Invalid phone number format.");
+        }
+        if (!preg_match("/^[a-zA-Z0-9\s\.\-&]+$/", $organization)) {
+            throw new Exception("Organization name contains disallowed special characters.");
+        }
+        if (!preg_match("/^[a-zA-Z0-9\s\.\-]+$/", $designation)) {
+            throw new Exception("Designation contains disallowed special characters.");
+        }
+        if (!preg_match("/^[a-zA-Z\s]+$/", $city) || !preg_match("/^[a-zA-Z\s]+$/", $state) || !preg_match("/^[a-zA-Z\s]+$/", $country)) {
+            throw new Exception("Location fields (City, State, Country) can only contain letters and spaces.");
+        }
+        if (!preg_match("/^[0-9]+$/", $experience_years)) {
+            throw new Exception("Years of experience must be a valid number.");
+        }
+
         if ($nomination_type === 'Nomination of an Organisation / Team') {
             if(empty($rep_name) || empty($rep_designation) || empty($rep_email) || empty($rep_phone)) {
                 throw new Exception("Representative details are mandatory for Organization/Team nominations.");
+            }
+            if (!preg_match("/^[a-zA-Z\s\.]+$/", $rep_name)) {
+                throw new Exception("Representative name can only contain letters and spaces.");
+            }
+            if (!preg_match("/^[a-zA-Z0-9\s\.\-]+$/", $rep_designation)) {
+                throw new Exception("Representative designation contains disallowed special characters.");
+            }
+            if (!preg_match("/^[0-9\+]+$/", $rep_phone) || strlen($rep_phone) < 10) {
+                throw new Exception("Invalid representative phone number format.");
             }
             if (!filter_var($rep_email, FILTER_VALIDATE_EMAIL)) {
                 throw new Exception("Invalid representative email format.");
@@ -206,7 +235,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <link rel="canonical" href="https://fcrf.academy/ethical-hacking-instructor-enrollment" />
 
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="assets/img/logo/favs.jpeg">
 
 <!-- ================== Open Graph (LinkedIn, WhatsApp, Facebook) ================== -->
 <meta property="og:type" content="website">
@@ -606,7 +635,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- HEADER / LOGO SECTION -->
         <header class="main-header">
             <a href="https://fcrf.academy" class="logo-link">
-                <!-- Using the same logo path as you supplied for the form banner -->
                 <img src="assets/img/logo/FCRF Excellence(vertical).webp" alt="FCRF Academy" class="brand-logo">
             </a>
         </header>
@@ -734,7 +762,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">
                     <label>Full Name / Organisation Name *</label>
                     <div class="input-wrapper">
+                        <!-- Strictly Letters, Spaces, Dots, and Hyphens in Frontend -->
                         <input type="text" name="nominee_name" required placeholder="Enter the nominee name"
+                               pattern="[a-zA-Z\s\.\-']+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.\-']/g, '')"
                                value="<?php echo isset($_POST['nominee_name']) ? htmlspecialchars($_POST['nominee_name']) : ''; ?>">
                         <i data-lucide="user-circle" size="18"></i>
                     </div>
@@ -753,7 +783,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label>Phone Number *</label>
                         <div class="input-wrapper">
                             <input type="tel" name="phone" required placeholder="Contact Number"
-                                   pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                   pattern="[\+0-9\s\-]+" oninput="this.value = this.value.replace(/[^0-9\+\-\s]/g, '')"
                                    value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>">
                             <i data-lucide="phone" size="18"></i>
                         </div>
@@ -764,7 +794,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group">
                         <label>Current Organisation *</label>
                         <div class="input-wrapper">
+                            <!-- Letters, Numbers, Spaces, Dots, Hyphens, Ampersand, parentheses -->
                             <input type="text" name="organization" required placeholder="Company or Institution"
+                                   pattern="[a-zA-Z0-9\s\.\-',&()]+" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s\.\-',&()]/g, '')"
                                    value="<?php echo isset($_POST['organization']) ? htmlspecialchars($_POST['organization']) : ''; ?>">
                             <i data-lucide="building-2" size="18"></i>
                         </div>
@@ -772,7 +804,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group">
                         <label>Official Designation *</label>
                         <div class="input-wrapper">
+                            <!-- Letters, Numbers, Spaces, Dots, Hyphens -->
                             <input type="text" name="designation" required placeholder="Job Title"
+                                   pattern="[a-zA-Z0-9\s\.\-]+" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s\.\-]/g, '')"
                                    value="<?php echo isset($_POST['designation']) ? htmlspecialchars($_POST['designation']) : ''; ?>">
                             <i data-lucide="briefcase" size="18"></i>
                         </div>
@@ -784,6 +818,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label>City *</label>
                         <div class="input-wrapper">
                             <input type="text" name="city" required placeholder="e.g. Mumbai"
+                                   pattern="[a-zA-Z\s\-]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\-]/g, '')"
                                    value="<?php echo isset($_POST['city']) ? htmlspecialchars($_POST['city']) : ''; ?>">
                             <i data-lucide="map-pin" size="18"></i>
                         </div>
@@ -792,6 +827,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label>State *</label>
                         <div class="input-wrapper">
                             <input type="text" name="state" required placeholder="e.g. Maharashtra"
+                                   pattern="[a-zA-Z\s\-]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\-]/g, '')"
                                    value="<?php echo isset($_POST['state']) ? htmlspecialchars($_POST['state']) : ''; ?>">
                             <i data-lucide="map" size="18"></i>
                         </div>
@@ -802,6 +838,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label>Country *</label>
                     <div class="input-wrapper">
                         <input type="text" name="country" required placeholder="e.g. India"
+                               pattern="[a-zA-Z\s\-]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\-]/g, '')"
                                value="<?php echo isset($_POST['country']) ? htmlspecialchars($_POST['country']) : ''; ?>">
                         <i data-lucide="globe" size="18"></i>
                     </div>
@@ -814,11 +851,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="form-group">
                             <label>Representative Name *</label>
                             <input type="text" name="rep_name" id="rep_name" placeholder="Name of point of contact"
+                                   pattern="[a-zA-Z\s\.\-']+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.\-']/g, '')"
                                    value="<?php echo isset($_POST['rep_name']) ? htmlspecialchars($_POST['rep_name']) : ''; ?>">
                         </div>
                         <div class="form-group">
                             <label>Representative Designation *</label>
                             <input type="text" name="rep_designation" id="rep_designation" placeholder="Job Title"
+                                   pattern="[a-zA-Z0-9\s\.\-]+" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s\.\-]/g, '')"
                                    value="<?php echo isset($_POST['rep_designation']) ? htmlspecialchars($_POST['rep_designation']) : ''; ?>">
                         </div>
                     </div>
@@ -831,7 +870,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="form-group">
                             <label>Representative Contact Number *</label>
                             <input type="tel" name="rep_phone" id="rep_phone" placeholder="Phone Number"
-                                   pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                   pattern="[\+0-9\s\-]+" oninput="this.value = this.value.replace(/[^0-9\+\-\s]/g, '')"
                                    value="<?php echo isset($_POST['rep_phone']) ? htmlspecialchars($_POST['rep_phone']) : ''; ?>">
                         </div>
                     </div>
@@ -877,6 +916,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label>Total Years of Experience *</label>
                         <div class="input-wrapper">
                             <input type="number" name="experience_years" required min="0" placeholder="e.g. 10"
+                                   pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                    value="<?php echo isset($_POST['experience_years']) ? htmlspecialchars($_POST['experience_years']) : ''; ?>">
                             <i data-lucide="clock" size="18"></i>
                         </div>
