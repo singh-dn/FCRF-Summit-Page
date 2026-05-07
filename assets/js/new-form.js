@@ -321,26 +321,24 @@ const stalwartsData = [
 
 
 
-        function openAgModal(id) {
+       function openAgModal(id) {
             const modal = document.getElementById(id);
             modal.style.display = 'flex';
-            // Slight delay ensures the CSS transition triggers
             setTimeout(() => { modal.classList.add('active'); }, 10);
-            document.body.style.overflow = 'hidden'; // Prevents background scrolling
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeAgModal(id) {
             const modal = document.getElementById(id);
             modal.classList.remove('active');
-            setTimeout(() => { modal.style.display = 'none'; }, 300); // Waits for transition
+            setTimeout(() => { modal.style.display = 'none'; }, 600); 
             document.body.style.overflow = ''; 
         }
 
-        // Close when clicking outside the modal box
         window.addEventListener('click', function(event) {
-            if (event.target.classList.contains('ag-modal-overlay')) {
+            if (event.target.classList.contains('modal-overlay')) {
                 event.target.classList.remove('active');
-                setTimeout(() => { event.target.style.display = 'none'; }, 300);
+                setTimeout(() => { event.target.style.display = 'none'; }, 600);
                 document.body.style.overflow = '';
             }
         });

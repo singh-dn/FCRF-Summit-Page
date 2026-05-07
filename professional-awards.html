@@ -84,26 +84,26 @@
     <!--<< Favcion >>-->
     <!-- <link rel="shortcut icon" href="assets/img/logo/favs.jpeg"> -->
     <!--<< Bootstrap min.css >>-->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.0.13">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.0.14">
     <!--<< All Min Css >>-->
-    <link rel="stylesheet" href="assets/css/all.min.css?v=1.0.13">
+    <link rel="stylesheet" href="assets/css/all.min.css?v=1.0.14">
     <!--<< Animate.css >>-->
-    <link rel="stylesheet" href="assets/css/animate.css?v=1.0.13">
+    <link rel="stylesheet" href="assets/css/animate.css?v=1.0.14">
     <!--<< Magnific Popup.css >>-->
-    <link rel="stylesheet" href="assets/css/magnific-popup.css?v=1.0.13">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css?v=1.0.14">
     <!--<< MeanMenu.css >>-->
-    <link rel="stylesheet" href="assets/css/meanmenu.css?v=1.0.13">
+    <link rel="stylesheet" href="assets/css/meanmenu.css?v=1.0.14">
     <!--<< Swiper Bundle.css >>-->
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css?v=1.0.13">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css?v=1.0.14">
     <!--<< Nice Select.css >>-->
-    <link rel="stylesheet" href="assets/css/nice-select.css?v=1.0.13">
+    <link rel="stylesheet" href="assets/css/nice-select.css?v=1.0.14">
     <!--<< Main.css >>-->
-    <link rel="stylesheet" href="assets/css/main.css?v=1.0.13">
+    <link rel="stylesheet" href="assets/css/main.css?v=1.0.14">
 
-    <link rel="stylesheet" href="assets/css/index-5.css?v=1.0.13">
-    <link rel="stylesheet" href="assets/css/animation-html-5.css?v=1.0.13">
-    <link rel="stylesheet" href="assets/css/summit.css?v=1.0.13">
-    <link rel="stylesheet" href="assets/css/new-form.css?v=1.0.13">
+    <link rel="stylesheet" href="assets/css/index-5.css?v=1.0.14">
+    <link rel="stylesheet" href="assets/css/animation-html-5.css?v=1.0.14">
+    <link rel="stylesheet" href="assets/css/summit.css?v=1.0.14">
+    <link rel="stylesheet" href="assets/css/new-form.css?v=1.0.14">
 
     <link href="https://fonts.cdnfonts.com/css/aquire" rel="stylesheet">
 
@@ -186,7 +186,7 @@ html.lenis, html.lenis body {
                             </div>
 
                             <div class="action-buttons">
-                                <a href="apply-for-professional-awards.php" class="btn btn-ghost">Submit Professional Nomination</a>
+                                <a href="apply-for-professional-awards.php" class="btn btn-primary">Submit Professional Nomination</a>
                                 <a href="apply-for-policing-nomination.php" class="btn btn-primary">Submit Policing Nomination</a>
                             </div>
                         </div>
@@ -226,8 +226,9 @@ html.lenis, html.lenis body {
                                 <strong>Submit Professional Nomination</strong>
                                 <i data-lucide="chevron-right"></i>
                             </a>
-                            <a href="apply-for-policing-nomination.php" class="btn btn-ghost btn-lg">
+                            <a href="apply-for-policing-nomination.php" class="btn btn-primary btn-lg btn-icon">
                                 <strong>Submit Policing Nomination</strong>
+                                <i data-lucide="chevron-right"></i>
                             </a>
                         </div>
                     </div>
@@ -593,9 +594,9 @@ html.lenis, html.lenis body {
         </div>
     </div>
 
-  <div class="isolated-antigravity-module">
+<div class="isolated-antigravity-module">
         
-        <!-- Background Watermark (Centered) -->
+        <!-- Main Background Watermark -->
         <div class="bg-watermark">FCRF</div>
 
         <!-- Top Section Header -->
@@ -604,7 +605,7 @@ html.lenis, html.lenis body {
             <p class="ag-pricing-subtitle">Explore the two nomination tracks under the FCRF Excellence Awards 2026.</p>
         </div>
 
-        <!-- Content Area -->
+        <!-- Content Area (Borderless Split Layout) -->
         <main class="ui-layer">
             
             <!-- Left Section -->
@@ -619,10 +620,10 @@ html.lenis, html.lenis body {
                     </p>
                     
                     <div class="ag-action-wrap">
-                        <a href="apply-for-professional-awards.php"><button class="ag-action-btn">
+                        <button class="ag-btn-3d" onclick="openAgModal('modal-professional')">
                             Explore Professional Track
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                        </button></a>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -639,15 +640,175 @@ html.lenis, html.lenis body {
                     </p>
                     
                     <div class="ag-action-wrap">
-                        <a href="apply-for-policing-nomination.php"><button class="ag-action-btn">
+                        <button class="ag-btn-3d" onclick="openAgModal('modal-policing')">
                             Explore Policing Track
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                        </button></a>
+                        </button>
                     </div>
                 </div>
             </section>
             
         </main>
+
+        <!-- ==========================================
+             SPLIT-SCREEN MODALS (SLIDES UP ON CLICK)
+             ========================================== -->
+             
+        <!-- Professional Modal -->
+        <div id="modal-professional" class="modal-overlay">
+            <div class="split-modal-box">
+                
+                <!-- Left Dark Visual Side -->
+                <div class="modal-left">
+                    <div class="modal-watermark">FCRF</div>
+                    <div class="modal-left-content">
+                        <span class="modal-left-badge">FCRF Awards 2026</span>
+                        <h2 class="modal-left-title">Professional Track</h2>
+                        <p style="color: #9ca3af; font-size: 0.95rem;">Select your expertise to view the nomination application.</p>
+                    </div>
+                </div>
+
+                <!-- Right Light List Side -->
+                <div class="modal-right">
+                    <div class="modal-right-header">
+                        <h3 class="modal-right-title">Indicative Categories</h3>
+                        <button class="modal-close-btn" aria-label="Close" onclick="closeAgModal('modal-professional')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="modal-right-body">
+                        <ul class="modal-list">
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Data Protection & Privacy Leadership
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Governance Excellence
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Digital Forensics & Incident Response
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Threat Intelligence & OSINT
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Law & Technology Policy
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Crisis Management
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Artificial Intelligence Security
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Financial Crime Compliance
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Fraud Risk Management
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Awareness & Capacity Building
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="modal-right-footer">
+                        <button class="ag-btn-3d" style="width: 100%; max-width: 100%;">
+                            Apply Now
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Policing Modal -->
+        <div id="modal-policing" class="modal-overlay">
+            <div class="split-modal-box">
+                
+                <!-- Left Dark Visual Side -->
+                <div class="modal-left">
+                    <div class="modal-watermark">FCRF</div>
+                    <div class="modal-left-content">
+                        <span class="modal-left-badge">FCRF Awards 2026</span>
+                        <h2 class="modal-left-title">Policing Track</h2>
+                        <p style="color: #9ca3af; font-size: 0.95rem;">Select your expertise to view the nomination application.</p>
+                    </div>
+                </div>
+
+                <!-- Right Light List Side -->
+                <div class="modal-right">
+                    <div class="modal-right-header">
+                        <h3 class="modal-right-title">Indicative Categories</h3>
+                        <button class="modal-close-btn" aria-label="Close" onclick="closeAgModal('modal-policing')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="modal-right-body">
+                        <ul class="modal-list">
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Policing Excellence
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Crime Investigation
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                State Cybercrime Response
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Forensics Excellence
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Intelligence Operations
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Social Media Crime Investigation
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Patrol & Monitoring
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Digital Policing Innovation
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Helpline Operations
+                            </li>
+                            <li class="modal-list-item">
+                                <svg class="modal-list-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Cyber Lab Development
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="modal-right-footer">
+                        <button class="ag-btn-3d" style="width: 100%; max-width: 100%;">
+                            Apply Now
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -807,46 +968,46 @@ Each category is designed to spotlight those who are building safer digital syst
 
 
    <!--<< All JS Plugins >>-->
-<script src="assets/js/jquery-3.7.1.min.js?v=1.0.13"></script>
+<script src="assets/js/jquery-3.7.1.min.js?v=1.0.14"></script>
 <!--<< Viewport Js >>-->
-<script src="assets/js/viewport.jquery.js?v=1.0.13"></script>
+<script src="assets/js/viewport.jquery.js?v=1.0.14"></script>
 <!--<< Bootstrap Js >>-->
-<script src="assets/js/bootstrap.bundle.min.js?v=1.0.13"></script>
+<script src="assets/js/bootstrap.bundle.min.js?v=1.0.14"></script>
 <!--<< Nice Select Js >>-->
-<script src="assets/js/jquery.nice-select.min.js?v=1.0.13"></script>
+<script src="assets/js/jquery.nice-select.min.js?v=1.0.14"></script>
 <!--<< Waypoints Js >>-->
-<script src="assets/js/jquery.waypoints.js?v=1.0.13"></script>
+<script src="assets/js/jquery.waypoints.js?v=1.0.14"></script>
 <!--<< Counterup Js >>-->
-<script src="assets/js/jquery.counterup.min.js?v=1.0.13"></script>
+<script src="assets/js/jquery.counterup.min.js?v=1.0.14"></script>
 <!--<< Swiper Slider Js >>-->
-<script src="assets/js/swiper-bundle.min.js?v=1.0.13"></script>
+<script src="assets/js/swiper-bundle.min.js?v=1.0.14"></script>
 <!--<< MeanMenu Js >>-->
-<script src="assets/js/jquery.meanmenu.min.js?v=1.0.13"></script>
+<script src="assets/js/jquery.meanmenu.min.js?v=1.0.14"></script>
 <!--<< Magnific Popup Js >>-->
-<script src="assets/js/jquery.magnific-popup.min.js?v=1.0.13"></script>
+<script src="assets/js/jquery.magnific-popup.min.js?v=1.0.14"></script>
 
 <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <!--<< Wow Animation Js >>-->
-<script src="assets/js/wow.min.js?v=1.0.13"></script>
+<script src="assets/js/wow.min.js?v=1.0.14"></script>
 <!--<< Gsap Js >>-->
-<script src="assets/js/gsap.min.js?v=1.0.13"></script>
+<script src="assets/js/gsap.min.js?v=1.0.14"></script>
 <!--<< Lenis Js >>-->
-<script src="assets/js/lenis.min.js?v=1.0.13"></script>
+<script src="assets/js/lenis.min.js?v=1.0.14"></script>
 <!--<< ScrollSmoother Js >>-->
-<script src="assets/js/scrollSmoother.js?v=1.0.13"></script>
+<script src="assets/js/scrollSmoother.js?v=1.0.14"></script>
 <!--<< ScrollTrigger Js >>-->
-<script src="assets/js/ScrollTrigger.min.js?v=1.0.13"></script>
+<script src="assets/js/ScrollTrigger.min.js?v=1.0.14"></script>
 <!--<< Spalit Text Js >>-->
-<script src="assets/js/spilitext-gsap.js?v=1.0.13"></script>
+<script src="assets/js/spilitext-gsap.js?v=1.0.14"></script>
 <!--<< Vanilla Tilt Js >>-->
-<script src="assets/js/vanilla-tilt.min.js?v=1.0.13"></script>
+<script src="assets/js/vanilla-tilt.min.js?v=1.0.14"></script>
 <!--<< Main.js >>-->
-<script src="assets/js/main.js?v=1.0.13"></script>
-<script src="assets/js/summit.js?v=1.0.13"></script>
-<script src="assets/js/new-form.js?v=1.0.13"></script>
+<script src="assets/js/main.js?v=1.0.14"></script>
+<script src="assets/js/summit.js?v=1.0.14"></script>
+<script src="assets/js/new-form.js?v=1.0.14"></script>
 
 
     <script>
