@@ -894,16 +894,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="checkbox-grid">
                         <?php 
                             $categories = [
-                                "FCRF Excellence Award in Cybersecurity Leadership",
                                 "FCRF Excellence Award in Data Protection and Privacy Leadership",
-                                "FCRF Excellence Award in Cyber Fraud Investigation",
+                                "FCRF Excellence Award in Cyber Governance",
                                 "FCRF Excellence Award in Digital Forensics and Incident Response",
                                 "FCRF Excellence Award in Threat Intelligence and OSINT",
-                                "FCRF Excellence Award in Cyber Crisis Management",
                                 "FCRF Excellence Award in Cyber Law and Technology Policy",
+                                "FCRF Excellence Award in Cyber Crisis Management",
+                                "FCRF Excellence Award in Artificial Intelligence Security",
                                 "FCRF Excellence Award in Financial Crime Compliance",
-                                "FCRF Excellence Award in Risk and Compliance",
-                                "FCRF Excellence Award in Security Innovation"
+                                "FCRF Excellence Award in Fraud Risk Management",
+                                "FCRF Excellence Award in Cyber Awareness and Capacity Building"
                             ];
                             $selected_cat = isset($_POST['award_category']) ? (array)$_POST['award_category'] : [];
                             foreach($categories as $cat) {

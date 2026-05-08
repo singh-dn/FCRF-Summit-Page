@@ -652,15 +652,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php 
                             $categories = [
                                 "FCRF Excellence Award in Cyber Policing",
-                                "FCRF Excellence Award in Cyber Policing Leadership",
                                 "FCRF Excellence Award in Cyber Crime Investigation",
-                                "FCRF Excellence Award in Cyber Fraud Investigation",
-                                "FCRF Excellence Award in Cyber Police Station Performance",
-                                "FCRF Excellence Award in Digital Evidence Handling",
+                                "FCRF Excellence Award in State Cybercrime Response",
                                 "FCRF Excellence Award in Cyber Forensics",
-                                "FCRF Excellence Award in OSINT and Cyber Intelligence",
-                                "FCRF Excellence Award in Citizen Cyber Safety",
-                                "FCRF Excellence Award in Cyber Training and Capacity Building"
+                                "FCRF Excellence Award in Cyber Intelligence Operations",
+                                "FCRF Excellence Award in Social Media Crime Investigation",
+                                "FCRF Excellence Award in Cyber Patrol and Monitoring",
+                                "FCRF Excellence Award in Digital Policing Innovation",
+                                "FCRF Excellence Award in Cyber Helpline Operations",
+                                "FCRF Excellence Award in Cyber Lab Development"
                             ];
                             $selected_cat = isset($_POST['award_category']) ? (array)$_POST['award_category'] : [];
                             foreach($categories as $cat) {
