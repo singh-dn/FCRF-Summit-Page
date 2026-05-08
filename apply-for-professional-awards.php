@@ -706,7 +706,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <section class="stalwarts-container">
                 
                 <h2 class="jury-headline">
-                    <span class="text-gradient">Expert Jury</span>
+                    <span class="text-gradient">Esteemed Jury</span>
                 </h2>
 
                 <div class="carousel-wrapper" id="carouselWrapper">
