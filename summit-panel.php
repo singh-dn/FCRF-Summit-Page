@@ -31,6 +31,9 @@ $db_configs = [
 // 🗂️ TABLE ARCHITECTURE
 $tables = [
     'professionals' => ['db_key' => 'summit', 'table' => 'fcrf_professionals', 'date_col' => 'created_at', 'name' => 'Summit Professionals', 'icon' => 'user-check'],
+    'awards'        => ['db_key' => 'summit', 'table' => 'fcrf_award_nominations', 'date_col' => 'created_at', 'name' => 'Excellence Awards', 'icon' => 'award'],
+    'policing'      => ['db_key' => 'summit', 'table' => 'fcrf_policing_awards', 'date_col' => 'created_at', 'name' => 'Policing Awards', 'icon' => 'shield'],
+    'hackers'       => ['db_key' => 'waitlist', 'table' => 'fcrf_ethical_hackers', 'date_col' => 'applied_at', 'name' => 'Ethical Hackers', 'icon' => 'terminal'],
     'waitlist'      => ['db_key' => 'waitlist', 'table' => 'fcrf_waitlist', 'date_col' => 'joined_at', 'name' => 'Course Waitlist', 'icon' => 'clock'],
     'instructors'   => ['db_key' => 'waitlist', 'table' => 'fcrf_instructors', 'date_col' => 'applied_at', 'name' => 'Instructors / Mentors', 'icon' => 'graduation-cap'],
     'organizations' => ['db_key' => 'waitlist', 'table' => 'fcrf_organizations', 'date_col' => 'created_at', 'name' => 'Organizations', 'icon' => 'building-2'],
@@ -321,19 +324,47 @@ if (isset($_SESSION['is_master_admin']) && $_SESSION['is_master_admin'] === true
                             <?php foreach ($table_data as $row): 
                                 // Smart logic to extract primary name and contact info universally
                                 $id = $row['id'];
-                                $name = $row['full_name'] ?? $row['first_name'] . ' ' . ($row['last_name'] ?? '') ?? $row['name'] ?? 'N/A';
-                                $sub_info = $row['designation'] ?? $row['position'] ?? $row['course_name'] ?? $row['subject'] ?? '';
+                                
+                                $name = 'N/A';
+                                if (!empty($row['nominee_name'])) $name = $row['nominee_name'];
+                                elseif (!empty($row['full_name'])) $name = $row['full_name'];
+                                elseif (!empty($row['first_name'])) $name = $row['first_name'] . ' ' . ($row['last_name'] ?? '');
+                                elseif (!empty($row['name'])) $name = $row['name'];
+
+                                $sub_info = '';
+                                if (!empty($row['award_category'])) $sub_info = $row['award_category'];
+                                elseif (!empty($row['designation'])) $sub_info = $row['designation'];
+                                elseif (!empty($row['position'])) $sub_info = $row['position'];
+                                elseif (!empty($row['course_name'])) $sub_info = $row['course_name'];
+                                elseif (!empty($row['subject'])) $sub_info = $row['subject'];
+
                                 $email = $row['email'] ?? 'N/A';
                                 $phone = $row['phone'] ?? $row['mobile'] ?? '';
                                 $date = date("d M Y, h:i A", strtotime($row[$current_table_info['date_col']]));
+                                
+                                // Check for attached documents (CV / Supporting Docs)
+                                $cv_link = $row['cv_path'] ?? $row['resume_path'] ?? '';
+                                $doc_link = $row['support_doc_path'] ?? '';
                             ?>
                                 <tr class="hover:bg-slate-50/50 transition-colors">
                                     <td class="px-6 py-4 font-medium text-slate-400">#<?php echo $id; ?></td>
                                     <td class="px-6 py-4">
                                         <div class="font-bold text-slate-900"><?php echo htmlspecialchars($name); ?></div>
                                         <?php if($sub_info): ?>
-                                            <div class="text-xs text-slate-500 mt-1 truncate max-w-[200px]"><?php echo htmlspecialchars($sub_info); ?></div>
+                                            <div class="text-xs text-slate-500 mt-1 truncate max-w-[250px]"><?php echo htmlspecialchars($sub_info); ?></div>
                                         <?php endif; ?>
+                                        <div class="flex gap-2 mt-2">
+                                            <?php if($cv_link): ?>
+                                                <a href="<?php echo htmlspecialchars($cv_link); ?>" target="_blank" class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-200 hover:bg-emerald-100 transition-colors">
+                                                    <i data-lucide="file-text" size="12"></i> CV
+                                                </a>
+                                            <?php endif; ?>
+                                            <?php if($doc_link): ?>
+                                                <a href="<?php echo htmlspecialchars($doc_link); ?>" target="_blank" class="inline-flex items-center gap-1 text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-1 rounded-md border border-blue-200 hover:bg-blue-100 transition-colors">
+                                                    <i data-lucide="folder-open" size="12"></i> DOCS
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-2 text-indigo-600 font-medium">
@@ -423,10 +454,10 @@ if (isset($_SESSION['is_master_admin']) && $_SESSION['is_master_admin'] === true
                 let displayValue = value;
                 if (value === null || value === '') {
                     displayValue = '<span class="text-slate-300 italic">Not Provided</span>';
-                } else if (key.includes('path') || key.includes('url')) {
-                    // Make links clickable
-                    displayValue = `<a href="${value}" target="_blank" class="text-indigo-600 hover:underline break-all">${value}</a>`;
-                } else if (value.length > 50) {
+                } else if (key.includes('path') || key.includes('url') || key.includes('link')) {
+                    // Make links clickable with icon
+                    displayValue = `<a href="${value}" target="_blank" class="inline-flex items-center gap-1 text-indigo-600 hover:text-indigo-800 font-semibold bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 transition-colors mt-1"><i data-lucide="external-link" size="14"></i> Open File / Link</a>`;
+                } else if (value.length > 60) {
                     // For long text blocks (like brief, message, feedback), span full width
                     html += `<div class="col-span-1 md:col-span-2 bg-slate-50 p-4 rounded-xl border border-slate-100">
                                 <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">${formattedKey}</div>
@@ -436,7 +467,7 @@ if (isset($_SESSION['is_master_admin']) && $_SESSION['is_master_admin'] === true
                 } else {
                     // Add badge styling for specific keywords
                     if (key === 'overall_rating') displayValue = `<span class="badge-orange px-2 py-1 rounded text-xs font-bold">${value}</span>`;
-                    else if (key === 'interested_courses' || key === 'course_name') displayValue = `<span class="badge-purple px-2 py-1 rounded text-xs font-bold">${value}</span>`;
+                    else if (key === 'award_category' || key === 'interested_courses' || key === 'course_name') displayValue = `<span class="badge-purple px-2 py-1 rounded text-xs font-bold">${value}</span>`;
                     else if (key.includes('email')) displayValue = `<span class="badge-blue px-2 py-1 rounded text-xs font-medium">${value}</span>`;
                 }
 
