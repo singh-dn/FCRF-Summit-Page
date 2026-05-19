@@ -1626,3 +1626,172 @@
                 flex-shrink: 0;
             }
         }
+
+
+         .iso-cert-container {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: transparent; /* Adapts to your project's background */
+        }
+
+        /* Scope box-sizing reset only to this component */
+        .iso-cert-container * {
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 768px) {
+            .iso-cert-container { padding: 3rem; }
+        }
+
+        /* Heading Styles */
+        .iso-cert-main-heading {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #1a202c;
+            letter-spacing: -0.025em;
+            text-align: center;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .iso-cert-main-heading { font-size: 3rem; margin-bottom: 1.5rem; }
+        }
+        @media (min-width: 1024px) {
+            .iso-cert-main-heading { font-size: 3.75rem; }
+        }
+
+        /* Highlight Word Effect using strong tags */
+        .iso-cert-highlight-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 0 0.25rem;
+            font-weight: inherit;
+        }
+
+        @media (min-width: 768px) {
+            .iso-cert-highlight-wrapper { margin: 0 0.5rem; }
+        }
+
+        .iso-cert-highlight-bg {
+            position: absolute;
+            top: 45%;
+            bottom: 0%;
+            left: -0.5rem;
+            right: -0.5rem;
+            background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+            opacity: 0.5;
+            transform: skewX(-16deg);
+            z-index: 1;
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .iso-cert-highlight-bg { left: -0.75rem; right: -0.75rem; }
+        }
+
+        .iso-cert-highlight-text {
+            position: relative;
+            z-index: 10;
+            font-weight: inherit;
+        }
+
+        /* Sub-headline Styles */
+        .iso-cert-sub-headline {
+            font-size: 1.125rem;
+            color: #6b7280;
+            text-align: center;
+            max-width: 42rem;
+            margin-left: auto;
+            margin-right: auto;
+            
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        @media (min-width: 768px) {
+            .iso-cert-sub-headline { font-size: 1.25rem; }
+        }
+
+        /* Certification Section */
+        .iso-cert-section {
+            width: 100%;
+            max-width: 64rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-bottom: 5rem;
+        }
+
+        @media (min-width: 768px) {
+            .iso-cert-section { padding-left: 2rem; padding-right: 2rem; }
+        }
+
+        /* Frame container */
+        .iso-cert-frame {
+            position: relative;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) { .iso-cert-frame { padding: 3rem; } }
+        @media (min-width: 1024px) { .iso-cert-frame { padding: 4rem; } }
+
+        /* Frame Corner Designs */
+        .iso-cert-corner {
+            position: absolute;
+            width: 1.5rem;
+            height: 1.5rem;
+            pointer-events: none;
+            border-style: solid;
+            border-color: transparent;
+            border-width: 0;
+            border-image: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%) 1;
+            opacity: 0.8;
+        }
+
+        @media (min-width: 768px) {
+            .iso-cert-corner { width: 2rem; height: 2rem; }
+        }
+
+        /* Corner Placements */
+        .iso-cert-corner-tl { top: 1rem; left: 1rem; border-top-width: 2px; border-left-width: 2px; }
+        .iso-cert-corner-tr { top: 1rem; right: 1rem; border-top-width: 2px; border-right-width: 2px; }
+        .iso-cert-corner-br { bottom: 1rem; right: 1rem; border-bottom-width: 2px; border-right-width: 2px; }
+        .iso-cert-corner-bl { bottom: 1rem; left: 1rem; border-bottom-width: 2px; border-left-width: 2px; }
+
+        @media (min-width: 768px) {
+            .iso-cert-corner-tl { top: 1.5rem; left: 1.5rem; }
+            .iso-cert-corner-tr { top: 1.5rem; right: 1.5rem; }
+            .iso-cert-corner-br { bottom: 1.5rem; right: 1.5rem; }
+            .iso-cert-corner-bl { bottom: 1.5rem; left: 1.5rem; }
+        }
+
+        /* Certificate Image */
+        .iso-cert-image-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .iso-cert-image {
+            width: 100%;
+            max-width: 56rem;
+            height: auto;
+            object-fit: contain;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border-radius: 0.125rem;
+            display: block;
+        }
