@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FutureCrime Summit 2026</title>
+
+  <style>
+    /* Global Reset to ensure no borders around the screen */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden; /* prevents horizontal scrolling */
+    }
+
+    /* ==========================================================================
+       ISOLATED CSS SCOPE (#fc-hero-module)
+       ========================================================================== */
+    #fc-hero-module {
+      --fc-bg-color: #0a0a0a;
+      --fc-text-color: #ffffff;
+      --fc-font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      --fc-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --fc-brand-cyan: #a1e6ec;
+      font-family: var(--fc-font-sans);
+      color: var(--fc-text-color);
+      width: 100%;
+      position: relative;
+    }
+
+    #fc-hero-module *, #fc-hero-module *::before, #fc-hero-module *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Fix to remove default blue underlines from all links */
+    #fc-hero-module a { text-decoration: none; color: inherit; }
+
+    /* --- WIDE PILL NAVIGATION HEADER --- */
+    #fc-hero-module .fc-header {
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      z-index: 999; /* Increased to ensure it's absolutely above everything */
+      display: flex; 
+      justify-content: center; 
+      padding: 0; /* Changed: Flush to the top edge initially */
+      pointer-events: none; 
+      transition: padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #fc-hero-module .fc-header.fc-scrolled { 
+      padding: 1rem 2rem; /* Changed: Drops down slightly when scrolled to form pill gap */
+    }
+    
+    #fc-hero-module .fc-wide-nav-pill {
+      pointer-events: auto; 
+      width: 100%;
+      max-width: 100%; /* Changed: Full width across screen initially */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem; 
+      
+      /* Fully merged/transparent initially */
+      background: transparent; 
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-shadow: none;
+      
+      border: none;
+      border-radius: 0; /* Changed: Sharp corners at the very top */
+      padding: 1.5rem 4rem; /* Changed: Wider padding for full top bar */
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth shape-shifting transition */
+    }
+
+    /* Scrolled state: Apply the pill background, blur, and shape */
+    #fc-hero-module .fc-header.fc-scrolled .fc-wide-nav-pill {
+      max-width: 1100px; /* Shrinks into pill size */
+      border-radius: 9999px; /* Rounds out into a pill */
+      padding: 0.5rem 0.5rem 0.5rem 1.5rem; /* Tighter pill padding */
+      background: rgba(25, 25, 25, 0.85); 
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    #fc-hero-module .fc-nav-logo { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+    #fc-hero-module .fc-nav-logo svg { fill: none; stroke: white; stroke-width: 6; width: 1.8rem; height: 1.8rem; }
+    #fc-hero-module .fc-nav-logo span { font-weight: 700; letter-spacing: 0.05em; font-size: 1.1rem; color: white; }
+
+    /* Shifted links left by using margin-right: auto and margin-left to space from logo */
+    #fc-hero-module .fc-nav-links { display: flex; gap: 2.5rem; align-items: center; margin-right: auto; margin-left: 3.5rem; }
+    #fc-hero-module .fc-nav-links a { display: flex; align-items: center; }
+    #fc-hero-module .fc-nav-link { color: rgba(255, 255, 255, 0.65); font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: color 0.2s ease; }
+    #fc-hero-module .fc-nav-link:hover { color: rgba(255, 255, 255, 1); }
+
+    #fc-hero-module .fc-nav-actions { display: flex; align-items: center; gap: 1.5rem; }
+    #fc-hero-module .fc-nav-actions a { display: flex; align-items: center; }
+    #fc-hero-module .fc-nav-login { color: rgba(255, 255, 255, 0.8); font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: color 0.2s ease; }
+    #fc-hero-module .fc-nav-login:hover { color: white; }
+
+    #fc-hero-module .fc-nav-cta { 
+      background-color: #eeeeee; color: #111111; border: none; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; padding: 0.8rem 1.75rem; cursor: pointer; transition: background-color 0.2s ease; white-space: nowrap; font-family: inherit; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; justify-content: center;
+    }
+    #fc-hero-module .fc-nav-cta:hover { background-color: #ffffff; }
+
+    #fc-hero-module .fc-mobile-toggle { background: transparent; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0.5rem; }
+
+    #fc-hero-module .fc-mobile-menu {
+      position: absolute; top: calc(100% + 1rem); right: 2rem; left: 2rem; background: rgba(21, 21, 21, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: none; border-radius: 1.5rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; opacity: 0; pointer-events: none; transform: translateY(-10px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    #fc-hero-module .fc-mobile-menu.fc-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    #fc-hero-module .fc-mobile-menu .fc-nav-link, #fc-hero-module .fc-mobile-menu .fc-nav-login { font-size: 1.1rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    #fc-hero-module .fc-mobile-menu .fc-nav-cta { margin-top: 0.5rem; text-align: center; width: 100%; }
+
+    /* --- HERO SECTION --- */
+    #fc-hero-module .fc-hero { position: relative; width: 100%; height: 100vh; overflow: hidden; background-color: var(--fc-bg-color); }
+    #fc-hero-module .fc-slide { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; z-index: 0; pointer-events: none; will-change: opacity; transition: opacity 1.2s ease-in-out; }
+    #fc-hero-module .fc-slide.fc-active { opacity: 1; z-index: 10; }
+    
+    /* NEW: Placeholder sits ON TOP of video until video actually plays */
+    #fc-hero-module .fc-slide-placeholder { 
+      position: absolute; 
+      inset: 0; 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      z-index: 2; 
+    }
+    #fc-hero-module .fc-slide video { 
+      position: absolute;
+      inset: 0;
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      z-index: 1;
+    }
+    
+    #fc-hero-module .fc-slide-overlay-tint { position: absolute; inset: 0; mix-blend-mode: multiply; z-index: 3; }
+    #fc-hero-module .fc-slide-overlay-grad { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 50%), linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 40%, rgba(0,0,0,0.85) 100%); z-index: 4; }
+    
+    /* ==========================================================================
+       NEW LAYOUT: CENTERED CONTENT + MASSIVE BOTTOM TEXT
+       ========================================================================== */
+    
+    /* 1. Centered Content Block */
+    #fc-hero-module .fc-hero-center-content {
+      position: absolute;
+      top: auto; /* Changed: Removed top centering */
+      bottom: 12vh; /* Changed: Anchored perfectly to the bottom, above massive text */
+      left: 4rem; /* Changed: Aligned exactly with the initial header padding */
+      transform: none; /* Changed: Removed center translation */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* Changed: Left align all flex items */
+      text-align: left; /* Changed: Left align text */
+      width: 90%;
+      max-width: 900px; 
+      z-index: 30;
+      gap: 1.5rem;
+    }
+
+    /* ===== Stylized Hero Title (Single Line Aquire) ===== */
+    #fc-hero-module .fc-hero-title-single {
+      font-family: 'Aquire', sans-serif !important;
+      font-size: 3.5rem; /* Smaller size for one line */
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap; /* Allows safe wrapping on very narrow mobile devices */
+      gap: 0.8rem; /* Space between words */
+      z-index: 2;
+    }
+
+    #fc-hero-module .fc-hero-title-highlight {
+      position: relative;
+      display: inline-block;
+      z-index: 2;
+    }
+
+    #fc-hero-module .fc-squiggly-line {
+      position: absolute;
+      bottom: -0.5rem; /* Slightly lower to accommodate the taller wave */
+      left: 0; 
+      width: 102%; /* Stretch just past the word to guarantee it touches the 't' */
+      height: 60%; /* Taller to allow the wave to reach up high at the end */
+      z-index: -1; /* Place just behind the text */
+      pointer-events: none;
+      /* Drop shadow for extra pop against the video */
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); 
+      overflow: visible; /* Ensures the upward flick isn't clipped */
+    }
+
+    #fc-hero-module .fc-location-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #ffffff;
+      letter-spacing: 0.05em;
+      margin-top: -0.5rem; /* Pull location slightly closer to the logo */
+    }
+
+    #fc-hero-module .fc-desc-text {
+      font-family: var(--fc-font-sans);
+      font-size: 1.25rem; /* Slightly refined size for better readability */
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.95);
+      line-height: 1.6;
+      margin: 0; /* Changed: Removed center auto margin */
+      max-width: 95%; /* Keep text contained neatly */
+      text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+      transition: opacity 0.5s ease;
+    }
+
+    #fc-hero-module .fc-hero-buttons {
+      display: flex;
+      gap: 1.5rem; /* Slightly wider gap between buttons */
+      margin-top: 0.5rem;
+      justify-content: flex-start; /* Changed: Align buttons to the left */
+    }
+
+    #fc-hero-module .fc-btn-primary,
+    #fc-hero-module .fc-btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.6rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    #fc-hero-module .fc-btn-primary {
+      background-color: #e5e7eb;
+      color: #0a0a0a;
+      border: none;
+    }
+    #fc-hero-module .fc-btn-primary:hover {
+      background-color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    #fc-hero-module .fc-btn-secondary {
+      background-color: rgba(10, 10, 10, 0.5);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    #fc-hero-module .fc-btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* 2. Massive Full-Width Bottom Text */
+    #fc-hero-module .fc-massive-bottom-text {
+      position: absolute;
+      bottom: -0.5vw; 
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-family: 'Aquire', sans-serif !important;
+      
+      font-size: 7.2vw;              
+      font-weight: 900 !important; 
+      letter-spacing: -0.05em;     
+
+      line-height: 1;
+      white-space: nowrap;
+      text-transform: uppercase;
+      user-select: none;
+      pointer-events: none;
+      z-index: 30;
+      
+      background: linear-gradient(93deg, rgba(81, 53, 255, 0.4) 10.65%, rgba(255, 84, 85, 0.4) 89.35%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+      
+      mix-blend-mode: hard-light; 
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+    }
+
+    @media (max-width: 992px) {
+      #fc-hero-module .fc-desktop-only { display: none !important; }
+      #fc-hero-module .fc-mobile-only { display: flex !important; }
+    }
+
+    @media (max-width: 768px) {
+      #fc-hero-module .fc-header { padding: 0; }
+      #fc-hero-module .fc-header.fc-scrolled { padding: 0.75rem 1rem; }
+      
+      #fc-hero-module .fc-wide-nav-pill { padding: 1rem 1.5rem; }
+      #fc-hero-module .fc-header.fc-scrolled .fc-wide-nav-pill { padding: 0.4rem 0.4rem 0.4rem 1rem; }
+      
+      #fc-hero-module .fc-nav-logo span { font-size: 1rem; }
+      
+      #fc-hero-module .fc-dots-container { right: auto; left: 1.5rem; top: 35%; transform: translateY(0); }
+      
+      /* Responsive sizing for the new single line title */
+      #fc-hero-module .fc-hero-title-single { font-size: 2.2rem; gap: 0.5rem; margin-bottom: 0; }
+      #fc-hero-module .fc-squiggly-line { bottom: -0.3rem; height: 50%; }
+
+      #fc-hero-module .fc-hero-center-content {
+        top: auto; 
+        bottom: 12vh; /* Anchored to bottom on mobile */
+        left: 1.5rem; /* Aligned with mobile header padding */
+        transform: none;
+        width: calc(100% - 3rem);
+        gap: 1.25rem;
+        align-items: flex-start; /* Left align items */
+        text-align: left; /* Left align text */
+      }
+      
+      #fc-hero-module .fc-desc-text {
+        font-size: 1.1rem;
+      }
+
+      #fc-hero-module .fc-hero-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      #fc-hero-module .fc-btn-primary,
+      #fc-hero-module .fc-btn-secondary {
+        width: 100%;
+      }
+
+      #fc-hero-module .fc-massive-bottom-text {
+        font-size: 7.2vw; 
+        -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.4); 
+      }
+    }
+    
+    @media (min-width: 993px) {
+      #fc-hero-module .fc-desktop-only { display: flex !important; }
+      #fc-hero-module .fc-mobile-only { display: none !important; }
+      #fc-hero-module .fc-mobile-menu { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Website Wrapper (Preloader fully removed) -->
+  <div>
+    <div id="fc-hero-module">
+      
+      <!-- PILL HEADER -->
+      <header id="fc-main-header" class="fc-header">
+        <div class="fc-wide-nav-pill">
+          <div class="fc-nav-logo">
+            <span style="font-family: 'Aquire', sans-serif !important;">FCRF</span>
+          </div>
+
+          <div class="fc-nav-links fc-desktop-only">
+           <a href="/about-us.html"><span class="fc-nav-link">About Us</span></a>
+           <a href="#summit-app-root"><span class="fc-nav-link">Schedule</span></a>
+           <a href="apply-as-a-speaker.php"><span class="fc-nav-link">Apply as a Speaker</span></a>
+          </div>
+
+          <div class="fc-nav-actions">
+           <a href="fcrf-excellence-awards-cyber-risk-&-policing-awards.html"><span class="fc-nav-login fc-desktop-only">FCRF Excellence Awards</span></a>
+            <a href="#pricing-sections" class="fc-nav-cta fc-desktop-only">Register Now</a>
+            <button id="fc-mobile-toggle" class="fc-mobile-toggle fc-mobile-only">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="fc-mobile-menu" class="fc-mobile-menu">
+         <a href="/about-us.html"><span class="fc-nav-link">About Us</span></a>
+         <a href="#summit-app-root"><span class="fc-nav-link">Schedule</span></a>
+         <a href="apply-as-a-speaker.php"><span class="fc-nav-link">Apply as a Speaker</span></a>
+         <a href="fcrf-excellence-awards-cyber-risk-&-policing-awards.html"><span class="fc-nav-login">FCRF Excellence Awards</span></a>
+         <a href="#pricing-sections" class="fc-nav-cta">Register Now</a>
+        </div>
+      </header>
+
+      <section class="fc-hero">
+        <div id="fc-video-layer"></div>
+        <div id="fc-dots-layer" class="fc-dots-container"></div>
+        
+        <div class="fc-hero-center-content">
+          
+          <!-- STYLIZED TEXT HEADER (One Line with Aquire) -->
+          <h1 class="fc-hero-title-single">
+            FutureCrime
+            <span class="fc-hero-title-highlight">
+              Summit
+              <!-- Custom Gradient Squiggly Line SVG (Upward Growth Trend) -->
+              <svg class="fc-squiggly-line" viewBox="0 0 250 70" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="squiggle-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="10.65%" stop-color="#5135FF" />
+                    <stop offset="89.35%" stop-color="#FF5455" />
+                  </linearGradient>
+                </defs>
+                <!-- Modified Path: Starts low, bounces progressively higher, and shoots up at the end -->
+                <path d="M 5 65 C 30 80, 50 50, 80 55 C 110 60, 130 25, 160 30 C 180 35, 210 65, 250 -5" fill="none" stroke="url(#squiggle-grad)" stroke-width="8" stroke-linecap="round" />
+              </svg>
+            </span>
+          </h1>
+
+          <!-- Location Tag -->
+          <div class="fc-location-tag">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3" fill="#ffffff"></circle>
+            </svg>
+            <a href="https://www.google.com/maps/place/Bharat+Mandapam/@28.6197155,77.2396062,17z/data=!3m1!4b1!4m6!3m5!1s0x390ce328e21150a5:0x1db02b6d0ba0702a!8m2!3d28.6197108!4d77.2421811!16s%2Fm%2F0267j4z?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="location-link" style="color: white; text-decoration: none;">
+              The Bharat Mandapam Convention Centre, Delhi
+            </a>
+          </div>
+
+          <!-- Dynamic Description -->
+          <p id="fc-desc-text" class="fc-desc-text"></p>
+          
+          <!-- Matched Image Buttons -->
+          <div class="fc-hero-buttons">
+           <a href="https://www.google.com/maps/place/Bharat+Mandapam/@28.6197155,77.2396062,17z/data=!3m1!4b1!4m6!3m5!1s0x390ce328e21150a5:0x1db02b6d0ba0702a!8m2!3d28.6197108!4d77.2421811!16s%2Fm%2F0267j4z?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="fc-btn-primary" style="text-decoration: none;">
+              Location
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </a>
+            <button class="fc-btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polygon points="10 8 16 12 10 16 10 8"/>
+              </svg>
+              <a href="#video" style="color: inherit; text-decoration: none;"> Watch Highlights </a>
+            </button>
+          </div>
+          
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // bg javascript 
+    (function initFutureCrimeHero() {
+      
+      const slidesData = [
+        {
+          videoUrl: "assets/video/summit-video.mp4",
+          placeholderImg: "assets/img/watch/transparent-png.png", // Image to load instantly
+          text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF), is India's largest conference focused on tackling technology-driven crime.",
+          overlayTint: "rgba(20, 83, 45, 0.3)" 
+        }
+      ];
+
+      let currentSlideIndex = 0;
+      let slideInterval;
+      
+      const cachedSlides = [];
+      const cachedDots = [];
+
+      const moduleContainer = document.getElementById('fc-hero-module');
+      if (!moduleContainer) return;
+
+      const videoLayer = moduleContainer.querySelector('#fc-video-layer');
+      const dotsLayer = moduleContainer.querySelector('#fc-dots-layer');
+      const descText = moduleContainer.querySelector('#fc-desc-text');
+      const header = moduleContainer.querySelector('#fc-main-header');
+      const mobileToggle = moduleContainer.querySelector('#fc-mobile-toggle');
+      const mobileMenu = moduleContainer.querySelector('#fc-mobile-menu');
+
+      function buildSlider() {
+        const videoFragment = document.createDocumentFragment();
+        const dotFragment = document.createDocumentFragment();
+
+        slidesData.forEach((slide, index) => {
+          const videoDiv = document.createElement('div');
+          videoDiv.className = `fc-slide ${index === 0 ? 'fc-active' : ''}`;
+          
+          videoDiv.innerHTML = `
+            <img src="${slide.placeholderImg}" class="fc-slide-placeholder" alt="Loading media..." />
+            <video src="${slide.videoUrl}" loop muted playsinline preload="auto"></video>
+            <div class="fc-slide-overlay-tint" style="background-color: ${slide.overlayTint};"></div>
+            <div class="fc-slide-overlay-grad"></div>
+          `;
+          
+          const videoEl = videoDiv.querySelector('video');
+          const placeholderEl = videoDiv.querySelector('.fc-slide-placeholder');
+
+          // STRONG LOGIC: Instead of guessing when it's ready, we wait for the exact moment 
+          // the video time progresses > 0, meaning frame 1 is actively painted on screen.
+          videoEl.addEventListener('timeupdate', function onTimeUpdate() {
+            if (videoEl.currentTime > 0) {
+              placeholderEl.style.display = 'none'; // Instant removal on the spot
+              videoEl.removeEventListener('timeupdate', onTimeUpdate); // Run only once
+            }
+          });
+
+          // Autoplay execution
+          if (index === currentSlideIndex) {
+            videoEl.play().catch(e => console.warn("Autoplay blocked by browser:", e));
+          }
+
+          cachedSlides.push(videoDiv);
+          videoFragment.appendChild(videoDiv);
+
+          const dotBtn = document.createElement('button');
+          dotBtn.className = "fc-dot-btn";
+          dotBtn.setAttribute('aria-label', `Go to slide ${index + 1}`);
+          
+          const dotStrong = document.createElement('strong');
+          dotStrong.className = `fc-dot-strong ${index === 0 ? 'fc-active' : ''}`;
+          
+          dotBtn.appendChild(dotStrong);
+          dotBtn.addEventListener('click', () => goToSlide(index));
+          
+          cachedDots.push(dotStrong);
+          dotFragment.appendChild(dotBtn);
+        });
+
+        videoLayer.appendChild(videoFragment);
+        dotsLayer.appendChild(dotFragment);
+
+        updateTypography(0);
+      }
+
+      function goToSlide(index) {
+        clearInterval(slideInterval); 
+        
+        const prevVideo = cachedSlides[currentSlideIndex].querySelector('video');
+        if(prevVideo) prevVideo.pause();
+
+        cachedSlides[currentSlideIndex].classList.remove('fc-active');
+        if(cachedDots[currentSlideIndex]) cachedDots[currentSlideIndex].classList.remove('fc-active');
+
+        cachedSlides[index].classList.add('fc-active');
+        if(cachedDots[index]) cachedDots[index].classList.add('fc-active');
+        
+        const nextVideo = cachedSlides[index].querySelector('video');
+        if(nextVideo) {
+             nextVideo.play().catch(e => console.warn("Playback blocked by browser:", e));
+        }
+
+        updateTypography(index);
+        
+        currentSlideIndex = index;
+        startAutoSlide();
+      }
+
+      function updateTypography(index) {
+        if(descText) {
+          descText.style.opacity = '0';
+          setTimeout(() => {
+            descText.innerText = slidesData[index].text;
+            descText.style.opacity = '1';
+          }, 200);
+        }
+      }
+
+      function startAutoSlide() {
+        slideInterval = setInterval(() => {
+          const nextIndex = (currentSlideIndex + 1) % slidesData.length;
+          goToSlide(nextIndex);
+        }, 8000); 
+      }
+
+      function initInteractions() {
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              if (window.scrollY > 50) {
+                header.classList.add('fc-scrolled');
+              } else {
+                header.classList.remove('fc-scrolled');
+              }
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+
+        if (mobileToggle && mobileMenu) {
+            mobileToggle.addEventListener('click', () => {
+              mobileMenu.classList.toggle('fc-open');
+            });
+
+            document.addEventListener('click', (e) => {
+              if (!header.contains(e.target) && mobileMenu.classList.contains('fc-open')) {
+                mobileMenu.classList.remove('fc-open');
+              }
+            });
+        }
+      }
+
+      // Initialize the page immediately since preloader is removed
+      buildSlider();
+      initInteractions();
+
+    })();
+  </script>
+</body>
+</html>

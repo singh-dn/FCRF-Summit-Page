@@ -164,12 +164,13 @@
 
 
 
-        // bg javascript 
-      (function initFutureCrimeHero() {
-      // Updated the text array to feature the exact text from the new image in Slide 1
+     // bg javascript 
+    (function initFutureCrimeHero() {
+      
       const slidesData = [
         {
           videoUrl: "assets/video/summit-video.mp4",
+          placeholderImg: "assets/img/watch/transparent-png.png", // Image to load instantly
           text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF), is India's largest conference focused on tackling technology-driven crime.",
           overlayTint: "rgba(20, 83, 45, 0.3)" 
         }
@@ -198,11 +199,31 @@
         slidesData.forEach((slide, index) => {
           const videoDiv = document.createElement('div');
           videoDiv.className = `fc-slide ${index === 0 ? 'fc-active' : ''}`;
+          
           videoDiv.innerHTML = `
-            <video src="${slide.videoUrl}" autoplay loop muted playsinline></video>
+            <img src="${slide.placeholderImg}" class="fc-slide-placeholder" alt="Loading media..." />
+            <video src="${slide.videoUrl}" loop muted playsinline preload="auto"></video>
             <div class="fc-slide-overlay-tint" style="background-color: ${slide.overlayTint};"></div>
             <div class="fc-slide-overlay-grad"></div>
           `;
+          
+          const videoEl = videoDiv.querySelector('video');
+          const placeholderEl = videoDiv.querySelector('.fc-slide-placeholder');
+
+          // STRONG LOGIC: Instead of guessing when it's ready, we wait for the exact moment 
+          // the video time progresses > 0, meaning frame 1 is actively painted on screen.
+          videoEl.addEventListener('timeupdate', function onTimeUpdate() {
+            if (videoEl.currentTime > 0) {
+              placeholderEl.style.display = 'none'; // Instant removal on the spot
+              videoEl.removeEventListener('timeupdate', onTimeUpdate); // Run only once
+            }
+          });
+
+          // Autoplay execution
+          if (index === currentSlideIndex) {
+            videoEl.play().catch(e => console.warn("Autoplay blocked by browser:", e));
+          }
+
           cachedSlides.push(videoDiv);
           videoFragment.appendChild(videoDiv);
 
@@ -229,11 +250,19 @@
       function goToSlide(index) {
         clearInterval(slideInterval); 
         
+        const prevVideo = cachedSlides[currentSlideIndex].querySelector('video');
+        if(prevVideo) prevVideo.pause();
+
         cachedSlides[currentSlideIndex].classList.remove('fc-active');
-        cachedDots[currentSlideIndex].classList.remove('fc-active');
+        if(cachedDots[currentSlideIndex]) cachedDots[currentSlideIndex].classList.remove('fc-active');
 
         cachedSlides[index].classList.add('fc-active');
-        cachedDots[index].classList.add('fc-active');
+        if(cachedDots[index]) cachedDots[index].classList.add('fc-active');
+        
+        const nextVideo = cachedSlides[index].querySelector('video');
+        if(nextVideo) {
+             nextVideo.play().catch(e => console.warn("Playback blocked by browser:", e));
+        }
 
         updateTypography(index);
         
@@ -274,58 +303,22 @@
           }
         });
 
-        mobileToggle.addEventListener('click', () => {
-          mobileMenu.classList.toggle('fc-open');
-        });
+        if (mobileToggle && mobileMenu) {
+            mobileToggle.addEventListener('click', () => {
+              mobileMenu.classList.toggle('fc-open');
+            });
 
-        document.addEventListener('click', (e) => {
-          if (!header.contains(e.target) && mobileMenu.classList.contains('fc-open')) {
-            mobileMenu.classList.remove('fc-open');
-          }
-        });
+            document.addEventListener('click', (e) => {
+              if (!header.contains(e.target) && mobileMenu.classList.contains('fc-open')) {
+                mobileMenu.classList.remove('fc-open');
+              }
+            });
+        }
       }
 
-      function runPreloaderAndInit() {
-        var timeline = gsap.timeline();
-
-        timeline.to(".mil-preloader-animation", { opacity: 1 });
-
-        timeline.fromTo(".mil-animation-1 .mil-h3", {
-            y: "30px", opacity: 0
-        }, {
-            y: "0px", opacity: 1, stagger: 0.4, duration: 0.5
-        });
-
-        timeline.to(".mil-animation-1 .mil-h3", {
-            opacity: 0, y: '-30', duration: 0.5
-        }, "+=0.3");
-
-        timeline.set(".mil-reveal-box", { scaleX: 0, transformOrigin: "left center" });
-        timeline.to(".mil-reveal-box", { duration: 0.45, scaleX: 1, opacity: 1, ease: "power2.inOut" });
-        
-        timeline.set(".mil-reveal-box", { transformOrigin: "right center" }); 
-        
-        timeline.to(".mil-reveal-box", { duration: 0.45, scaleX: 0, ease: "power2.inOut" });
-        
-        timeline.fromTo(".mil-animation-2 .mil-h3", { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.5");
-        timeline.to(".mil-animation-2 .mil-h3", { duration: 0.6, opacity: 0, y: '-30' }, "+=0.5");
-        
-        timeline.to(".mil-preloader", { duration: 0.8, opacity: 0, ease: 'sine' }, "+=0.2");
-
-        timeline.fromTo(".mil-up", {
-            opacity: 0, y: 40, scale: 0.98
-        }, {
-            duration: 0.8, y: 0, opacity: 1, scale: 1, ease: 'sine',
-            clearProps: "transform", 
-            onComplete: function () {
-                document.querySelector('.mil-preloader').classList.add("mil-hidden");
-                buildSlider();
-                initInteractions();
-            }
-        }, "-=1");
-      }
-
-      runPreloaderAndInit();
+      // Initialize the page immediately since preloader is removed
+      buildSlider();
+      initInteractions();
 
     })();
 
