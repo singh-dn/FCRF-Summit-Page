@@ -170,7 +170,7 @@
       const slidesData = [
         {
           videoUrl: "assets/video/summit-video.mp4",
-          placeholderImg: "assets/img/watch/transparent-png.png", // Image to load instantly
+          placeholderImg: "assets/img/banner/home-page-preloader.webp", // Image to load instantly
           text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF), is India's largest conference focused on tackling technology-driven crime.",
           overlayTint: "rgba(20, 83, 45, 0.3)" 
         }

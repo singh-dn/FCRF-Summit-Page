@@ -345,4 +345,42 @@ const stalwartsData = [
 
 
 
-        
+        // scroll up 
+
+
+          lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollUpBtn = document.getElementById('scrollUpBtn');
+
+            // 1. Show/Hide based on scroll position
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    scrollUpBtn.classList.add('show');
+                } else {
+                    scrollUpBtn.classList.remove('show');
+                }
+            }, { passive: true });
+
+            // 2. Immediate Smooth Scroll Logic
+            scrollUpBtn.addEventListener('click', () => {
+                const start = window.scrollY;
+                const startTime = performance.now();
+                const duration = 500; // 0.5 seconds for snappy feel
+                
+                function animate(time) {
+                    const elapsed = time - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Ease Out Quart: Starts fast, slows down at the end
+                    const ease = 1 - Math.pow(1 - progress, 4);
+                    
+                    window.scrollTo(0, start - (start * ease));
+                    
+                    if (elapsed < duration) {
+                        requestAnimationFrame(animate);
+                    }
+                }
+                requestAnimationFrame(animate);
+            });
+        });

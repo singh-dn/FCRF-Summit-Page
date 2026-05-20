@@ -1795,3 +1795,59 @@
             border-radius: 0.125rem;
             display: block;
         }
+
+
+
+        /* register now banner at bottom  */
+
+
+           :root {
+        --brand-gradient: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+    }
+
+    #scrollUpBtn {
+        position: fixed;
+        bottom: 80px;
+        right: 30px; /* Positioned Bottom Right */
+        width: 50px;
+        height: 50px;
+        background: var(--brand-gradient); 
+        color: white;
+        border: none;
+        border-radius: 50%;
+        box-shadow: 0 4px 15px rgba(81, 53, 255, 0.4);
+        cursor: pointer;
+        
+        /* Visibility Logic */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px) scale(0.9);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    #scrollUpBtn.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+    }
+
+    #scrollUpBtn:hover {
+        box-shadow: 0 8px 25px rgba(255, 84, 85, 0.5);
+        transform: translateY(-3px);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+        #scrollUpBtn {
+            bottom: 80px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+        }
+    }

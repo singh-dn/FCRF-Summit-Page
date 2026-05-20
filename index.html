@@ -84,26 +84,26 @@
     <!--<< Favcion >>-->
     <!-- <link rel="shortcut icon" href="assets/img/logo/favs.jpeg"> -->
     <!--<< Bootstrap min.css >>-->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.0.18">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.0.20">
     <!--<< All Min Css >>-->
-    <link rel="stylesheet" href="assets/css/all.min.css?v=1.0.18">
+    <link rel="stylesheet" href="assets/css/all.min.css?v=1.0.20">
     <!--<< Animate.css >>-->
-    <link rel="stylesheet" href="assets/css/animate.css?v=1.0.18">
+    <link rel="stylesheet" href="assets/css/animate.css?v=1.0.20">
     <!--<< Magnific Popup.css >>-->
-    <link rel="stylesheet" href="assets/css/magnific-popup.css?v=1.0.18">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css?v=1.0.20">
     <!--<< MeanMenu.css >>-->
-    <link rel="stylesheet" href="assets/css/meanmenu.css?v=1.0.18">
+    <link rel="stylesheet" href="assets/css/meanmenu.css?v=1.0.20">
     <!--<< Swiper Bundle.css >>-->
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css?v=1.0.18">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css?v=1.0.20">
     <!--<< Nice Select.css >>-->
-    <link rel="stylesheet" href="assets/css/nice-select.css?v=1.0.18">
+    <link rel="stylesheet" href="assets/css/nice-select.css?v=1.0.20">
     <!--<< Main.css >>-->
-    <link rel="stylesheet" href="assets/css/main.css?v=1.0.18">
+    <link rel="stylesheet" href="assets/css/main.css?v=1.0.20">
 
-    <link rel="stylesheet" href="assets/css/index-5.css?v=1.0.18">
-    <link rel="stylesheet" href="assets/css/animation-html-5.css?v=1.0.18">
-    <link rel="stylesheet" href="assets/css/summit.css?v=1.0.18">
-    <link rel="stylesheet" href="assets/css/new-form.css?v=1.0.18">
+    <link rel="stylesheet" href="assets/css/index-5.css?v=1.0.20">
+    <link rel="stylesheet" href="assets/css/animation-html-5.css?v=1.0.20">
+    <link rel="stylesheet" href="assets/css/summit.css?v=1.0.20">
+    <link rel="stylesheet" href="assets/css/new-form.css?v=1.0.20">
 
     <link href="https://fonts.cdnfonts.com/css/aquire" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -142,7 +142,7 @@ html.lenis, html.lenis body {
         <span class="cursor-dot"></span>
     </div> -->
 
-    <!-- Main Website Wrapper (Preloader fully removed) -->
+   <!-- Main Website Wrapper (Preloader fully removed) -->
   <div>
     <div id="fc-hero-module">
       
@@ -187,24 +187,8 @@ html.lenis, html.lenis body {
         
         <div class="fc-hero-center-content">
           
-          <!-- STYLIZED TEXT HEADER (One Line with Aquire) -->
-          <h1 class="fc-hero-title-single">
-            FutureCrime
-            <strong class="fc-hero-title-highlight">
-              Summit
-              <!-- Custom Gradient Squiggly Line SVG (Upward Growth Trend) -->
-              <svg class="fc-squiggly-line" viewBox="0 0 250 70" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="squiggle-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="10.65%" stop-color="#5135FF" />
-                    <stop offset="89.35%" stop-color="#FF5455" />
-                  </linearGradient>
-                </defs>
-                <!-- Modified Path: Starts low, bounces progressively higher, and shoots up at the end -->
-                <path d="M 5 65 C 30 80, 50 50, 80 55 C 110 60, 130 25, 160 30 C 180 35, 210 65, 250 -5" fill="none" stroke="url(#squiggle-grad)" stroke-width="8" stroke-linecap="round" />
-              </svg>
-            </strong>
-          </h1>
+          <!-- TRANSPARENT HIGH-RES PNG ABOVE TEXT (Kept safely in the middle!) -->
+          <img src="assets/img/watch/transparent-png.png" alt="Future Crime Summit" class="fc-hero-top-png" onerror="this.style.display='none'">
 
           <!-- Location Tag -->
           <div class="fc-location-tag">
@@ -222,11 +206,10 @@ html.lenis, html.lenis body {
           
           <!-- Matched Image Buttons -->
           <div class="fc-hero-buttons">
-           <a href="https://www.google.com/maps/place/Bharat+Mandapam/@28.6197155,77.2396062,17z/data=!3m1!4b1!4m6!3m5!1s0x390ce328e21150a5:0x1db02b6d0ba0702a!8m2!3d28.6197108!4d77.2421811!16s%2Fm%2F0267j4z?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="fc-btn-primary" style="text-decoration: none;">
-              Location
+           <a href="#pricing-sections" class="fc-btn-primary" style="text-decoration: none;">
+              Register Now
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
+                <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </a>
             <button class="fc-btn-secondary">
@@ -2160,14 +2143,18 @@ FCRF is registered under Section 8 of the Companies Act, 2013 and Section 12A & 
         </div>
     </footer>
 
+     <button id="scrollUpBtn" aria-label="Scroll to top">
+        <i data-lucide="arrow-up" width="24" height="24" stroke-width="2.5"></i>
+    </button>
+    
         <!-- Isolated Banner HTML -->
-    <!-- <div class="pricing-banner">
+    <div class="pricing-banner">
         <div class="banner-container">
             
             <div class="pricing-info">
                 <div class="price-row">
-                    <div class="current-price">₹5,999</div>
-                    <div class="original-price">₹29,999</div>
+                    <div class="current-price">₹2,999</div>
+                    <div class="original-price">₹5,999</div>
                 </div>
                 <p class="deadline-text">(Inclusive of GST and all Charges)</p>
             </div>
@@ -2175,49 +2162,49 @@ FCRF is registered under Section 8 of the Companies Act, 2013 and Section 12A & 
            <a href="https://konfhub.com/futurecrime-summit-2026"><button class="register-btn" id="registerBtn">Register Now</button></a>
             
         </div>
-    </div> -->
+    </div>
 
    <!--<< All JS Plugins >>-->
-<script src="assets/js/jquery-3.7.1.min.js?v=1.0.18"></script>
+<script src="assets/js/jquery-3.7.1.min.js?v=1.0.20"></script>
 <!--<< Viewport Js >>-->
-<script src="assets/js/viewport.jquery.js?v=1.0.18"></script>
+<script src="assets/js/viewport.jquery.js?v=1.0.20"></script>
 <!--<< Bootstrap Js >>-->
-<script src="assets/js/bootstrap.bundle.min.js?v=1.0.18"></script>
+<script src="assets/js/bootstrap.bundle.min.js?v=1.0.20"></script>
 <!--<< Nice Select Js >>-->
-<script src="assets/js/jquery.nice-select.min.js?v=1.0.18"></script>
+<script src="assets/js/jquery.nice-select.min.js?v=1.0.20"></script>
 <!--<< Waypoints Js >>-->
-<script src="assets/js/jquery.waypoints.js?v=1.0.18"></script>
+<script src="assets/js/jquery.waypoints.js?v=1.0.20"></script>
 <!--<< Counterup Js >>-->
-<script src="assets/js/jquery.counterup.min.js?v=1.0.18"></script>
+<script src="assets/js/jquery.counterup.min.js?v=1.0.20"></script>
 <!--<< Swiper Slider Js >>-->
-<script src="assets/js/swiper-bundle.min.js?v=1.0.18"></script>
+<script src="assets/js/swiper-bundle.min.js?v=1.0.20"></script>
 <!--<< MeanMenu Js >>-->
-<script src="assets/js/jquery.meanmenu.min.js?v=1.0.18"></script>
+<script src="assets/js/jquery.meanmenu.min.js?v=1.0.20"></script>
 <!--<< Magnific Popup Js >>-->
-<script src="assets/js/jquery.magnific-popup.min.js?v=1.0.18"></script>
+<script src="assets/js/jquery.magnific-popup.min.js?v=1.0.20"></script>
 
 <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <!--<< Wow Animation Js >>-->
-<script src="assets/js/wow.min.js?v=1.0.18"></script>
+<script src="assets/js/wow.min.js?v=1.0.20"></script>
 <!--<< Gsap Js >>-->
-<script src="assets/js/gsap.min.js?v=1.0.18"></script>
+<script src="assets/js/gsap.min.js?v=1.0.20"></script>
 <!--<< Lenis Js >>-->
-<script src="assets/js/lenis.min.js?v=1.0.18"></script>
+<script src="assets/js/lenis.min.js?v=1.0.20"></script>
 <!--<< ScrollSmoother Js >>-->
-<script src="assets/js/scrollSmoother.js?v=1.0.18"></script>
+<script src="assets/js/scrollSmoother.js?v=1.0.20"></script>
 <!--<< ScrollTrigger Js >>-->
-<script src="assets/js/ScrollTrigger.min.js?v=1.0.18"></script>
+<script src="assets/js/ScrollTrigger.min.js?v=1.0.20"></script>
 <!--<< Spalit Text Js >>-->
-<script src="assets/js/spilitext-gsap.js?v=1.0.18"></script>
+<script src="assets/js/spilitext-gsap.js?v=1.0.20"></script>
 <!--<< Vanilla Tilt Js >>-->
-<script src="assets/js/vanilla-tilt.min.js?v=1.0.18"></script>
+<script src="assets/js/vanilla-tilt.min.js?v=1.0.20"></script>
 <!--<< Main.js >>-->
-<script src="assets/js/main.js?v=1.0.18"></script>
-<script src="assets/js/summit.js?v=1.0.18"></script>
-<script src="assets/js/new-form.js?v=1.0.18"></script>
+<script src="assets/js/main.js?v=1.0.20"></script>
+<script src="assets/js/summit.js?v=1.0.20"></script>
+<script src="assets/js/new-form.js?v=1.0.20"></script>
 
 
     <script>

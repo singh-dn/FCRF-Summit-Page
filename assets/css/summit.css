@@ -1,4 +1,4 @@
-      /* ==========================================================================
+    /* ==========================================================================
        ISOLATED CSS SCOPE (#fc-hero-module)
        ========================================================================== */
     #fc-hero-module {
@@ -129,53 +129,37 @@
     /* 1. Centered Content Block */
     #fc-hero-module .fc-hero-center-content {
       position: absolute;
-      top: auto; /* Changed: Removed top centering */
-      bottom: 12vh; /* Changed: Anchored perfectly to the bottom, above massive text */
-      left: 4rem; /* Changed: Aligned exactly with the initial header padding */
-      transform: none; /* Changed: Removed center translation */
+      top: auto; /* Changed: Removed top anchor */
+      bottom: 16vh; /* Changed: Moved content slightly up (was 10vh) */
+      left: 50%;
+      transform: translateX(-50%); /* Changed: Only translates horizontally now */
       display: flex;
       flex-direction: column;
-      align-items: flex-start; /* Changed: Left align all flex items */
-      text-align: left; /* Changed: Left align text */
+      align-items: center; /* Center align all flex items */
+      text-align: center; /* Center align text */
       width: 90%;
       max-width: 900px; 
       z-index: 30;
       gap: 1.5rem;
     }
 
-    /* ===== Stylized Hero Title (Single Line Aquire) ===== */
-    #fc-hero-module .fc-hero-title-single {
-      font-family: 'Aquire', sans-serif !important;
-      font-size: 3.5rem; /* Smaller size for one line */
-      font-weight: 700;
-      color: #ffffff;
-      line-height: 1.2;
-      margin: 0 0 0.5rem 0;
-      letter-spacing: 0.02em;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap; /* Allows safe wrapping on very narrow mobile devices */
-      gap: 0.8rem; /* Space between words */
-      z-index: 2;
-    }
-
-    #fc-hero-module .fc-hero-title-highlight {
+    /* ===== Future Crime Summit Image Enhancement ===== */
+    .fc-hero-top-png {
+      width: 75%;          /* Changed: Made image slightly smaller (was 85%) */
+      max-width: 600px;    /* Changed: Scaled down maximum size (was 800px) */
+      height: auto;
+      display: block;
+      margin: 0 auto;      /* Keep it centered */
+      object-fit: contain;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      filter: contrast(1.1) brightness(1.05) saturate(1.1);
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      border-radius: 8px;
       position: relative;
-      display: inline-block;
       z-index: 2;
-    }
-
-    #fc-hero-module .fc-squiggly-line {
-      position: absolute;
-      bottom: -0.5rem; /* Slightly lower to accommodate the taller wave */
-      left: 0; 
-      width: 102%; /* Stretch just past the word to guarantee it touches the 't' */
-      height: 60%; /* Taller to allow the wave to reach up high at the end */
-      z-index: -1; /* Place just behind the text */
-      pointer-events: none;
-      /* Drop shadow for extra pop against the video */
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); 
-      overflow: visible; /* Ensures the upward flick isn't clipped */
+      transition: all 0.3s ease;
     }
 
     #fc-hero-module .fc-location-tag {
@@ -195,7 +179,7 @@
       font-weight: 400;
       color: rgba(255, 255, 255, 0.95);
       line-height: 1.6;
-      margin: 0; /* Changed: Removed center auto margin */
+      margin: 0 auto; /* Center auto margin */
       max-width: 95%; /* Keep text contained neatly */
       text-shadow: 0 4px 20px rgba(0,0,0,0.8);
       transition: opacity 0.5s ease;
@@ -205,7 +189,7 @@
       display: flex;
       gap: 1.5rem; /* Slightly wider gap between buttons */
       margin-top: 0.5rem;
-      justify-content: flex-start; /* Changed: Align buttons to the left */
+      justify-content: center; /* Align buttons to the center */
     }
 
     #fc-hero-module .fc-btn-primary,
@@ -293,21 +277,22 @@
       
       #fc-hero-module .fc-dots-container { right: auto; left: 1.5rem; top: 35%; transform: translateY(0); }
       
-      /* Responsive sizing for the new single line title */
-      #fc-hero-module .fc-hero-title-single { font-size: 2.2rem; gap: 0.5rem; margin-bottom: 0; }
-      #fc-hero-module .fc-squiggly-line { bottom: -0.3rem; height: 50%; }
-
       #fc-hero-module .fc-hero-center-content {
         top: auto; 
-        bottom: 12vh; /* Anchored to bottom on mobile */
-        left: 1.5rem; /* Aligned with mobile header padding */
-        transform: none;
-        width: calc(100% - 3rem);
+        bottom: 14vh; /* Changed: Moved content up for mobile screens as well */
+        left: 50%; 
+        transform: translateX(-50%); /* Center horizontally */
+        width: 95%;
         gap: 1.25rem;
-        align-items: flex-start; /* Left align items */
-        text-align: left; /* Left align text */
+        align-items: center; /* Center align items */
+        text-align: center; /* Center align text */
       }
       
+      .fc-hero-top-png {
+        width: 85%; /* Changed: Keeps the image legible and well-proportioned on small phones */
+        max-width: 100%;
+      }
+
       #fc-hero-module .fc-desc-text {
         font-size: 1.1rem;
       }
