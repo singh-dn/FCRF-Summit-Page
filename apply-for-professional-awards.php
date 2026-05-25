@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!preg_match("/^[a-zA-Z\s\.]+$/", $nominee_name)) {
             throw new Exception("Nominee name can only contain letters and spaces.");
         }
-        if (!preg_match("/^[0-9\+]+$/", $phone) || strlen($phone) < 10) {
+        if (!preg_match("/^[0-9\+]+$/", $phone) || strlen($phone) < 12) {
             throw new Exception("Invalid phone number format.");
         }
         if (!preg_match("/^[a-zA-Z0-9\s\.\-&]+$/", $organization)) {

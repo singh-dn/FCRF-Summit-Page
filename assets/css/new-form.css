@@ -651,7 +651,7 @@
         /* ========================================== */
         .isolated-program-module .stalwarts-section {
             width: 100%;
-            background-color: var(--bg-dark);
+            background-color: rgb(0, 0, 0);
             color: var(--text-white);
             display: flex;
             justify-content: center;
@@ -1628,7 +1628,7 @@
         }
 
 
-         .iso-cert-container {
+      .iso-cert-container {
             font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
@@ -1645,7 +1645,7 @@
         }
 
         @media (min-width: 768px) {
-            .iso-cert-container { padding: 3rem; }
+            .iso-cert-container { padding: 0.1rem; }
         }
 
         /* Heading Styles */
@@ -1710,7 +1710,6 @@
             max-width: 42rem;
             margin-left: auto;
             margin-right: auto;
-            
             line-height: 1.5;
             font-weight: 400;
         }
@@ -1746,36 +1745,6 @@
         @media (min-width: 768px) { .iso-cert-frame { padding: 3rem; } }
         @media (min-width: 1024px) { .iso-cert-frame { padding: 4rem; } }
 
-        /* Frame Corner Designs */
-        .iso-cert-corner {
-            position: absolute;
-            width: 1.5rem;
-            height: 1.5rem;
-            pointer-events: none;
-            border-style: solid;
-            border-color: transparent;
-            border-width: 0;
-            border-image: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%) 1;
-            opacity: 0.8;
-        }
-
-        @media (min-width: 768px) {
-            .iso-cert-corner { width: 2rem; height: 2rem; }
-        }
-
-        /* Corner Placements */
-        .iso-cert-corner-tl { top: 1rem; left: 1rem; border-top-width: 2px; border-left-width: 2px; }
-        .iso-cert-corner-tr { top: 1rem; right: 1rem; border-top-width: 2px; border-right-width: 2px; }
-        .iso-cert-corner-br { bottom: 1rem; right: 1rem; border-bottom-width: 2px; border-right-width: 2px; }
-        .iso-cert-corner-bl { bottom: 1rem; left: 1rem; border-bottom-width: 2px; border-left-width: 2px; }
-
-        @media (min-width: 768px) {
-            .iso-cert-corner-tl { top: 1.5rem; left: 1.5rem; }
-            .iso-cert-corner-tr { top: 1.5rem; right: 1.5rem; }
-            .iso-cert-corner-br { bottom: 1.5rem; right: 1.5rem; }
-            .iso-cert-corner-bl { bottom: 1.5rem; left: 1.5rem; }
-        }
-
         /* Certificate Image */
         .iso-cert-image-wrapper {
             position: relative;
@@ -1791,9 +1760,23 @@
             max-width: 56rem;
             height: auto;
             object-fit: contain;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border-radius: 0.125rem;
+            /* Enhanced layered 3D shadow effect */
+            box-shadow: 
+                0 0 0 1px rgba(0,0,0,0.02),
+                0 30px 60px -12px rgba(0, 0, 0, 0.25), 
+                0 18px 36px -18px rgba(0, 0, 0, 0.3);
+            border-radius: 0.25rem;
             display: block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Optional: slight lift on hover to enhance 3D feel */
+        .iso-cert-image:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 0 0 1px rgba(0,0,0,0.02),
+                0 40px 70px -12px rgba(0, 0, 0, 0.25), 
+                0 24px 48px -18px rgba(0, 0, 0, 0.3);
         }
 
 
@@ -1851,3 +1834,155 @@
             height: 44px;
         }
     }
+
+
+
+
+            /* footer section price  */
+
+        /* =========================================================
+           🟢 DS DYNAMIC EXPANDING BANNER MODULE
+           ========================================================= */
+        
+          
+      .ds-banner-module * {
+            box-sizing: border-box;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        /* The Main Dock Container */
+        .ds-pricing-dock {
+            position: fixed;
+            bottom: 1.5rem; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 95%; 
+            max-width: 1000px; 
+            border-radius: 9999px; 
+            background-color: #000000; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            z-index: 999999; 
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            
+            /* Restored layout directly to the dock */
+            padding: 0.5rem 1.5rem; 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        /* Responsive Widths & Padding */
+        @media (min-width: 768px) {
+            .ds-pricing-dock { 
+                width: 85%; 
+                padding: 0.625rem 3rem; 
+                gap: 0.75rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .ds-pricing-dock { width: 75%; }
+        }
+
+        /* Text Layout */
+        .ds-pricing-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            justify-content: center;
+        }
+
+        .ds-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.375rem;
+            flex-wrap: nowrap;
+        }
+
+        .ds-current-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1;
+            letter-spacing: 0.025em;
+            white-space: nowrap;
+        }
+        @media (min-width: 640px) { .ds-current-price { font-size: 1.125rem; } }
+        @media (min-width: 768px) { .ds-current-price { font-size: 1.25rem; } }
+
+        .ds-original-price {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: line-through;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        @media (min-width: 640px) { .ds-original-price { font-size: 0.75rem; } }
+
+        .ds-gst-text {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0.125rem 0 0 0; 
+            white-space: nowrap;
+        }
+        @media (min-width: 640px) { .ds-gst-text { font-size: 10px; } }
+
+        /* Button & Animation */
+        .ds-register-link {
+            flex-shrink: 0;
+            outline: none;
+            text-decoration: none;
+        }
+
+        .ds-register-btn {
+            background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+            padding: 0.375rem 0.75rem; 
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        @media (min-width: 640px) { .ds-register-btn { padding: 0.375rem 1rem; } }
+        @media (min-width: 768px) {
+            .ds-register-btn {
+                padding: 0.4rem 1.5rem; 
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Lightning Shine Effect */
+        .ds-register-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            animation: shine-sweep 4s infinite;
+        }
+
+        @keyframes shine-sweep {
+            0% { left: -100%; }
+            25% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        .ds-register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .ds-register-btn:active {
+            transform: translateY(0);
+        }

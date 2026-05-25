@@ -384,3 +384,46 @@ const stalwartsData = [
                 requestAnimationFrame(animate);
             });
         });
+
+
+
+
+     // --- Custom Notification Logic (Scroll tracking removed) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const registerBtn = document.getElementById('registerBtn');
+            if (registerBtn) {
+                registerBtn.addEventListener('click', function(e) {
+                    // Uncomment the line below to prevent redirection while testing the toast popup
+                    // e.preventDefault(); 
+                    
+                    const msgBox = document.createElement('div');
+                    msgBox.textContent = 'Redirecting to checkout...';
+                    
+                    Object.assign(msgBox.style, {
+                        position: 'fixed',
+                        bottom: '100px', 
+                        right: '24px',
+                        backgroundColor: '#222',
+                        color: '#fff',
+                        padding: '12px 24px',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        zIndex: '9999999', 
+                        opacity: '0',
+                        transition: 'opacity 0.3s ease',
+                        fontFamily: 'sans-serif',
+                        fontWeight: '500'
+                    });
+                    
+                    document.body.appendChild(msgBox);
+                    
+                    setTimeout(() => msgBox.style.opacity = '1', 10);
+                    
+                    setTimeout(() => {
+                        msgBox.style.opacity = '0';
+                        setTimeout(() => msgBox.remove(), 300);
+                    }, 2000); 
+                });
+            }
+        });
