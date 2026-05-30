@@ -7776,7 +7776,7 @@ input.main-search-input::placeholder {
 
         /* --- Scoped Reset & Utilities --- */
         .partner-scroller-section {
-            background-color: #f8f9fa;
+            background-color: #ffffff;
             padding: 60px 0;
             overflow: hidden; 
             position: relative;
@@ -8395,5 +8395,44 @@ input.main-search-input::placeholder {
                 aspect-ratio: 352 / 192;
             }
         }
+
+
+
+
+
+
+
+
+                /* =========================================
+           COPY THIS CSS INTO YOUR PROJECT
+           ========================================= */
+
+        .text-highlight-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 0 0.1em; /* Slight spacing around the word */
+            font-weight: inherit; /* Inherits font weight from parent heading */
+        }
+
+        .text-highlight-bg {
+            position: absolute;
+            top: 45%; /* Starts halfway down */
+            bottom: 0%; /* Ends at the baseline */
+            left: -0.25em; /* Extends slightly left (scales with font size) */
+            right: -0.25em; /* Extends slightly right (scales with font size) */
+            background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+            opacity: 0.5; /* Adjust visibility here */
+            transform: skewX(-16deg); /* The slanted edge effect */
+            z-index: 1; /* Puts it behind the text */
+            display: block;
+            border-radius: 2px; /* Optional: slightly softens the sharp corners */
+        }
+
+        .text-highlight-text {
+            position: relative;
+            z-index: 10; /* Keeps text visibly on top */
+            font-weight: inherit;
+        }
+
 
       

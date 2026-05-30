@@ -1853,7 +1853,7 @@
         /* The Main Dock Container */
         .ds-pricing-dock {
             position: fixed;
-            bottom: 1.5rem; 
+            bottom: 0.9rem; 
             left: 50%; 
             transform: translateX(-50%); 
             width: 95%; 

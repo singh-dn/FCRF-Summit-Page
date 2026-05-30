@@ -1,129 +1,492 @@
-/* =============================
-   BROAD FOCUS AREA – PARALLAX
-   ============================= */
+    /* --- ISOLATED COMPONENT STYLES --- 
+      Everything is scoped inside .fa-wrapper to prevent conflicts with your project 
+    */
+    
+    .fa-wrapper {
+      position: relative;
+      width: 100%;
+      background: radial-gradient(circle at 50% 50%, #060606 0%, #000000 100%); /* Added subtle radial depth */
+      color: #ffffff;
+      font-family: inherit; /* Inherits your project's font */
+      overflow: hidden;
+      padding: 4rem 0; /* Increased overall section height */
+      /* CSS Variables for the mouse tracking */
+      --mouse-x: 0px;
+      --mouse-y: 0px;
+    }
 
-.fcrf-focus {
-  font-family: 'Inter', sans-serif;
-  /* Premium Dark Gradient Background */
-  background: radial-gradient(circle at center top, #1e3a8a, #0f172a 60%, #020617 100%);
-  padding: 100px 0;
-  color: #fff;
-  overflow: hidden;
-  position: relative;
-}
+    /* Isolate reset for this component only */
+    .fa-wrapper * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.fcrf-focus__title {
-  text-align: center;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 800;
-  margin-bottom: 70px;
-  background: linear-gradient(to right, #ffffff, #94a3b8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  opacity: 0;
-  animation: fcrfFadeDown 1s ease-out forwards;
-}
+    .fa-wrapper ::selection {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
 
-/* VIEWPORT CONTAINER */
-.fcrf-focus__viewport {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  
-  /* Create fade effect on left and right edges */
-  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-}
+    /* --- BACKGROUND PATTERNS --- */
+    
+    /* 1. Abstract Swoosh Design (Premium 3D Brand Identity) */
+    .fa-bg-swoosh {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      /* Highly engineered SVG with gradients, layering, and realistic drop-shadows */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 600' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23050505'/%3E%3Cstop offset='40%25' stop-color='%23161616'/%3E%3Cstop offset='100%25' stop-color='%23080808'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='100%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23121212'/%3E%3Cstop offset='100%25' stop-color='%230a0a0a'/%3E%3C/linearGradient%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='0' dy='15' stdDeviation='20' flood-color='%23000000' flood-opacity='1'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M-200,800 C200,600 400,-100 800,150 C1200,400 900,900 1400,600 C1600,480 1700,200 1900,100' stroke='url(%23g1)' stroke-width='220' stroke-linecap='round' fill='none' filter='url(%23shadow)'/%3E%3Cpath d='M0,950 C350,850 650,300 1000,450 C1350,600 1200,900 1600,650 C1750,550 1850,350 2000,200' stroke='url(%23g2)' stroke-width='140' stroke-linecap='round' fill='none' filter='url(%23shadow)'/%3E%3C/svg%3E");
+      background-size: cover;
+      background-position: center;
+      opacity: 0.9;
+    }
 
-/* SCROLLING TRACK */
-.fcrf-focus__track {
-  display: flex;
-  gap: 30px;
-  width: max-content; /* Critical for smooth looping */
-  padding: 20px 0; /* Space for hover scaling */
-  
-  /* Adjusted time for smoother flow */
-  animation: fcrfAutoScroll 40s linear infinite;
-}
+    /* 2. Ambient Center Glow */
+    .fa-ambient-glow {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-/* Pause scroll on hover for readability */
-.fcrf-focus__track:hover {
-  animation-play-state: paused;
-}
+    .fa-ambient-glow::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 250px;
+      background-color: rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+      filter: blur(100px);
+    }
 
-/* CARD STYLING */
-.fcrf-focus__card {
-  min-width: 300px;
-  height: 200px;
-  border-radius: 24px;
-  
-  /* Glassmorphism Effect */
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 30px;
-  
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  cursor: default;
-}
+    /* --- MAIN LAYOUT --- */
+    .fa-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0; 
+    }
 
-.fcrf-focus__card span {
-  font-size: 48px;
-  margin-bottom: 15px;
-  filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-  transition: transform 0.3s ease;
-}
+    .fa-section-header {
+      text-align: center;
+      margin-bottom: 1rem; 
+    }
 
-.fcrf-focus__card p {
-  font-size: 1rem;
-  line-height: 1.5;
-  font-weight: 500;
-  color: #e2e8f0;
-}
+    .fa-section-header h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: -0.025em;
+    }
+    @media (min-width: 768px) {
+      .fa-section-header h2 { font-size: 1.5rem; }
+    }
 
-/* ACTIVE / HOVER STATE */
-/* We use a specific class for JS highlighting, OR hover for user interaction */
-.fcrf-focus__card.active,
-.fcrf-focus__card:hover {
-  transform: scale(1.1);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(56, 189, 248, 0.5); /* Light Blue Border */
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
-              0 0 30px rgba(56, 189, 248, 0.2); /* Glow */
-  z-index: 10;
-}
+    /* --- MARQUEE STYLES --- */
+    .fa-marquee-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
 
-.fcrf-focus__card.active span,
-.fcrf-focus__card:hover span {
-  transform: scale(1.2) rotate(5deg);
-}
+    /* Gradient Fades for Edges (Black matching background) */
+    .fa-fade-left, .fa-fade-right {
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4rem; 
+      z-index: 20;
+    }
+    .fa-fade-left {
+      left: 0;
+      background: linear-gradient(to right, #000000, transparent);
+    }
+    .fa-fade-right {
+      right: 0;
+      background: linear-gradient(to left, #000000, transparent);
+    }
 
-/* ANIMATIONS */
-@keyframes fcrfAutoScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-50% - 15px)); } /* -50% - half gap */
-}
+    .fa-marquee-row {
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      padding: 0.5rem 0;
+    }
 
-@keyframes fcrfFadeDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    .fa-marquee-content {
+      display: flex;
+      width: max-content;
+      gap: 1rem;
+    }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .fcrf-focus { padding: 60px 0; }
-  .fcrf-focus__card {
-    min-width: 260px;
-    height: 180px;
-  }
-  .fcrf-focus__card span { font-size: 36px; }
-  /* Speed up slightly on mobile */
-  .fcrf-focus__track { animation-duration: 30s; }
-}
+    .fa-animate-scroll-left { animation: fa-scroll-left 20s linear infinite; }
+    .fa-animate-scroll-right { animation: fa-scroll-right 20s linear infinite; }
+
+    @keyframes fa-scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-33.3333%); } 
+    }
+    
+    @keyframes fa-scroll-right {
+      0% { transform: translateX(-33.3333%); }
+      100% { transform: translateX(0); }
+    }
+
+    /* --- HOVER CARD STYLES (Mouse Tracking Glow - B&W) --- */
+    .fa-glow-card {
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+      width: 160px; /* Increased card width */
+      height: 125px; /* Increased card height */
+      border-radius: 0.75rem; 
+      transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+      z-index: 0;
+    }
+
+    .fa-glow-card.active {
+      transform: scale(1.02);
+      z-index: 10;
+      box-shadow: 0 0 25px -5px rgba(255, 255, 255, 0.3); /* Bright white shadow */
+    }
+
+    /* 1. Mouse-tracking glowing border layer (White Glow) */
+    .fa-glow-border-layer {
+      pointer-events: none;
+      position: absolute;
+      inset: -1px;
+      border-radius: 0.75rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      background: radial-gradient(150px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.9), transparent 40%);
+      z-index: 1;
+    }
+    .fa-glow-card:hover .fa-glow-border-layer { opacity: 1; }
+
+    /* 2. Static Border & Active Border Layer */
+    .fa-static-border-layer {
+      pointer-events: none;
+      position: absolute;
+      inset: -1px;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: border-color 0.3s;
+      z-index: 2;
+    }
+    .fa-glow-card:hover .fa-static-border-layer { border-color: rgba(255, 255, 255, 0.3); }
+    .fa-glow-card.active .fa-static-border-layer { border-color: rgba(255, 255, 255, 0.8); }
+
+    /* 3. Inner Card Background (Dark Grays) */
+    .fa-inner-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 11px; 
+      overflow: hidden;
+      background-color: #0a0a0a; /* Very dark gray/black */
+      transition: background-color 0.3s;
+      z-index: 3;
+    }
+    .fa-glow-card:hover .fa-inner-bg { background-color: #141414; }
+    .fa-glow-card.active .fa-inner-bg { background-color: #1f1f1f; }
+
+    /* Inner mouse-tracking subtle background glow */
+    .fa-inner-glow {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      background: radial-gradient(250px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.1), transparent 40%);
+    }
+    .fa-glow-card:hover .fa-inner-glow { opacity: 1; }
+
+    /* 4. Content styling */
+    .fa-card-content {
+      position: relative;
+      z-index: 10;
+      padding: 0.75rem; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      gap: 0.5rem; 
+    }
+
+    .fa-card-icon {
+      color: #a3a3a3; /* Lighter gray icon for better visibility */
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: scale(0.9); 
+    }
+    .fa-glow-card:hover .fa-card-icon { color: #e5e5e5; }
+    
+    .fa-glow-card.active .fa-card-icon {
+      color: #ffffff; /* Pure white active */
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+    }
+
+    .fa-card-title {
+      font-size: 12px; 
+      font-weight: 500;
+      line-height: 1.2;
+      color: #d4d4d4; /* Much brighter text for high visibility */
+      transition: color 0.3s;
+    }
+    .fa-glow-card:hover .fa-card-title { color: #ffffff; }
+    .fa-glow-card.active .fa-card-title { color: #ffffff; }
+
+
+
+
+
+
+
+
+
+
+
+    /* location  */
+
+            /* =====================================================================
+           ISOLATED STYLES
+           Everything is scoped to .loc-wrapper to prevent conflicts
+           ===================================================================== */
+        
+        .loc-wrapper {
+            /* Localized Variables */
+            --primary: #ffffff; 
+            --primary-hover: #000000;
+            --text-dark: #ffffff; 
+            --text-gray: #a3a3a3; 
+            --bg-base: #000000;
+            --panel-bg: rgba(12, 12, 12, 0.85);
+
+            /* Base typography and background scoped to this section */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-base);
+            background: radial-gradient(circle at 50% 50%, #060606 0%, #000000 100%);
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+
+            /* Layout constraints */
+            width: 100%;
+            padding: 4rem 1rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Scoped reset */
+        .loc-wrapper *,
+        .loc-wrapper *::before,
+        .loc-wrapper *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* =====================================================================
+           PREMIUM BACKGROUND (Mirrored for flow)
+           ===================================================================== */
+        .loc-bg-swoosh {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            transform: scaleX(-1);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 600' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23050505'/%3E%3Cstop offset='40%25' stop-color='%23161616'/%3E%3Cstop offset='100%25' stop-color='%23080808'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='100%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23121212'/%3E%3Cstop offset='100%25' stop-color='%230a0a0a'/%3E%3C/linearGradient%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='0' dy='15' stdDeviation='20' flood-color='%23000000' flood-opacity='1'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M-200,800 C200,600 400,-100 800,150 C1200,400 900,900 1400,600 C1600,480 1700,200 1900,100' stroke='url(%23g1)' stroke-width='80' stroke-linecap='round' fill='none' filter='url(%23shadow)'/%3E%3Cpath d='M0,950 C350,850 650,300 1000,450 C1350,600 1200,900 1600,650 C1750,550 1850,350 2000,200' stroke='url(%23g2)' stroke-width='50' stroke-linecap='round' fill='none' filter='url(%23shadow)'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.9;
+        }
+
+        .loc-ambient-glow {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loc-ambient-glow::before {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            filter: blur(100px);
+        }
+
+        /* =====================================================================
+           LAYOUT & GRID
+           ===================================================================== */
+        .loc-container {
+            max-width: 80rem; /* 1280px */
+            margin: 0 auto;
+            position: relative;
+            z-index: 10; 
+        }
+
+        .loc-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .loc-grid {
+                /* Both panels are now exactly equal in size */
+                grid-template-columns: 1fr 1fr; 
+                gap: 2rem;
+            }
+        }
+
+        /* =====================================================================
+           PANEL STYLES (MAP & IMAGE)
+           ===================================================================== */
+        .loc-panel {
+            position: relative;
+            width: 100%;
+            height: 300px; 
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.8);
+            transform: translateZ(0); 
+            transition: border-color 0.4s ease;
+        }
+
+        @media (min-width: 768px) {
+            .loc-panel {
+                height: 350px; 
+            }
+        }
+
+        .loc-panel:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Map Specifics */
+        .loc-map-iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: invert(100%) hue-rotate(180deg) grayscale(20%) brightness(85%) contrast(90%);
+            transition: filter 0.4s ease;
+            pointer-events: auto;
+        }
+
+        .loc-panel:hover .loc-map-iframe {
+            filter: invert(100%) hue-rotate(180deg) grayscale(10%) brightness(95%) contrast(100%);
+        }
+
+        /* Image Specifics */
+        .loc-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0.85; 
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+            will-change: transform;
+        }
+
+        .loc-panel:hover .loc-img {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        .loc-pin-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 3rem;
+            height: 3rem;
+            background: rgba(10,10,10,0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .loc-panel:hover .loc-pin-overlay {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* =====================================================================
+           INFO PILLS ROW (BOTTOM)
+           ===================================================================== */
+        .loc-bottom-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem; /* Spacing below the cards */
+        }
+
+        .loc-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 9999px; /* Perfect pill shape */
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: border-color 0.3s ease;
+        }
+
+        .loc-pill:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .loc-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: var(--primary-hover);
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 9999px; /* Matches the pill shapes perfectly */
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.15);
+        }
+
+        .loc-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,255,255,0.3);
+            background-color: #e5e5e5;
+        }

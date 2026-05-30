@@ -1029,7 +1029,7 @@
         /* --- SHADOW HEADLINE STYLING --- */
         #summit-app-root .ss-section-header {
             position: relative;
-            padding: 110px 0 10px;
+            padding: 50px 0 10px;
             margin-bottom: 20px;
             display: flex;
             flex-direction: column;
@@ -1816,261 +1816,361 @@
 
 
 
-    /* who attend  */
+ /* who attend  */
 
-        /* ==========================================================================
-       ISOLATED CSS SCOPE (#fc-attendees-module)
-       ========================================================================== */
-    
-    #fc-attendees-module {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      /* UPDATED: Deep dark blue background matching the reference image */
-      background-color: #000000; 
-      color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      min-height: 100vh;
-      padding: 6rem 1.5rem;
-      position: relative;
-      overflow: hidden;
-    }
+/* who attend  */
 
-    #fc-attendees-module *,
-    #fc-attendees-module *::before,
-    #fc-attendees-module *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 1.6px;
-    }
+/* ==========================================================================
+ISOLATED CSS SCOPE (#fc-attendees-module)
+========================================================================== */
 
-    .fc-attendees-container {
-      width: 100%;
-      max-width: 1200px;
-      display: flex;
-      flex-direction: column;
-      gap: 4rem;
-      position: relative;
-      z-index: 10;
-    }
+#fc-attendees-module {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
 
-    /* --- HEADER AREA --- */
-    .fc-header-wrapper {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
+  /* WHITE THEME */
+  background-color: #ffffff;
+  color: #000000;
 
-    .fc-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1.2rem;
-      border-radius: 9999px;
-      background: rgba(81, 53, 255, 0.1);
-      border: 1px solid rgba(81, 53, 255, 0.3);
-      color: #a78bfa;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 6rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
 
-    .fc-section-title {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: #ffffff;
-      margin: 0;
-    }
+#fc-attendees-module *,
+#fc-attendees-module *::before,
+#fc-attendees-module *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 1.6px;
+}
 
-    /* NO SPANS USED! Using strong for gradient text */
-    .fc-section-title strong {
-      background: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-      font-weight: inherit;
-    }
+.fc-attendees-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  position: relative;
+  z-index: 10;
+}
 
-    .fc-section-desc {
-      font-size: 1.1rem;
-      color: #94a3b8;
-      max-width: 600px;
-      line-height: 1.6;
-    }
+/* ==========================================================================
+HEADER AREA
+========================================================================== */
 
-    /* --- BENTO GRID LAYOUT --- */
-    .fc-bento-grid {
-      display: grid;
-      /* 3 Column Layout for Desktop */
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      width: 100%;
-    }
+.fc-header-wrapper {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
 
-    /* --- BENTO CARDS --- */
-    .fc-bento-card {
-      /* UPDATED: Changed to a transparent white tint so the new dark blue background shines through the glass beautifully */
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 24px;
-      /* INCREASED PADDING for more breathing room */
-      padding: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease, border-color 0.3s ease;
-    }
+.fc-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 
-    /* Mouse Spotlight Hover Effect Layer */
-    .fc-bento-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: inherit;
-      background: radial-gradient(
-        800px circle at var(--mouse-x) var(--mouse-y), 
-        rgba(81, 53, 255, 0.06),
-        transparent 40%
-      );
-      z-index: 0;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-    }
+  padding: 0.5rem 1.2rem;
 
-    .fc-bento-card:hover::before {
-      opacity: 1;
-    }
+  border-radius: 9999px;
 
-    .fc-bento-card:hover {
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateY(-4px);
-    }
+  background: rgba(81, 53, 255, 0.06);
+  border: 1px solid rgba(81, 53, 255, 0.12);
 
-    /* Bento Grid Spanning Logistics */
-    .fc-span-2 { grid-column: span 2; }
-    .fc-span-1 { grid-column: span 1; }
+  color: #5135ff;
 
-    /* --- CARD HEADER --- */
-    .fc-card-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      position: relative;
-      z-index: 1;
-    }
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
 
-    .fc-card-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.fc-section-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 
-    .fc-card-icon svg {
-      width: 24px;
-      height: 24px;
-      stroke: #a1e6ec; /* Cyber Cyan */
-      fill: none;
-      stroke-width: 1.5;
-    }
+  color: #000000;
 
-    .fc-card-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin: 0;
-      letter-spacing: -0.01em;
-    }
+  margin: 0;
+}
 
-    /* --- CHIPS CONTAINER (Roles) --- */
-    .fc-chips-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      position: relative;
-      z-index: 1;
-    }
+/* GRADIENT TITLE */
 
-    /* The "Pill" design for each role instead of boring text lists */
-    .fc-role-chip {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 0.5rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.9rem;
-      color: #cbd5e1;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      cursor: default;
-      display: inline-flex;
-      align-items: center;
-      /* FIX: Ensures long text wraps inside the chip instead of touching the card edges */
-      max-width: 100%;
-      white-space: normal;
-      line-height: 1.4;
-      text-align: left;
-    }
+.fc-section-title strong {
+  background: linear-gradient(93deg, #5135ff 10.65%, #ff5455 89.35%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 
-    .fc-role-chip:hover {
-      background: linear-gradient(93deg, rgba(81, 53, 255, 0.8) 10.65%, rgba(255, 84, 85, 0.8) 89.35%);
-      color: #ffffff;
-      border-color: transparent;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(81, 53, 255, 0.4);
-    }
+  color: transparent;
+  font-weight: inherit;
+}
 
-    /* ==========================================================================
-       RESPONSIVE DESIGN
-       ========================================================================== */
-    @media (max-width: 992px) {
-      .fc-bento-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      /* Reset spans for tablet */
-      .fc-span-2 { grid-column: span 1; }
-      
-      /* Make specific cards span 2 on tablet to keep grid full */
-      .fc-bento-card:nth-child(7) { grid-column: span 2; }
-    }
+.fc-section-desc {
+  font-size: 1.1rem;
 
-    @media (max-width: 768px) {
-      #fc-attendees-module {
-        padding: 4rem 1rem;
-      }
-      .fc-bento-grid {
-        grid-template-columns: 1fr; /* Single column on mobile */
-      }
-      .fc-bento-card:nth-child(7) { grid-column: span 1; }
-      
-      .fc-bento-card {
-        /* INCREASED MOBILE PADDING so it doesn't touch the edges */
-        padding: 2rem;
-      }
-      
-      .fc-role-chip {
-        font-size: 0.85rem;
-        padding: 0.5rem 0.9rem;
-      }
-    }
+  color: #475569;
+
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+BENTO GRID
+========================================================================== */
+
+.fc-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* ==========================================================================
+BENTO CARDS
+========================================================================== */
+
+.fc-bento-card {
+  background: #ffffff;
+
+  border: 1px solid #d9dee7;
+
+  border-radius: 24px;
+
+  padding: 2.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  position: relative;
+  overflow: hidden;
+
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+
+  transition: all 0.3s ease;
+}
+
+/* Spotlight Hover Effect */
+
+.fc-bento-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  border-radius: inherit;
+
+  background: radial-gradient(
+    800px circle at var(--mouse-x) var(--mouse-y),
+    rgba(81, 53, 255, 0.06),
+    transparent 40%
+  );
+
+  z-index: 0;
+
+  opacity: 0;
+
+  transition: opacity 0.5s ease;
+
+  pointer-events: none;
+}
+
+.fc-bento-card:hover::before {
+  opacity: 1;
+}
+
+.fc-bento-card:hover {
+  border-color: #c7ced9;
+
+  transform: translateY(-4px);
+
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* Grid Span */
+
+.fc-span-2 {
+  grid-column: span 2;
+}
+
+.fc-span-1 {
+  grid-column: span 1;
+}
+
+/* ==========================================================================
+CARD HEADER
+========================================================================== */
+
+.fc-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  position: relative;
+  z-index: 1;
+}
+
+.fc-card-icon {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 14px;
+
+  background: #f8f9fc;
+
+  border: 1px solid #d7dce5;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 0.3s ease;
+}
+
+.fc-bento-card:hover .fc-card-icon {
+  background: rgba(81, 53, 255, 0.05);
+
+  border-color: rgba(81, 53, 255, 0.15);
+}
+
+.fc-card-icon svg {
+  width: 24px;
+  height: 24px;
+
+  stroke: #5135ff;
+
+  fill: none;
+  stroke-width: 1.7;
+}
+
+.fc-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+
+  color: #000000;
+
+  margin: 0;
+
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+CHIPS CONTAINER
+========================================================================== */
+
+.fc-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+
+  position: relative;
+  z-index: 1;
+}
+
+/* ROLE CHIPS */
+
+.fc-role-chip {
+  background: #f8fafc;
+
+  border: 1px solid #d8dde6;
+
+  padding: 0.55rem 1rem;
+
+  border-radius: 9999px;
+
+  font-size: 0.9rem;
+
+  color: #334155;
+
+  font-weight: 500;
+
+  transition: all 0.3s ease;
+
+  cursor: default;
+
+  display: inline-flex;
+  align-items: center;
+
+  max-width: 100%;
+
+  white-space: normal;
+
+  line-height: 1.4;
+
+  text-align: left;
+}
+
+.fc-role-chip:hover {
+  background: linear-gradient(
+    93deg,
+    rgba(81, 53, 255, 0.95) 10.65%,
+    rgba(255, 84, 85, 0.95) 89.35%
+  );
+
+  color: #ffffff;
+
+  border-color: transparent;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 4px 15px rgba(81, 53, 255, 0.2);
+}
+
+/* ==========================================================================
+RESPONSIVE DESIGN
+========================================================================== */
+
+@media (max-width: 992px) {
+  .fc-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .fc-span-2 {
+    grid-column: span 1;
+  }
+
+  .fc-bento-card:nth-child(7) {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  #fc-attendees-module {
+    padding: 4rem 1rem;
+  }
+
+  .fc-bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fc-bento-card:nth-child(7) {
+    grid-column: span 1;
+  }
+
+  .fc-bento-card {
+    padding: 2rem;
+  }
+
+  .fc-role-chip {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.9rem;
+  }
+}
     
             /* Scoped Font Imports */
         @import url('https://fonts.cdnfonts.com/css/aquire');
@@ -3210,258 +3310,310 @@
 }
 
 
+   /* =====================================================================
+           ISOLATED STYLES
+           Everything is scoped to .sponsor-wrapper to prevent conflicts
+           ===================================================================== */
+        
+        .sponsor-wrapper {
+            /* Localized Variables */
+            --primary: #ffffff; 
+            --primary-hover: #000000;
+            --text-dark: #ffffff; 
+            --text-gray: #a3a3a3; 
+            --bg-base: #000000;
+            --panel-bg: rgba(12, 12, 12, 0.85);
 
+            /* Base typography and background scoped to this section */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-base);
+            background: radial-gradient(circle at 50% 50%, #060606 0%, #000000 100%);
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
 
-
- .dsci-contact-wrapper {
-            --dsci-bg: #ffffff;
-            --dsci-card-bg: rgba(255, 255, 255, 0.85);
-            --dsci-text-primary: #0f172a;
-            --dsci-text-muted: #64748b;
-            --dsci-brand-gradient: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
-            --dsci-blue: #5135FF;
-            --dsci-red: #FF5455;
-            --dsci-shadow-sm: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
-            --dsci-shadow-lg: 0 10px 30px -5px rgba(0, 0, 0, 0.06);
-            
-            background-color: var(--dsci-bg);
-            background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.03) 1px, transparent 0);
-            background-size: 24px 24px;
-            color: var(--dsci-text-primary);
-            font-family: 'Inter', sans-serif;
-            /* Removed vertical padding, kept horizontal for mobile safety */
-            padding: 0 20px; 
-            margin: 0;
-            overflow-x: hidden;
+            /* Layout constraints */
             width: 100%;
-        }
-
-        .dsci-contact-wrapper * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .dsci-contact-wrapper .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            opacity: 0;
-            animation: dsciReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes dsciReveal {
-            to { opacity: 1; }
-        }
-
-        /* --- Header --- */
-        .dsci-contact-wrapper .header {
-            text-align: center;
-            margin-bottom: 40px;
-            /* Added small top padding to header instead of wrapper for better spacing control */
-            padding-top: 70px; 
-        }
-
-        .dsci-contact-wrapper .header-tag {
-            color: var(--dsci-red);
-            text-transform: uppercase;
-            letter-spacing: 0.4em;
-            font-size: 0.65rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .dsci-contact-wrapper .title-group {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 15px;
-        }
-
-        .dsci-contact-wrapper .glow-line {
-            height: 1px;
-            flex: 1;
-            max-width: 120px;
+            padding: 6rem 1rem;
             position: relative;
-        }
-
-        .dsci-contact-wrapper .line-left { background: linear-gradient(to left, var(--dsci-blue), transparent); }
-        .dsci-contact-wrapper .line-right { background: linear-gradient(to right, var(--dsci-red), transparent); }
-
-        .dsci-contact-wrapper .glow-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            position: absolute;
-            top: -2px;
-        }
-        .dsci-contact-wrapper .line-left .glow-dot { right: 0; background: var(--dsci-blue); box-shadow: 0 0 10px var(--dsci-blue); }
-        .dsci-contact-wrapper .line-right .glow-dot { left: 0; background: var(--dsci-red); box-shadow: 0 0 10px var(--dsci-red); }
-
-        .dsci-contact-wrapper h1 {
-            font-size: clamp(1.4rem, 4vw, 2.8rem);
-            font-weight: 500;
-            letter-spacing: -0.02em;
-        }
-
-        .dsci-contact-wrapper .gradient-text {
-            background: var(--dsci-brand-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-        }
-
-        .dsci-contact-wrapper .header p {
-            color: var(--dsci-text-muted);
-            max-width: 550px;
-            margin: 15px auto 0;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        /* --- Single Prominent Card Layout (COMPACT) --- */
-        .dsci-contact-wrapper .grid {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 650px; /* Reduced from 800px */
-            margin: 0 auto;
-            padding-bottom: 20px; 
-        }
-
-        .dsci-contact-wrapper .card {
-            background: var(--dsci-card-bg);
-            border-radius: 12px; /* Reduced border radius from 20px */
-            padding: clamp(20px, 4vw, 35px) clamp(15px, 3vw, 25px); 
-            position: relative;
-            border: 1px solid rgba(81, 53, 255, 0.25); /* Added visible blue-tinted border color */
-            backdrop-filter: blur(15px);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            box-shadow: var(--dsci-shadow-sm);
-            width: 100%;
-        }
-
-        .dsci-contact-wrapper .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--dsci-shadow-lg);
-            background: #ffffff;
-            border-color: rgba(81, 53, 255, 0.6); /* Border becomes slightly stronger on hover */
-        }
-
-        /* --- New Icon & Content Styles (COMPACT) --- */
-        .dsci-contact-wrapper .icon-container {
-            width: 60px; /* Reduced from 80px */
-            height: 60px; /* Reduced from 80px */
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px; /* Reduced from 25px */
-        }
-
-        .dsci-contact-wrapper .avatar-glow-ring {
-            position: absolute;
-            inset: -2px;
-            border-radius: 50%;
-            z-index: -1;
-            padding: 2px;
-            background: var(--dsci-brand-gradient);
-            opacity: 0.9;
-        }
-
-        .dsci-contact-wrapper .icon-inner {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 3px solid #fff; /* Reduced from 4px */
+            overflow: hidden;
             z-index: 1;
         }
 
-        .dsci-contact-wrapper .icon-inner svg {
-            width: 24px; /* Reduced from 32px */
-            height: 24px; /* Reduced from 32px */
-            fill: var(--dsci-blue);
+        /* Scoped reset */
+        .sponsor-wrapper *,
+        .sponsor-wrapper *::before,
+        .sponsor-wrapper *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .dsci-contact-wrapper .card-content-stack {
+        /* =====================================================================
+           PREMIUM BACKGROUND (Flipped vertically for variety)
+           ===================================================================== */
+        .sponsor-bg-swoosh {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            transform: scaleY(-1); /* Flipped to flow differently from previous sections */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 600' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23050505'/%3E%3Cstop offset='40%25' stop-color='%23161616'/%3E%3Cstop offset='100%25' stop-color='%23080808'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='100%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23121212'/%3E%3Cstop offset='100%25' stop-color='%230a0a0a'/%3E%3C/linearGradient%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='0' dy='15' stdDeviation='20' flood-color='%23000000' flood-opacity='1'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M-200,800 C200,600 400,-100 800,150 C1200,400 900,900 1400,600 C1600,480 1700,200 1900,100' stroke='url(%23g1)' stroke-width='80' stroke-linecap='round' fill='none' filter='url(%23shadow)'/%3E%3Cpath d='M0,950 C350,850 650,300 1000,450 C1350,600 1200,900 1600,650 C1750,550 1850,350 2000,200' stroke='url(%23g2)' stroke-width='50' stroke-linecap='round' fill='none' filter='url(%23shadow)'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.9;
+        }
+
+        .sponsor-ambient-glow {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sponsor-ambient-glow::before {
+            content: "";
+            position: absolute;
+            width: 600px;
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            filter: blur(100px);
+        }
+
+        /* =====================================================================
+           LAYOUT & GRID
+           ===================================================================== */
+        .sponsor-container {
+            max-width: 80rem; /* 1280px */
+            margin: 0 auto;
+            position: relative;
+            z-index: 10; 
+        }
+
+        .sponsor-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .sponsor-grid {
+                /* Gave the left text more space to keep the right card smaller */
+                grid-template-columns: 1.4fr 1fr; 
+                gap: 4rem;
+            }
+        }
+
+        /* =====================================================================
+           TEXT CONTENT (LEFT)
+           ===================================================================== */
+        .sponsor-text-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sponsor-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #d4d4d4;
+            margin-bottom: 1.5rem;
+            padding: 0.35rem 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 2rem;
+            width: max-content;
+        }
+
+        .sponsor-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+            background-image: linear-gradient(93deg, #ffffff 10%, #888888 90%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        @media (min-width: 768px) {
+            .sponsor-title { font-size: 3.5rem; }
+        }
+
+        .sponsor-desc {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 90%;
+        }
+
+        /* Value Proposition List */
+        .sponsor-benefits {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .sponsor-benefits li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1rem;
+            color: #e5e5e5;
+            font-weight: 500;
+        }
+
+        .sponsor-benefits li i {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.25rem;
+            border-radius: 50%;
+        }
+
+        /* =====================================================================
+           GLASS CONTACT CARD (RIGHT)
+           ===================================================================== */
+        .sponsor-card {
+            background-color: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.25rem; 
+            padding: 1.5rem 1.25rem; /* Reduced for mobile to keep it compact */
+            max-width: 320px; /* Constrained even tighter on mobile */
+            margin: 0 auto; /* Centered in its column */
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px; /* Reduced from 15px */
-            margin-bottom: 25px; /* Reduced from 35px */
+            text-align: center;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.8);
+            transform: translateZ(0); 
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
         }
 
-        .dsci-contact-wrapper h2 {
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem); /* Scaled down slightly */
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            color: var(--dsci-text-primary);
+        @media (min-width: 768px) {
+            .sponsor-card {
+                padding: 2rem 1.5rem; 
+                max-width: 380px; 
+            }
         }
 
-        .dsci-contact-wrapper .inquiry-text {
-            color: var(--dsci-text-muted);
-            font-size: 0.95rem; /* Scaled down */
-            line-height: 1.6;
-            max-width: 600px;
+        .sponsor-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #333, #fff, #333);
+            opacity: 0.5;
         }
 
-        /* --- Button (COMPACT) --- */
-        .dsci-contact-wrapper .btn-wrapper {
-            margin-top: auto;
+        .sponsor-card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 50px -5px rgba(255,255,255,0.1); 
+            transform: translateY(-4px) translateZ(0);
         }
 
-        .dsci-contact-wrapper .cta-btn {
+        .sponsor-icon-wrapper {
+            width: 2.5rem; /* Reduced for mobile */
+            height: 2.5rem; /* Reduced for mobile */
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem; 
+            color: var(--primary);
+            box-shadow: 0 0 20px rgba(255,255,255,0.05);
+        }
+
+        @media (min-width: 768px) {
+            .sponsor-icon-wrapper {
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+
+        .sponsor-card h3 {
+            font-size: 1.15rem; /* Reduced for mobile */
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .sponsor-card p {
+            color: var(--text-gray);
+            font-size: 0.8rem; /* Reduced for mobile */
+            margin-bottom: 1.25rem; 
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) {
+            .sponsor-card h3 { font-size: 1.25rem; }
+            .sponsor-card p { font-size: 0.875rem; margin-bottom: 1.5rem; }
+        }
+
+        /* Email Display Box */
+        .sponsor-email-box {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            padding: 0.6rem; /* Reduced for mobile */
+            margin-bottom: 1.25rem; 
+            font-family: monospace;
+            font-size: 0.85rem; /* Reduced for mobile */
+            color: #ffffff;
+            letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 768px) {
+            .sponsor-email-box {
+                padding: 0.75rem;
+                margin-bottom: 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Call To Action Button (Mailto link) */
+        .sponsor-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 12px 28px; /* Reduced from 16px 36px */
-            border-radius: 10px;
-            color: white;
-            text-decoration: none;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem; /* Reduced padding */
+            width: 100%;
+            background-color: var(--primary);
+            color: var(--primary-hover);
+            font-size: 0.9rem; /* Reduced font size */
             font-weight: 700;
-            font-size: clamp(0.75rem, 1.5vw, 0.85rem); /* Scaled down slightly */
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            background: var(--dsci-brand-gradient);
-            box-shadow: 0 4px 12px rgba(81, 53, 255, 0.15);
+            border-radius: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.15);
         }
 
-        .dsci-contact-wrapper .cta-btn:hover {
-            filter: brightness(1.1);
-            box-shadow: 0 6px 20px rgba(255, 84, 85, 0.2);
+        .sponsor-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.35);
+            background-color: #e5e5e5;
         }
-
-        .dsci-contact-wrapper .cta-btn svg {
-            width: 18px; /* Reduced from 20px */
-            height: 18px; /* Reduced from 20px */
-            fill: currentColor;
-        }
-
-        /* Responsive Mobile */
-        @media (max-width: 600px) {
-            .dsci-contact-wrapper .grid { padding-bottom: 10px; }
-            .dsci-contact-wrapper .card { padding: 25px 15px; border-radius: 12px; } /* Updated radius here as well */
-            .dsci-contact-wrapper .header { margin-bottom: 25px; }
-            .dsci-contact-wrapper .header p { font-size: 0.85rem; }
-            .dsci-contact-wrapper .glow-line { max-width: 40px; }
-            .dsci-contact-wrapper .inquiry-text { font-size: 0.85rem; }
-            .dsci-contact-wrapper .cta-btn { width: 100%; justify-content: center; text-align: center; }
-        }
-
 
 
         /* button css for index page  */
