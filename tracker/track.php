@@ -5,7 +5,7 @@
 // ============================================
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: https://summit.futurecrime.org/');          // restrict to your domain in production
+header('Access-Control-Allow-Origin: https://summit.futurecrime.org');          // restrict to your domain in production
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, X-Tracker-Key');
 header('Cache-Control: no-store');

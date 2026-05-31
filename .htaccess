@@ -1,45 +1,51 @@
 RewriteEngine On
 
-# ---------------------------------
-# 1. Redirect index → /
-# ---------------------------------
-RewriteCond %{THE_REQUEST} \s/+index(\.html|\.php)?[\s?] [NC]
-RewriteRule ^index(\.html|\.php)?$ / [R=301,L]
-
-# ---------------------------------
-# 2. Force HTTPS
-# ---------------------------------
+# =========================================
+# FORCE HTTPS
+# =========================================
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# ---------------------------------
-# 3. Remove .html extension
-# ---------------------------------
+# =========================================
+# EXCLUDE TRACKER FOLDER FROM REWRITES
+# =========================================
+RewriteCond %{REQUEST_URI} ^/tracker/
+RewriteRule .* - [L]
+
+# =========================================
+# REDIRECT index → /
+# =========================================
+RewriteCond %{THE_REQUEST} \s/+index(\.html|\.php)?[\s?] [NC]
+RewriteRule ^index(\.html|\.php)?$ / [R=301,L]
+
+# =========================================
+# REMOVE .html
+# =========================================
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
 RewriteRule ^ /%1 [R=301,L]
 
-# ---------------------------------
-# 4. Remove .php extension
-# ---------------------------------
+# =========================================
+# REMOVE .php
+# =========================================
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.php [NC]
+RewriteCond %{REQUEST_URI} !^/tracker/
 RewriteRule ^ /%1 [R=301,L]
 
-
-# ---------------------------------
-# 5. Internal rewrite for .html
-# ---------------------------------
+# =========================================
+# INTERNAL .html
+# =========================================
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L]
 
-# ---------------------------------
-# 6. Internal rewrite for .php
-# ---------------------------------
+# =========================================
+# INTERNAL .php
+# =========================================
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]
 
-# ---------------------------------
-# 7. Security
-# ---------------------------------
+# =========================================
+# SECURITY
+# =========================================
 Options -Indexes
