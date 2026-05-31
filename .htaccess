@@ -7,9 +7,10 @@ RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # =========================================
-# SKIP TRACKER FOLDER COMPLETELY
+# TRACKER FOLDER - NO REWRITES
 # =========================================
-RewriteRule ^tracker/ - [L]
+RewriteCond %{REQUEST_URI} ^/tracker/
+RewriteRule .* - [L]
 
 # =========================================
 # REDIRECT index → /
@@ -18,27 +19,28 @@ RewriteCond %{THE_REQUEST} \s/+index(\.html|\.php)?[\s?] [NC]
 RewriteRule ^index(\.html|\.php)?$ / [R=301,L]
 
 # =========================================
-# REMOVE .html ONLY
+# REMOVE .html
 # =========================================
+RewriteCond %{REQUEST_URI} !^/tracker/
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
 RewriteRule ^ /%1 [R=301,L]
 
 # =========================================
-# REMOVE .php EXCEPT tracker
+# REMOVE .php
 # =========================================
 RewriteCond %{REQUEST_URI} !^/tracker/
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.php [NC]
 RewriteRule ^ /%1 [R=301,L]
 
 # =========================================
-# INTERNAL REWRITE .html
+# INTERNAL .html
 # =========================================
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L]
 
 # =========================================
-# INTERNAL REWRITE .php
+# INTERNAL .php
 # =========================================
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
