@@ -24,57 +24,22 @@ RewriteRule ^ /%1 [R=301,L]
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.php [NC]
 RewriteRule ^ /%1 [R=301,L]
 
-# =================================================
-# 5. Skip rewrite for tracker folder
-# IMPORTANT
-# =================================================
-RewriteRule ^tracker/ - [L]
 
-# =================================================
-# 6. Internal rewrite for .html
-# =================================================
+# ---------------------------------
+# 5. Internal rewrite for .html
+# ---------------------------------
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L]
 
-# =================================================
-# 7. Internal rewrite for .php
-# =================================================
+# ---------------------------------
+# 6. Internal rewrite for .php
+# ---------------------------------
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]
 
-# =================================================
-# 8. Protect sensitive files
-# =================================================
-<FilesMatch "(^\.|config\.php|schema\.sql|composer\.json|composer\.lock)">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
-
-# =================================================
-# 9. Disable directory listing
-# =================================================
+# ---------------------------------
+# 7. Security
+# ---------------------------------
 Options -Indexes
-
-# =================================================
-# 10. Prevent access to backup/log files
-# =================================================
-<FilesMatch "\.(log|sql|bak|env|ini)$">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
-
-# =================================================
-# 11. Browser caching (optional performance boost)
-# =================================================
-<IfModule mod_expires.c>
-    ExpiresActive On
-
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/webp "access plus 1 year"
-    ExpiresByType image/svg+xml "access plus 1 year"
-</IfModule>
