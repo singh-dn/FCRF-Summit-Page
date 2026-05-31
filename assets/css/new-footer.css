@@ -492,7 +492,7 @@
 
 
         
-        .sam-root {
+             .sam-root {
             /* Component-specific variables */
             --sam-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             --sam-btn-bg: #1e293b; /* Sleek, universal Dark Slate/Blue instead of grey */
@@ -518,6 +518,16 @@
             padding: 0;
         }
 
+        .sam-root {
+    pointer-events: none;
+}
+
+.sam-trigger,
+.sam-container,
+.sam-scroll-wrapper {
+    pointer-events: auto;
+}
+
         /* FIX: Apply resets directly to the classes to avoid CSS specificity overriding the background */
         .sam-item, .sam-trigger, .sam-scroll-up {
             border: none;
@@ -529,13 +539,18 @@
 
         /* Animated Items Container */
         .sam-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            margin-right: 0.5rem; 
-        }
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    margin-right: 0.5rem;
+    pointer-events: none;
+}
+
+.sam-active .sam-container {
+    pointer-events: auto;
+}
 
         /* Menu Items */
         .sam-item {
