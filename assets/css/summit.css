@@ -2355,11 +2355,18 @@ RESPONSIVE DESIGN
 
 
   /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
+            /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
+   
+        /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
         #dev-sponsors-section {
-            --dss-primary-grad: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+            /* Tier Gradients */
+            --dss-platinum-grad: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+            --dss-gold-grad: linear-gradient(93deg, #B8860B 0%, #FFD700 50%, #B8860B 100%);
+            --dss-silver-grad: linear-gradient(93deg, #71717a 0%, #d4d4d8 50%, #71717a 100%);
+            
             --dss-modal-light: #ffffff; 
-            --dss-text-main: #000000; /* Black text */
-            --dss-text-gray: #374151; /* Dark gray for subtle text */
+            --dss-text-main: #000000;
+            --dss-text-gray: #374151;
             --dss-bg-white: #ffffff;
             --dss-card-bg: #ffffff;
             --dss-border-light: rgba(0, 0, 0, 0.08);
@@ -2395,7 +2402,7 @@ RESPONSIVE DESIGN
             pointer-events: none;
         }
 
-        /* Top small headline style - Set to Black */
+        /* Top small headline style - Kept simple */
         #dev-sponsors-section .dss-sub-headline {
             font-size: 0.85rem;
             color: #000000;
@@ -2403,82 +2410,127 @@ RESPONSIVE DESIGN
             font-weight: 700;
             letter-spacing: 0.3em;
             text-transform: uppercase;
-            display: inline-block;
+            display: block; /* FIX: Changed from inline-block to block to force a new line */
             position: relative;
         }
 
-        /* Main Headline */
-        #dev-sponsors-section .dss-main-headline {
+        /* Base Headline Style */
+        #dev-sponsors-section .dss-tier-headline {
             font-family: 'Aquire', sans-serif;
-            font-size: 3rem;
             font-weight: 700;
             text-transform: uppercase;
-            background: var(--dss-primary-grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8rem; 
-            letter-spacing: 0.08em;
-            line-height: 1.2;
             position: relative;
+            display: inline-block;
         }
-
-        #dev-sponsors-section .dss-main-headline::after {
+        
+        #dev-sponsors-section .dss-tier-headline::after {
             content: "";
             position: absolute;
-            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 3px;
-            background: var(--dss-primary-grad);
             border-radius: 2px;
             opacity: 0.8;
         }
 
-        /* Logo Grid Container */
+        /* PLATINUM Headline (Largest) */
+        #dev-sponsors-section .dss-headline-platinum {
+            font-size: 3rem;
+            background-image: var(--dss-platinum-grad);
+            margin-bottom: 6rem; 
+            letter-spacing: 0.08em;
+            line-height: 1.2;
+        }
+        #dev-sponsors-section .dss-headline-platinum::after {
+            bottom: -12px; width: 40px; height: 3px; background: var(--dss-platinum-grad);
+        }
+
+        /* GOLD Headline (Medium) */
+        #dev-sponsors-section .dss-headline-gold {
+            font-size: 2.2rem;
+            background-image: var(--dss-platinum-grad);
+            margin-top: 6rem;
+            margin-bottom: 4rem; 
+            letter-spacing: 0.06em;
+            line-height: 1.2;
+        }
+        #dev-sponsors-section .dss-headline-gold::after {
+            bottom: -10px; width: 30px; height: 2px; background: var(--dss-platinum-grad);
+        }
+
+        /* SILVER Headline (Smallest) */
+        #dev-sponsors-section .dss-headline-silver {
+            font-size: 1.6rem;
+            background-image: var(--dss-platinum-grad);
+            margin-top: 5rem;
+            margin-bottom: 3rem; 
+            letter-spacing: 0.04em;
+            line-height: 1.2;
+        }
+        #dev-sponsors-section .dss-headline-silver::after {
+            bottom: -8px; width: 20px; height: 2px; background: var(--dss-platinum-grad);
+        }
+
+
+        /* Base Grid Container */
         #dev-sponsors-section .dss-logo-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 4rem; 
-            max-width: 1100px;
             margin: 0 auto;
             align-items: center;
             justify-content: center;
         }
 
-        /* Individual Logo Card */
+        /* Tier-Specific Grid Gaps */
+        #dev-sponsors-section .dss-grid-platinum { gap: 4rem; max-width: 1100px; }
+        #dev-sponsors-section .dss-grid-gold { gap: 3rem; max-width: 1000px; }
+        #dev-sponsors-section .dss-grid-silver { gap: 2rem; max-width: 900px; }
+
+        /* Base Logo Card */
         #dev-sponsors-section .dss-logo-item {
             width: 100%;
-            max-width: 380px;
-            height: 180px;
             background: var(--dss-card-bg);
             border: 1px solid var(--dss-border-light);
-            border-radius: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2.5rem;
             position: relative;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02),
-                        0 10px 40px -10px rgba(0, 0, 0, 0.04);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: pointer;
         }
 
-        #dev-sponsors-section .dss-logo-item:hover {
+        /* PLATINUM Card Styles */
+        #dev-sponsors-section .dss-card-platinum {
+            max-width: 380px; height: 180px; padding: 2.5rem; border-radius: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02), 0 10px 40px -10px rgba(0, 0, 0, 0.04);
+        }
+        #dev-sponsors-section .dss-card-platinum:hover {
             transform: translateY(-5px) scale(1.02);
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
-            border-color: rgba(0, 0, 0, 0.1);
+            border-color: rgba(81, 53, 255, 0.3);
         }
 
-        /* Platinum Sheen Overlay */
-        #dev-sponsors-section .dss-logo-item::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 1.5rem;
-            background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%, rgba(240,240,240,0.5) 100%);
-            pointer-events: none;
+        /* GOLD Card Styles */
+        #dev-sponsors-section .dss-card-gold {
+            max-width: 340px; height: 160px; padding: 3.1rem; border-radius: 1.25rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02), 0 8px 30px -10px rgba(0, 0, 0, 0.03);
+        }
+        #dev-sponsors-section .dss-card-gold:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.06);
+            border-color: rgba(218, 165, 32, 0.4);
+        }
+
+        /* SILVER Card Styles */
+        #dev-sponsors-section .dss-card-silver {
+            max-width: 300px; height: 140px; padding: 2rem; border-radius: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+        }
+        #dev-sponsors-section .dss-card-silver:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
+            border-color: rgba(113, 113, 122, 0.4);
         }
 
         /* Logo Image */
@@ -2529,7 +2581,7 @@ RESPONSIVE DESIGN
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Close Button - Now Black */
+        /* Close Button */
         #dss-close-btn {
             position: absolute;
             top: 20px;
@@ -2561,7 +2613,7 @@ RESPONSIVE DESIGN
             object-fit: contain;
         }
 
-        /* Modal Right Side (Info) - Now White/Light with Black Text */
+        /* Modal Right Side (Info) */
         .dss-modal-right {
             flex: 1.5;
             background: #ffffff;
@@ -2593,7 +2645,7 @@ RESPONSIVE DESIGN
         .dss-modal-desc {
             font-size: 15px;
             line-height: 1.7;
-            color: #4b5563; /* Accessible dark gray for description */
+            color: #4b5563; 
             margin-bottom: 30px;
         }
 
@@ -2608,6 +2660,9 @@ RESPONSIVE DESIGN
             transition: all 0.2s;
             border-bottom: 2px solid transparent;
             width: fit-content;
+            cursor: pointer;
+            position: relative;
+            z-index: 5;
         }
         .dss-modal-link:hover { 
             color: #5135FF;
@@ -2617,14 +2672,27 @@ RESPONSIVE DESIGN
 
         /* Responsive Scaling for Mobile */
         @media (max-width: 768px) {
-            #dev-sponsors-section { padding: 2rem 1rem; }
-            #dev-sponsors-section .dss-main-headline { font-size: 2.25rem; margin-bottom: 3rem; }
+            #dev-sponsors-section { padding: 3rem 1rem; }
             
-            #dev-sponsors-section .dss-logo-grid { gap: 1rem; }
-            #dev-sponsors-section .dss-logo-item {
-                width: calc(50% - 0.5rem); 
-                height: 110px;
-                padding: 1rem;
+            /* Responsive Headlines */
+            #dev-sponsors-section .dss-headline-platinum { font-size: 2.25rem; margin-bottom: 3rem; }
+            #dev-sponsors-section .dss-headline-gold { font-size: 1.8rem; margin-top: 4rem; margin-bottom: 2.5rem; }
+            #dev-sponsors-section .dss-headline-silver { font-size: 1.4rem; margin-top: 3rem; margin-bottom: 2rem; }
+            
+            /* Responsive Grids & Cards */
+            #dev-sponsors-section .dss-grid-platinum { gap: 1rem; }
+            #dev-sponsors-section .dss-card-platinum {
+                width: calc(50% - 0.5rem); height: 110px; padding: 0rem;
+            }
+
+            #dev-sponsors-section .dss-grid-gold { gap: 1rem; }
+            #dev-sponsors-section .dss-card-gold {
+                width: calc(50% - 0.5rem); height: 100px; padding: 1rem;
+            }
+
+            #dev-sponsors-section .dss-grid-silver { gap: 1rem; }
+            #dev-sponsors-section .dss-card-silver {
+                width: calc(50% - 0.5rem); height: 90px; padding: 1rem;
             }
 
             /* Modal Responsive */

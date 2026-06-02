@@ -573,25 +573,47 @@
         // ------------------------------- sponsore 
 
               // SPONSOR DATA ARRAY
+       // SPONSOR DATA ARRAY (Expanded for all tiers)
         const sponsorData = [
+            // Platinum (0, 1)
             {
+                tier: "Platinum Sponsor",
                 name: "Resecurity",
                 logo: "assets/img/sponsors/Resecurity.jpeg",
                 description: "Resecurity is a global cybersecurity company delivering advanced threat intelligence, risk management, and endpoint protection solutions. Leveraging AI, big data, and human-curated intelligence, Resecurity helps enterprises and governments detect, prevent, and respond to sophisticated cyber threats in real time.",
                 website: "https://www.resecurity.com"
             },
             {
-                name: "Binary Global",
+                tier: "Platinum Sponsor",
+                name: "Binary",
                 logo: "assets/img/sponsors/Binary.jpeg",
-                description: "Binary Global is a leading technology solutions provider specializing in cloud, cybersecurity, and digital infrastructure. With a strong focus on innovation, scalability, and security, Binary Global empowers enterprises to accelerate digital transformation, strengthen cyber resilience, and optimize IT operations across industries.",
-                website: "https://binaryglobal.com/"
+                description: "Binary is a leading innovator in software architecture and secure digital infrastructure. Specializing in high-performance computing and threat defense mechanisms, they help government agencies and private enterprises build resilient digital ecosystems.",
+                website: "https://www.binary.com"
+            },
+            // Gold (2, 3)
+            {
+                tier: "Gold Sponsor", name: "Gold Sponsor 1", logo: "assets/img/sponsors/mh services.webp",
+                description: "MH Service is a globally recognized leader in digital forensics and cyber investigation technologies. Leveraging over three decades of expertise, the company delivers cutting-edge forensic hardware, software, mobile laboratories, and incident response solutions that enable organizations to uncover digital evidence, combat cybercrime, and accelerate investigations. Trusted by law enforcement agencies, government bodies, and enterprise security teams worldwide, MH Service combines innovation, performance, and reliability to advance the future of digital investigations.", website: "https://mh-service.de/en/"
+            },
+            {
+                tier: "Gold Sponsor", name: "Gold Sponsor 2", logo: "assets/img/sponsors/prodiscover.webp",
+                description: "ProDiscover is a digital forensics and cybersecurity technology company offering advanced solutions for cyber investigations, incident response, and digital evidence analysis. Developed by Hyderabad-based DotC Technologies, its trusted forensic platform supports law enforcement, defense, corporate, and legal organizations worldwide in uncovering digital evidence and combating cyber threats effectively.", website: "https://prodiscover.com/"
+            },
+            // Silver (4, 5)
+            {
+                tier: "Silver Sponsor", name: "Silver Sponsor 1", logo: "assets/img/sponsors/innefu.webp",
+                description: "INNEFU Labs is at the forefront of AI-driven national security and cybersecurity innovation. The company delivers intelligent platforms for predictive policing, digital forensics, intelligence fusion, fraud analytics, video intelligence, and cyber threat management. Serving defense agencies, law enforcement organizations, financial institutions, and global enterprises, INNEFU combines artificial intelligence, big data analytics, and domain expertise to provide actionable insights that strengthen security, accelerate investigations, and enable smarter decision-making in an increasingly complex digital world.", website: "https://innefu.com/"
+            },
+            {
+                tier: "Silver Sponsor", name: "Silver Sponsor 2", logo: "assets/img/sponsors/starlight data solutions.png",
+                description: "Starlight Data Solutions empowers organizations with cutting-edge cybersecurity and IT solutions designed to secure critical assets, automate workflows, and drive business innovation. With capabilities spanning digital forensics, cyber defense, cloud security, threat intelligence, infrastructure modernization, and compliance automation, the company delivers tailored, end-to-end technology services for enterprises and public sector organizations. Through deep technical expertise, strategic partnerships, and a commitment to excellence, Starlight Data Solutions helps organizations build resilient, future-ready digital ecosystems.", website: "https://www.starlightdata.in/"
             }
         ];
 
         const overlay = document.getElementById('dss-modal-overlay');
-        const modalContent = document.getElementById('dss-modal-content');
         const modalLogo = document.getElementById('dss-modal-logo');
         const modalName = document.getElementById('dss-modal-name');
+        const modalTier = document.getElementById('dss-modal-tier');
         const modalText = document.getElementById('dss-modal-text');
         const modalUrl = document.getElementById('dss-modal-url');
 
@@ -600,7 +622,13 @@
             const data = sponsorData[index];
             if (!data) return;
 
+            // Handle fallback for broken local images when testing
             modalLogo.src = data.logo;
+            modalLogo.onerror = function() {
+                this.src = `https://placehold.co/300x120/ffffff/000000?text=${data.name}`;
+            };
+            
+            modalTier.innerText = data.tier;
             modalName.innerText = data.name;
             modalText.innerText = data.description;
             modalUrl.href = data.website;
@@ -609,15 +637,8 @@
             document.body.style.overflow = 'hidden'; 
         };
 
-        // Close when clicking overlay (but not modal content)
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) {
-                closeSponsorModal();
-            }
-        });
-
         // Function to Close Modal
-        window.closeSponsorModal = function() {
+        window.closeSponsorModal = function(e) {
             overlay.style.display = 'none';
             document.body.style.overflow = 'auto'; 
         };
@@ -626,7 +647,6 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeSponsorModal();
         });
-
 
 
 
