@@ -1,5 +1,5 @@
     /* =========================================
-           1. ISOLATED RESETS & VARIABLES (V2)
+           1. RESETS & VARIABLES (V2)
            ========================================= */
         .fcrf-v2-footer-module {
             font-family: 'Inter', sans-serif;
@@ -788,10 +788,10 @@
 
 
 
-        /* =====================================================================
-           ISOLATED STYLES
+        /* .
+           STYLES
            Everything is scoped to .expert-showcase to prevent conflicts
-           ===================================================================== */
+           . */
         
         .expert-showcase {
             /* Localized Variables */
@@ -830,9 +830,9 @@
             padding: 0;
         }
 
-        /* =====================================================================
+        /* .
            LAYOUT & CONTAINERS & PREMIUM BACKGROUND
-           ===================================================================== */
+           . */
 
         /* 1. Abstract Swoosh Design (Premium 3D Brand Identity) */
         .expert-bg-swoosh {
@@ -874,9 +874,9 @@
             z-index: 10; 
         }
 
-        /* =====================================================================
+        /* .
            HEADER & NAVIGATION
-           ===================================================================== */
+           . */
         .expert-header {
             display: flex;
             flex-direction: column;
@@ -954,9 +954,9 @@
         .expert-dot-small { width: 8px; height: 8px; opacity: 0.5; transform: scale(0.9); }
         .expert-dot-xsmall { width: 6px; height: 6px; opacity: 0.2; transform: scale(0.8); }
 
-        /* =====================================================================
+        /* .
            CAROUSEL
-           ===================================================================== */
+           . */
         .expert-carousel {
             display: flex;
             flex-wrap: nowrap;
@@ -975,9 +975,9 @@
             display: none;
         }
 
-        /* =====================================================================
+        /* .
            CARDS (Optimized for performance)
-           ===================================================================== */
+           . */
         .expert-card {
             position: relative;
             flex: 0 0 auto;
@@ -1024,9 +1024,9 @@
             z-index: 10;
         }
 
-        /* =====================================================================
+        /* .
            DARK GLASSMORPHISM DETAILS
-           ===================================================================== */
+           . */
         .expert-card-details {
             position: relative;
             flex: 1;
@@ -1156,9 +1156,9 @@
         .talentserv-icon { margin-left: 0; margin-right: 0.25rem; stroke: #ffffff; fill: none; }
         .talentserv-name { font-weight: 600; font-size: 0.9375rem; color: var(--text-dark); }
 
-        /* =====================================================================
+        /* .
            RESPONSIVE MEDIA QUERIES
-           ===================================================================== */
+           . */
         @media (min-width: 640px) {
             .expert-showcase { padding-left: 1.5rem; padding-right: 1.5rem; }
             .expert-card { width: 340px; } 

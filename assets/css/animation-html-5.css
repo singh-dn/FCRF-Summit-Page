@@ -1,4 +1,4 @@
-    /* --- ISOLATED COMPONENT STYLES --- 
+    /* --- COMPONENT STYLES --- 
       Everything is scoped inside .fa-wrapper to prevent conflicts with your project 
     */
     
@@ -261,10 +261,10 @@
 
     /* location  */
 
-            /* =====================================================================
-           ISOLATED STYLES
+            /* .
+           STYLES
            Everything is scoped to .loc-wrapper to prevent conflicts
-           ===================================================================== */
+           . */
         
         .loc-wrapper {
             /* Localized Variables */
@@ -299,9 +299,9 @@
             padding: 0;
         }
 
-        /* =====================================================================
+        /* .
            PREMIUM BACKGROUND (Mirrored for flow)
-           ===================================================================== */
+           . */
         .loc-bg-swoosh {
             position: absolute;
             inset: 0;
@@ -334,9 +334,9 @@
             filter: blur(100px);
         }
 
-        /* =====================================================================
+        /* .
            LAYOUT & GRID
-           ===================================================================== */
+           . */
         .loc-container {
             max-width: 80rem; /* 1280px */
             margin: 0 auto;
@@ -359,9 +359,9 @@
             }
         }
 
-        /* =====================================================================
+        /* .
            PANEL STYLES (MAP & IMAGE)
-           ===================================================================== */
+           . */
         .loc-panel {
             position: relative;
             width: 100%;
@@ -438,9 +438,9 @@
             transform: translate(-50%, -50%) scale(1.1);
         }
 
-        /* =====================================================================
+        /* .
            INFO PILLS ROW (BOTTOM)
-           ===================================================================== */
+           . */
         .loc-bottom-row {
             display: flex;
             flex-wrap: wrap;

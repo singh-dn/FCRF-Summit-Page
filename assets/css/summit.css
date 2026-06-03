@@ -1,6 +1,6 @@
-    /* ==========================================================================
-       ISOLATED CSS SCOPE (#fc-hero-module)
-       ========================================================================== */
+    /* .=====
+       CSS SCOPE (#fc-hero-module)
+       .===== */
     #fc-hero-module {
       --fc-bg-color: #0a0a0a;
       --fc-text-color: #ffffff;
@@ -122,9 +122,9 @@
     #fc-hero-module .fc-slide-overlay-tint { position: absolute; inset: 0; mix-blend-mode: multiply; z-index: 3; }
     #fc-hero-module .fc-slide-overlay-grad { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 50%), linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 40%, rgba(0,0,0,0.85) 100%); z-index: 4; }
     
-    /* ==========================================================================
+    /* .=====
        NEW LAYOUT: CENTERED CONTENT + MASSIVE BOTTOM TEXT
-       ========================================================================== */
+       .===== */
     
     /* 1. Centered Content Block */
     #fc-hero-module .fc-hero-center-content {
@@ -545,7 +545,7 @@
   }
 }
 
-        /* ISOLATED SCOPE: All styles prefixed with #summit-app-root */
+        /*SCOPE: All styles prefixed with #summit-app-root */
         #summit-app-root {
             --brand-gradient: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
             --white: #ffffff;
@@ -999,7 +999,7 @@
         
 
 
-        /* ISOLATED SCOPE: Scoped to #summit-app-root to avoid site interference */
+        /* SCOPE: Scoped to #summit-app-root to avoid site interference */
         #summit-app-root {
             --brand-gradient: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
             --white: #ffffff;
@@ -1281,10 +1281,10 @@
 
 
 
-   /* ==========================================================================
-           ISOLATED COMPONENT STYLES
+   /* .=====
+          COMPONENT STYLES
            Everything is tightly scoped to .ai-summit-wsa-widget to prevent conflicts
-           ========================================================================== */
+           .===== */
 
         /* Scoped CSS Variables */
         .ai-summit-wsa-widget {
@@ -1506,9 +1506,9 @@
 
 /* hightlight css  */
 
-    /* ==========================================================================
-       ISOLATED CSS SCOPE (#fc-fcrf-module)
-       ========================================================================== */
+    /* .=====
+      CSS SCOPE (#fc-fcrf-module)
+       .===== */
     
          /* Import Aquire Font */
     @import url('https://fonts.cdnfonts.com/css/aquire');
@@ -1764,9 +1764,9 @@
       visibility: visible;
     }
 
-    /* ==========================================================================
+    /* .=====
        RESPONSIVE & MOBILE DESIGN
-       ========================================================================== */
+       .===== */
     @media (max-width: 992px) {
       .fc-letter-group:nth-child(1) .fc-popup-card { left: 0; }
       .fc-letter-group:nth-child(4) .fc-popup-card { right: 0; }
@@ -1820,9 +1820,9 @@
 
 /* who attend  */
 
-/* ==========================================================================
-ISOLATED CSS SCOPE (#fc-attendees-module)
-========================================================================== */
+/* .=====
+CSS SCOPE (#fc-attendees-module)
+.===== */
 
 #fc-attendees-module {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -1861,9 +1861,9 @@ ISOLATED CSS SCOPE (#fc-attendees-module)
   z-index: 10;
 }
 
-/* ==========================================================================
+/* .=====
 HEADER AREA
-========================================================================== */
+.===== */
 
 .fc-header-wrapper {
   text-align: center;
@@ -1925,9 +1925,9 @@ HEADER AREA
   line-height: 1.6;
 }
 
-/* ==========================================================================
+/* .=====
 BENTO GRID
-========================================================================== */
+.===== */
 
 .fc-bento-grid {
   display: grid;
@@ -1936,9 +1936,9 @@ BENTO GRID
   width: 100%;
 }
 
-/* ==========================================================================
+/* .=====
 BENTO CARDS
-========================================================================== */
+.===== */
 
 .fc-bento-card {
   background: #ffffff;
@@ -2012,9 +2012,9 @@ BENTO CARDS
   grid-column: span 1;
 }
 
-/* ==========================================================================
+/* .=====
 CARD HEADER
-========================================================================== */
+.===== */
 
 .fc-card-header {
   display: flex;
@@ -2069,9 +2069,9 @@ CARD HEADER
   letter-spacing: -0.01em;
 }
 
-/* ==========================================================================
+/* .=====
 CHIPS CONTAINER
-========================================================================== */
+.===== */
 
 .fc-chips-container {
   display: flex;
@@ -2131,9 +2131,9 @@ CHIPS CONTAINER
   box-shadow: 0 4px 15px rgba(81, 53, 255, 0.2);
 }
 
-/* ==========================================================================
+/* .=====
 RESPONSIVE DESIGN
-========================================================================== */
+.===== */
 
 @media (max-width: 992px) {
   .fc-bento-grid {
@@ -2354,7 +2354,7 @@ RESPONSIVE DESIGN
 
 
 
-   /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
+   /* SCOPE: All styles contained within #dev-sponsors-section */
         #dev-sponsors-section {
             /* Tier Gradients */
             --dss-primary-grad: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
@@ -2498,7 +2498,7 @@ RESPONSIVE DESIGN
         }
 
         /* =========================================
-           POPUP MODAL STYLES (Isolated)
+           POPUP MODAL STYLES 
            ========================================= */
         #dss-modal-overlay {
             position: fixed;
@@ -2657,9 +2657,9 @@ RESPONSIVE DESIGN
 
         /* galary css  */
 
-                /* ==========================================================================
-           ISOLATED SCOPE: Interactive Selector Widget
-           ========================================================================== */
+                /* .=====
+           SCOPE: Interactive Selector Widget
+           .===== */
         .is-widget {
             --brand-gradient: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
             font-family: 'Inter', sans-serif;
@@ -2893,7 +2893,7 @@ RESPONSIVE DESIGN
 
 
 
-                /* --- Isolated Banner Styles Start Here --- */
+                /* --- Banner Styles Start Here --- */
         .pricing-banner {
             position: fixed;
             bottom: 0;
@@ -3041,7 +3041,7 @@ RESPONSIVE DESIGN
 
 
     /* =========================================
-   ISOLATED FAQ SECTION STYLES
+   FAQ SECTION STYLES
    ID: #faq-component-scope
    ========================================= */
 
@@ -3331,10 +3331,10 @@ RESPONSIVE DESIGN
 }
 
 
-   /* =====================================================================
-           ISOLATED STYLES
+   /* .
+           STYLES
            Everything is scoped to .sponsor-wrapper to prevent conflicts
-           ===================================================================== */
+           . */
         
         .sponsor-wrapper {
             /* Localized Variables */
@@ -3369,9 +3369,9 @@ RESPONSIVE DESIGN
             padding: 0;
         }
 
-        /* =====================================================================
+        /* .
            PREMIUM BACKGROUND (Flipped vertically for variety)
-           ===================================================================== */
+           . */
         .sponsor-bg-swoosh {
             position: absolute;
             inset: 0;
@@ -3404,9 +3404,9 @@ RESPONSIVE DESIGN
             filter: blur(100px);
         }
 
-        /* =====================================================================
+        /* .
            LAYOUT & GRID
-           ===================================================================== */
+           . */
         .sponsor-container {
             max-width: 80rem; /* 1280px */
             margin: 0 auto;
@@ -3429,9 +3429,9 @@ RESPONSIVE DESIGN
             }
         }
 
-        /* =====================================================================
+        /* .
            TEXT CONTENT (LEFT)
-           ===================================================================== */
+           . */
         .sponsor-text-content {
             display: flex;
             flex-direction: column;
@@ -3502,9 +3502,9 @@ RESPONSIVE DESIGN
             border-radius: 50%;
         }
 
-        /* =====================================================================
+        /* .
            GLASS CONTACT CARD (RIGHT)
-           ===================================================================== */
+           . */
         .sponsor-card {
             background-color: var(--panel-bg);
             backdrop-filter: blur(12px);

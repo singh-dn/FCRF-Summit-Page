@@ -11,7 +11,7 @@
             --black: #000000;
         }
 
-        /* --- Isolated Wrapper Resets (Protects your main site) --- */
+        /* --- Wrapper Resets (Protects your main site) --- */
         .isolated-hero-module {
             background-color: var(--zinc-950);
             color: var(--zinc-50);

@@ -7496,7 +7496,7 @@ input.main-search-input::placeholder {
     height: auto !important;
 }
 
-/* === Infinite Scroll Banner (Isolated Namespace: fcrf-) === */
+/* === Infinite Scroll Banner (Namespace: fcrf-) === */
 /* === Infinite Scroll Banner (FINAL FIXED VERSION) === */
 
 @keyframes fcrf-scroll {

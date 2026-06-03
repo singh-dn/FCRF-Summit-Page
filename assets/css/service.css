@@ -229,7 +229,6 @@
         
         /* Scoped Variables & Container */
         .logo-marquee-section {
-            /* ISOLATED VARIABLES */
             --lm-bg: #ffffff;
             --lm-text: #64748b;
             --lm-border: #e2e8f0;
