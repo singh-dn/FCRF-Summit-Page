@@ -2354,13 +2354,11 @@ RESPONSIVE DESIGN
 
 
 
-  /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
-            /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
-   
-        /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
+   /* ISOLATED SCOPE: All styles contained within #dev-sponsors-section */
         #dev-sponsors-section {
             /* Tier Gradients */
-            --dss-platinum-grad: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+            --dss-primary-grad: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
+            --dss-platinum-grad: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             --dss-gold-grad: linear-gradient(93deg, #B8860B 0%, #FFD700 50%, #B8860B 100%);
             --dss-silver-grad: linear-gradient(93deg, #71717a 0%, #d4d4d8 50%, #71717a 100%);
             
@@ -2402,76 +2400,32 @@ RESPONSIVE DESIGN
             pointer-events: none;
         }
 
-        /* Top small headline style - Kept simple */
-        #dev-sponsors-section .dss-sub-headline {
-            font-size: 0.85rem;
-            color: #000000;
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            display: block; /* FIX: Changed from inline-block to block to force a new line */
-            position: relative;
-        }
-
-        /* Base Headline Style */
-        #dev-sponsors-section .dss-tier-headline {
-            font-family: 'Aquire', sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
+        /* Main Headline (Normal Font, Gradient Color) */
+        #dev-sponsors-section .dss-main-headline {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: var(--dss-primary-grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem; 
+            letter-spacing: -0.02em;
+            line-height: 1.2;
             position: relative;
-            display: inline-block;
-        }
-        
-        #dev-sponsors-section .dss-tier-headline::after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-            opacity: 0.8;
         }
 
-        /* PLATINUM Headline (Largest) */
-        #dev-sponsors-section .dss-headline-platinum {
-            font-size: 3rem;
-            background-image: var(--dss-platinum-grad);
-            margin-bottom: 6rem; 
-            letter-spacing: 0.08em;
-            line-height: 1.2;
+        /* Sub-headline text (Normal paragraph style) */
+        #dev-sponsors-section .dss-sub-headline {
+            font-size: 1.1rem;
+            color: var(--dss-text-gray); 
+            margin-bottom: 5rem; /* Pushes the logos down */
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            position: relative;
         }
-        #dev-sponsors-section .dss-headline-platinum::after {
-            bottom: -12px; width: 40px; height: 3px; background: var(--dss-platinum-grad);
-        }
-
-        /* GOLD Headline (Medium) */
-        #dev-sponsors-section .dss-headline-gold {
-            font-size: 2.2rem;
-            background-image: var(--dss-platinum-grad);
-            margin-top: 6rem;
-            margin-bottom: 4rem; 
-            letter-spacing: 0.06em;
-            line-height: 1.2;
-        }
-        #dev-sponsors-section .dss-headline-gold::after {
-            bottom: -10px; width: 30px; height: 2px; background: var(--dss-platinum-grad);
-        }
-
-        /* SILVER Headline (Smallest) */
-        #dev-sponsors-section .dss-headline-silver {
-            font-size: 1.6rem;
-            background-image: var(--dss-platinum-grad);
-            margin-top: 5rem;
-            margin-bottom: 3rem; 
-            letter-spacing: 0.04em;
-            line-height: 1.2;
-        }
-        #dev-sponsors-section .dss-headline-silver::after {
-            bottom: -8px; width: 20px; height: 2px; background: var(--dss-platinum-grad);
-        }
-
 
         /* Base Grid Container */
         #dev-sponsors-section .dss-logo-grid {
@@ -2484,8 +2438,8 @@ RESPONSIVE DESIGN
 
         /* Tier-Specific Grid Gaps */
         #dev-sponsors-section .dss-grid-platinum { gap: 4rem; max-width: 1100px; }
-        #dev-sponsors-section .dss-grid-gold { gap: 3rem; max-width: 1000px; }
-        #dev-sponsors-section .dss-grid-silver { gap: 2rem; max-width: 900px; }
+        #dev-sponsors-section .dss-grid-gold { gap: 3rem; max-width: 1000px; margin-top: 4rem; }
+        #dev-sponsors-section .dss-grid-silver { gap: 2rem; max-width: 900px; margin-top: 3rem; }
 
         /* Base Logo Card */
         #dev-sponsors-section .dss-logo-item {
@@ -2524,7 +2478,7 @@ RESPONSIVE DESIGN
 
         /* SILVER Card Styles */
         #dev-sponsors-section .dss-card-silver {
-            max-width: 300px; height: 140px; padding: 2rem; border-radius: 1rem;
+            max-width: 300px; height: 140px; padding: 1.5rem; border-radius: 1rem;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
         }
         #dev-sponsors-section .dss-card-silver:hover {
@@ -2675,14 +2629,13 @@ RESPONSIVE DESIGN
             #dev-sponsors-section { padding: 3rem 1rem; }
             
             /* Responsive Headlines */
-            #dev-sponsors-section .dss-headline-platinum { font-size: 2.25rem; margin-bottom: 3rem; }
-            #dev-sponsors-section .dss-headline-gold { font-size: 1.8rem; margin-top: 4rem; margin-bottom: 2.5rem; }
-            #dev-sponsors-section .dss-headline-silver { font-size: 1.4rem; margin-top: 3rem; margin-bottom: 2rem; }
+            #dev-sponsors-section .dss-main-headline { font-size: 2rem; margin-bottom: 1rem; }
+            #dev-sponsors-section .dss-sub-headline { font-size: 1rem; margin-bottom: 3rem; }
             
             /* Responsive Grids & Cards */
             #dev-sponsors-section .dss-grid-platinum { gap: 1rem; }
             #dev-sponsors-section .dss-card-platinum {
-                width: calc(50% - 0.5rem); height: 110px; padding: 0rem;
+                width: calc(50% - 0.5rem); height: 110px; padding: 1rem;
             }
 
             #dev-sponsors-section .dss-grid-gold { gap: 1rem; }
