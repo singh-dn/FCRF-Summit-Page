@@ -317,6 +317,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /* Error & Buttons */
         .error-box { background: #fee2e2; border-left: 4px solid var(--error); color: #b91c1c; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; font-weight: 500; display: flex; align-items: center; gap: 8px; }
 
+        /* --- NEW VALIDATION STYLES --- */
+        .form-group.has-error input,
+        .form-group.has-error select,
+        .form-group.has-error textarea {
+            border-color: var(--error);
+            background-color: #fef2f2;
+        }
+        .form-group.has-error .input-wrapper i {
+            color: var(--error);
+        }
+        .form-group.has-error::after {
+            content: "⚠️ This field is required or invalid.";
+            display: block;
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 0.4rem;
+            font-weight: 600;
+            animation: popIn 0.3s ease;
+        }
+        .upload-area.has-error {
+            border-color: var(--error);
+            background-color: #fef2f2;
+        }
+        .upload-area.has-error i, .upload-area.has-error .upload-label {
+            color: var(--error);
+        }
+        .upload-area.has-error::after {
+            content: "⚠️ Required file missing";
+            display: block;
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .confirmation-card.has-error {
+            border-color: var(--error);
+            background-color: #fef2f2;
+        }
+        .confirmation-card.has-error label {
+            color: var(--error);
+        }
+
         .submit-btn {
             width: 100%; background: var(--gradient); color: white; border: none; padding: 1.2rem; border-radius: 12px;
             font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 2rem; display: flex; justify-content: center; align-items: center; gap: 10px;
@@ -368,9 +410,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <div class="banner">
             <div class="banner-content">
-                <img src="assets/img/logo/FCRF Academy.png" alt="FCRF Logo" class="banner-logo">
-                <h1>Professional <span>Registration</span></h1>
-                <p>Register as a professional and connect with global leaders in the cybersecurity ecosystem.</p>
+                <h1>Take the Stage at<span>FutureCrime Summit 2026</span></h1>
+                <p>Join a national platform where experts speak on cybercrime, AI threats, digital forensics, fraud, cyber law, data privacy, and the future of technology-enabled crime.</p>
             </div>
         </div>
 
@@ -383,7 +424,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             <?php endif; ?>
 
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="" method="POST" enctype="multipart/form-data" id="regForm" novalidate>
                 
                 <!-- Section 1: Identity -->
                 <div class="section-title"><i data-lucide="user"></i> 1. Identity</div>
@@ -672,6 +713,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }, 1000);
         <?php endif; ?>
+
+        // --- SMART FORM VALIDATION ENGINE ---
+        const form = document.getElementById('regForm');
+        
+        form.addEventListener('submit', function(event) {
+            let isValid = true;
+            let firstInvalid = null;
+
+            // Remove existing error classes before re-checking
+            document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+
+            // Check all inputs, selects, and textareas inside the form
+            const elements = form.querySelectorAll('input, select, textarea');
+            elements.forEach(el => {
+                if (!el.checkValidity()) {
+                    isValid = false;
+                    if (!firstInvalid) firstInvalid = el;
+                    
+                    // Add error class to the specific parent wrapper
+                    if (el.type === 'file') {
+                        el.closest('.upload-area').classList.add('has-error');
+                    } else if (el.type === 'checkbox') {
+                        el.closest('.confirmation-card').classList.add('has-error');
+                    } else {
+                        el.closest('.form-group').classList.add('has-error');
+                    }
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault(); // Stop form submission
+                
+                // Smooth scroll to the first missed field
+                if (firstInvalid) {
+                    const container = firstInvalid.closest('.form-group') || firstInvalid.closest('.upload-area') || firstInvalid.closest('.confirmation-card');
+                    if(container) {
+                        container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    firstInvalid.focus({ preventScroll: true });
+                }
+            }
+        });
+
+        // Real-time error clearing when user starts typing/selecting
+        form.addEventListener('input', function(e) {
+            if (e.target.checkValidity()) {
+                if (e.target.type === 'file') {
+                    e.target.closest('.upload-area')?.classList.remove('has-error');
+                } else if (e.target.type === 'checkbox') {
+                    e.target.closest('.confirmation-card')?.classList.remove('has-error');
+                } else {
+                    e.target.closest('.form-group')?.classList.remove('has-error');
+                }
+            }
+        });
     </script>
 </body>
 </html>
