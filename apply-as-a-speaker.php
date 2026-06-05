@@ -137,367 +137,548 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-        :root {
-            --primary-gradient: linear-gradient(93deg, #5135FF 10.65%, #FF5455 89.35%);
-            --primary-solid: #5135FF;
-            --bg-page: #f0f2f5;
-            --bg-ipad: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --ipad-bezel: #1a1a1a;
-            --error-color: #ef4444;
-            --success-color: #10b981;
-            --font-main: 'Inter', sans-serif;
+        /* Scoped Root */
+        #professional-form-section {
+            --if-font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --if-primary: #5b2dd8;
+            --if-secondary: #db2777;
+            --if-gradient: linear-gradient(135deg, #5b2dd8, #db2777);
+            --if-bg: #f3f4f6;
+            --if-window-bg: #ffffff;
+            --if-border: #e5e7eb;
+            --if-text-main: #1f2937;
+            --if-text-muted: #6b7280;
+            
+            width: 100%;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            background: var(--if-bg);
+            font-family: var(--if-font);
+            color: var(--if-text-main);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        #professional-form-section *, 
+        #professional-form-section *::before, 
+        #professional-form-section *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
+
+        /* 3D Window Container */
+        #professional-form-section .if-window {
+            background: var(--if-window-bg);
+            width: 100%;
+            max-width: 900px;
+            border-radius: 1.5rem;
+            box-shadow: 
+                0 0 0 1px rgba(0,0,0,0.03), 
+                0 25px 50px -12px rgba(0, 0, 0, 0.15), 
+                0 0 0 8px rgba(255, 255, 255, 0.4); 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform-style: preserve-3d;
+            margin-top: 1rem;
+        }
+
+        /* Window Title Bar */
+        #professional-form-section .if-titlebar {
+            background: #f9fafb;
+            border-bottom: 1px solid var(--if-border);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #professional-form-section .if-dot { width: 12px; height: 12px; border-radius: 50%; }
+        #professional-form-section .if-dot.red { background: #ef4444; }
+        #professional-form-section .if-dot.yellow { background: #f59e0b; }
+        #professional-form-section .if-dot.green { background: #22c55e; }
+
+        #professional-form-section .if-address-bar {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            width: 200px;
+            margin-left: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Main Content Layout */
+        #professional-form-section .if-content {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        /* IMAGE PANEL (Banner) */
+        #professional-form-section .if-image-panel {
+            width: 100%;
+            height: 250px;
+            background: #1e1b4b; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        #professional-form-section .if-bg-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            mix-blend-mode: overlay;
+        }
         
-        body { 
-            font-family: var(--font-main); 
-            background-color: var(--bg-page); 
-            color: var(--text-main); 
-            min-height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            padding: 0; 
+        #professional-form-section .if-overlay-text {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            right: 2rem;
+            color: white;
+            z-index: 2;
         }
 
-        /* Responsive iPad Pro Frame */
-        .ipad-container { 
-            position: relative; 
-            width: 100%; 
-            max-width: 1024px; 
-            height: 90vh; 
-            max-height: 900px; 
-            background-color: #000; 
-            border-radius: 50px; 
-            border: 4px solid #334155; 
-            box-shadow: 0 0 0 12px var(--ipad-bezel), 0 30px 60px -15px rgba(0,0,0,0.3); 
-            display: flex; 
-            flex-direction: column; 
-            overflow: hidden; 
-            transition: all 0.3s ease;
+        /* FORM PANEL (Body) */
+        #professional-form-section .if-form-panel {
+            width: 100%;
+            padding: 3rem 2.5rem;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 1024px) {
-            body { background-color: var(--bg-ipad); }
-            .ipad-container {
-                height: 100vh;
-                max-height: none;
-                border-radius: 0;
-                border: none;
-                box-shadow: none;
-            }
-            .bezel-sensor { display: none !important; }
+        /* Typography */
+        #professional-form-section h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0 0 0.5rem 0;
+            background: var(--if-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Status Bar */
-        .status-bar { 
-            height: 40px; 
-            padding: 0 25px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(10px); 
-            border-bottom: 1px solid var(--border-color); 
-            z-index: 20; 
-            font-size: 0.85rem; 
-            font-weight: 700; 
-            color: #000; 
+        #professional-form-section h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: var(--if-text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 0.5rem;
         }
-        .status-right { display: flex; align-items: center; gap: 8px; }
 
-        /* Content Area */
-        .main-viewport { flex: 1; background-color: var(--bg-ipad); overflow-y: auto; position: relative; }
-        .main-viewport::-webkit-scrollbar { width: 6px; }
-        .main-viewport::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.1); border-radius: 10px; }
+        #professional-form-section h3 i { color: var(--if-primary); width: 20px; }
 
-        /* Header Branding */
-        .header-branding { background: var(--primary-gradient); padding: 50px 30px; text-align: center; color: white; position: relative; overflow: hidden; }
-        .header-branding::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 30px 30px; }
-        .header-branding h1 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; position: relative; letter-spacing: -0.02em; }
-        .header-branding p { font-size: 0.9rem; opacity: 0.9; max-width: 500px; margin: 0 auto; position: relative; font-weight: 400; }
+        /* Form Inputs */
+        #professional-form-section .if-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
 
-        /* Form Layout */
-        .form-content { padding: 30px; max-width: 900px; margin: 0 auto; }
-        section { margin-bottom: 40px; }
-        .section-header { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; }
-        .icon-box { background: #f1f5f9; color: var(--primary-solid); padding: 10px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-        .section-header h2 { font-size: 1.2rem; font-weight: 700; color: #0f172a; }
+        #professional-form-section .if-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
 
-        .grid-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        @media (max-width: 640px) { .grid-row { grid-template-columns: 1fr; } }
+        #professional-form-section .if-group { margin-bottom: 1.5rem; }
 
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #334155; }
-        input, select, textarea { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid var(--border-color); background-color: #fff; color: var(--text-main); font-size: 0.9rem; transition: all 0.2s ease; outline: none; }
-        input:focus, select:focus, textarea:focus { border-color: var(--primary-solid); box-shadow: 0 0 0 4px rgba(81, 53, 255, 0.1); }
+        #professional-form-section label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
 
-        /* Server Error Message */
-        .server-error { background: #fee2e2; border-left: 4px solid #ef4444; color: #b91c1c; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-weight: 500; font-size: 0.9rem; }
+        #professional-form-section input[type="text"],
+        #professional-form-section input[type="email"],
+        #professional-form-section input[type="tel"],
+        #professional-form-section input[type="number"],
+        #professional-form-section input[type="url"],
+        #professional-form-section select,
+        #professional-form-section textarea {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--if-border);
+            background: #f9fafb;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        #professional-form-section input:focus,
+        #professional-form-section textarea:focus,
+        #professional-form-section select:focus {
+            outline: none;
+            border-color: var(--if-primary);
+            box-shadow: 0 0 0 4px rgba(91, 45, 216, 0.1);
+            background: white;
+        }
 
         /* Upload Boxes */
-        .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .upload-box { border: 2px dashed var(--border-color); border-radius: 15px; padding: 25px 15px; text-align: center; cursor: pointer; background: #fafafa; transition: all 0.2s ease; display: block; }
-        .upload-box:hover { background: #fff; border-color: var(--primary-solid); }
-        .upload-box i { font-size: 24px; color: var(--text-muted); margin-bottom: 8px; }
-        .upload-box .upload-label { font-weight: 700; font-size: 13px; color: #1e293b; }
-        .file-indicator { font-size: 10px; color: var(--success-color); margin-top: 4px; display: none; font-weight: 700; }
+        #professional-form-section .upload-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 1.5rem; 
+            margin-bottom: 1.5rem; 
+        }
+        #professional-form-section .upload-box { 
+            border: 2px dashed var(--if-border); 
+            border-radius: 1rem; 
+            padding: 2rem 1rem; 
+            text-align: center; 
+            cursor: pointer; 
+            background: #f9fafb; 
+            transition: all 0.2s ease; 
+            display: block; 
+        }
+        #professional-form-section .upload-box:hover { 
+            background: #ffffff; 
+            border-color: var(--if-primary); 
+        }
+        #professional-form-section .upload-box i { 
+            color: var(--if-text-muted); 
+            margin-bottom: 0.5rem; 
+            transition: color 0.3s;
+        }
+        #professional-form-section .upload-box:hover i { 
+            color: var(--if-primary); 
+        }
+        #professional-form-section .upload-label { 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            color: #1e293b; 
+        }
+        #professional-form-section .file-indicator { 
+            font-size: 0.8rem; 
+            color: #10b981; 
+            margin-top: 0.5rem; 
+            display: none; 
+            font-weight: 700; 
+        }
 
-        /* Confirmation & Button */
-        .confirmation-card { background: #f8fafc; padding: 18px; border-radius: 15px; display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--border-color); }
-        .confirmation-card input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary-solid); margin-top: 2px; }
-        .confirmation-card label { margin: 0; font-size: 0.8rem; line-height: 1.4; cursor: pointer; color: #475569; }
+        /* Confirmation */
+        #professional-form-section .confirmation-card { 
+            background: #f9fafb; 
+            padding: 1.25rem; 
+            border-radius: 0.75rem; 
+            display: flex; 
+            gap: 0.75rem; 
+            align-items: flex-start; 
+            border: 1px solid var(--if-border); 
+            margin-top: 2rem;
+        }
+        #professional-form-section .confirmation-card input[type="checkbox"] { 
+            width: 1.1rem; 
+            height: 1.1rem; 
+            cursor: pointer; 
+            accent-color: var(--if-primary); 
+            margin-top: 0.1rem; 
+        }
+        #professional-form-section .confirmation-card label { 
+            margin: 0; 
+            font-size: 0.9rem; 
+            line-height: 1.5; 
+            cursor: pointer; 
+            color: #4b5563; 
+        }
 
-        .captcha-wrapper { display: flex; justify-content: center; margin-top: 20px; }
+        /* Submit Button */
+        #professional-form-section .if-btn-submit {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1.25rem;
+            margin-top: 2rem;
+            background: var(--if-gradient);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-        .submit-btn { width: 100%; background: var(--primary-gradient); color: white; border: none; padding: 16px; border-radius: 14px; font-size: 1rem; font-weight: 800; margin-top: 25px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 8px 20px -5px rgba(81, 53, 255, 0.3); }
-        .submit-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        #professional-form-section .if-btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(91, 45, 216, 0.3);
+        }
+
+        .server-error {
+            background: #fee2e2; color: #b91c1c; padding: 1rem;
+            border-radius: 0.75rem; margin-bottom: 2rem;
+            border: 1px solid #fca5a5; font-size: 0.95rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.7);
+            z-index: 2000; justify-content: center; align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            text-align: center; padding: 40px;
+            background: white; border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--if-border);
+            width: 90%; max-width: 400px;
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .success-icon { font-size: 60px; color: #10b981; margin-bottom: 15px; display: block; }
         
-        /* POPUP MODAL STYLES */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { background: white; padding: 40px; border-radius: 30px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); transform: scale(0.9); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .modal-overlay.active .modal-content { transform: scale(1); }
-        .success-icon-popup { width: 80px; height: 80px; background: var(--primary-gradient); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 20px rgba(81, 53, 255, 0.2); }
+        @keyframes slideUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-        /* Bezel Elements */
-        .bezel-sensor { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 160px; height: 32px; display: flex; align-items: center; justify-content: center; gap: 12px; z-index: 30; }
-        .sensor-dot { width: 4px; height: 4px; background: #333; border-radius: 50%; }
-        .sensor-lens { width: 8px; height: 8px; background: #111; border: 1px solid #333; border-radius: 50%; }
-        .home-indicator { position: sticky; bottom: 8px; left: 50%; width: 120px; height: 5px; background: rgba(0,0,0,0.1); border-radius: 10px; margin: 0 auto; }
-    </style>
+        /* Mobile Fixes */
+        @media (max-width: 768px) {
+            #professional-form-section { padding: 1rem; }
+            #professional-form-section .if-form-panel { padding: 2rem 1.5rem; }
+            #professional-form-section .if-grid-2,
+            #professional-form-section .if-grid-3,
+            #professional-form-section .upload-grid { grid-template-columns: 1fr; }
+            #professional-form-section .if-overlay-text h2 { font-size: 1.8rem; }
+            #professional-form-section .if-image-panel { height: 200px; }
+        }
+</style>
 </head>
 <body>
 
-    <div class="ipad-container">
-        <div class="bezel-sensor">
-            <div class="sensor-dot"></div>
-            <div class="sensor-lens"></div>
+    <!-- SUCCESS MODAL -->
+    <div class="modal-overlay <?php echo $showSuccessModal ? 'active' : ''; ?>" id="success-modal">
+        <div class="modal-box">
+            <span class="success-icon"><i data-lucide="check-circle" size="64"></i></span>
+            <h2 style="margin:0 0 10px 0; color:#1f2937; font-size: 1.8rem; font-weight: 800;">Success!</h2>
+            <p style="color:#6b7280; margin-bottom:25px; line-height: 1.5;">
+                Hello <?php echo htmlspecialchars($successName ?? ''); ?>, your registration has been successfully saved.
+            </p>
+            <button onclick="closeModal()" style="width: 100%; padding: 14px; border:none; background: #0f172a; color:white; border-radius:12px; cursor:pointer; font-weight: 600; font-size: 1rem; transition: background 0.2s;">Continue to Summit</button>
         </div>
+    </div>
 
-        <div class="status-bar">
-            <div id="clock">9:41 AM</div>
-            <div class="status-right">
-                <i data-lucide="signal" size="14"></i>
-                <i data-lucide="wifi" size="14"></i>
-                <i data-lucide="battery" size="18"></i>
+    <section id="professional-form-section">
+        <div class="if-window">
+            
+            <div class="if-titlebar">
+                <div class="if-dot red"></div>
+                <div class="if-dot yellow"></div>
+                <div class="if-dot green"></div>
+                <div class="if-address-bar"></div>
             </div>
-        </div>
 
-        <div class="main-viewport" id="viewport">
-            <div id="form-container">
-                <header class="header-branding">
-                    <h1>Registration Portal</h1>
-                    <p>Enter your professional details. All fields with * are required.</p>
-                </header>
+            <div class="if-content">
+                
+                <div class="if-form-panel">
+                    <h2>Registration Portal</h2>
+                    <p style="color: #6b7280; margin-top: 0;">Enter your professional details. All fields with * are required.</p>
 
-                <div class="form-content">
-                    
                     <?php if (!empty($message) && $messageType == "error"): ?>
                         <div class="server-error">
-                            <i data-lucide="alert-circle" size="18" style="display:inline; vertical-align:middle; margin-right:5px;"></i>
-                            <?php echo $message; ?>
+                            <i data-lucide="alert-circle" size="20"></i>
+                            <span><?php echo $message; ?></span>
                         </div>
                     <?php endif; ?>
 
                     <form action="" method="POST" enctype="multipart/form-data">
                         
                         <!-- Identity Section -->
-                        <section>
-                            <div class="section-header">
-                                <div class="icon-box"><i data-lucide="user" size="20"></i></div>
-                                <h2>Identity</h2>
+                        <h3><i data-lucide="user"></i> Identity</h3>
+                        
+                        <div class="if-grid-2">
+                            <div class="if-group">
+                                <label>First Name *</label>
+                                <input type="text" name="firstName" required placeholder="John"
+                                       pattern="[a-zA-Z\s\.]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.]/g, '')"
+                                       value="<?php echo isset($_POST['firstName']) ? htmlspecialchars($_POST['firstName']) : ''; ?>">
                             </div>
-                            <div class="grid-row">
-                                <div class="form-group">
-                                    <label>First Name *</label>
-                                    <input type="text" name="firstName" required placeholder="John"
-                                           pattern="[a-zA-Z\s\.]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.]/g, '')"
-                                           value="<?php echo isset($_POST['firstName']) ? htmlspecialchars($_POST['firstName']) : ''; ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Last Name *</label>
-                                    <input type="text" name="lastName" required placeholder="Doe"
-                                           pattern="[a-zA-Z\s\.]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.]/g, '')"
-                                           value="<?php echo isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : ''; ?>">
-                                </div>
+                            <div class="if-group">
+                                <label>Last Name *</label>
+                                <input type="text" name="lastName" required placeholder="Doe"
+                                       pattern="[a-zA-Z\s\.]+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.]/g, '')"
+                                       value="<?php echo isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : ''; ?>">
                             </div>
-                            <div class="grid-row">
-                                <div class="form-group">
-                                    <label>Phone/Mobile *</label>
-                                    <input type="tel" name="phone" required placeholder="10-digit number"
-                                           pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                           value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Email *</label>
-                                    <input type="email" name="email" required placeholder="john@example.com"
-                                           value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
-                                </div>
-                            </div>
-                        </section>
+                        </div>
 
-                        <!-- Professional Section -->
-                        <section>
-                            <div class="section-header">
-                                <div class="icon-box"><i data-lucide="briefcase" size="20"></i></div>
-                                <h2>Professional Details *</h2>
+                        <div class="if-grid-2">
+                            <div class="if-group">
+                                <label>Phone/Mobile *</label>
+                                <input type="tel" name="phone" required placeholder="10-digit number"
+                                       pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                       value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>">
                             </div>
-                            <div class="grid-row">
-                                <div class="form-group">
-                                    <label>Educational Qualification *</label>
-                                    <input type="text" name="qualification" placeholder="e.g. MCA Student"
-                                           value="<?php echo isset($_POST['qualification']) ? htmlspecialchars($_POST['qualification']) : ''; ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Years of Experience *</label>
-                                    <input type="number" name="experience" min="0" placeholder="e.g. 2"
-                                           value="<?php echo isset($_POST['experience']) ? htmlspecialchars($_POST['experience']) : ''; ?>">
-                                </div>
+                            <div class="if-group">
+                                <label>Email *</label>
+                                <input type="email" name="email" required placeholder="john@example.com"
+                                       value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                             </div>
-                            <div class="grid-row">
-                                <div class="form-group">
-                                    <label>Designation *</label>
-                                    <input type="text" name="designation" placeholder="e.g. Lead Developer"
-                                           value="<?php echo isset($_POST['designation']) ? htmlspecialchars($_POST['designation']) : ''; ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Name of Organization *</label>
-                                    <input type="text" name="organization" placeholder="e.g. Tech Solutions Inc."
-                                           value="<?php echo isset($_POST['organization']) ? htmlspecialchars($_POST['organization']) : ''; ?>">
-                                </div>
-                            </div>
-                        </section>
+                        </div>
 
-                        <!-- Online & Location Section -->
-                        <section>
-                            <div class="section-header">
-                                <div class="icon-box"><i data-lucide="globe" size="20"></i></div>
-                                <h2>Presence & Location *</h2>
+                        <!-- Professional Details Section -->
+                        <h3><i data-lucide="briefcase"></i> Professional Details *</h3>
+                        
+                        <div class="if-grid-2">
+                            <div class="if-group">
+                                <label>Educational Qualification *</label>
+                                <input type="text" name="qualification" placeholder="e.g. MCA Student" required
+                                       value="<?php echo isset($_POST['qualification']) ? htmlspecialchars($_POST['qualification']) : ''; ?>">
                             </div>
-                            <div class="form-group">
-                                <label>Website URL</label>
-                                <input type="text" name="websiteUrl" placeholder="https://yourproduct.com"
-                                       value="<?php echo isset($_POST['websiteUrl']) ? htmlspecialchars($_POST['websiteUrl']) : ''; ?>">
+                            <div class="if-group">
+                                <label>Years of Experience *</label>
+                                <input type="number" name="experience" min="0" placeholder="e.g. 2" required
+                                       value="<?php echo isset($_POST['experience']) ? htmlspecialchars($_POST['experience']) : ''; ?>">
                             </div>
-                            <div class="grid-row" style="grid-template-columns: repeat(3, 1fr);">
-                                <div class="form-group">
-                                    <label>District *</label>
-                                    <input type="text" name="district" placeholder="e.g. Ulhasnagar"
-                                           value="<?php echo isset($_POST['district']) ? htmlspecialchars($_POST['district']) : ''; ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>State *</label>
-                                    <input type="text" name="state" placeholder="e.g. Maharashtra"
-                                           value="<?php echo isset($_POST['state']) ? htmlspecialchars($_POST['state']) : ''; ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Country *</label>
-                                    <select name="country">
-                                        <option value="" disabled selected>Select Country</option>
-                                        <?php 
-                                            $countries = ["India", "USA", "UK", "Canada", "Australia", "Other"];
-                                            $selected_c = isset($_POST['country']) ? $_POST['country'] : '';
-                                            foreach($countries as $c) {
-                                                $sel = ($c == $selected_c) ? 'selected' : '';
-                                                echo "<option value='$c' $sel>$c</option>";
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>LinkedIn / Social Media / Website (if any)</label>
-                                <input type="url" name="social" placeholder="LinkedIn or Portfolio URL"
-                                       value="<?php echo isset($_POST['social']) ? htmlspecialchars($_POST['social']) : ''; ?>">
-                            </div>
-                        </section>
+                        </div>
 
-                        <!-- Files Section -->
-                        <section>
-                            <div class="section-header">
-                                <div class="icon-box"><i data-lucide="paperclip" size="20"></i></div>
-                                <h2>Attachments </h2>
+                        <div class="if-grid-2">
+                            <div class="if-group">
+                                <label>Designation *</label>
+                                <input type="text" name="designation" placeholder="e.g. Lead Developer" required
+                                       value="<?php echo isset($_POST['designation']) ? htmlspecialchars($_POST['designation']) : ''; ?>">
                             </div>
-                            <div class="upload-grid">
-                                <label class="upload-box">
-                                    <i data-lucide="camera"></i>
-                                    <div class="upload-label">Upload your latest photo *</div>
-                                    <input type="file" name="photo" class="hidden" accept="image/jpeg, image/png, image/jpg" id="photo-input" style="display:none;">
-                                    <div id="photo-file" class="file-indicator">✓ Photo Selected</div>
-                                </label>
-                                <label class="upload-box">
-                                    <i data-lucide="file-up"></i>
-                                    <div class="upload-label">Upload your CV/ Bio<br>(PDF, Doc) *</div>
-                                    <input type="file" name="cv" class="hidden" accept=".pdf,.doc,.docx" id="cv-input" style="display:none;">
-                                    <div id="cv-file" class="file-indicator">✓ CV Selected</div>
-                                </label>
+                            <div class="if-group">
+                                <label>Name of Organization *</label>
+                                <input type="text" name="organization" placeholder="e.g. Tech Solutions Inc." required
+                                       value="<?php echo isset($_POST['organization']) ? htmlspecialchars($_POST['organization']) : ''; ?>">
                             </div>
-                            <div class="form-group">
-                                <label>Area of Expertise / Brief of Work Experience *</label>
-                                <textarea name="brief" rows="4" placeholder="Tell us about your background..."><?php echo isset($_POST['brief']) ? htmlspecialchars($_POST['brief']) : ''; ?></textarea>
-                            </div>
-                        </section>
+                        </div>
 
+                        <!-- Presence & Location Section -->
+                        <h3><i data-lucide="globe"></i> Presence & Location *</h3>
+                        
+                        <div class="if-group">
+                            <label>Website URL</label>
+                            <input type="url" name="websiteUrl" placeholder="https://yourproduct.com"
+                                   value="<?php echo isset($_POST['websiteUrl']) ? htmlspecialchars($_POST['websiteUrl']) : ''; ?>">
+                        </div>
+
+                        <div class="if-grid-3">
+                            <div class="if-group">
+                                <label>District *</label>
+                                <input type="text" name="district" placeholder="e.g. Ulhasnagar" required
+                                       value="<?php echo isset($_POST['district']) ? htmlspecialchars($_POST['district']) : ''; ?>">
+                            </div>
+                            <div class="if-group">
+                                <label>State *</label>
+                                <input type="text" name="state" placeholder="e.g. Maharashtra" required
+                                       value="<?php echo isset($_POST['state']) ? htmlspecialchars($_POST['state']) : ''; ?>">
+                            </div>
+                            <div class="if-group">
+                                <label>Country *</label>
+                                <select name="country" required>
+                                    <option value="" disabled selected>Select Country</option>
+                                    <?php 
+                                        $countries = ["India", "USA", "UK", "Canada", "Australia", "Other"];
+                                        $selected_c = isset($_POST['country']) ? $_POST['country'] : '';
+                                        foreach($countries as $c) {
+                                            $sel = ($c == $selected_c) ? 'selected' : '';
+                                            echo "<option value='$c' $sel>$c</option>";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="if-group">
+                            <label>LinkedIn / Social Media / Website (if any)</label>
+                            <input type="url" name="social" placeholder="LinkedIn or Portfolio URL"
+                                   value="<?php echo isset($_POST['social']) ? htmlspecialchars($_POST['social']) : ''; ?>">
+                        </div>
+
+                        <!-- Attachments Section -->
+                        <h3><i data-lucide="paperclip"></i> Attachments</h3>
+                        
+                        <div class="upload-grid">
+                            <label class="upload-box" for="photo-input">
+                                <i data-lucide="camera" size="32"></i>
+                                <div class="upload-label">Upload your latest photo *</div>
+                                <input type="file" name="photo" class="hidden" accept="image/jpeg, image/png, image/jpg" id="photo-input" style="display:none;" required>
+                                <div id="photo-file" class="file-indicator"></div>
+                            </label>
+                            <label class="upload-box" for="cv-input">
+                                <i data-lucide="file-up" size="32"></i>
+                                <div class="upload-label">Upload your CV/ Bio<br>(PDF, Doc) *</div>
+                                <input type="file" name="cv" class="hidden" accept=".pdf,.doc,.docx" id="cv-input" style="display:none;" required>
+                                <div id="cv-file" class="file-indicator"></div>
+                            </label>
+                        </div>
+
+                        <div class="if-group">
+                            <label>Area of Expertise / Brief of Work Experience *</label>
+                            <textarea name="brief" rows="4" required placeholder="Tell us about your background..."><?php echo isset($_POST['brief']) ? htmlspecialchars($_POST['brief']) : ''; ?></textarea>
+                        </div>
+
+                        <!-- Confirmation -->
                         <div class="confirmation-card">
-                            <input type="checkbox" id="confirm">
+                            <input type="checkbox" id="confirm" required>
                             <label for="confirm">I confirm that the information provided is accurate and true to my knowledge.</label>
                         </div>
 
                         <!-- Recaptcha -->
-                        <div class="captcha-wrapper">
-                            <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_site_key; ?>"></div>
+                        <div style="margin-top:20px; display:flex; justify-content:center;">
+                            <!-- Ensure your variables $recaptcha_site_key are defined in PHP logic -->
+                            <div class="g-recaptcha" data-sitekey="<?php echo isset($recaptcha_site_key) ? $recaptcha_site_key : ''; ?>"></div>
                         </div>
 
-                        <button type="submit" class="submit-btn" id="submit-btn">
-                            <span id="btn-text">Submit Registration</span>
+                        <button type="submit" class="if-btn-submit" id="submit-btn">
+                            <span>Submit Registration</span> <i data-lucide="send" size="18"></i>
                         </button>
+
                     </form>
                 </div>
+
+                <!-- Image Banner (Top of Form) -->
+                <div class="if-image-panel">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070&auto=format&fit=crop" class="if-bg-image" alt="Professional Networking">
+                    <div class="if-overlay-text">
+                        <h2 style="color: white; font-size: 2.5rem; line-height: 1.1;">Join the Network.</h2>
+                        <p style="color: rgba(255,255,255,0.8); margin-top: 1rem; font-size: 1.1rem;">Register as a professional and connect with global leaders.</p>
+                    </div>
+                </div>
+
             </div>
-
-            <div class="home-indicator"></div>
         </div>
-    </div>
+    </section>
 
-    <!-- SUCCESS POPUP MODAL -->
-    <div class="modal-overlay <?php echo $showSuccessModal ? 'active' : ''; ?>" id="success-modal">
-        <div class="modal-content">
-            <div class="success-icon-popup"><i data-lucide="check" size="40"></i></div>
-            <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; color:#1e293b;">Success!</h2>
-            <p style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.5; font-size: 0.95rem;">
-                Hello <?php echo htmlspecialchars($successName); ?>, your registration has been successfully saved.
-            </p>
-            <button onclick="closeModal()" class="submit-btn" style="margin-top: 0; background: #0f172a; box-shadow: none;">Continue to Summit</button>
-        </div>
-    </div>
-
-    <script>
-        lucide.createIcons();
-
-        // Live Clock
-        function updateClock() {
-            const now = new Date();
-            let h = now.getHours(); let m = now.getMinutes();
-            const ampm = h >= 12 ? 'PM' : 'AM';
-            h = h % 12 || 12; m = m < 10 ? '0' + m : m;
-            document.getElementById('clock').textContent = h + ':' + m + ' ' + ampm;
-        }
-        setInterval(updateClock, 1000); updateClock();
+  <!-- Scripts -->
+<script>
+     lucide.createIcons();
 
         // File Selection Feedback
         document.getElementById('photo-input').onchange = (e) => {
-            if (e.target.files.length > 0) document.getElementById('photo-file').style.display = 'block';
+            const display = document.getElementById('photo-file');
+            if (e.target.files.length > 0) {
+                display.textContent = '✓ ' + e.target.files[0].name;
+                display.style.display = 'block';
+            } else {
+                display.style.display = 'none';
+            }
         };
+
         document.getElementById('cv-input').onchange = (e) => {
-            if (e.target.files.length > 0) document.getElementById('cv-file').style.display = 'block';
+            const display = document.getElementById('cv-file');
+            if (e.target.files.length > 0) {
+                display.textContent = '✓ ' + e.target.files[0].name;
+                display.style.display = 'block';
+            } else {
+                display.style.display = 'none';
+            }
         };
 
         function closeModal() {
