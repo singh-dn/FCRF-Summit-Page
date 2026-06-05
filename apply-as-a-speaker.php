@@ -19,6 +19,17 @@ $table_name = "fcrf_professionals";
 $recaptcha_site_key = "6LfkXYwsAAAAAO8Vwrhg7KdnocQzL-yQwl8zgTt4";
 $recaptcha_secret = "6LfkXYwsAAAAAOg_C4CYVgNlQOyG9X1RU4Pl576h"; 
 
+// --- SECURITY: Input Sanitization Function to prevent XSS ---
+function sanitize_input($data) {
+    if (is_array($data)) {
+        return array_map('sanitize_input', $data);
+    }
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+    return $data;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
@@ -42,25 +53,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         $conn->set_charset("utf8mb4");
 
-        // 3. Process & Validate Inputs
-        $first_name = trim($_POST['firstName']);
-        $last_name = trim($_POST['lastName']);
-        $phone = trim($_POST['phone']);
-        $email = trim($_POST['email']);
-        $qualification = trim($_POST['qualification']);
-        $experience = trim($_POST['experience']);
-        $designation = trim($_POST['designation']);
-        $organization = trim($_POST['organization']);
-        $websiteUrl = trim($_POST['websiteUrl']);
-        $district = trim($_POST['district']);
-        $state = trim($_POST['state']);
-        $country = trim($_POST['country']);
-        $social = trim($_POST['social']);
-        $brief = trim($_POST['brief']);
+        // 3. Process & Validate Inputs Securely
+        $first_name    = sanitize_input($_POST['firstName'] ?? '');
+        $last_name     = sanitize_input($_POST['lastName'] ?? '');
+        $phone         = sanitize_input($_POST['phone'] ?? '');
+        $email         = sanitize_input($_POST['email'] ?? '');
+        $qualification = sanitize_input($_POST['qualification'] ?? '');
+        $experience    = sanitize_input($_POST['experience'] ?? '');
+        $designation   = sanitize_input($_POST['designation'] ?? '');
+        $organization  = sanitize_input($_POST['organization'] ?? '');
+        $websiteUrl    = sanitize_input($_POST['websiteUrl'] ?? '');
+        $district      = sanitize_input($_POST['district'] ?? '');
+        $state         = sanitize_input($_POST['state'] ?? '');
+        $country       = sanitize_input($_POST['country'] ?? '');
+        $social        = sanitize_input($_POST['social'] ?? '');
+        $brief         = sanitize_input($_POST['brief'] ?? '');
 
         // --- STRICT VALIDATION LOGIC ---
-        if (empty($first_name) || empty($last_name) || empty($phone) || empty($email)) {
-            throw new Exception("First Name, Last Name, Phone, and Email are mandatory.");
+        if (empty($first_name) || empty($last_name) || empty($phone) || empty($email) || empty($qualification) || empty($experience) || empty($designation) || empty($organization) || empty($district) || empty($state) || empty($country) || empty($brief)) {
+            throw new Exception("All fields marked with * are mandatory.");
         }
 
         if (!preg_match("/^[a-zA-Z\s\.]+$/", $first_name) || !preg_match("/^[a-zA-Z\s\.]+$/", $last_name)) {
@@ -75,32 +86,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("Invalid email format.");
         }
 
+        if (!preg_match("/^[0-9]+$/", $experience)) {
+            throw new Exception("Years of experience must be a valid number.");
+        }
+
+        if (!empty($websiteUrl) && !filter_var($websiteUrl, FILTER_VALIDATE_URL)) {
+            throw new Exception("Please provide a valid Website URL.");
+        }
+
+        if (!empty($social) && !filter_var($social, FILTER_VALIDATE_URL)) {
+            throw new Exception("Please provide a valid Social/LinkedIn URL.");
+        }
+
         // 4. File Upload Logic
         $target_dir = "uploads/professionals/";
         if (!file_exists($target_dir)) { mkdir($target_dir, 0755, true); }
         
-        // Handle Photo (Optional)
+        // Handle Photo (Secure MIME validation)
         $photoPath = "";
         if (!empty($_FILES["photo"]["name"])) {
             $photoName = time() . "_photo_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["photo"]["name"]));
             $photoPath = $target_dir . $photoName;
+            
+            $allowed_photo_mimes = ['image/jpeg', 'image/png', 'image/jpg'];
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime = finfo_file($finfo, $_FILES["photo"]["tmp_name"]);
+            finfo_close($finfo);
+            
             $photoType = strtolower(pathinfo($photoPath, PATHINFO_EXTENSION));
-            if (!in_array($photoType, ['jpg', 'jpeg', 'png'])) { throw new Exception("Photo must be JPG, JPEG, or PNG."); }
+            if (!in_array($photoType, ['jpg', 'jpeg', 'png']) || !in_array($mime, $allowed_photo_mimes)) { 
+                throw new Exception("Invalid Photo. Only JPG or PNG formats are allowed."); 
+            }
+            if ($_FILES["photo"]["size"] > 5000000) { throw new Exception("Photo size must be less than 5MB."); }
             if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $photoPath)) { throw new Exception("Failed to upload photo."); }
+        } else {
+            throw new Exception("Profile photo is required.");
         }
 
-        // Handle CV (Optional)
+        // Handle CV (Secure MIME validation for PDF/DOC)
         $cvPath = "";
         if (!empty($_FILES["cv"]["name"])) {
             $cvName = time() . "_cv_" . preg_replace("/[^a-zA-Z0-9.]/", "", basename($_FILES["cv"]["name"]));
             $cvPath = $target_dir . $cvName;
+            
+            $allowed_cv_mimes = [
+                'application/pdf', 
+                'application/msword', 
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ];
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime = finfo_file($finfo, $_FILES["cv"]["tmp_name"]);
+            finfo_close($finfo);
+            
             $cvType = strtolower(pathinfo($cvPath, PATHINFO_EXTENSION));
-            if (!in_array($cvType, ['pdf', 'doc', 'docx'])) { throw new Exception("CV must be PDF, DOC, or DOCX."); }
+            if (!in_array($cvType, ['pdf', 'doc', 'docx']) || !in_array($mime, $allowed_cv_mimes)) { 
+                throw new Exception("Invalid CV. Only PDF, DOC, or DOCX documents are allowed."); 
+            }
+            if ($_FILES["cv"]["size"] > 5000000) { throw new Exception("CV size must be less than 5MB."); }
             if (!move_uploaded_file($_FILES["cv"]["tmp_name"], $cvPath)) { throw new Exception("Failed to upload CV."); }
+        } else {
+            throw new Exception("CV document is required.");
         }
 
-
-        // 5. Insert into Database
+        // 5. Insert into Database Securely (Prepared Statements prevent SQLi)
         $sql = "INSERT INTO $table_name (first_name, last_name, phone, email, qualification, experience, designation, organization, website_url, district, state, country, social_url, photo_path, cv_path, brief) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($sql);
@@ -346,6 +394,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background: #ffffff; 
             border-color: var(--if-primary); 
         }
+        #professional-form-section .upload-box.has-error {
+            border-color: #ef4444; background: #fef2f2;
+        }
         #professional-form-section .upload-box i { 
             color: var(--if-text-muted); 
             margin-bottom: 0.5rem; 
@@ -457,11 +508,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             #professional-form-section .if-overlay-text h2 { font-size: 1.8rem; }
             #professional-form-section .if-image-panel { height: 200px; }
         }
-</style>
+    </style>
 </head>
 <body>
 
-    <!-- SUCCESS MODAL -->
+    <!-- SUCCESS MODAL (With Countdown & Redirection) -->
     <div class="modal-overlay <?php echo $showSuccessModal ? 'active' : ''; ?>" id="success-modal">
         <div class="modal-box">
             <span class="success-icon"><i data-lucide="check-circle" size="64"></i></span>
@@ -469,7 +520,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p style="color:#6b7280; margin-bottom:25px; line-height: 1.5;">
                 Hello <?php echo htmlspecialchars($successName ?? ''); ?>, your registration has been successfully saved.
             </p>
-            <button onclick="closeModal()" style="width: 100%; padding: 14px; border:none; background: #0f172a; color:white; border-radius:12px; cursor:pointer; font-weight: 600; font-size: 1rem; transition: background 0.2s;">Continue to Summit</button>
+            <button onclick="forceRedirect()" style="width: 100%; padding: 14px; border:none; background: #0f172a; color:white; border-radius:12px; cursor:pointer; font-weight: 600; font-size: 1rem; transition: background 0.2s;">Continue to Summit</button>
+            <div class="countdown-text" style="font-size: 0.9rem; color: #94a3b8; margin-top: 1rem; font-weight: 500;">Auto-redirecting in <span id="timer">4</span> seconds...</div>
         </div>
     </div>
 
@@ -542,6 +594,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="if-group">
                                 <label>Years of Experience *</label>
                                 <input type="number" name="experience" min="0" placeholder="e.g. 2" required
+                                       pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                        value="<?php echo isset($_POST['experience']) ? htmlspecialchars($_POST['experience']) : ''; ?>">
                             </div>
                         </div>
@@ -563,7 +616,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h3><i data-lucide="globe"></i> Presence & Location *</h3>
                         
                         <div class="if-group">
-                            <label>Website URL</label>
+                            <label>Website URL <span style="font-weight: 400; color: #94a3b8; font-size: 0.8rem;">(Optional)</span></label>
                             <input type="url" name="websiteUrl" placeholder="https://yourproduct.com"
                                    value="<?php echo isset($_POST['websiteUrl']) ? htmlspecialchars($_POST['websiteUrl']) : ''; ?>">
                         </div>
@@ -596,7 +649,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
 
                         <div class="if-group">
-                            <label>LinkedIn / Social Media / Website (if any)</label>
+                            <label>LinkedIn / Social Media <span style="font-weight: 400; color: #94a3b8; font-size: 0.8rem;">(if any)</span></label>
                             <input type="url" name="social" placeholder="LinkedIn or Portfolio URL"
                                    value="<?php echo isset($_POST['social']) ? htmlspecialchars($_POST['social']) : ''; ?>">
                         </div>
@@ -605,15 +658,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h3><i data-lucide="paperclip"></i> Attachments</h3>
                         
                         <div class="upload-grid">
-                            <label class="upload-box" for="photo-input">
+                            <label class="upload-box" for="photo-input" id="drop-area-photo">
                                 <i data-lucide="camera" size="32"></i>
-                                <div class="upload-label">Upload your latest photo *</div>
-                                <input type="file" name="photo" class="hidden" accept="image/jpeg, image/png, image/jpg" id="photo-input" style="display:none;" required>
+                                <div class="upload-label">Upload your latest photo * <br><span style="font-weight: 400; color: #94a3b8; font-size: 0.8rem;">(JPG/PNG up to 5MB)</span></div>
+                                <input type="file" name="photo" class="hidden" accept=".jpg,.jpeg,.png" id="photo-input" style="display:none;" required>
                                 <div id="photo-file" class="file-indicator"></div>
                             </label>
-                            <label class="upload-box" for="cv-input">
+                            <label class="upload-box" for="cv-input" id="drop-area-cv">
                                 <i data-lucide="file-up" size="32"></i>
-                                <div class="upload-label">Upload your CV/ Bio<br>(PDF, Doc) *</div>
+                                <div class="upload-label">Upload your CV/ Bio * <br><span style="font-weight: 400; color: #94a3b8; font-size: 0.8rem;">(PDF/DOC up to 5MB)</span></div>
                                 <input type="file" name="cv" class="hidden" accept=".pdf,.doc,.docx" id="cv-input" style="display:none;" required>
                                 <div id="cv-file" class="file-indicator"></div>
                             </label>
@@ -626,7 +679,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <!-- Confirmation -->
                         <div class="confirmation-card">
-                            <input type="checkbox" id="confirm" required>
+                            <input type="checkbox" id="confirm" name="confirm" required <?php if(isset($_POST['confirm'])) echo 'checked'; ?>>
                             <label for="confirm">I confirm that the information provided is accurate and true to my knowledge.</label>
                         </div>
 
@@ -656,41 +709,93 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </section>
 
-  <!-- Scripts -->
-<script>
-     lucide.createIcons();
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
 
-        // File Selection Feedback
-        document.getElementById('photo-input').onchange = (e) => {
-            const display = document.getElementById('photo-file');
-            if (e.target.files.length > 0) {
-                display.textContent = '✓ ' + e.target.files[0].name;
-                display.style.display = 'block';
-            } else {
-                display.style.display = 'none';
+        // --- File Upload Visual Feedback & Client-Side Validation ---
+        function setupFileUpload(inputId, fileNameId, dropAreaId, isPhoto) {
+            const fileInput = document.getElementById(inputId);
+            const fileNameDiv = document.getElementById(fileNameId);
+            const dropArea = document.getElementById(dropAreaId);
+
+            const maxSize = 5 * 1024 * 1024; // 5MB limit
+            const allowedTypes = isPhoto 
+                ? ['image/jpeg', 'image/png'] 
+                : ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            const allowedExts = isPhoto ? ['jpg', 'jpeg', 'png'] : ['pdf', 'doc', 'docx'];
+
+            function handleFileValidation(file) {
+                dropArea.classList.remove('has-error');
+                if (!file) return;
+
+                const ext = file.name.split('.').pop().toLowerCase();
+
+                if (!allowedExts.includes(ext) && !allowedTypes.includes(file.type)) {
+                    alert(isPhoto ? "Invalid file type. Please upload a JPG or PNG." : "Invalid file type. Please upload a PDF or Word document.");
+                    fileInput.value = ''; 
+                    fileNameDiv.style.display = 'none';
+                    dropArea.classList.add('has-error'); 
+                    return;
+                }
+
+                if (file.size > maxSize) {
+                    alert(`File is too large. Maximum size allowed is ${maxSize / (1024 * 1024)}MB.`);
+                    fileInput.value = ''; 
+                    fileNameDiv.style.display = 'none';
+                    dropArea.classList.add('has-error'); 
+                    return;
+                }
+
+                fileNameDiv.textContent = '✓ Selected: ' + file.name;
+                fileNameDiv.style.display = 'block'; 
+                dropArea.style.borderColor = "var(--if-secondary)";
             }
-        };
 
-        document.getElementById('cv-input').onchange = (e) => {
-            const display = document.getElementById('cv-file');
-            if (e.target.files.length > 0) {
-                display.textContent = '✓ ' + e.target.files[0].name;
-                display.style.display = 'block';
-            } else {
-                display.style.display = 'none';
-            }
-        };
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) { 
+                    handleFileValidation(e.target.files[0]); 
+                } else { 
+                    fileNameDiv.style.display = 'none'; 
+                    dropArea.style.borderColor = "var(--if-border)"; 
+                    dropArea.classList.remove('has-error'); 
+                }
+            });
 
-        function closeModal() {
-            document.getElementById('success-modal').classList.remove('active');
-            window.location.href = "https://summit.futurecrime.org"; // Redirect on click
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); }, false);
+            });
+            ['dragenter', 'dragover'].forEach(eventName => dropArea.addEventListener(eventName, () => dropArea.classList.add('dragover'), false));
+            ['dragleave', 'drop'].forEach(eventName => dropArea.addEventListener(eventName, () => dropArea.classList.remove('dragover'), false));
+            
+            dropArea.addEventListener('drop', (e) => {
+                if(e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileValidation(e.dataTransfer.files[0]);
+                }
+            });
         }
-        
-        // Auto-redirect after 4 seconds
-        <?php if ($showSuccessModal): ?>
-        setTimeout(function() {
+
+        setupFileUpload('photo-input', 'photo-file', 'drop-area-photo', true);
+        setupFileUpload('cv-input', 'cv-file', 'drop-area-cv', false);
+
+
+        // --- Redirection Logic with Countdown ---
+        function forceRedirect() {
             window.location.href = "https://summit.futurecrime.org";
-        }, 4000);
+        }
+
+        <?php if ($showSuccessModal): ?>
+        let timeLeft = 4;
+        const timerElement = document.getElementById('timer');
+        const countdown = setInterval(function() {
+            timeLeft--;
+            if (timerElement) timerElement.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                forceRedirect();
+            }
+        }, 1000);
         <?php endif; ?>
     </script>
 </body>
