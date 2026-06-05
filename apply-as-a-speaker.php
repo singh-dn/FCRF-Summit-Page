@@ -647,8 +647,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="if-image-panel">
                     <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070&auto=format&fit=crop" class="if-bg-image" alt="Professional Networking">
                     <div class="if-overlay-text">
-                        <h2 style="color: white; font-size: 2.5rem; line-height: 1.1;">Join the Network.</h2>
-                        <p style="color: rgba(255,255,255,0.8); margin-top: 1rem; font-size: 1.1rem;">Register as a professional and connect with global leaders.</p>
+                        <h2 style="color: white; font-size: 2.5rem; line-height: 1.1;">Take the Stage at FutureCrime Summit 2026.</h2>
+                        <p style="color: rgba(255,255,255,0.8); margin-top: 1rem; font-size: 1.1rem;">Join a national platform where experts speak on cybercrime, AI threats, digital forensics, fraud, cyber law, data privacy, and the future of technology-enabled crime.</p>
                     </div>
                 </div>
 
