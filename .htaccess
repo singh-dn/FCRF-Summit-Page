@@ -1,91 +1,59 @@
-# ================================================================
-#  .htaccess — public_html (ROOT)
-#  Hostinger shared hosting
-# ================================================================
+RewriteEngine On
 
+# FORCE HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# TRACKER FOLDER - NO REWRITES
+RewriteCond %{REQUEST_URI} ^/tracker/
+RewriteRule .* - [L]
+
+# Redirect index → /
+RewriteCond %{THE_REQUEST} \s/+index(\.html|\.php)?[\s?] [NC]
+RewriteRule ^index(\.html|\.php)?$ / [R=301,L]
+
+# Remove .html
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Internal .html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# Internal .php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+
+# Security
+Options -IndexesRewriteEngine On
+
+# FORCE HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# TRACKER FOLDER - NO REWRITES
+RewriteCond %{REQUEST_URI} ^/tracker/
+RewriteRule .* - [L]
+
+# Redirect index → /
+RewriteCond %{THE_REQUEST} \s/+index(\.html|\.php)?[\s?] [NC]
+RewriteRule ^index(\.html|\.php)?$ / [R=301,L]
+
+# Remove .html
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Internal .html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# Internal .php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+
+# Security
 Options -Indexes
-ServerSignature Off
-
-# ── Security headers ─────────────────────────────────────────────
-<IfModule mod_headers.c>
-    Header always set X-Content-Type-Options "nosniff"
-    Header always set X-Frame-Options        "SAMEORIGIN"
-    Header always set X-XSS-Protection       "1; mode=block"
-    Header always set Referrer-Policy        "strict-origin-when-cross-origin"
-    Header unset X-Powered-By
-</IfModule>
-
-# ── Block config.php anywhere in root ───────────────────────────
-<FilesMatch "^config\.php$">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
-
-# ── Gzip compression ─────────────────────────────────────────────
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/css application/javascript
-</IfModule>
-
-# ── Browser caching ──────────────────────────────────────────────
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType text/css                "access plus 1 month"
-    ExpiresByType application/javascript  "access plus 1 month"
-    ExpiresByType image/jpeg              "access plus 1 year"
-    ExpiresByType image/png               "access plus 1 year"
-    ExpiresByType image/webp              "access plus 1 year"
-    ExpiresByType image/svg+xml           "access plus 1 month"
-    ExpiresByType image/x-icon            "access plus 1 year"
-    ExpiresByType font/woff2              "access plus 1 year"
-    ExpiresByType font/woff               "access plus 1 year"
-</IfModule>
-
-# ================================================================
-#  REWRITE RULES
-# ================================================================
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-
-    # ── 1. FORCE HTTPS ───────────────────────────────────────────
-    RewriteCond %{HTTPS} !=on
-    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-    # ── 2. FORCE NON-WWW ─────────────────────────────────────────
-    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-    RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
-
-    # ── 3. TRACKER FOLDER — stop ALL rewriting here ──────────────
-    RewriteRule ^tracker/ - [L]
-
-    # ── 4. Let real files & folders through ──────────────────────
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^ - [L]
-
-    # ── 5. index.html / index.php → / ────────────────────────────
-    RewriteCond %{THE_REQUEST} \s/+index\.(html|php)[\s?] [NC]
-    RewriteRule ^index\.(html|php)$ / [R=301,L]
-
-    # ── 6. Strip .html (301 redirect) ────────────────────────────
-    RewriteCond %{THE_REQUEST} \s/+(.+)\.html[\s?] [NC]
-    RewriteRule ^ /%1 [R=301,L]
-
-    # ── 7. Strip .php (301 redirect) — NOT tracker folder ────────
-    RewriteCond %{THE_REQUEST} \s/+(.+)\.php[\s?] [NC]
-    RewriteCond %{THE_REQUEST} !\s/+tracker/ [NC]
-    RewriteRule ^ /%1 [R=301,L]
-
-    # ── 8. Serve .html for clean URLs ────────────────────────────
-    RewriteCond %{REQUEST_FILENAME}      !-f
-    RewriteCond %{REQUEST_FILENAME}      !-d
-    RewriteCond %{REQUEST_FILENAME}.html -f
-    RewriteRule ^(.+?)/?$ $1.html [L]
-
-    # ── 9. Serve .php for clean URLs ─────────────────────────────
-    RewriteCond %{REQUEST_FILENAME}     !-f
-    RewriteCond %{REQUEST_FILENAME}     !-d
-    RewriteCond %{REQUEST_FILENAME}.php -f
-    RewriteRule ^(.+?)/?$ $1.php [L]
-
-</IfModule>
