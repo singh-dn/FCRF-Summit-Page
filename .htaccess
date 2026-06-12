@@ -1,59 +1,32 @@
 RewriteEngine On
 
-# FORCE HTTPS
+# Force HTTPS
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# TRACKER FOLDER - NO REWRITES
-RewriteCond %{REQUEST_URI} ^/tracker/
-RewriteRule .* - [L]
+# Redirect /index.html or /index.php to /
+RewriteCond %{THE_REQUEST} \s/+index\.(html|php)[\s?] [NC]
+RewriteRule ^index\.(html|php)$ / [R=301,L]
 
-# Redirect index → /
-RewriteCond %{THE_REQUEST} \s/+index(\.html|\.php)?[\s?] [NC]
-RewriteRule ^index(\.html|\.php)?$ / [R=301,L]
+# Remove .html extension from URLs
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.html[\s?] [NC]
+RewriteRule ^(.+)\.html$ /$1 [R=301,L]
 
-# Remove .html
-RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
-RewriteRule ^ /%1 [R=301,L]
+# Remove .php extension from URLs
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.php[\s?] [NC]
+RewriteRule ^(.+)\.php$ /$1 [R=301,L]
 
-# Internal .html
+# Internally serve .html files
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
 RewriteRule ^(.+)$ $1.html [L]
 
-# Internal .php
+# Internally serve .php files
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}/$1.php -f
 RewriteRule ^(.+)$ $1.php [L]
 
-# Security
-Options -IndexesRewriteEngine On
-
-# FORCE HTTPS
-RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# TRACKER FOLDER - NO REWRITES
-RewriteCond %{REQUEST_URI} ^/tracker/
-RewriteRule .* - [L]
-
-# Redirect index → /
-RewriteCond %{THE_REQUEST} \s/+index(\.html|\.php)?[\s?] [NC]
-RewriteRule ^index(\.html|\.php)?$ / [R=301,L]
-
-# Remove .html
-RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
-RewriteRule ^ /%1 [R=301,L]
-
-# Internal .html
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.+)$ $1.html [L]
-
-# Internal .php
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^(.+)$ $1.php [L]
-
-# Security
+# Disable directory listing
 Options -Indexes
