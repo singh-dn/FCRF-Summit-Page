@@ -11,7 +11,7 @@ require_once __DIR__ . '/config.php';
 $pass = $_GET['key'] ?? '';
 if ($pass !== TRACKER_SECRET) {
     http_response_code(403);
-    die('Add ?key=YOUR_TRACKER_SECRET to the URL');
+    die('Add ?key=x9Kf2LmQ7vNp4RsT8yZa1BcDeFgH6Jk');
 }
 
 $testIP  = $_GET['ip'] ?? getClientIP();
