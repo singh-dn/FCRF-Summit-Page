@@ -1,122 +1,91 @@
 # ================================================================
-#  .htaccess — Root public_html
+#  .htaccess — public_html (ROOT)
 #  Hostinger shared hosting
-#  Last updated: 2025
 # ================================================================
 
-# ── 1. Core options ──────────────────────────────────────────────
-Options -Indexes -MultiViews
+Options -Indexes
 ServerSignature Off
 
-# ── 2. Character set & default handlers ─────────────────────────
-AddDefaultCharset UTF-8
-AddType application/javascript .js
-AddType text/css               .css
-
-# ── 3. Security headers ──────────────────────────────────────────
+# ── Security headers ─────────────────────────────────────────────
 <IfModule mod_headers.c>
-    Header always set X-Content-Type-Options    "nosniff"
-    Header always set X-Frame-Options           "SAMEORIGIN"
-    Header always set X-XSS-Protection          "1; mode=block"
-    Header always set Referrer-Policy           "strict-origin-when-cross-origin"
-    Header always set Permissions-Policy        "geolocation=(), microphone=(), camera=()"
-    # Remove server info
-    Header unset Server
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options        "SAMEORIGIN"
+    Header always set X-XSS-Protection       "1; mode=block"
+    Header always set Referrer-Policy        "strict-origin-when-cross-origin"
     Header unset X-Powered-By
 </IfModule>
 
-# ── 4. Block direct access to sensitive files ────────────────────
-<FilesMatch "^(config\.php|\.env|composer\.(json|lock)|package\.json|README\.md)$">
+# ── Block config.php anywhere in root ───────────────────────────
+<FilesMatch "^config\.php$">
     Order allow,deny
     Deny from all
 </FilesMatch>
 
-# Block hidden files/folders (.git, .svn, etc.)
-<FilesMatch "^\.">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
-
-# ── 5. Browser caching ───────────────────────────────────────────
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType text/css                     "access plus 1 month"
-    ExpiresByType application/javascript       "access plus 1 month"
-    ExpiresByType image/jpeg                   "access plus 1 year"
-    ExpiresByType image/png                    "access plus 1 year"
-    ExpiresByType image/webp                   "access plus 1 year"
-    ExpiresByType image/svg+xml                "access plus 1 month"
-    ExpiresByType image/gif                    "access plus 1 year"
-    ExpiresByType image/x-icon                 "access plus 1 year"
-    ExpiresByType font/woff2                   "access plus 1 year"
-    ExpiresByType font/woff                    "access plus 1 year"
-    ExpiresByType application/font-woff2       "access plus 1 year"
-    ExpiresByType text/html                    "access plus 0 seconds"
+# ── Gzip compression ─────────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript
 </IfModule>
 
-# ── 6. Gzip compression ──────────────────────────────────────────
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/css text/javascript
-    AddOutputFilterByType DEFLATE application/javascript application/json
-    AddOutputFilterByType DEFLATE image/svg+xml font/woff font/woff2
+# ── Browser caching ──────────────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css                "access plus 1 month"
+    ExpiresByType application/javascript  "access plus 1 month"
+    ExpiresByType image/jpeg              "access plus 1 year"
+    ExpiresByType image/png               "access plus 1 year"
+    ExpiresByType image/webp              "access plus 1 year"
+    ExpiresByType image/svg+xml           "access plus 1 month"
+    ExpiresByType image/x-icon            "access plus 1 year"
+    ExpiresByType font/woff2              "access plus 1 year"
+    ExpiresByType font/woff               "access plus 1 year"
 </IfModule>
 
 # ================================================================
-#  URL REWRITING
+#  REWRITE RULES
 # ================================================================
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
-    # ── A. FORCE HTTPS ───────────────────────────────────────────
+    # ── 1. FORCE HTTPS ───────────────────────────────────────────
     RewriteCond %{HTTPS} !=on
-    RewriteCond %{HTTP_HOST} !^localhost [NC]
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-    # ── B. FORCE NON-WWW (pick one: www OR non-www) ──────────────
-    # Non-www (recommended — comment out if you prefer www)
+    # ── 2. FORCE NON-WWW ─────────────────────────────────────────
     RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
     RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
 
-    # ── C. TRACKER FOLDER — pass through untouched ───────────────
-    # Must be BEFORE all extension-removal rules
-    RewriteRule ^tracker(/.*)?$ - [L]
+    # ── 3. TRACKER FOLDER — stop ALL rewriting here ──────────────
+    RewriteRule ^tracker/ - [L]
 
-    # ── D. Let real files & directories pass through ─────────────
+    # ── 4. Let real files & folders through ──────────────────────
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
-    # ── E. Clean up index → root ─────────────────────────────────
-    # Handles: /index  /index.html  /index.php  → /
-    RewriteCond %{THE_REQUEST} \s/+(index)(\.html|\.php)?[\s?] [NC]
-    RewriteRule ^index(\.html|\.php)?$ / [R=301,L]
+    # ── 5. index.html / index.php → / ────────────────────────────
+    RewriteCond %{THE_REQUEST} \s/+index\.(html|php)[\s?] [NC]
+    RewriteRule ^index\.(html|php)$ / [R=301,L]
 
-    # ── F. Remove .html extension (301 redirect) ─────────────────
-    # Matches browser requests like GET /about.html HTTP/1.1
-    RewriteCond %{THE_REQUEST} \s/+([^.?]+)\.html(\?[^\s]*)?\s [NC]
-    RewriteRule ^ /%1%2 [R=301,L]
+    # ── 6. Strip .html (301 redirect) ────────────────────────────
+    RewriteCond %{THE_REQUEST} \s/+(.+)\.html[\s?] [NC]
+    RewriteRule ^ /%1 [R=301,L]
 
-    # ── G. Remove .php extension (301 redirect) ──────────────────
-    # Skips /tracker/*.php — those keep their .php extension
-    RewriteCond %{THE_REQUEST} \s/+([^.?]+)\.php(\?[^\s]*)?\s [NC]
+    # ── 7. Strip .php (301 redirect) — NOT tracker folder ────────
+    RewriteCond %{THE_REQUEST} \s/+(.+)\.php[\s?] [NC]
     RewriteCond %{THE_REQUEST} !\s/+tracker/ [NC]
-    RewriteRule ^ /%1%2 [R=301,L]
+    RewriteRule ^ /%1 [R=301,L]
 
-    # ── H. Internal rewrite: serve .html for clean URLs ─────────
-    RewriteCond %{REQUEST_FILENAME}       !-f
-    RewriteCond %{REQUEST_FILENAME}       !-d
-    RewriteCond %{REQUEST_FILENAME}.html  -f
-    RewriteRule ^([^.]+)/?$ $1.html [L]
-
-    # ── I. Internal rewrite: serve .php for clean URLs ───────────
+    # ── 8. Serve .html for clean URLs ────────────────────────────
     RewriteCond %{REQUEST_FILENAME}      !-f
     RewriteCond %{REQUEST_FILENAME}      !-d
-    RewriteCond %{REQUEST_FILENAME}.php  -f
-    RewriteRule ^([^.]+)/?$ $1.php [L]
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^(.+?)/?$ $1.html [L]
+
+    # ── 9. Serve .php for clean URLs ─────────────────────────────
+    RewriteCond %{REQUEST_FILENAME}     !-f
+    RewriteCond %{REQUEST_FILENAME}     !-d
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^(.+?)/?$ $1.php [L]
 
 </IfModule>
-
-# ── 7. Custom error pages (optional — create these files) ────────
-# ErrorDocument 404 /404.html
-# ErrorDocument 500 /500.html

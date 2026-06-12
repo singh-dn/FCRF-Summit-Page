@@ -1,32 +1,22 @@
 # ================================================================
 #  tracker/.htaccess
-#  Place this file INSIDE your tracker/ folder
-#  Rename it to .htaccess after uploading
+#  Keeps .php extensions, blocks sensitive files, allows CORS
 # ================================================================
 
-# ── 1. Block directory listing ───────────────────────────────────
 Options -Indexes
 
-# ── 2. Block all direct browser access except specific files ────
-# Nobody should browse to tracker/ directly
-# Only track.php, dashboard.php, realtime.php, heatmap.php, geo_test.php
-# need to be reachable — everything else is locked
+# ── Stop root rewrite rules from running inside here ─────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine Off
+</IfModule>
 
-# Block config and utility files completely
-<FilesMatch "^(config\.php|schema\.sql|README\.md|geo_test\.php)$">
+# ── Block direct access to config & schema ───────────────────────
+<FilesMatch "^(config\.php|schema\.sql|README\.md)$">
     Order allow,deny
     Deny from all
 </FilesMatch>
 
-# NOTE: geo_test.php is protected by secret key internally,
-# but you can also block it here once geo is confirmed working.
-# Just uncomment the line below:
-# <Files "geo_test.php">
-#     Order allow,deny
-#     Deny from all
-# </Files>
-
-# ── 3. Allow CORS for track.php (called by other domains) ───────
+# ── CORS for track.php (called from other domains) ───────────────
 <Files "track.php">
     <IfModule mod_headers.c>
         Header always set Access-Control-Allow-Origin  "*"
@@ -35,15 +25,9 @@ Options -Indexes
     </IfModule>
 </Files>
 
-# ── 4. No caching for tracker API endpoints ──────────────────────
-<FilesMatch "\.(php)$">
+# ── No caching on tracker PHP responses ──────────────────────────
+<FilesMatch "\.php$">
     <IfModule mod_headers.c>
         Header always set Cache-Control "no-store, no-cache, must-revalidate"
-        Header always set Pragma        "no-cache"
     </IfModule>
 </FilesMatch>
-
-# ── 5. Block rewrite rules from root bleeding into this folder ───
-<IfModule mod_rewrite.c>
-    RewriteEngine Off
-</IfModule>
