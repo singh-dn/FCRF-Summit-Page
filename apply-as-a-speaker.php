@@ -410,6 +410,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <div class="banner">
             <div class="banner-content">
+                <img src="assets/img/watch/transparent-png.png" alt="FCRF Logo" class="banner-logo">
                 <h1>Take the Stage at<span> FutureCrime Summit 2026</span></h1>
                 <p>Join a national platform where experts speak on cybercrime, AI threats, digital forensics, fraud, cyber law, data privacy, and the future of technology-enabled crime.</p>
             </div>
