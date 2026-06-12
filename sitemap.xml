@@ -16,6 +16,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://summit.futurecrime.org/fcrf-excellence-awards-cyber-risk-%26-policing-awards</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
   <!-- Apply as Speaker -->
   <url>
