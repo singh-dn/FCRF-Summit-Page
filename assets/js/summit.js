@@ -1,138 +1,197 @@
-  const scheduleData = {
-           1: {
-        date: "Day 1",
-        sessions: [
-            {
-                time: "11:30 AM - 12:30 PM",
-                location: "Main Conference Hall",
-                title: "National Cyber Security: Policy, Preparedness and AI-Enabled Threats",
-                description: "Discussion on national cybersecurity strategy, AI-enabled threats, and policy preparedness.",
-                type: "Conference Session",
-                speakers: []
-            },
-            {
-                time: "2:15 PM - 3:00 PM",
-                location: "Main Conference Hall",
-                title: "Digital Forensics and Cyber Investigations",
-                description: "Tracing criminals in a borderless digital ecosystem using modern digital forensics techniques.",
-                type: "Conference Session",
-                speakers: []
-            },
-            {
-                time: "3:00 PM - 3:45 PM",
-                location: "Main Conference Hall",
-                title: "Securing Critical Infrastructure",
-                description: "Cyber resilience strategies for protecting essential national services and infrastructure.",
-                type: "Conference Session",
-                speakers: []
-            },
-            {
-                time: "3:45 PM - 4:30 PM",
-                location: "Main Conference Hall",
-                title: "Blockchain, Cryptocurrency and Web3 Investigations",
-                description: "Investigating crypto-related crimes and challenges in decentralized ecosystems.",
-                type: "Conference Session",
-                speakers: []
-            },
-            {
-                time: "4:30 PM - 5:15 PM",
-                location: "Main Conference Hall",
-                title: "Securing the Internet of Things",
-                description: "Security risks and protection strategies for IoT, smart devices, and connected ecosystems.",
-                type: "Conference Session",
-                speakers: []
-            }
-        ]
-    },
+     // State Management
+        let activeDay = 1;
+        let activeHall = 'main';
 
-    2: {
-        date: "Day 2",
-        sessions: [
-            {
-                time: "10:00 AM - 10:45 AM",
-                location: "Main Conference Hall",
-                title: "Combating Digital Threats",
-                description: "Addressing sextortion, digital arrest scams, identity fraud and AI-driven deception.",
-                type: "Conference Session",
-                speakers: []
+        const scheduleData = {
+            1: {
+                date: "Day 1 (August 6th)",
+                sessions: [
+                    // --- MAIN HALL ---
+                    {
+                        hall: "main",
+                        time: "11:30 AM - 12:30 PM",
+                        location: "Main Conference Hall",
+                        title: "National Cyber Security: Policy, Preparedness and AI-Enabled Threats",
+                        description: "Discussion on national cybersecurity strategy, AI-enabled threats, and policy preparedness.",
+                        type: "Keynote Session"
+                    },
+                    {
+                        hall: "main",
+                        time: "2:15 PM - 3:00 PM",
+                        location: "Main Conference Hall",
+                        title: "Digital Forensics and Cyber Investigations",
+                        description: "Tracing criminals in a borderless digital ecosystem using modern digital forensics techniques.",
+                        type: "Panel Discussion"
+                    },
+                    {
+                        hall: "main",
+                        time: "3:00 PM - 3:45 PM",
+                        location: "Main Conference Hall",
+                        title: "Securing Critical Infrastructure",
+                        description: "Cyber resilience strategies for protecting essential national services and infrastructure.",
+                        type: "Conference Session"
+                    },
+                    {
+                        hall: "main",
+                        time: "3:45 PM - 4:30 PM",
+                        location: "Main Conference Hall",
+                        title: "Blockchain, Cryptocurrency and Web3 Investigations",
+                        description: "Investigating crypto-related crimes and challenges in decentralized ecosystems.",
+                        type: "Conference Session"
+                    },
+                    {
+                        hall: "main",
+                        time: "4:30 PM - 5:15 PM",
+                        location: "Main Conference Hall",
+                        title: "Securing the Internet of Things",
+                        description: "Security risks and protection strategies for IoT, smart devices, and connected ecosystems.",
+                        type: "Conference Session"
+                    },
+                    // --- SMALL HALL ---
+                    {
+                        hall: "small",
+                        time: "11:30 AM - 01:00 PM",
+                        location: "Tech Lab A (Small Hall)",
+                        title: "Masterclass: Deep Dive into OSINT Techniques",
+                        description: "A hands-on workshop exploring advanced Open Source Intelligence (OSINT) tools for tracking digital footprints.",
+                        type: "Workshop"
+                    },
+                    {
+                        hall: "small",
+                        time: "2:15 PM - 03:45 PM",
+                        location: "Tech Lab A (Small Hall)",
+                        title: "Practical AI Model Fine-tuning for Cybersecurity",
+                        description: "Learn how to deploy and fine-tune open-source LLMs locally to automate threat hunting without exposing data.",
+                        type: "Lab Session"
+                    },
+                    {
+                        hall: "small",
+                        time: "4:00 PM - 05:15 PM",
+                        location: "Tech Lab A (Small Hall)",
+                        title: "Blockchain Forensics Sandbox",
+                        description: "Interactive session tracing mock illicit cryptocurrency transactions across multiple blockchains.",
+                        type: "Interactive Seminar"
+                    }
+                ]
             },
-            {
-                time: "11:30 AM - 12:15 PM",
-                location: "Main Conference Hall",
-                title: "BFSI Crime in 2026",
-                description: "Financial frauds, payment abuse and trust exploitation in the banking ecosystem.",
-                type: "Conference Session",
-                speakers: []
-            },
-            {
-                time: "12:15 PM - 1:00 PM",
-                location: "Main Conference Hall",
-                title: "Fighting Ransomware, Malware and Data Breaches",
-                description: "Strategies for prevention, detection and response to modern cyber attacks.",
-                type: "Conference Session",
-                speakers: []
-            },
-            {
-                time: "2:00 PM - 2:30 PM",
-                location: "Main Conference Hall",
-                title: "CISO Forum",
-                description: "Governance, crisis readiness and securing the AI-enabled enterprise.",
-                type: "Panel",
-                speakers: []
-            },
-            {
-                time: "2:30 PM - 3:00 PM",
-                location: "Main Conference Hall",
-                title: "Synthetic Threats",
-                description: "Deepfakes, voice cloning and AI-generated scams in the modern threat landscape.",
-                type: "Conference Session",
-                speakers: []
-            },
-            {
-                time: "3:00 PM - 3:30 PM",
-                location: "Main Conference Hall",
-                title: "Combating CSAM and Online Abuse",
-                description: "Addressing online harms and protecting digital communities.",
-                type: "Conference Session",
-                speakers: []
-            },
-            {
-                time: "3:30 PM - 4:00 PM",
-                location: "Main Conference Hall",
-                title: "Privacy, Data Protection and Compliance",
-                description: "Understanding DPDP, IT Act regulations and the future of responsible innovation.",
-                type: "Conference Session",
-                speakers: []
+            2: {
+                date: "Day 2 (August 7th)",
+                sessions: [
+                    // --- MAIN HALL ---
+                    {
+                        hall: "main",
+                        time: "10:00 AM - 10:45 AM",
+                        location: "Main Conference Hall",
+                        title: "Combating Digital Threats",
+                        description: "Addressing sextortion, digital arrest scams, identity fraud and AI-driven deception.",
+                        type: "Conference Session"
+                    },
+                    {
+                        hall: "main",
+                        time: "11:30 AM - 12:15 PM",
+                        location: "Main Conference Hall",
+                        title: "BFSI Crime in 2026",
+                        description: "Financial frauds, payment abuse and trust exploitation in the banking ecosystem.",
+                        type: "Conference Session"
+                    },
+                    {
+                        hall: "main",
+                        time: "12:15 PM - 1:00 PM",
+                        location: "Main Conference Hall",
+                        title: "Fighting Ransomware, Malware and Data Breaches",
+                        description: "Strategies for prevention, detection and response to modern cyber attacks.",
+                        type: "Conference Session"
+                    },
+                    {
+                        hall: "main",
+                        time: "2:00 PM - 2:30 PM",
+                        location: "Main Conference Hall",
+                        title: "CISO Forum",
+                        description: "Governance, crisis readiness and securing the AI-enabled enterprise.",
+                        type: "Panel"
+                    },
+                    {
+                        hall: "main",
+                        time: "2:30 PM - 3:00 PM",
+                        location: "Main Conference Hall",
+                        title: "Synthetic Threats",
+                        description: "Deepfakes, voice cloning and AI-generated scams in the modern threat landscape.",
+                        type: "Conference Session"
+                    },
+                    // --- SMALL HALL ---
+                    {
+                        hall: "small",
+                        time: "10:00 AM - 11:30 AM",
+                        location: "Tech Lab A (Small Hall)",
+                        title: "Malware Reverse Engineering 101",
+                        description: "Deconstructing modern ransomware strains in a safe, sandboxed environment.",
+                        type: "Workshop"
+                    },
+                    {
+                        hall: "small",
+                        time: "12:00 PM - 01:30 PM",
+                        location: "Tech Lab A (Small Hall)",
+                        title: "DPDP Act Compliance Workshop",
+                        description: "Translating data protection policies into technical architectures for enterprise systems.",
+                        type: "Masterclass"
+                    },
+                    {
+                        hall: "small",
+                        time: "2:00 PM - 03:00 PM",
+                        location: "Tech Lab A (Small Hall)",
+                        title: "Identifying Audio Deepfakes",
+                        description: "Analyzing spectograms and metadata to detect synthetic voice cloning in real-time.",
+                        type: "Lab Session"
+                    }
+                ]
             }
-        ]
-    }
-};
+        };
 
+        // Functions
         function switchDay(day) {
-            // UI Update: Active Tab
+            activeDay = day;
+            
+            // Update Day Tabs
             document.querySelectorAll('.ss-day-tab').forEach(t => t.classList.remove('active'));
             document.getElementById(`btn-day-${day}`).classList.add('active');
             
-            // UI Update: Date Display
+            // Update Date Indicator
             document.getElementById('display-date').innerText = scheduleData[day].date;
 
-            // Render List
+            renderSchedule();
+        }
+
+        function switchHall(hall) {
+            activeHall = hall;
+            
+            // Update Hall Toggle Buttons
+            document.querySelectorAll('.ss-hall-btn').forEach(t => t.classList.remove('active'));
+            document.getElementById(`btn-hall-${hall}`).classList.add('active');
+
+            renderSchedule();
+        }
+
+        function renderSchedule() {
             const container = document.getElementById('schedule-container');
             container.innerHTML = '';
 
-            scheduleData[day].sessions.forEach((session, idx) => {
+            // Filter sessions by the currently active hall
+            const filteredSessions = scheduleData[activeDay].sessions.filter(s => s.hall === activeHall);
+
+            if (filteredSessions.length === 0) {
+                container.innerHTML = `
+                    <div class="ss-empty-state">
+                        <p>No sessions are currently scheduled for this hall on this date.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Render filtered cards
+            filteredSessions.forEach((session, idx) => {
                 const card = document.createElement('div');
                 card.className = 'ss-schedule-card';
-                card.style.animationDelay = `${idx * 0.1}s`;
-
-                const speakerHTML = session.speakers.map(s => `
-                    <div class="ss-speaker-item">
-                        <div class="ss-speaker-info">
-                            <h4>${s.name}</h4>
-                            <p>${s.role}</p>
-                        </div>
-                    </div>
-                `).join('');
+                card.style.animationDelay = `${idx * 0.08}s`;
 
                 card.innerHTML = `
                     <div class="ss-card-left">
@@ -149,18 +208,16 @@
                     <div class="ss-card-content">
                         <h3>${session.title}</h3>
                         <p>${session.description}</p>
-                        <div class="ss-speaker-row">
-                            ${speakerHTML}
-                        </div>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        // Initialize
-        window.onload = () => switchDay(1);
-
+        // Bootstrapping
+        window.onload = () => {
+            switchDay(1); // Initializes rendering with default activeDay and activeHall
+        };
 
 
 
@@ -588,7 +645,7 @@
                 name: "Binary",
                 logo: "assets/img/sponsors/Binary.jpeg",
                 description: "Binary is a leading innovator in software architecture and secure digital infrastructure. Specializing in high-performance computing and threat defense mechanisms, they help government agencies and private enterprises build resilient digital ecosystems.",
-                website: "https://www.binary.com"
+                website: "https://binaryglobal.com/"
             },
             // Gold (2, 3)
             {
