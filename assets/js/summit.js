@@ -2,150 +2,273 @@
         let activeDay = 1;
         let activeHall = 'main';
 
-        const scheduleData = {
-            1: {
-                date: "Day 1 (August 6th)",
-                sessions: [
-                    // --- MAIN HALL ---
-                    {
-                        hall: "main",
-                        time: "11:30 AM - 12:30 PM",
-                        location: "Main Conference Hall",
-                        title: "National Cyber Security: Policy, Preparedness and AI-Enabled Threats",
-                        description: "Discussion on national cybersecurity strategy, AI-enabled threats, and policy preparedness.",
-                        type: "Keynote Session"
-                    },
-                    {
-                        hall: "main",
-                        time: "2:15 PM - 3:00 PM",
-                        location: "Main Conference Hall",
-                        title: "Digital Forensics and Cyber Investigations",
-                        description: "Tracing criminals in a borderless digital ecosystem using modern digital forensics techniques.",
-                        type: "Panel Discussion"
-                    },
-                    {
-                        hall: "main",
-                        time: "3:00 PM - 3:45 PM",
-                        location: "Main Conference Hall",
-                        title: "Securing Critical Infrastructure",
-                        description: "Cyber resilience strategies for protecting essential national services and infrastructure.",
-                        type: "Conference Session"
-                    },
-                    {
-                        hall: "main",
-                        time: "3:45 PM - 4:30 PM",
-                        location: "Main Conference Hall",
-                        title: "Blockchain, Cryptocurrency and Web3 Investigations",
-                        description: "Investigating crypto-related crimes and challenges in decentralized ecosystems.",
-                        type: "Conference Session"
-                    },
-                    {
-                        hall: "main",
-                        time: "4:30 PM - 5:15 PM",
-                        location: "Main Conference Hall",
-                        title: "Securing the Internet of Things",
-                        description: "Security risks and protection strategies for IoT, smart devices, and connected ecosystems.",
-                        type: "Conference Session"
-                    },
-                    // --- SMALL HALL ---
-                    {
-                        hall: "small",
-                        time: "11:30 AM - 01:00 PM",
-                        location: "Tech Lab A (Small Hall)",
-                        title: "Masterclass: Deep Dive into OSINT Techniques",
-                        description: "A hands-on workshop exploring advanced Open Source Intelligence (OSINT) tools for tracking digital footprints.",
-                        type: "Workshop"
-                    },
-                    {
-                        hall: "small",
-                        time: "2:15 PM - 03:45 PM",
-                        location: "Tech Lab A (Small Hall)",
-                        title: "Practical AI Model Fine-tuning for Cybersecurity",
-                        description: "Learn how to deploy and fine-tune open-source LLMs locally to automate threat hunting without exposing data.",
-                        type: "Lab Session"
-                    },
-                    {
-                        hall: "small",
-                        time: "4:00 PM - 05:15 PM",
-                        location: "Tech Lab A (Small Hall)",
-                        title: "Blockchain Forensics Sandbox",
-                        description: "Interactive session tracing mock illicit cryptocurrency transactions across multiple blockchains.",
-                        type: "Interactive Seminar"
-                    }
-                ]
+const scheduleData = {
+    1: {
+        date: "Day 1 (August 6th)",
+        sessions: [
+            // --- MAIN HALL ---
+            {
+                hall: "main",
+                time: "9:30 AM - 10:30 AM",
+                location: "Main Hall",
+                title: "Opening Ceremony and Leadership Addresses",
+                description: "Securing Tomorrow: Future Crime Readiness in the Age of AI",
+                type: "Opening Ceremony"
             },
-            2: {
-                date: "Day 2 (August 7th)",
-                sessions: [
-                    // --- MAIN HALL ---
-                    {
-                        hall: "main",
-                        time: "10:00 AM - 10:45 AM",
-                        location: "Main Conference Hall",
-                        title: "Combating Digital Threats",
-                        description: "Addressing sextortion, digital arrest scams, identity fraud and AI-driven deception.",
-                        type: "Conference Session"
-                    },
-                    {
-                        hall: "main",
-                        time: "11:30 AM - 12:15 PM",
-                        location: "Main Conference Hall",
-                        title: "BFSI Crime in 2026",
-                        description: "Financial frauds, payment abuse and trust exploitation in the banking ecosystem.",
-                        type: "Conference Session"
-                    },
-                    {
-                        hall: "main",
-                        time: "12:15 PM - 1:00 PM",
-                        location: "Main Conference Hall",
-                        title: "Fighting Ransomware, Malware and Data Breaches",
-                        description: "Strategies for prevention, detection and response to modern cyber attacks.",
-                        type: "Conference Session"
-                    },
-                    {
-                        hall: "main",
-                        time: "2:00 PM - 2:30 PM",
-                        location: "Main Conference Hall",
-                        title: "CISO Forum",
-                        description: "Governance, crisis readiness and securing the AI-enabled enterprise.",
-                        type: "Panel"
-                    },
-                    {
-                        hall: "main",
-                        time: "2:30 PM - 3:00 PM",
-                        location: "Main Conference Hall",
-                        title: "Synthetic Threats",
-                        description: "Deepfakes, voice cloning and AI-generated scams in the modern threat landscape.",
-                        type: "Conference Session"
-                    },
-                    // --- SMALL HALL ---
-                    {
-                        hall: "small",
-                        time: "10:00 AM - 11:30 AM",
-                        location: "Tech Lab A (Small Hall)",
-                        title: "Malware Reverse Engineering 101",
-                        description: "Deconstructing modern ransomware strains in a safe, sandboxed environment.",
-                        type: "Workshop"
-                    },
-                    {
-                        hall: "small",
-                        time: "12:00 PM - 01:30 PM",
-                        location: "Tech Lab A (Small Hall)",
-                        title: "DPDP Act Compliance Workshop",
-                        description: "Translating data protection policies into technical architectures for enterprise systems.",
-                        type: "Masterclass"
-                    },
-                    {
-                        hall: "small",
-                        time: "2:00 PM - 03:00 PM",
-                        location: "Tech Lab A (Small Hall)",
-                        title: "Identifying Audio Deepfakes",
-                        description: "Analyzing spectograms and metadata to detect synthetic voice cloning in real-time.",
-                        type: "Lab Session"
-                    }
-                ]
+            {
+                hall: "main",
+                time: "10:30 AM - 11:15 AM",
+                location: "Main Hall",
+                title: "Grand Panel Discussion",
+                description: "Crime at Machine Speed: AI-Powered Cybercrime and the New Threat Landscape",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "11:15 AM - 11:45 AM",
+                location: "Main Hall",
+                title: "Partner Presentation and Moderated Interaction",
+                description: "From the Dark Web to the Money Trail: Intelligence-Led Disruption of Cybercrime",
+                type: "Platinum Partner Spotlight"
+            },
+            {
+                hall: "main",
+                time: "12:00 PM - 12:45 PM",
+                location: "Main Hall",
+                title: "Strategic Panel Discussion",
+                description: "Defending the Digital Backbone: AI, Critical Infrastructure and Cyber Resilience",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "12:45 PM - 1:30 PM",
+                location: "Main Hall",
+                title: "Regulatory and Ecosystem Panel",
+                description: "Breaking the Fraud Chain: A Unified Regulatory and Industry Response",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "2:15 PM - 3:00 PM",
+                location: "Main Hall",
+                title: "Financial Crime Panel",
+                description: "Follow the Money: Digital Fraud, Financial Crime and AML/CFT Intelligence",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "3:00 PM - 3:45 PM",
+                location: "Main Hall",
+                title: "Technology and Investigation Panel",
+                description: "From Data to Action: Predictive Policing, OSINT and AI-Led Investigation",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "4:00 PM - 4:45 PM",
+                location: "Main Hall",
+                title: "Digital Evidence and Legal Panel",
+                description: "Evidence That Stands: Digital Forensics, Chain of Custody and Courtroom Admissibility",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "4:45 PM - 5:30 PM",
+                location: "Main Hall",
+                title: "Multi-Agency Leadership Panel",
+                description: "One Network, One Response: Building a National Alliance Against Cyber Fraud",
+                type: "Day 1 Closing Panel"
+            },
+
+            // --- SMALL HALL ---
+            {
+                hall: "small",
+                time: "10:30 AM - 11:15 AM",
+                location: "Workshop & Innovation Hall",
+                title: "Scenario-Based Workshop",
+                description: "The First 60 Minutes: Cyber Fraud Triage and Incident Response Simulation",
+                type: "Workshop"
+            },
+            {
+                hall: "small",
+                time: "11:15 AM - 11:45 AM",
+                location: "Workshop & Innovation Hall",
+                title: "Technical Briefing",
+                description: "Preserve First, Investigate Next: Mobile, Email and Network Evidence",
+                type: "Technical Briefing"
+            },
+            {
+                hall: "small",
+                time: "12:00 PM - 12:45 PM",
+                location: "Workshop & Innovation Hall",
+                title: "Practical Skill Lab",
+                description: "Finding the Digital Footprint: OSINT and Social Media Intelligence",
+                type: "Skill Lab"
+            },
+            {
+                hall: "small",
+                time: "12:45 PM - 1:30 PM",
+                location: "Workshop & Innovation Hall",
+                title: "Technical Demonstration",
+                description: "Inside the Attack: Malware, Reverse Engineering and Web Evidence",
+                type: "Live Demonstration"
+            },
+            {
+                hall: "small",
+                time: "2:15 PM - 3:00 PM",
+                location: "Workshop & Innovation Hall",
+                title: "Legal and Investigation Clinic",
+                description: "From Complaint to Court: FIR Drafting, Evidence Preservation and Chain of Custody",
+                type: "Case Clinic"
+            },
+            {
+                hall: "small",
+                time: "3:00 PM - 3:45 PM",
+                location: "Workshop & Innovation Hall",
+                title: "Hands-On Workshop",
+                description: "Investigator 2.0: Building an AI-Assisted Investigation Workflow",
+                type: "Workshop"
+            },
+            {
+                hall: "small",
+                time: "4:00 PM - 4:45 PM",
+                location: "Workshop & Innovation Hall",
+                title: "Technical Roundtable",
+                description: "Tracing the Invisible: Blockchain Forensics and Cryptocurrency Investigations",
+                type: "Expert Roundtable"
+            },
+            {
+                hall: "small",
+                time: "4:45 PM - 5:30 PM",
+                location: "Workshop & Innovation Hall",
+                title: "Expert Roundtable",
+                description: "Building the Frontline: Modern Cyber Cells and District-Level Forensic Capacity",
+                type: "Capacity-Building Roundtable"
             }
-        };
+        ]
+    },
+
+    2: {
+        date: "Day 2 (August 7th)",
+        sessions: [
+            // --- MAIN HALL ---
+            {
+                hall: "main",
+                time: "9:30 AM - 10:30 AM",
+                location: "Main Hall",
+                title: "Leadership Addresses and Strategic Dialogue",
+                description: "A Resilient Digital India: Leadership, Public Safety and the Future of Investigation",
+                type: "Day 2 Inaugural Leadership Session"
+            },
+            {
+                hall: "main",
+                time: "10:30 AM - 11:15 AM",
+                location: "Main Hall",
+                title: "Public Safety Panel",
+                description: "Beyond the Screen: Hybrid Scams, Human Exploitation and Platform Abuse",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "11:15 AM - 11:45 AM",
+                location: "Main Hall",
+                title: "Partner Presentation and Moderated Interaction",
+                description: "Resilience by Design: Securing Enterprise Infrastructure in the AI Era",
+                type: "Platinum Partner Spotlight"
+            },
+            {
+                hall: "main",
+                time: "12:00 PM - 12:45 PM",
+                location: "Main Hall",
+                title: "Future Technology Panel",
+                description: "Beyond Encryption: Quantum-Safe Security and the Next Digital Frontier",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "12:45 PM - 1:30 PM",
+                location: "Main Hall",
+                title: "Public Safety and Victim Protection Panel",
+                description: "Protecting the Vulnerable: Child Safety, Cyberstalking and Online Victim Protection",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "2:15 PM - 3:00 PM",
+                location: "Main Hall",
+                title: "Legal and Policy Panel",
+                description: "Law Without Borders: Cyber Law, Data Protection and International Cooperation",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "3:00 PM - 3:45 PM",
+                location: "Main Hall",
+                title: "Future of Digital Forensics Panel",
+                description: "The Next Evidence Frontier: Cloud, Drone, Vehicle and Location Forensics",
+                type: "Panel Discussion"
+            },
+            {
+                hall: "main",
+                time: "4:00 PM - 5:30 PM",
+                location: "Main Hall",
+                title: "Awards and Closing Ceremony",
+                description: "Honouring the Guardians of the Digital Future",
+                type: "FCRF Excellence Awards 2026"
+            },
+
+            // --- SMALL HALL ---
+            {
+                hall: "small",
+                time: "10:30 AM - 11:15 AM",
+                location: "Workshop & Innovation Hall",
+                title: "Practical Skill Lab",
+                description: "Evidence in the Cloud: Web, SaaS and Incident Artefact Collection",
+                type: "Skill Lab"
+            },
+            {
+                hall: "small",
+                time: "11:15 AM - 11:45 AM",
+                location: "Workshop & Innovation Hall",
+                title: "Technical Briefing",
+                description: "Recovering the Unrecoverable: Disk, Memory, Mobile and Damaged Media Forensics",
+                type: "Technical Briefing"
+            },
+            {
+                hall: "small",
+                time: "12:00 PM - 12:45 PM",
+                location: "Workshop & Innovation Hall",
+                title: "Technical and Legal Panel",
+                description: "Proving Authenticity: E-Discovery, Metadata and Document Tampering",
+                type: "Expert Panel"
+            },
+            {
+                hall: "small",
+                time: "12:45 PM - 1:30 PM",
+                location: "Workshop & Innovation Hall",
+                title: "Technical Demonstration",
+                description: "Truth in the Age of Synthetic Media: Deepfake and Multimedia Forensics",
+                type: "Live Demonstration"
+            },
+            {
+                hall: "small",
+                time: "2:15 PM - 3:00 PM",
+                location: "Workshop & Innovation Hall",
+                title: "Facilitated Tabletop Exercise",
+                description: "Breaking the Silos: A Multi-Agency Cyber Fraud Response Exercise",
+                type: "Tabletop Exercise"
+            },
+            {
+                hall: "small",
+                time: "3:00 PM - 3:45 PM",
+                location: "Workshop & Innovation Hall",
+                title: "Capacity-Building Workshop",
+                description: "Ready Before the Breach: Forensic Readiness and Cyber Investigation Capacity",
+                type: "Capacity Lab"
+            }
+        ]
+    }
+};
 
         // Functions
         function switchDay(day) {
