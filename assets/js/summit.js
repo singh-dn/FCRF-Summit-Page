@@ -2,6 +2,7 @@
         let activeDay = 1;
         let activeHall = 'main';
 
+
 const scheduleData = {
     1: {
         date: "Day 1 (August 6th)",
@@ -11,73 +12,73 @@ const scheduleData = {
                 hall: "main",
                 time: "9:30 AM - 10:30 AM",
                 location: "Main Hall",
-                title: "Opening Ceremony and Leadership Addresses",
-                description: "Securing Tomorrow: Future Crime Readiness in the Age of AI",
+                title: "Securing Tomorrow: Future Crime Readiness in the Age of AI",
+                description: "A high-level inaugural session bringing together senior government officials, law-enforcement leaders, cybersecurity experts and industry representatives to discuss future crime readiness.",
                 type: "Opening Ceremony"
             },
             {
                 hall: "main",
                 time: "10:30 AM - 11:15 AM",
                 location: "Main Hall",
-                title: "Grand Panel Discussion",
-                description: "Crime at Machine Speed: AI-Powered Cybercrime and the New Threat Landscape",
+                title: "Crime at Machine Speed: AI-Powered Cybercrime and the New Threat Landscape",
+                description: "Exploring how AI, automation, deepfakes and synthetic identities are reshaping cybercrime and social engineering attacks.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "11:15 AM - 11:45 AM",
                 location: "Main Hall",
-                title: "Partner Presentation and Moderated Interaction",
-                description: "From the Dark Web to the Money Trail: Intelligence-Led Disruption of Cybercrime",
-                type: "Platinum Partner Spotlight"
+                title: "From the Dark Web to the Money Trail: Intelligence-Led Disruption of Cybercrime",
+                description: "A partner spotlight session on using cyber-threat intelligence to disrupt dark-web markets, cryptocurrency-enabled crime and organised fraud networks.",
+                type: "Partner Presentation"
             },
             {
                 hall: "main",
                 time: "12:00 PM - 12:45 PM",
                 location: "Main Hall",
-                title: "Strategic Panel Discussion",
-                description: "Defending the Digital Backbone: AI, Critical Infrastructure and Cyber Resilience",
+                title: "Defending the Digital Backbone: AI, Critical Infrastructure and Cyber Resilience",
+                description: "Discussion on protecting critical infrastructure, enterprise systems and government networks against evolving cyber threats.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "12:45 PM - 1:30 PM",
                 location: "Main Hall",
-                title: "Regulatory and Ecosystem Panel",
-                description: "Breaking the Fraud Chain: A Unified Regulatory and Industry Response",
+                title: "Breaking the Fraud Chain: A Unified Regulatory and Industry Response",
+                description: "Regulators, banks, telecom companies and law enforcement discuss coordinated responses to digital fraud.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "2:15 PM - 3:00 PM",
                 location: "Main Hall",
-                title: "Financial Crime Panel",
-                description: "Follow the Money: Digital Fraud, Financial Crime and AML/CFT Intelligence",
+                title: "Follow the Money: Digital Fraud, Financial Crime and AML/CFT Intelligence",
+                description: "Examining financial crime investigations involving phishing, mule accounts, cryptocurrency tracing and AML intelligence.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "3:00 PM - 3:45 PM",
                 location: "Main Hall",
-                title: "Technology and Investigation Panel",
-                description: "From Data to Action: Predictive Policing, OSINT and AI-Led Investigation",
+                title: "From Data to Action: Predictive Policing, OSINT and AI-Led Investigation",
+                description: "Exploring responsible use of AI, OSINT and data analytics to improve investigative outcomes.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "4:00 PM - 4:45 PM",
                 location: "Main Hall",
-                title: "Digital Evidence and Legal Panel",
-                description: "Evidence That Stands: Digital Forensics, Chain of Custody and Courtroom Admissibility",
+                title: "Evidence That Stands: Digital Forensics, Chain of Custody and Courtroom Admissibility",
+                description: "Connecting digital forensic practices with evidentiary integrity, legal requirements and courtroom presentation.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "4:45 PM - 5:30 PM",
                 location: "Main Hall",
-                title: "Multi-Agency Leadership Panel",
-                description: "One Network, One Response: Building a National Alliance Against Cyber Fraud",
-                type: "Day 1 Closing Panel"
+                title: "One Network, One Response: Building a National Alliance Against Cyber Fraud",
+                description: "A leadership discussion focused on strengthening cooperation among stakeholders involved in cyber fraud response.",
+                type: "Closing Panel"
             },
 
             // --- SMALL HALL ---
@@ -85,65 +86,65 @@ const scheduleData = {
                 hall: "small",
                 time: "10:30 AM - 11:15 AM",
                 location: "Workshop & Innovation Hall",
-                title: "Scenario-Based Workshop",
-                description: "The First 60 Minutes: Cyber Fraud Triage and Incident Response Simulation",
+                title: "The First 60 Minutes: Cyber Fraud Triage and Incident Response Simulation",
+                description: "Scenario-based workshop covering immediate response steps following a cyber fraud complaint.",
                 type: "Workshop"
             },
             {
                 hall: "small",
                 time: "11:15 AM - 11:45 AM",
                 location: "Workshop & Innovation Hall",
-                title: "Technical Briefing",
-                description: "Preserve First, Investigate Next: Mobile, Email and Network Evidence",
+                title: "Preserve First, Investigate Next: Mobile, Email and Network Evidence",
+                description: "Technical briefing on identifying and preserving crucial evidence during the initial stages of investigations.",
                 type: "Technical Briefing"
             },
             {
                 hall: "small",
                 time: "12:00 PM - 12:45 PM",
                 location: "Workshop & Innovation Hall",
-                title: "Practical Skill Lab",
-                description: "Finding the Digital Footprint: OSINT and Social Media Intelligence",
+                title: "Finding the Digital Footprint: OSINT and Social Media Intelligence",
+                description: "Practical skill lab covering ethical OSINT workflows and social media intelligence techniques.",
                 type: "Skill Lab"
             },
             {
                 hall: "small",
                 time: "12:45 PM - 1:30 PM",
                 location: "Workshop & Innovation Hall",
-                title: "Technical Demonstration",
-                description: "Inside the Attack: Malware, Reverse Engineering and Web Evidence",
+                title: "Inside the Attack: Malware, Reverse Engineering and Web Evidence",
+                description: "Live demonstration showcasing how malware artefacts and web evidence support investigations.",
                 type: "Live Demonstration"
             },
             {
                 hall: "small",
                 time: "2:15 PM - 3:00 PM",
                 location: "Workshop & Innovation Hall",
-                title: "Legal and Investigation Clinic",
-                description: "From Complaint to Court: FIR Drafting, Evidence Preservation and Chain of Custody",
+                title: "From Complaint to Court: FIR Drafting, Evidence Preservation and Chain of Custody",
+                description: "Practical clinic on transforming cyber incidents into legally sustainable investigations.",
                 type: "Case Clinic"
             },
             {
                 hall: "small",
                 time: "3:00 PM - 3:45 PM",
                 location: "Workshop & Innovation Hall",
-                title: "Hands-On Workshop",
-                description: "Investigator 2.0: Building an AI-Assisted Investigation Workflow",
+                title: "Investigator 2.0: Building an AI-Assisted Investigation Workflow",
+                description: "Hands-on workshop demonstrating responsible AI applications in modern investigations.",
                 type: "Workshop"
             },
             {
                 hall: "small",
                 time: "4:00 PM - 4:45 PM",
                 location: "Workshop & Innovation Hall",
-                title: "Technical Roundtable",
-                description: "Tracing the Invisible: Blockchain Forensics and Cryptocurrency Investigations",
-                type: "Expert Roundtable"
+                title: "Tracing the Invisible: Blockchain Forensics and Cryptocurrency Investigations",
+                description: "Technical roundtable focused on cryptocurrency tracing and blockchain investigation challenges.",
+                type: "Roundtable"
             },
             {
                 hall: "small",
                 time: "4:45 PM - 5:30 PM",
                 location: "Workshop & Innovation Hall",
-                title: "Expert Roundtable",
-                description: "Building the Frontline: Modern Cyber Cells and District-Level Forensic Capacity",
-                type: "Capacity-Building Roundtable"
+                title: "Building the Frontline: Modern Cyber Cells and District-Level Forensic Capacity",
+                description: "Discussion on strengthening cyber investigation infrastructure and forensic capabilities.",
+                type: "Roundtable"
             }
         ]
     },
@@ -156,65 +157,65 @@ const scheduleData = {
                 hall: "main",
                 time: "9:30 AM - 10:30 AM",
                 location: "Main Hall",
-                title: "Leadership Addresses and Strategic Dialogue",
-                description: "A Resilient Digital India: Leadership, Public Safety and the Future of Investigation",
-                type: "Day 2 Inaugural Leadership Session"
+                title: "A Resilient Digital India: Leadership, Public Safety and the Future of Investigation",
+                description: "Leadership session focused on cyber resilience, public safety and the future of investigations.",
+                type: "Leadership Session"
             },
             {
                 hall: "main",
                 time: "10:30 AM - 11:15 AM",
                 location: "Main Hall",
-                title: "Public Safety Panel",
-                description: "Beyond the Screen: Hybrid Scams, Human Exploitation and Platform Abuse",
+                title: "Beyond the Screen: Hybrid Scams, Human Exploitation and Platform Abuse",
+                description: "Examining cybercrimes involving emotional manipulation, platform misuse and victim exploitation.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "11:15 AM - 11:45 AM",
                 location: "Main Hall",
-                title: "Partner Presentation and Moderated Interaction",
-                description: "Resilience by Design: Securing Enterprise Infrastructure in the AI Era",
-                type: "Platinum Partner Spotlight"
+                title: "Resilience by Design: Securing Enterprise Infrastructure in the AI Era",
+                description: "Partner spotlight discussing enterprise security architecture and resilience strategies.",
+                type: "Partner Presentation"
             },
             {
                 hall: "main",
                 time: "12:00 PM - 12:45 PM",
                 location: "Main Hall",
-                title: "Future Technology Panel",
-                description: "Beyond Encryption: Quantum-Safe Security and the Next Digital Frontier",
+                title: "Beyond Encryption: Quantum-Safe Security and the Next Digital Frontier",
+                description: "Exploring the future impact of quantum computing on cybersecurity and digital identity.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "12:45 PM - 1:30 PM",
                 location: "Main Hall",
-                title: "Public Safety and Victim Protection Panel",
-                description: "Protecting the Vulnerable: Child Safety, Cyberstalking and Online Victim Protection",
+                title: "Protecting the Vulnerable: Child Safety, Cyberstalking and Online Victim Protection",
+                description: "Discussion on combating online abuse and strengthening victim protection mechanisms.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "2:15 PM - 3:00 PM",
                 location: "Main Hall",
-                title: "Legal and Policy Panel",
-                description: "Law Without Borders: Cyber Law, Data Protection and International Cooperation",
+                title: "Law Without Borders: Cyber Law, Data Protection and International Cooperation",
+                description: "Examining legal frameworks and international cooperation mechanisms for cybercrime.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "3:00 PM - 3:45 PM",
                 location: "Main Hall",
-                title: "Future of Digital Forensics Panel",
-                description: "The Next Evidence Frontier: Cloud, Drone, Vehicle and Location Forensics",
+                title: "The Next Evidence Frontier: Cloud, Drone, Vehicle and Location Forensics",
+                description: "A discussion on emerging sources of digital evidence and forensic preparedness.",
                 type: "Panel Discussion"
             },
             {
                 hall: "main",
                 time: "4:00 PM - 5:30 PM",
                 location: "Main Hall",
-                title: "Awards and Closing Ceremony",
-                description: "Honouring the Guardians of the Digital Future",
-                type: "FCRF Excellence Awards 2026"
+                title: "FCRF Excellence Awards 2026: Honouring the Guardians of the Digital Future",
+                description: "National recognition ceremony celebrating excellence in cyber policing, forensics and public safety.",
+                type: "Awards Ceremony"
             },
 
             // --- SMALL HALL ---
@@ -222,48 +223,48 @@ const scheduleData = {
                 hall: "small",
                 time: "10:30 AM - 11:15 AM",
                 location: "Workshop & Innovation Hall",
-                title: "Practical Skill Lab",
-                description: "Evidence in the Cloud: Web, SaaS and Incident Artefact Collection",
+                title: "Evidence in the Cloud: Web, SaaS and Incident Artefact Collection",
+                description: "Practical skill lab on preserving and collecting evidence from cloud and SaaS environments.",
                 type: "Skill Lab"
             },
             {
                 hall: "small",
                 time: "11:15 AM - 11:45 AM",
                 location: "Workshop & Innovation Hall",
-                title: "Technical Briefing",
-                description: "Recovering the Unrecoverable: Disk, Memory, Mobile and Damaged Media Forensics",
+                title: "Recovering the Unrecoverable: Disk, Memory, Mobile and Damaged Media Forensics",
+                description: "Technical briefing on recovering evidence from encrypted, deleted and damaged sources.",
                 type: "Technical Briefing"
             },
             {
                 hall: "small",
                 time: "12:00 PM - 12:45 PM",
                 location: "Workshop & Innovation Hall",
-                title: "Technical and Legal Panel",
-                description: "Proving Authenticity: E-Discovery, Metadata and Document Tampering",
+                title: "Proving Authenticity: E-Discovery, Metadata and Document Tampering",
+                description: "Panel discussion on electronic document authenticity and evidentiary integrity.",
                 type: "Expert Panel"
             },
             {
                 hall: "small",
                 time: "12:45 PM - 1:30 PM",
                 location: "Workshop & Innovation Hall",
-                title: "Technical Demonstration",
-                description: "Truth in the Age of Synthetic Media: Deepfake and Multimedia Forensics",
+                title: "Truth in the Age of Synthetic Media: Deepfake and Multimedia Forensics",
+                description: "Live demonstration examining methods for detecting manipulated digital media.",
                 type: "Live Demonstration"
             },
             {
                 hall: "small",
                 time: "2:15 PM - 3:00 PM",
                 location: "Workshop & Innovation Hall",
-                title: "Facilitated Tabletop Exercise",
-                description: "Breaking the Silos: A Multi-Agency Cyber Fraud Response Exercise",
+                title: "Breaking the Silos: A Multi-Agency Cyber Fraud Response Exercise",
+                description: "Tabletop exercise simulating coordinated responses to cyber fraud incidents.",
                 type: "Tabletop Exercise"
             },
             {
                 hall: "small",
                 time: "3:00 PM - 3:45 PM",
                 location: "Workshop & Innovation Hall",
-                title: "Capacity-Building Workshop",
-                description: "Ready Before the Breach: Forensic Readiness and Cyber Investigation Capacity",
+                title: "Ready Before the Breach: Forensic Readiness and Cyber Investigation Capacity",
+                description: "Capacity-building workshop focused on investigation readiness and institutional resilience.",
                 type: "Capacity Lab"
             }
         ]
