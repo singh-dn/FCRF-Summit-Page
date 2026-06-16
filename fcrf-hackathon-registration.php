@@ -406,7 +406,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <div class="banner">
             <div class="banner-content">
-                <img src="assets/img/logo/FCRF Academy.png" alt="FCRF Logo" class="banner-logo">
+                <img src="assets/img/logo/FCRF Hackathon.png" alt="FCRF Logo" class="banner-logo">
                 <h1>Register for the FCRF <span>Hackathon 2026</span></h1>
                 <p>Take on real-world challenges in cybercrime, digital forensics and emerging threats.</p>
             </div>
@@ -415,7 +415,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="form-body">
             
             <div class="intro-text">
-                <p>Complete the form below to register as an individual participant for the FCRF Hackathon 2026. Registered participants will begin receiving official communications, instructions and problem statements from <strong>7 July 2026</strong>.</p>
+                <p>Complete the form below to register as an individual participant for the FCRF Hackathon 2026. Registered participants will begin receiving official communications, instructions and problem statements from <strong>12 July 2026</strong>.</p>
                 <p>All eligible participants who complete the hackathon will receive an official <strong>Certificate of Participation</strong>. The top five performers will receive separate winner or merit certificates, complimentary passes to Future Crime Summit 2026, and formal recognition at the summit.</p>
             </div>
 
