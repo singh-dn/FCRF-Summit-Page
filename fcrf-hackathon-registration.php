@@ -122,7 +122,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // 5. Insert into Database Securely (Prepared Statements prevent SQLi)
-        $sql = "INSERT INTO $table_name (full_name, email, mobile, city, state, current_status, highest_qualification, organization_name, current_role, linkedin_url, cv_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Wrapped columns in backticks to prevent reserved keyword (current_role) errors
+        $sql = "INSERT INTO `$table_name` (`full_name`, `email`, `mobile`, `city`, `state`, `current_status`, `highest_qualification`, `organization_name`, `current_role`, `linkedin_url`, `cv_path`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($sql);
         if (!$stmt) { throw new Exception("Database Error: " . $conn->error); }
@@ -618,7 +619,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </button>
 
                 <div class="footer-note">
-                    After submitting the form, please check your registered email address. Detailed communications will begin from <strong>7 July 2026</strong>.
+                    After submitting the form, please check your registered email address. Detailed communications will begin from <strong>12 July 2026</strong>.
                 </div>
 
             </form>
