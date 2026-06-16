@@ -1650,7 +1650,7 @@
 
         /* Heading Styles */
         .iso-cert-main-heading {
-            font-size: 2.25rem;
+            font-size: 2.1rem;
             font-weight: 700;
             color: #1a202c;
             letter-spacing: -0.025em;
@@ -1664,7 +1664,7 @@
             .iso-cert-main-heading { font-size: 3rem; margin-bottom: 1.5rem; }
         }
         @media (min-width: 1024px) {
-            .iso-cert-main-heading { font-size: 3.75rem; }
+            .iso-cert-main-heading { font-size: 2.75rem; }
         }
 
         /* Highlight Word Effect using strong tags */
@@ -1704,7 +1704,7 @@
 
         /* Sub-headline Styles */
         .iso-cert-sub-headline {
-            font-size: 1.125rem;
+            font-size: 0.9rem;
             color: #6b7280;
             text-align: center;
             max-width: 42rem;

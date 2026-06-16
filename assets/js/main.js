@@ -987,3 +987,47 @@ CSS TABLE OF CONTENTS
             }
         })();
 
+
+
+
+		// new section line of code for timline 
+
+
+		    (function() {
+        function scaleTimeline() {
+            const container = document.getElementById('ns-scale-container');
+            const wrapper = document.getElementById('ns-timeline-wrapper');
+            if(!container || !wrapper) return;
+            
+            // The fixed design width of the timeline
+            const targetWidth = 1024; 
+            
+            // Get the available width from the parent of the timeline section
+            const availableWidth = container.parentElement.clientWidth;
+            
+            // If screen is smaller than the design, zoom it out perfectly
+            if (availableWidth < targetWidth) {
+                // Add a small 40px buffer margin for aesthetics on mobile
+                const scaleRatio = (availableWidth - 40) / targetWidth;
+                
+                wrapper.style.transform = `scale(${scaleRatio})`;
+                
+                // Crucial: Adjust the height of the container to match the shrunken element 
+                // so it doesn't leave a massive blank space below it.
+                const scaledHeight = wrapper.getBoundingClientRect().height;
+                container.style.height = `${scaledHeight}px`;
+            } else {
+                // Reset on large screens
+                wrapper.style.transform = 'scale(1)';
+                container.style.height = 'auto';
+            }
+        }
+
+        // Run on load and whenever the screen is resized
+        window.addEventListener('resize', scaleTimeline);
+        scaleTimeline();
+        
+        // Failsafe execution after fonts/styles load
+        setTimeout(scaleTimeline, 100);
+    })();
+

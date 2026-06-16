@@ -1,0 +1,456 @@
+<!-- ============================================================= -->
+<!--  PRISMA HERO — ISOLATED / conflict-free snippet              -->
+<!--  Paste this whole block anywhere inside your <body>.         -->
+<!--                                                              -->
+<!--  Isolation guarantees:                                       -->
+<!--   • No global reset — nothing styles bare *, html, or body.  -->
+<!--     All resets are scoped to .prisma-hero only.              -->
+<!--   • Every CSS selector is nested under .prisma-hero, so no   -->
+<!--     rule leaks onto your other sections.                     -->
+<!--   • JS runs in an IIFE with an init-guard; no global vars,   -->
+<!--     all DOM queries limited to this section's root element.  -->
+<!--   • No element IDs are used, so nothing can collide.         -->
+<!--   • rem units replaced with px so host root font-size can't  -->
+<!--     change the layout.                                       -->
+<!--                                                              -->
+<!--  ▸ Swap the <video src> with your own clip.                  -->
+<!--  ▸ Optional: move the font <link>s into your <head>.         -->
+<!-- ============================================================= -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<section class="prisma-hero" aria-label="Prisma hero">
+  <div class="prisma-hero__frame">
+
+    <!-- background video (replace src with your own) -->
+    <video class="prisma-hero__video" autoplay loop muted playsinline
+      src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"></video>
+
+    <!-- noise + gradient overlays -->
+    <div class="prisma-hero__noise" aria-hidden="true"></div>
+    <div class="prisma-hero__grad" aria-hidden="true"></div>
+
+    <!-- header + mobile menu live OUTSIDE the frame (added below) so the nav can stay position:fixed while scrolling -->
+
+    <!-- hero content -->
+    <div class="prisma-hero__content">
+      <div class="prisma-hero__grid">
+
+        <div class="prisma-hero__headline-col">
+          <h1 class="prisma-hero__title" data-pullup data-asterisk>Prisma</h1>
+        </div>
+
+        <div class="prisma-hero__aside">
+          <p class="prisma-hero__lead" data-fade data-delay="500">
+            Prisma is a worldwide network of visual artists, filmmakers and storytellers bound not by place, status or labels but by passion and hunger to unlock potential through our unique perspectives.
+          </p>
+
+          <button class="prisma-hero__cta" type="button" data-fade data-delay="700">
+            Join the lab
+            <span class="prisma-hero__cta-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== FIXED top nav (outside the frame so it stays put while scrolling) ===== -->
+  <header class="prisma-hero__header">
+
+    <!-- logo (left) -->
+    <a href="#" class="prisma-hero__logo" aria-label="Home">
+      <svg class="prisma-hero__logo-mark" viewBox="0 0 28 28" fill="none"
+           stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M14 3 25 22 3 22 14 3Z"/>
+        <path d="M3 16h12l9-5" stroke-opacity=".55"/>
+      </svg>
+      <span class="prisma-hero__logo-text">PRISMA</span>
+      <!-- To use your own (wider) logo, replace the <svg> + <span> above with:
+           <img src="your-logo.svg" alt="Your brand" class="prisma-hero__logo-img"> -->
+    </a>
+
+    <!-- nav group (DESKTOP ONLY) -->
+    <nav class="prisma-hero__nav" aria-label="Primary">
+      <a href="#" class="prisma-hero__nav-link">Collective</a>
+      <a href="#" class="prisma-hero__nav-link">Workshops</a>
+      <a href="#" class="prisma-hero__nav-link">Programs</a>
+      <button type="button" class="prisma-hero__register">Register Now</button>
+    </nav>
+
+    <!-- hamburger (MOBILE ONLY) -->
+    <button class="prisma-hero__menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <!-- mobile menu overlay (MOBILE ONLY) -->
+  <div class="prisma-hero__mobile-menu" aria-hidden="true">
+    <a href="#" class="prisma-hero__mobile-link">Collective</a>
+    <a href="#" class="prisma-hero__mobile-link">Workshops</a>
+    <a href="#" class="prisma-hero__mobile-link">Programs</a>
+    <button class="prisma-hero__mobile-cta" type="button">Register Now</button>
+  </div>
+
+  <style>
+    /* ===== scoped reset (only affects elements INSIDE .prisma-hero) ===== */
+    .prisma-hero,
+    .prisma-hero *,
+    .prisma-hero *::before,
+    .prisma-hero *::after{ box-sizing:border-box; }
+    .prisma-hero h1,
+    .prisma-hero p{ margin:0; }
+
+    /* ===== root ===== */
+    .prisma-hero{
+      --ph-cream:#E1E0CC;
+      --ph-cream-70:rgba(225,224,204,.7);
+      --ph-cream-80:rgba(225,224,204,.8);
+
+      position:relative;
+      width:100%; min-height:100vh; padding:10px;
+      background:#0a0a0a;
+      font-family:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      text-rendering:optimizeLegibility;
+    }
+
+    .prisma-hero__frame{
+      position:relative; width:100%; height:calc(100vh - 20px); min-height:560px;
+      overflow:hidden; border-radius:16px; background:#111;
+      contain:paint;            /* isolate painting for smoother compositing */
+    }
+    @media (min-width:768px){ .prisma-hero__frame{ border-radius:32px; } }
+
+    .prisma-hero__video{
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; z-index:0;
+    }
+
+    /* noise (inline SVG turbulence) */
+    .prisma-hero__noise{
+      position:absolute; inset:0; z-index:1; pointer-events:none;
+      opacity:.7; mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      background-size:160px 160px;
+    }
+    .prisma-hero__grad{
+      position:absolute; inset:0; z-index:1; pointer-events:none;
+      background:linear-gradient(to bottom, rgba(0,0,0,.30) 0%, transparent 45%, rgba(0,0,0,.60) 100%);
+    }
+
+    /* top header (logo + nav) */
+    .prisma-hero__header{
+      position:absolute; top:16px; left:16px; right:16px; z-index:20;
+      background:rgba(0,0,0,0.5);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-radius:12px;
+      display:flex; align-items:center; gap:16px;
+      height:48px; padding:0 16px;
+    }
+    @media (min-width:768px){
+      .prisma-hero__header{ top:32px; left:48px; right:48px; height:72px; border-radius:24px; padding:0 32px; }
+    }
+
+    /* top header (logo + nav) — FIXED so it stays while scrolling */
+    .prisma-hero__header{
+      position:fixed; top:16px; left:16px; right:16px; z-index:1000;
+      background:rgba(0,0,0,0.5);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-radius:12px;
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+      height:48px; padding:0 12px 0 16px;
+      transition:box-shadow .3s ease, background-color .3s ease;
+    }
+    @media (min-width:768px){
+      .prisma-hero__header{ top:32px; left:48px; right:48px; height:72px; border-radius:24px; padding:0 16px 0 28px; gap:28px; }
+    }
+    /* subtle lift once the page is scrolled, so it stays readable over any section */
+    .prisma-hero__header.is-scrolled{
+      background:rgba(0,0,0,0.66);
+      box-shadow:0 12px 30px -14px rgba(0,0,0,.7);
+    }
+
+    /* logo (left) — flexible width so a longer logo fits without pushing the nav */
+    .prisma-hero__logo{
+      flex:0 1 auto; min-width:0;
+      display:inline-flex; align-items:center; gap:8px;
+      color:var(--ph-cream); text-decoration:none;
+    }
+    .prisma-hero__logo-mark{ width:20px; height:20px; flex:none; }
+    .prisma-hero__logo-text{ font-size:14px; font-weight:600; letter-spacing:.14em; white-space:nowrap;
+      overflow:hidden; text-overflow:ellipsis; }
+    /* if you swap in an <img> logo, it scales by height and keeps its aspect ratio */
+    .prisma-hero__logo-img{ height:22px; width:auto; max-width:100%; display:block; object-fit:contain; }
+    @media (min-width:768px){
+      .prisma-hero__logo{ gap:10px; }
+      .prisma-hero__logo-mark{ width:28px; height:28px; }
+      .prisma-hero__logo-text{ font-size:18px; }
+      .prisma-hero__logo-img{ height:34px; }
+    }
+
+    /* nav group (right side - DESKTOP ONLY) */
+    .prisma-hero__nav{ display:none; }
+    @media (min-width:768px){
+      .prisma-hero__nav{ display:flex; flex:0 0 auto; align-items:center; gap:30px; }
+    }
+    .prisma-hero__nav-link{
+      color:var(--ph-cream-80); text-decoration:none;
+      font-size:13px; font-weight:500; white-space:nowrap;
+      transition:color .25s ease;
+    }
+    .prisma-hero__nav-link:hover,
+    .prisma-hero__nav-link:focus-visible{ color:var(--ph-cream); }
+
+    /* white "Register Now" button (sits where Inquiries was) */
+    .prisma-hero__register{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 22px; border:none; cursor:pointer; white-space:nowrap;
+      background:#ffffff; color:#0a0a0a;
+      font-family:inherit; font-size:13px; font-weight:600; letter-spacing:.02em;
+      border-radius:999px;
+      transition:transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+      will-change:transform;
+    }
+    .prisma-hero__register:hover,
+    .prisma-hero__register:focus-visible{
+      transform:translateY(-1px);
+      background-color:#f1f0e6;
+      box-shadow:0 10px 24px -10px rgba(255,255,255,.55);
+    }
+    .prisma-hero__register:active{ transform:translateY(0); }
+
+    /* hamburger button (MOBILE ONLY) */
+    .prisma-hero__menu-toggle{
+      display:flex; flex-direction:column; justify-content:center; gap:4px;
+      width:24px; height:24px; background:none; border:none; cursor:pointer; padding:0;
+      z-index:30;
+    }
+    .prisma-hero__menu-toggle span{
+      display:block; width:100%; height:2px; background:var(--ph-cream);
+      transition:transform .3s ease, opacity .3s ease;
+    }
+    @media (min-width:768px){ .prisma-hero__menu-toggle{ display:none; } }
+
+    /* mobile menu overlay (MOBILE ONLY) */
+    .prisma-hero__mobile-menu{
+      position:fixed; top:72px; left:16px; right:16px; z-index:999;
+      background:rgba(0,0,0,0.7);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-radius:16px; padding:24px;
+      display:flex; flex-direction:column; gap:24px;
+      opacity:0; pointer-events:none; transform:translateY(-10px);
+      transition:opacity .3s ease, transform .3s ease;
+    }
+    .prisma-hero__mobile-menu.is-open{
+      opacity:1; pointer-events:auto; transform:translateY(0);
+    }
+    @media (min-width:768px){ .prisma-hero__mobile-menu{ display:none; } }
+
+    .prisma-hero__mobile-link{
+      color:var(--ph-cream); text-decoration:none;
+      font-size:16px; font-weight:500;
+      transition:color .25s ease;
+    }
+    .prisma-hero__mobile-link:hover{ color:var(--ph-cream-80); }
+
+    .prisma-hero__mobile-cta{
+      display:flex; align-items:center; justify-content:center;
+      width:100%; padding:12px; border:none; cursor:pointer;
+      background:#ffffff; color:#0a0a0a;
+      font-family:inherit; font-size:16px; font-weight:600;
+      border-radius:8px;
+    }
+
+    /* content */
+    .prisma-hero__content{
+      position:absolute; left:0; right:0; bottom:0; z-index:10;
+      padding:0 16px 24px;
+    }
+    @media (min-width:768px){ .prisma-hero__content{ padding:0 40px 8px; } }
+
+    .prisma-hero__grid{
+      display:grid; grid-template-columns:repeat(12,1fr);
+      align-items:end; gap:16px; max-width:1700px; margin:0 auto;
+    }
+    .prisma-hero__headline-col{ grid-column:1 / -1; }
+    .prisma-hero__aside{ grid-column:1 / -1; display:flex; flex-direction:column; gap:20px; padding-bottom:0; }
+    @media (min-width:1024px){
+      .prisma-hero__headline-col{ grid-column:1 / span 8; }
+      .prisma-hero__aside{ grid-column:9 / -1; padding-bottom:40px; }
+    }
+
+    .prisma-hero__title{
+      color:var(--ph-cream);
+      font-weight:500; line-height:.85; letter-spacing:-.07em;
+      font-size:20vw;
+      white-space:nowrap;
+    }
+    @media (min-width:640px){ .prisma-hero__title{ font-size:24vw; } }
+    @media (min-width:1024px){ .prisma-hero__title{ font-size:20vw; } }
+
+    /* word pull-up */
+    .prisma-hero__word{
+      display:inline-block; position:relative;
+      transform:translateY(24px); opacity:0;
+      transition:transform .6s cubic-bezier(.16,1,.3,1), opacity .6s cubic-bezier(.16,1,.3,1);
+    }
+    .prisma-hero__title.is-in .prisma-hero__word{ transform:none; opacity:1; }
+    .prisma-hero__ast{ position:absolute; top:.55em; right:-.28em; font-size:.31em; }
+
+    .prisma-hero__lead{ color:var(--ph-cream-70); font-size:13px; line-height:1.25; }
+    @media (min-width:768px){ .prisma-hero__lead{ font-size:16px; } }
+
+    .prisma-hero__cta{
+      align-self:flex-start; display:inline-flex; align-items:center; gap:8px;
+      padding:5px 6px 5px 22px; border:none; cursor:pointer;
+      background:var(--ph-cream); color:#000;
+      font-family:inherit; font-size:15px; font-weight:500;
+      border-radius:999px; transition:gap .3s ease;
+    }
+    .prisma-hero__cta:hover{ gap:12px; }
+    .prisma-hero__cta-icon{
+      display:flex; align-items:center; justify-content:center;
+      width:38px; height:38px; border-radius:50%; background:#000;
+      transition:transform .3s ease;
+    }
+    .prisma-hero__cta:hover .prisma-hero__cta-icon{ transform:scale(1.1); }
+    .prisma-hero__cta-icon svg{ width:16px; height:16px; color:var(--ph-cream); }
+
+    /* fade-up for lead + cta */
+    .prisma-hero [data-fade]{
+      opacity:0; transform:translateY(20px);
+      transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+    }
+    .prisma-hero [data-fade].is-in{ opacity:1; transform:none; }
+
+    @media (prefers-reduced-motion:reduce){
+      .prisma-hero__word,.prisma-hero [data-fade]{ opacity:1 !important; transform:none !important; transition:none; }
+    }
+  </style>
+
+  <script>
+    (function(){
+      "use strict";
+      var hosts = document.querySelectorAll('.prisma-hero');
+      var root = hosts[hosts.length-1];
+      if(!root || root.dataset.phInit) return;
+      root.dataset.phInit = '1';
+
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+      /* mobile menu toggle */
+      var menuToggle = root.querySelector('.prisma-hero__menu-toggle');
+      var mobileMenu = root.querySelector('.prisma-hero__mobile-menu');
+      if(menuToggle && mobileMenu){
+        menuToggle.addEventListener('click', function(){
+          var isOpen = mobileMenu.classList.contains('is-open');
+          mobileMenu.classList.toggle('is-open');
+          menuToggle.setAttribute('aria-expanded', String(!isOpen));
+          mobileMenu.setAttribute('aria-hidden', String(isOpen));
+        });
+        /* close the menu when a link is tapped */
+        mobileMenu.querySelectorAll('a, .prisma-hero__mobile-cta').forEach(function(el){
+          el.addEventListener('click', function(){
+            mobileMenu.classList.remove('is-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+          });
+        });
+      }
+
+      /* split headline into animated words */
+      var title = root.querySelector('[data-pullup]');
+      if(title){
+        var withAst = title.hasAttribute('data-asterisk');
+        var words = title.textContent.trim().split(/\s+/);
+        title.textContent = '';
+        words.forEach(function(w, i){
+          var span = document.createElement('span');
+          span.className = 'prisma-hero__word';
+          span.textContent = w;
+          span.style.transitionDelay = (i*0.08) + 's';
+          if(i < words.length-1) span.style.marginRight = '0.25em';
+          if(withAst && i === words.length-1){
+            var a = document.createElement('span');
+            a.className = 'prisma-hero__ast'; a.textContent = '*';
+            span.appendChild(a);
+          }
+          title.appendChild(span);
+        });
+      }
+
+      function reveal(el){
+        var d = parseInt(el.getAttribute('data-delay')||'0',10);
+        setTimeout(function(){
+          el.classList.add('is-in');
+          /* drop will-change once the entrance finishes (keeps memory lean) */
+          el.addEventListener('transitionend', function clr(){
+            el.style.willChange = 'auto';
+            el.removeEventListener('transitionend', clr);
+          });
+        }, d);
+      }
+
+      var targets = [];
+      if(title) targets.push(title);
+      root.querySelectorAll('[data-fade]').forEach(function(el){ targets.push(el); });
+      targets.forEach(function(el){ el.style.willChange = 'transform, opacity'; });
+
+      if(reduce || !('IntersectionObserver' in window)){
+        targets.forEach(function(el){ el.classList.add('is-in'); el.style.willChange='auto'; });
+      } else {
+        var io = new IntersectionObserver(function(en){
+          en.forEach(function(e){ if(e.isIntersecting){ reveal(e.target); io.unobserve(e.target); } });
+        }, { threshold:0.2 });
+        targets.forEach(function(el){ io.observe(el); });
+      }
+
+      /* video: nudge muted autoplay, pause when off-screen, respect reduced motion */
+      var vid = root.querySelector('.prisma-hero__video');
+      if(vid){
+        if(reduce){
+          vid.pause();
+        } else {
+          var play = function(){ var p = vid.play && vid.play(); if(p && p.catch) p.catch(function(){}); };
+          play();
+          if('IntersectionObserver' in window){
+            new IntersectionObserver(function(en){
+              en.forEach(function(e){ e.isIntersecting ? play() : vid.pause(); });
+            }, { threshold:0.05 }).observe(root);
+          }
+        }
+      }
+
+      /* fixed nav: add a subtle shadow once the page is scrolled (rAF-throttled, passive) */
+      var header = root.querySelector('.prisma-hero__header');
+      if(header){
+        var ticking = false;
+        var onScroll = function(){
+          if(ticking) return; ticking = true;
+          requestAnimationFrame(function(){
+            header.classList.toggle('is-scrolled', (window.pageYOffset || 0) > 8);
+            ticking = false;
+          });
+        };
+        window.addEventListener('scroll', onScroll, { passive:true });
+        onScroll();
+      }
+    })();
+  </script>
+
+</section>
