@@ -939,7 +939,14 @@ const scheduleData = {
             {
                 tier: "Silver Sponsor", name: "Starlight Data Solutions", logo: "assets/img/sponsors/starlight data solutions.png",
                 description: "Starlight Data Solutions empowers organizations with cutting-edge cybersecurity and IT solutions designed to secure critical assets, automate workflows, and drive business innovation. With capabilities spanning digital forensics, cyber defense, cloud security, threat intelligence, infrastructure modernization, and compliance automation, the company delivers tailored, end-to-end technology services for enterprises and public sector organizations. Through deep technical expertise, strategic partnerships, and a commitment to excellence, Starlight Data Solutions helps organizations build resilient, future-ready digital ecosystems.", website: "https://www.starlightdata.in/"
-            }
+            },
+         {
+    tier: "Silver Sponsor",
+    name: "Tech Defence",
+    logo: "assets/img/sponsors/tech-defence-lab.webp",
+    description: "Tech Defence is a leading cybersecurity company specializing in advanced cyber defense, digital forensics, threat intelligence, security operations, and enterprise security solutions. The company provides innovative services and cutting-edge technologies to help organizations detect, prevent, and respond to evolving cyber threats. With expertise in cyber resilience, security consulting, incident response, and training, Tech Defence enables businesses and government organizations to strengthen their security posture and build secure, future-ready digital environments.",
+    website: "https://techdefence.ai/"
+}
         ];
 
         const overlay = document.getElementById('dss-modal-overlay');
