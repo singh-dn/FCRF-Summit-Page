@@ -189,8 +189,8 @@
 
 
 // speaker section 
-      // Optimized Smooth Scroll & Dynamic Tapering Dots Logic
-        document.addEventListener("DOMContentLoaded", () => {
+        // Optimized Smooth Scroll, Dynamic Tapering Dots & AUTO-SCROLL Logic
+       document.addEventListener("DOMContentLoaded", () => {
             // Isolate JS selection to only within this specific section container!
             const expertSection = document.getElementById('isolated-expert-module');
             if (!expertSection) return;
@@ -204,16 +204,35 @@
             let itemWidth = 0;
             let isTicking = false;
             let dots = [];
-            let lastActiveIndex = -1; // Optimization: Track last active index
+            let lastActiveIndex = -1; 
+            
+            // Stepped auto-scroll variables
+            let autoScrollInterval = null; // handle for the step timer
+            const autoScrollDelay = 2500;  // ms a card rests before the next step
+            const stepDuration = 1000;     // ms for one card's glide (the "scroll in 1 sec")
 
-            // 1. DYNAMICALLY GENERATE DOTS
+            // Custom scroll-animation handle (lets us cancel/replace in-flight animations)
+            let scrollRAF = null;
+
+            // 1. DYNAMICALLY GENERATE DOTS (based on the original cards only)
+            const originalCards = Array.from(cards);
             dotsContainer.innerHTML = ''; 
-            cards.forEach(() => {
+            originalCards.forEach(() => {
                 const dot = document.createElement('span');
                 dot.className = 'expert-dot expert-dot-xsmall'; 
                 dotsContainer.appendChild(dot);
             });
             dots = expertSection.querySelectorAll('.expert-dot');
+
+            // 1b. CLONE CARDS for a seamless, never-ending loop.
+            // When we scroll past the original set, the clones occupy the exact
+            // same visual position, so we silently reset and the loop is invisible.
+            originalCards.forEach((card) => {
+                const clone = card.cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                clone.classList.add('expert-card-clone');
+                carousel.appendChild(clone);
+            });
 
             // 2. COMPUTE WIDTHS
             const getGapWidth = () => {
@@ -230,7 +249,55 @@
             calculateWidth();
             window.addEventListener('resize', calculateWidth, { passive: true });
 
-            // 3. DOT HIGHLIGHTING LOGIC (Highly Optimized)
+            // 2b. CUSTOM rAF SMOOTH SCROLL
+            // Buttery, consistent easing across browsers. Snap is briefly disabled
+            // during the animation so mandatory snapping never fights the motion,
+            // then restored once we land exactly on a card.
+            const maxScroll = () => carousel.scrollWidth - carousel.clientWidth;
+            const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+            const smoothScrollTo = (target, duration = 600, onComplete = null) => {
+                if (scrollRAF) cancelAnimationFrame(scrollRAF);
+
+                target = Math.max(0, Math.min(target, maxScroll()));
+                const start = carousel.scrollLeft;
+                const distance = target - start;
+                if (Math.abs(distance) < 1) { if (onComplete) onComplete(); return; }
+
+                carousel.style.scrollSnapType = 'none'; // avoid snap fighting the animation
+                let startTime = null;
+
+                const step = (now) => {
+                    if (startTime === null) startTime = now;
+                    const progress = Math.min((now - startTime) / duration, 1);
+                    carousel.scrollLeft = start + distance * easeInOutCubic(progress);
+
+                    if (progress < 1) {
+                        scrollRAF = requestAnimationFrame(step);
+                    } else {
+                        carousel.style.scrollSnapType = ''; // restore CSS snap (we're already on a card)
+                        scrollRAF = null;
+                        if (onComplete) onComplete();
+                    }
+                };
+                scrollRAF = requestAnimationFrame(step);
+            };
+
+            // Width of one full set of original cards = the seamless-loop reset distance
+            const loopWidth = () => originalCards.length * itemWidth;
+
+            const currentIndex = () => {
+                if (itemWidth === 0) return 0;
+                const raw = Math.round(carousel.scrollLeft / itemWidth);
+                // Wrap into the original card range so buttons/dots stay consistent
+                return ((raw % originalCards.length) + originalCards.length) % originalCards.length;
+            };
+
+            const goToIndex = (i, duration) => {
+                smoothScrollTo(i * itemWidth, duration);
+            };
+
+            // 3. DOT HIGHLIGHTING LOGIC
             const updateDots = () => {
                 if (itemWidth === 0 || dots.length === 0) {
                     isTicking = false;
@@ -238,7 +305,8 @@
                 }
                 
                 let activeIndex = Math.round(carousel.scrollLeft / itemWidth);
-                activeIndex = Math.max(0, Math.min(activeIndex, dots.length - 1));
+                // Wrap into the original dot range (scrollLeft now runs through clones too)
+                activeIndex = ((activeIndex % dots.length) + dots.length) % dots.length;
 
                 // Only update the DOM if the active slide actually changed
                 if (activeIndex !== lastActiveIndex) {
@@ -263,14 +331,14 @@
 
             // 4. BUTTON CLICKS
             nextBtn.addEventListener('click', () => {
-                carousel.scrollBy({ left: itemWidth, behavior: 'smooth' });
+                goToIndex(currentIndex() + 1, 600);
             });
 
             prevBtn.addEventListener('click', () => {
-                carousel.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+                goToIndex(currentIndex() - 1, 600);
             });
 
-            // 5. SCROLL LISTENER (Throttled using requestAnimationFrame)
+            // 5. SCROLL LISTENER
             carousel.addEventListener('scroll', () => {
                 if (!isTicking) {
                     window.requestAnimationFrame(updateDots);
@@ -278,9 +346,47 @@
                 }
             }, { passive: true });
 
+            // 6. STEPPED AUTO-SCROLL — glides one full card per step (~1s each)
+            const autoStep = () => {
+                if (itemWidth === 0) return;
+                // Next card's position from wherever we currently rest
+                const nextLeft = Math.round(carousel.scrollLeft / itemWidth) * itemWidth + itemWidth;
+
+                smoothScrollTo(nextLeft, stepDuration, () => {
+                    // Seamless loop: if that glide carried us into the cloned set,
+                    // jump back by one full set — invisible because clones are identical
+                    if (loopWidth() > 0 && carousel.scrollLeft >= loopWidth() - 1) {
+                        carousel.style.scrollSnapType = 'none';
+                        carousel.scrollLeft -= loopWidth();
+                        carousel.style.scrollSnapType = '';
+                    }
+                });
+            };
+
+            const startAutoScroll = () => {
+                stopAutoScroll(); // clear any existing timer first
+                // cadence = glide time + rest time, so each card advances cleanly one by one
+                autoScrollInterval = setInterval(autoStep, stepDuration + autoScrollDelay);
+            };
+
+            const stopAutoScroll = () => {
+                if (autoScrollInterval) {
+                    clearInterval(autoScrollInterval);
+                    autoScrollInterval = null;
+                }
+            };
+
+            // Pause auto-scroll while the user interacts, then resume
+            expertSection.addEventListener('mouseenter', stopAutoScroll);
+            expertSection.addEventListener('mouseleave', startAutoScroll);
+            expertSection.addEventListener('touchstart', stopAutoScroll, { passive: true });
+            expertSection.addEventListener('touchend', startAutoScroll, { passive: true });
+
+            // INITIALIZE
             setTimeout(() => {
                 calculateWidth();
                 updateDots();
+                startAutoScroll(); // Start the auto-scrolling
             }, 50); 
         });
 
