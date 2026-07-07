@@ -909,6 +909,20 @@ const scheduleData = {
         const sponsorData = [
             // Platinum (0, 1)
             {
+                tier: "Knowledge Partner",
+                name: "Cyseck",
+                logo: "assets/img/sponsors/cyseck-logo.avif",
+                description: "The Centre of Excellence for Cybersecurity (CySecK) is a flagship initiative by the Government of Karnataka through the Department of Electronics, IT, and Bt, established in 2017 to drive cybersecurity innovation, research, and ecosystem development across the state. Anchored within the Indian Institute of Science (IISc), Bengaluru, and supported by the Foundation for Science, Innovation and Development (FSID), CySecK serves as a strategic platform that unites government, academia, industry, and startups to create a secure and resilient digital future for Karnataka and beyond.",
+                website: "https://cyseck.in/"
+            },
+            {
+                tier: "Knowledge Partner",
+                name: "Indian Cybercrime Coordination Centre (I4C)",
+                logo: "assets/img/sponsors/i4cpng.png",
+                description: "The Indian Cyber Crime Coordination Centre (I4C) is an initiative of the Ministry of Home Affairs that coordinates efforts to prevent, detect, investigate, and combat cybercrime across India while supporting law enforcement agencies, promoting cyber awareness, and providing cybercrime reporting services.",
+                website: "https://i4c.mha.gov.in/"
+            },
+            {
                 tier: "Platinum Sponsor",
                 name: "Resecurity",
                 logo: "assets/img/sponsors/Resecurity.jpeg",
