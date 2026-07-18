@@ -33,6 +33,7 @@ $tables = [
     'professionals' => ['db_key' => 'summit', 'table' => 'fcrf_professionals', 'date_col' => 'created_at', 'name' => 'Summit Professionals', 'icon' => 'user-check'],
     'awards'        => ['db_key' => 'summit', 'table' => 'fcrf_award_nominations', 'date_col' => 'created_at', 'name' => 'Excellence Awards', 'icon' => 'award'],
     'policing'      => ['db_key' => 'summit', 'table' => 'fcrf_policing_awards', 'date_col' => 'created_at', 'name' => 'Policing Awards', 'icon' => 'shield'],
+    'hackathon'     => ['db_key' => 'summit', 'table' => 'fcrf_hackathon_2026', 'date_col' => 'created_at', 'name' => 'Hackathon Registration', 'icon' => 'laptop'],
     'hackers'       => ['db_key' => 'waitlist', 'table' => 'fcrf_ethical_hackers', 'date_col' => 'applied_at', 'name' => 'Ethical Hackers', 'icon' => 'terminal'],
     'waitlist'      => ['db_key' => 'waitlist', 'table' => 'fcrf_waitlist', 'date_col' => 'joined_at', 'name' => 'Course Waitlist', 'icon' => 'clock'],
     'instructors'   => ['db_key' => 'waitlist', 'table' => 'fcrf_instructors', 'date_col' => 'applied_at', 'name' => 'Instructors / Mentors', 'icon' => 'graduation-cap'],
@@ -334,6 +335,7 @@ if (isset($_SESSION['is_master_admin']) && $_SESSION['is_master_admin'] === true
                                 $sub_info = '';
                                 if (!empty($row['award_category'])) $sub_info = $row['award_category'];
                                 elseif (!empty($row['designation'])) $sub_info = $row['designation'];
+                                elseif (!empty($row['current_role'])) $sub_info = $row['current_role'];
                                 elseif (!empty($row['position'])) $sub_info = $row['position'];
                                 elseif (!empty($row['course_name'])) $sub_info = $row['course_name'];
                                 elseif (!empty($row['subject'])) $sub_info = $row['subject'];
