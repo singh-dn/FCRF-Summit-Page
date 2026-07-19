@@ -353,7 +353,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="banner">
             <div class="banner-content">
                 <img src="https://summit.futurecrime.org/assets/img/watch/transparent-png.png" alt="FCRF Logo" class="banner-logo">
-                <h1>Complimentary Pass for <span>Law Enforcement, Defence &amp; Governance </span></h1>
+                <h1>Complimentary Pass for <span>Law Enforcement, Defence &amp; Government Officers</span></h1>
                 <p>Serving law enforcement and defence personnel can register here to receive a complimentary pass to the FutureCrime Summit.</p>
             </div>
         </div>
