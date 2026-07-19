@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Complimentary Pass — Law Enforcement &amp; Defence | FutureCrime Summit</title>
-    <link rel="shortcut icon" href="assets/img/logo/favs.jpeg">
+    <link rel="shortcut icon" href="/assets/img/logo/favs.jpeg">
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
