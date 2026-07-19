@@ -234,15 +234,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .form-group { margin-bottom: 1.5rem; }
 
         label { display: block; font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; color: #334155; }
-        .optional-tag { font-weight: 400; color: #94a3b8; font-size: 0.8rem; display: block; margin-top: 4px; }
+        .optional-tag {
+        font-weight: 400;
+        color: #94a3b8;
+        font-size: 0.8rem;
+        display: block;
+        margin-top: -2px;
+        margin-bottom: 10px;
+        line-height: 1.45;
+        }
         .inline-optional { font-weight: 400; color: #94a3b8; font-size: 0.8rem; }
 
         /* Input Wrapper for Icons */
         .input-wrapper { position: relative; display: flex; align-items: center; }
-        .input-wrapper i { position: absolute; left: 14px; color: #94a3b8; transition: color 0.3s ease; pointer-events: none; }
+        .input-wrapper i,
+        .input-wrapper svg {
+            position: absolute;
+            left: 14px;
+            width: 18px;
+            height: 18px;
+            color: #94a3b8;
+            transition: color 0.3s ease;
+            pointer-events: none;
+            flex-shrink: 0;
+            }
 
         input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"], select, textarea {
-            width: 100%; padding: 14px 16px 14px 44px; border-radius: 12px; border: 1px solid var(--border-color);
+            width: 100%; padding: 14px 16px 14px 46px; border-radius: 12px; border: 1px solid var(--border-color);
             background: #f8fafc; font-family: inherit; font-size: 1rem; color: var(--text-main); transition: all 0.3s ease;
         }
         select, textarea { padding-left: 16px; }
@@ -254,7 +272,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             outline: none; border-color: var(--primary); background: white;
             box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
         }
-        .input-wrapper input:focus + i, .input-wrapper select:focus + i { color: var(--primary); }
+        .input-wrapper input:focus + i,
+        .input-wrapper select:focus + i,
+        .input-wrapper input:focus + svg,
+        .input-wrapper select:focus + svg { color: var(--primary); }
 
         /* Radio & Checkbox Groups */
         .radio-label { display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; color: #475569; cursor: pointer; padding: 10px 12px; border-radius: 8px; transition: background 0.2s; line-height: 1.4; }
@@ -271,8 +292,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-color: var(--error);
             background-color: #fef2f2;
         }
-        .form-group.has-error .input-wrapper i {
-            color: var(--error);
+        .form-group.has-error .input-wrapper i,
+        .form-group.has-error .input-wrapper svg {
+        color: var(--error);
         }
         .form-group.has-error::after {
             content: "⚠️ This field is required or invalid.";

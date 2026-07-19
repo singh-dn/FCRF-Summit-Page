@@ -28,6 +28,7 @@ $tables = [
     'awards'        => ['db_key' => 'summit', 'table' => 'fcrf_award_nominations', 'date_col' => 'created_at', 'name' => 'Excellence Awards', 'icon' => 'award'],
     'policing'      => ['db_key' => 'summit', 'table' => 'fcrf_policing_awards', 'date_col' => 'created_at', 'name' => 'Policing Awards', 'icon' => 'shield'],
     'hackathon'     => ['db_key' => 'summit', 'table' => 'fcrf_hackathon_2026', 'date_col' => 'created_at', 'name' => 'Hackathon Registration', 'icon' => 'laptop'],
+    'lawpass'       => ['db_key' => 'summit', 'table' => 'fcrf_defence_passes', 'date_col' => 'created_at', 'name' => 'Law Enforcement Passes', 'icon' => 'shield-check'],
     'applications'  => ['db_key' => 'newfuturecrime', 'table' => 'applications_table', 'date_col' => 'created_at', 'name' => 'Job Applications', 'icon' => 'briefcase'],
     'careers'       => ['db_key' => 'newfuturecrime', 'table' => 'fcrf_careers', 'date_col' => 'applied_at', 'name' => 'Career Form', 'icon' => 'rocket'],
     'contact'       => ['db_key' => 'newfuturecrime', 'table' => 'contact_messages', 'date_col' => 'created_at', 'name' => 'Contact Messages', 'icon' => 'mail']
@@ -203,7 +204,7 @@ $month_cut = strtotime('-29 days 00:00:00');
 // seed the last 30 days so gaps render as zero, not as missing points
 for ($i = 29; $i >= 0; $i--) { $daily_counts[date('Y-m-d', strtotime("-$i days"))] = 0; }
 
-$breakdown_candidates = ['award_category','category','course_name','interested_courses','designation',
+$breakdown_candidates = ['pass_status','award_category','category','course_name','interested_courses','designation',
                          'current_role','position','department','organization','organisation','company',
                          'state','city','experience','subject','status','gender','how_did_you_hear'];
 $breakdown_col = '';
