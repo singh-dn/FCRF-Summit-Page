@@ -931,7 +931,7 @@ const scheduleData = {
             },
             {
                 tier: "Platinum Sponsor",
-                name: "Binary",
+                name: "Binary Global Limited",
                 logo: "assets/img/sponsors/Binary.jpeg",
                 description: "Binary is a leading innovator in software architecture and secure digital infrastructure. Specializing in high-performance computing and threat defense mechanisms, they help government agencies and private enterprises build resilient digital ecosystems.",
                 website: "https://binaryglobal.com/"
