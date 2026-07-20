@@ -931,7 +931,7 @@ const scheduleData = {
             },
             {
                 tier: "Platinum Sponsor",
-                name: "Binary Global Limited",
+                name: "Binary Global",
                 logo: "assets/img/sponsors/Binary.jpeg",
                 description: "Binary Global Limited is a leading IT infrastructure, cybersecurity, and digital transformation company that helps enterprises and government organizations build secure, resilient, and future-ready technology environments. With expertise across cybersecurity, AI-driven Security Operations Centers (SOC), cloud, data centers, enterprise networking, collaboration, and managed services, Binary Global enables organizations to accelerate innovation while strengthening cyber resilience through 24x7 expert operations and next-generation technologies.",
                 website: "https://binaryglobal.com/"
