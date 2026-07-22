@@ -960,6 +960,27 @@ const scheduleData = {
     logo: "assets/img/sponsors/tech-defence-lab.webp",
     description: "Tech Defence is a leading cybersecurity company specializing in advanced cyber defense, digital forensics, threat intelligence, security operations, and enterprise security solutions. The company provides innovative services and cutting-edge technologies to help organizations detect, prevent, and respond to evolving cyber threats. With expertise in cyber resilience, security consulting, incident response, and training, Tech Defence enables businesses and government organizations to strengthen their security posture and build secure, future-ready digital environments.",
     website: "https://techdefence.ai/"
+},
+{
+    tier: "Silver Sponsor",
+    name: "mFilterIt",
+    logo: "assets/img/sponsors/mfilterit.png",
+    description: "mFilterIt is a digital trust and fraud-prevention platform that helps brands and enterprises protect their media, brand, and financial ecosystems. Its solutions address advertising fraud, brand infringement, unsafe ad placements, financial scams, and other digital risks while improving transparency and campaign effectiveness across the digital ecosystem.",
+    website: "https://www.mfilterit.com/"
+},
+{
+    tier: "Lanyard Sponsor",
+    name: "HackElite",
+    logo: "assets/img/sponsors/hackelite1.png",
+    description: "HackElite is a cybersecurity company providing advanced solutions to help organizations protect their digital assets and strengthen their security posture. Its services include threat intelligence, dark-web and credential-leak monitoring, AI-driven security automation, vulnerability assessment and penetration testing, network and application security, malware analysis, security consultancy, and online brand-reputation protection.",
+    website: "https://www.hack-elite.com/"
+},
+{
+    tier: "Community Partner",
+    name: "Cyber Shakti Foundation",
+    logo: "assets/img/sponsors/cybersakti.jpeg",
+    description: "Cyber Shakti Foundation is a community-driven organization working to advance cybersecurity awareness, education, research, knowledge sharing, and collaboration. Through training programs, internships, technical events, digital-forensics initiatives, and industry and academic engagement, the foundation aims to empower students, researchers, professionals, and cybersecurity enthusiasts while contributing to a safer and more resilient digital ecosystem.",
+    website: "https://www.cybershaktifoundation.org/"
 }
         ];
 
