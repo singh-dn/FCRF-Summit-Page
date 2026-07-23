@@ -788,402 +788,454 @@
 
 
 
-        /* .
-           STYLES
-           Everything is scoped to .expert-showcase to prevent conflicts
-           . */
-        
-            
-        .expert-showcase {
-            /* Localized Variables */
-            --primary: #ffffff; 
-            --primary-hover: #000000;
-            --border-light: rgba(255, 255, 255, 0.15);
-            --text-dark: #ffffff; 
-            --text-gray: #a3a3a3; 
-            --bg-base: #000000;
-            --card-bg: #0a0a0a;
-            --linkedin-btn: #ffffff; 
-            --linkedin-hover: #cccccc;
-            --card-gap: 1.5rem;
+ /* =========================================================================
+   FCRF SUMMIT — ESTEEMED SPEAKERS
+   Two-row, full-bleed pocket-card marquee.
+   Rows run edge to edge; the header stays inside the 80rem container.
+   Motion is transform-based, so the rows are NOT scroll containers.
+   ========================================================================= */
 
-            /* Base typography and background scoped to this section */
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--bg-base);
-            background: radial-gradient(circle at 50% 50%, #060606 0%, #000000 100%);
-            color: var(--text-dark);
-            -webkit-font-smoothing: antialiased;
+.expert-showcase {
+    /* ---- palette ------------------------------------------------------ */
+    --primary: #ffffff;
+    --primary-hover: #000000;
+    --border-light: rgba(255, 255, 255, 0.15);
+    --text-dark: #ffffff;
+    --text-gray: #a3a3a3;
+    --bg-base: #000000;
 
-            /* Layout constraints */
-            width: 100%;
-            padding: 6rem 1rem;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
+    /* Pocket planes, lifted well clear of the background so the card reads
+       as a solid object instead of blending into the page. Back is darker
+       than front, which is what gives the pocket its depth. */
+    --pocket-back:  #131313;
+    --pocket-front: #1e1e1e;
+    --pocket-edge:  rgba(255, 255, 255, 0.11);
 
-        /* Scoped reset so it doesn't affect the rest of your site */
-        .expert-showcase *,
-        .expert-showcase *::before,
-        .expert-showcase *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    /* The single accent, mirroring the reference's green arrow.
+       Set to #ffffff to keep the section strictly monochrome. */
+    --accent: #34d399;
 
-        /* =====================================================================
-           LAYOUT & CONTAINERS & PREMIUM BACKGROUND
-           ===================================================================== */
+    --card-gap: 1.25rem;
+    --card-radius: 1.75rem;
+    --card-h: 480px;
 
-        /* 1. Abstract Swoosh Design (Premium 3D Brand Identity) */
-        .expert-bg-swoosh {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 600' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23050505'/%3E%3Cstop offset='40%25' stop-color='%23161616'/%3E%3Cstop offset='100%25' stop-color='%23080808'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='100%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23121212'/%3E%3Cstop offset='100%25' stop-color='%230a0a0a'/%3E%3C/linearGradient%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='0' dy='15' stdDeviation='20' flood-color='%23000000' flood-opacity='1'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M-200,800 C200,600 400,-100 800,150 C1200,400 900,900 1400,600 C1600,480 1700,200 1900,100' stroke='url(%23g1)' stroke-width='80' stroke-linecap='round' fill='none' filter='url(%23shadow)'/%3E%3Cpath d='M0,950 C350,850 650,300 1000,450 C1350,600 1200,900 1600,650 C1750,550 1850,350 2000,200' stroke='url(%23g2)' stroke-width='50' stroke-linecap='round' fill='none' filter='url(%23shadow)'/%3E%3C/svg%3E");
-            background-size: cover;
-            background-position: center;
-            opacity: 0.9;
-        }
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--bg-base);
+    /* pushed darker so the lifted cards separate cleanly */
+    background: radial-gradient(circle at 50% 45%, #040404 0%, #000000 100%);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
 
-        /* 2. Ambient Center Glow */
-        .expert-ambient-glow {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    width: 100%;
+    padding: 6rem 1rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    contain: layout paint style;
+}
 
-        .expert-ambient-glow::before {
-            content: "";
-            position: absolute;
-            width: 500px;
-            height: 250px;
-            background-color: rgba(255, 255, 255, 0.04);
-            border-radius: 50%;
-            filter: blur(100px);
-        }
+.expert-showcase *,
+.expert-showcase *::before,
+.expert-showcase *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        .expert-container {
-            max-width: 80rem; /* 1280px */
-            margin: 0 auto;
-            position: relative;
-            z-index: 10; 
-        }
+/* =====================================================================
+   BACKGROUND LAYERS
+   ===================================================================== */
+.expert-bg-swoosh {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 600' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23050505'/%3E%3Cstop offset='40%25' stop-color='%23161616'/%3E%3Cstop offset='100%25' stop-color='%23080808'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='100%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23121212'/%3E%3Cstop offset='100%25' stop-color='%230a0a0a'/%3E%3C/linearGradient%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='0' dy='15' stdDeviation='20' flood-color='%23000000' flood-opacity='1'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M-200,800 C200,600 400,-100 800,150 C1200,400 900,900 1400,600 C1600,480 1700,200 1900,100' stroke='url(%23g1)' stroke-width='80' stroke-linecap='round' fill='none' filter='url(%23shadow)'/%3E%3Cpath d='M0,950 C350,850 650,300 1000,450 C1350,600 1200,900 1600,650 C1750,550 1850,350 2000,200' stroke='url(%23g2)' stroke-width='50' stroke-linecap='round' fill='none' filter='url(%23shadow)'/%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+    transform: translateZ(0);
+    contain: strict;
+}
 
-        /* =====================================================================
-           HEADER & NAVIGATION
-           ===================================================================== */
-        .expert-header {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
+.expert-ambient-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateZ(0);
+    contain: strict;
+}
 
-        .expert-header-text {
-            text-align: left;
-        }
+.expert-ambient-glow::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-radius: 50%;
+    filter: blur(100px);
+}
 
-        .expert-title-main {
-            font-size: 1.875rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            letter-spacing: -0.025em;
-        }
+.expert-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
 
-        .expert-subtitle {
-            font-size: 1rem;
-            color: var(--text-gray);
-        }
+/* =====================================================================
+   HEADER & NAVIGATION
+   ===================================================================== */
+.expert-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
 
-        .expert-nav-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-shrink: 0;
-        }
+.expert-header-text { text-align: left; }
 
-        .expert-nav-btn {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            border: 1px solid var(--border-light);
-            background-color: transparent;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-            outline: none;
-        }
+.expert-title-main {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    letter-spacing: -0.025em;
+}
 
-        .expert-nav-btn:hover {
-            background-color: var(--primary);
-            color: var(--primary-hover);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-        }
+.expert-subtitle { font-size: 1rem; color: var(--text-gray); }
 
-        .expert-nav-btn svg {
-            width: 1.25rem;
-            height: 1.25rem;
-        }
+.expert-nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+}
 
-        .expert-pagination {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            height: 1rem;
-            padding: 0 0.5rem;
-        }
+.expert-nav-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid var(--border-light);
+    background-color: transparent;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
 
-        .expert-dot {
-            border-radius: 50%;
-            background-color: var(--primary);
-            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            display: block;
-        }
-        
-        .expert-dot-mid { width: 10px; height: 10px; opacity: 1; box-shadow: 0 0 8px rgba(255,255,255,0.5); transform: scale(1); }
-        .expert-dot-small { width: 8px; height: 8px; opacity: 0.5; transform: scale(0.9); }
-        .expert-dot-xsmall { width: 6px; height: 6px; opacity: 0.2; transform: scale(0.8); }
+.expert-nav-btn:hover,
+.expert-nav-btn:focus-visible {
+    background-color: var(--primary);
+    color: var(--primary-hover);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
 
-        /* =====================================================================
-           CAROUSEL
-           ===================================================================== */
-        .expert-carousel {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            overscroll-behavior-x: contain; /* Prevents whole-page swipe on mobile */
-            gap: var(--card-gap);
-            padding-bottom: 2rem;
-            /* Mobile: side padding lets the active card sit dead-center while scrolling */
-            padding-left: calc(7.5vw - 1rem);
-            padding-right: calc(7.5vw - 1rem);
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            -ms-overflow-style: none;  
-            scrollbar-width: none;  
-        }
+.expert-nav-btn svg { width: 1.25rem; height: 1.25rem; }
 
-        .expert-carousel::-webkit-scrollbar {
-            display: none;
-        }
+.expert-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 1rem;
+    padding: 0 0.5rem;
+    contain: layout style;
+}
 
-        /* =====================================================================
-           CARDS (Optimized for performance)
-           ===================================================================== */
-        .expert-card {
-            position: relative;
-            flex: 0 0 auto;
-            width: 85vw;
-            height: 400px;
-            border-radius: 2rem;
-            overflow: hidden;
-            background-color: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.05); 
-            box-shadow: 0 4px 20px -10px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-            scroll-snap-align: center; /* Mobile: center the card in view */
-            
-            /* Performance optimizations */
-            transform: translateZ(0); /* Force hardware acceleration */
-            will-change: transform;
-            /* Smooth specific properties instead of 'all' to prevent lag */
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
-                        border-color 0.4s ease, 
-                        box-shadow 0.4s ease;
-        }
+.expert-dot {
+    border-radius: 50%;
+    background-color: var(--primary);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    display: block;
+}
 
-        .expert-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            z-index: 0;
-            opacity: 0.85; 
-            
-            /* Performance optimizations */
-            transform: translateZ(0) scale(1);
-            will-change: transform;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
-        }
+.expert-dot-mid    { width: 10px; height: 10px; opacity: 1;   box-shadow: 0 0 8px rgba(255,255,255,0.5); transform: scale(1); }
+.expert-dot-small  { width: 8px;  height: 8px;  opacity: 0.5; transform: scale(0.9); }
+.expert-dot-xsmall { width: 6px;  height: 6px;  opacity: 0.2; transform: scale(0.8); }
 
-        .expert-spacer {
-            height: 62%;
-            position: relative;
-            z-index: 10;
-        }
+/* =====================================================================
+   ROWS — full bleed, breaking out of the 80rem container
+   ===================================================================== */
+.expert-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 
-        /* =====================================================================
-           DARK GLASSMORPHISM DETAILS
-           ===================================================================== */
-        .expert-card-details {
-            position: relative;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            z-index: 20;
-            margin-top: 2rem;
-            border-bottom-left-radius: 2rem;
-            border-bottom-right-radius: 2rem;
-        }
+    width: 100vw;
+    margin-left:  calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
 
-        .expert-curve {
-            position: absolute;
-            bottom: 100%;
-            left: 0;
-            width: 100%;
-            height: 32px;
-            margin-bottom: -1px;
-            color: rgba(12, 12, 12, 0.9); /* Slightly more solid to boost performance */
-            fill: currentColor;
-        }
+/* The viewport clips; it is NOT a scroll container any more. */
+.expert-carousel {
+    position: relative;
+    overflow: hidden;
+    padding: 0.25rem 0 0.75rem;
+    cursor: grab;
+    -webkit-user-select: none;
+            user-select: none;
+    /* we own the horizontal axis, the page keeps the vertical one */
+    touch-action: pan-y;
+    contain: layout paint style;
+}
 
-        .expert-social-badge {
-            position: absolute;
-            right: 1.25rem;
-            top: -14px;
-            width: 1.75rem;
-            height: 1.75rem;
-            border-radius: 4px;
-            background-color: var(--linkedin-btn);
-            color: #000000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            z-index: 30;
-            text-decoration: none;
-            
-            /* Specific transition */
-            transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+.expert-carousel.is-grabbing { cursor: grabbing; }
 
-        .expert-social-badge:hover {
-            background-color: var(--linkedin-hover);
-            transform: translateY(-3px);
-        }
+/* The only element that moves. One promoted layer per row, not per card. */
+.expert-track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--card-gap);
+    width: max-content;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
 
-        .expert-social-badge svg {
-            width: 0.875rem;
-            height: 0.875rem;
-            fill: currentColor;
-        }
+/* =====================================================================
+   THE POCKET CARD
+   ===================================================================== */
+.expert-card {
+    position: relative;
+    flex: 0 0 auto;
+    width: 340px;
+    height: var(--card-h);
+    background: none;
+    border: 0;
+    contain: layout paint style;   /* paint isolation without 40 GPU layers */
+}
 
-        .expert-glass-panel {
-            background-color: rgba(12, 12, 12, 0.9); /* More opaque, less reliance on blur */
-            /* Reduced blur radius from 16px to 10px. Drastically improves scroll FPS */
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0 1.25rem 1.25rem 1.25rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-bottom-left-radius: 2rem;
-            border-bottom-right-radius: 2rem;
-            color: var(--text-dark);
-            transform: translateZ(0); /* Hardware accelerate this layer */
-        }
-        
-        .expert-glass-panel > div:last-child {
-            margin-top: 0.5rem !important; 
-        }
+/* --- 1. pocket body ---------------------------------------------------- */
+.expert-shell {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 31%;
+    bottom: 0;
+    z-index: 1;
+    background: var(--pocket-back);
+    border: 1px solid var(--pocket-edge);
+    border-radius: var(--card-radius);
+    box-shadow: 0 26px 52px -26px rgba(0, 0, 0, 1);
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.45s ease;
+}
 
-        .expert-name {
-            font-size: 1.0625rem;
-            font-weight: 700;
-            margin-bottom: 0.125rem;
-            line-height: 1.2;
-            background-image: linear-gradient(93deg, #ffffff 10%, #888888 90%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
+/* --- 2. photo tucked into it ------------------------------------------- */
+.expert-photo {
+    position: absolute;
+    top: 0;
+    left: 4.5%;
+    right: 4.5%;
+    height: 68%;
+    z-index: 2;
+    overflow: hidden;
+    border-radius: calc(var(--card-radius) - 0.25rem);
+    background: #1a1a1a;
+}
 
-        .expert-role {
-            font-size: 0.8125rem;
-            color: #d4d4d4; 
-            font-weight: 500;
-            line-height: 1.3;
-        }
+.expert-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
 
-        .expert-company-label {
-            font-size: 0.625rem;
-            color: var(--text-gray);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
-        }
+/* Contact shadow where the lip crosses the photo — sells the tucked-in
+   depth, and being a background gradient it composites for free. */
+.expert-photo::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 42%;
+    background: linear-gradient(to top, rgba(0,0,0,0.62), rgba(0,0,0,0));
+    pointer-events: none;
+}
 
-        .expert-company-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .expert-company-name {
-            font-weight: 700;
-            font-size: 1.1875rem;
-            letter-spacing: -0.025em;
-            line-height: 1;
-            color: var(--text-dark);
-        }
+.expert-mark {
+    position: absolute;
+    top: 0.85rem;
+    right: 1rem;
+    z-index: 2;
+    padding: 0.22rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.45);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.95);
+}
 
-        .expert-company-icon {
-            width: 1rem;
-            height: 1rem;
-            margin-left: 0.375rem;
-            fill: #ffffff; 
-            color: #ffffff;
-        }
+/* --- 3. front lip ------------------------------------------------------ */
+/* One masked div. The S-curve, both rounded top corners and the rounded
+   pocket bottom all come from the mask + border-radius, so there is no
+   inline SVG per card and the DOM stays light even with the loop clones. */
+.expert-lip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 44%;
+    z-index: 3;
+    background: var(--pocket-front);
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
 
-        /* Specific Company Styles (Adapted for B&W theme) */
-        .flipkart-name { font-style: italic; margin-right: 0.375rem;}
-        .brillio-name { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.05em; }
-        .talentserv-icon { margin-left: 0; margin-right: 0.25rem; stroke: #ffffff; fill: none; }
-        .talentserv-name { font-weight: 600; font-size: 0.9375rem; color: var(--text-dark); }
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 340 76' preserveAspectRatio='none'%3E%3Cpath d='M0,76 L0,34 C0,19.64 11.64,8 26,8 L124,8 C158,8 162,46 196,46 L314,46 C328.36,46 340,57.64 340,72 L340,76 Z' fill='%23fff'/%3E%3C/svg%3E"), linear-gradient(#000, #000);
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 340 76' preserveAspectRatio='none'%3E%3Cpath d='M0,76 L0,34 C0,19.64 11.64,8 26,8 L124,8 C158,8 162,46 196,46 L314,46 C328.36,46 340,57.64 340,72 L340,76 Z' fill='%23fff'/%3E%3C/svg%3E"), linear-gradient(#000, #000);
+    -webkit-mask-size: 100% 76px, 100% calc(100% - 75px);
+            mask-size: 100% 76px, 100% calc(100% - 75px);
+    -webkit-mask-position: top left, bottom left;
+            mask-position: top left, bottom left;
+    -webkit-mask-repeat: no-repeat, no-repeat;
+            mask-repeat: no-repeat, no-repeat;
+}
 
-        /* =====================================================================
-           RESPONSIVE MEDIA QUERIES
-           ===================================================================== */
-        @media (min-width: 640px) {
-            .expert-showcase { padding-left: 1.5rem; padding-right: 1.5rem; }
-            .expert-card { width: 340px; scroll-snap-align: start; } /* Desktop: align to start */
-            /* Remove the mobile centering padding on larger screens */
-            .expert-carousel { padding-left: 0; padding-right: 0; }
-        }
+/* --- 4. text ----------------------------------------------------------- */
+.expert-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 30%;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 1.4rem 1.15rem;
+}
 
-        @media (min-width: 768px) {
-            .expert-header {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: flex-end;
-            }
-            .expert-title-main { font-size: 2.5rem; }
-            .expert-subtitle { font-size: 1.125rem; }
-        }
+.expert-name {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
-        @media (min-width: 1024px) {
-            .expert-showcase { padding-left: 2rem; padding-right: 2rem; }
-        }
+/* designation — bolder and larger, sits directly under the name */
+.expert-role {
+    margin-top: 0.18rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -0.005em;
+    color: #c9c9c9;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
+.expert-meta {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
 
+/* organisation — the heavy line at the foot of the pocket */
+.expert-org {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    line-height: 1.22;
+    letter-spacing: -0.012em;
+    color: #ffffff;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.expert-link {
+    flex: 0 0 auto;
+    width: 1.9rem;
+    height: 1.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease;
+}
+
+.expert-link svg { width: 1.3rem; height: 1.3rem; }
+
+.expert-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* --- hover ------------------------------------------------------------- */
+/* Visual only. Hovering no longer pauses the drift. */
+@media (hover: hover) {
+    .expert-card:hover .expert-shell {
+        transform: translateY(-6px);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    .expert-card:hover .expert-photo img { transform: scale(1.06); }
+    .expert-card:hover .expert-link      { transform: translate(3px, -3px); }
+}
+
+/* =====================================================================
+   RESPONSIVE — two rows are kept at every width, the cards just shrink
+   ===================================================================== */
+@media (max-width: 639.98px) {
+    .expert-showcase { --card-h: 450px; --card-gap: 0.875rem; padding: 4rem 0.75rem; }
+    .expert-rows     { gap: 0.875rem; }
+    .expert-card     { width: min(74vw, 290px); }
+    .expert-content  { padding: 0 1.15rem 1rem; }
+    .expert-name     { font-size: 1rem; }
+    .expert-role     { font-size: 0.78rem; }
+    .expert-org      { font-size: 0.875rem; }
+    .expert-header   { margin-bottom: 2rem; }
+}
+
+@media (min-width: 640px) {
+    .expert-showcase { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+
+@media (min-width: 768px) {
+    .expert-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    .expert-title-main { font-size: 2.5rem; }
+    .expert-subtitle { font-size: 1.125rem; }
+}
+
+@media (min-width: 1024px) {
+    .expert-showcase { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* =====================================================================
+   REDUCED MOTION — the drift is disabled in JS as well
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .expert-showcase *,
+    .expert-showcase *::before,
+    .expert-showcase *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
 
 /* new banner  */
 

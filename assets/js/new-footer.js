@@ -187,208 +187,402 @@
 
 
 
+/* =========================================================================
+   FCRF SUMMIT — ESTEEMED SPEAKERS
+   Two-row marquee engine, transform-driven.
+   ========================================================================= */
 
-// speaker section 
-        // Optimized Smooth Scroll, Dynamic Tapering Dots & AUTO-SCROLL Logic
-       document.addEventListener("DOMContentLoaded", () => {
-            // Isolate JS selection to only within this specific section container!
-            const expertSection = document.getElementById('isolated-expert-module');
-            if (!expertSection) return;
+(() => {
+  'use strict';
 
-            const carousel = expertSection.querySelector('#expert-carousel-track');
-            const prevBtn = expertSection.querySelector('#expert-prev-btn');
-            const nextBtn = expertSection.querySelector('#expert-next-btn');
-            const dotsContainer = expertSection.querySelector('#expert-pagination-container');
-            const cards = expertSection.querySelectorAll('.expert-card');
-            
-            let itemWidth = 0;
-            let isTicking = false;
-            let dots = [];
-            let lastActiveIndex = -1; 
-            
-            // Stepped auto-scroll variables
-            let autoScrollInterval = null; // handle for the step timer
-            const autoScrollDelay = 2500;  // ms a card rests before the next step
-            const stepDuration = 1000;     // ms for one card's glide (the "scroll in 1 sec")
+  const SPEED       = 45;    // px per second of drift
+  const START_DELAY = 450;   // pause after arriving before the drift begins
+  const RESUME_MS   = 1200;  // idle time after an interaction before it resumes
+  const NUDGE_MS    = 620;   // prev/next glide duration
+  const FRICTION     = 0.94; // inertia decay per 16.7ms after a drag
+  const DRAG_SLOP   = 6;     // px of travel before a drag suppresses a click
 
-            // Custom scroll-animation handle (lets us cancel/replace in-flight animations)
-            let scrollRAF = null;
+  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+  const now = () => performance.now();
 
-            // 1. DYNAMICALLY GENERATE DOTS (based on the original cards only)
-            const originalCards = Array.from(cards);
-            dotsContainer.innerHTML = ''; 
-            originalCards.forEach(() => {
-                const dot = document.createElement('span');
-                dot.className = 'expert-dot expert-dot-xsmall'; 
-                dotsContainer.appendChild(dot);
-            });
-            dots = expertSection.querySelectorAll('.expert-dot');
+  const init = () => {
+    const section = document.getElementById('isolated-expert-module');
+    if (!section) return;
 
-            // 1b. CLONE CARDS for a seamless, never-ending loop.
-            // When we scroll past the original set, the clones occupy the exact
-            // same visual position, so we silently reset and the loop is invisible.
-            originalCards.forEach((card) => {
-                const clone = card.cloneNode(true);
-                clone.setAttribute('aria-hidden', 'true');
-                clone.classList.add('expert-card-clone');
-                carousel.appendChild(clone);
-            });
+    // Guard against this file being included twice, or running alongside the
+    // older build — double engines on one track look exactly like "broken".
+    if (section.dataset.marqueeReady === '1') return;
+    section.dataset.marqueeReady = '1';
 
-            // 2. COMPUTE WIDTHS
-            const getGapWidth = () => {
-                const style = window.getComputedStyle(carousel);
-                return parseInt(style.gap) || 24; 
-            };
+    const viewports = Array.from(section.querySelectorAll('.expert-carousel'));
+    const prevBtn   = section.querySelector('#expert-prev-btn');
+    const nextBtn   = section.querySelector('#expert-next-btn');
+    const dotsBox   = section.querySelector('#expert-pagination-container');
+    if (!viewports.length) return;
 
-            const calculateWidth = () => {
-                if (carousel.firstElementChild) {
-                    itemWidth = carousel.firstElementChild.offsetWidth + getGapWidth();
-                }
-            };
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let reduceMotion  = motionQuery.matches;
 
-            calculateWidth();
-            window.addEventListener('resize', calculateWidth, { passive: true });
+    /* ==================================================================
+       ONE ROW
+       ================================================================== */
+    const createRow = (viewport) => {
+      const dir   = viewport.dataset.row === 'reverse' ? -1 : 1;
+      const track = viewport.querySelector('.expert-track');
+      if (!track) return null;
 
-            // 2b. CUSTOM rAF SMOOTH SCROLL
-            // Buttery, consistent easing across browsers. Snap is briefly disabled
-            // during the animation so mandatory snapping never fights the motion,
-            // then restored once we land exactly on a card.
-            const maxScroll = () => carousel.scrollWidth - carousel.clientWidth;
-            const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+      const cards = Array.from(track.querySelectorAll('.expert-card'));
+      if (!cards.length) return null;
+      const count = cards.length;
 
-            const smoothScrollTo = (target, duration = 600, onComplete = null) => {
-                if (scrollRAF) cancelAnimationFrame(scrollRAF);
-
-                target = Math.max(0, Math.min(target, maxScroll()));
-                const start = carousel.scrollLeft;
-                const distance = target - start;
-                if (Math.abs(distance) < 1) { if (onComplete) onComplete(); return; }
-
-                carousel.style.scrollSnapType = 'none'; // avoid snap fighting the animation
-                let startTime = null;
-
-                const step = (now) => {
-                    if (startTime === null) startTime = now;
-                    const progress = Math.min((now - startTime) / duration, 1);
-                    carousel.scrollLeft = start + distance * easeInOutCubic(progress);
-
-                    if (progress < 1) {
-                        scrollRAF = requestAnimationFrame(step);
-                    } else {
-                        carousel.style.scrollSnapType = ''; // restore CSS snap (we're already on a card)
-                        scrollRAF = null;
-                        if (onComplete) onComplete();
-                    }
-                };
-                scrollRAF = requestAnimationFrame(step);
-            };
-
-            // Width of one full set of original cards = the seamless-loop reset distance
-            const loopWidth = () => originalCards.length * itemWidth;
-
-            const currentIndex = () => {
-                if (itemWidth === 0) return 0;
-                const raw = Math.round(carousel.scrollLeft / itemWidth);
-                // Wrap into the original card range so buttons/dots stay consistent
-                return ((raw % originalCards.length) + originalCards.length) % originalCards.length;
-            };
-
-            const goToIndex = (i, duration) => {
-                smoothScrollTo(i * itemWidth, duration);
-            };
-
-            // 3. DOT HIGHLIGHTING LOGIC
-            const updateDots = () => {
-                if (itemWidth === 0 || dots.length === 0) {
-                    isTicking = false;
-                    return;
-                }
-                
-                let activeIndex = Math.round(carousel.scrollLeft / itemWidth);
-                // Wrap into the original dot range (scrollLeft now runs through clones too)
-                activeIndex = ((activeIndex % dots.length) + dots.length) % dots.length;
-
-                // Only update the DOM if the active slide actually changed
-                if (activeIndex !== lastActiveIndex) {
-                    dots.forEach((dot, index) => {
-                        const distance = Math.abs(index - activeIndex);
-                        
-                        dot.className = 'expert-dot';
-                        
-                        if (distance === 0) {
-                            dot.classList.add('expert-dot-mid'); 
-                        } else if (distance === 1) {
-                            dot.classList.add('expert-dot-small'); 
-                        } else {
-                            dot.classList.add('expert-dot-xsmall'); 
-                        }
-                    });
-                    lastActiveIndex = activeIndex;
-                }
-
-                isTicking = false;
-            };
-
-            // 4. BUTTON CLICKS
-            nextBtn.addEventListener('click', () => {
-                goToIndex(currentIndex() + 1, 600);
-            });
-
-            prevBtn.addEventListener('click', () => {
-                goToIndex(currentIndex() - 1, 600);
-            });
-
-            // 5. SCROLL LISTENER
-            carousel.addEventListener('scroll', () => {
-                if (!isTicking) {
-                    window.requestAnimationFrame(updateDots);
-                    isTicking = true;
-                }
-            }, { passive: true });
-
-            // 6. STEPPED AUTO-SCROLL — glides one full card per step (~1s each)
-            const autoStep = () => {
-                if (itemWidth === 0) return;
-                // Next card's position from wherever we currently rest
-                const nextLeft = Math.round(carousel.scrollLeft / itemWidth) * itemWidth + itemWidth;
-
-                smoothScrollTo(nextLeft, stepDuration, () => {
-                    // Seamless loop: if that glide carried us into the cloned set,
-                    // jump back by one full set — invisible because clones are identical
-                    if (loopWidth() > 0 && carousel.scrollLeft >= loopWidth() - 1) {
-                        carousel.style.scrollSnapType = 'none';
-                        carousel.scrollLeft -= loopWidth();
-                        carousel.style.scrollSnapType = '';
-                    }
-                });
-            };
-
-            const startAutoScroll = () => {
-                stopAutoScroll(); // clear any existing timer first
-                // cadence = glide time + rest time, so each card advances cleanly one by one
-                autoScrollInterval = setInterval(autoStep, stepDuration + autoScrollDelay);
-            };
-
-            const stopAutoScroll = () => {
-                if (autoScrollInterval) {
-                    clearInterval(autoScrollInterval);
-                    autoScrollInterval = null;
-                }
-            };
-
-            // Pause auto-scroll while the user interacts, then resume
-            expertSection.addEventListener('mouseenter', stopAutoScroll);
-            expertSection.addEventListener('mouseleave', startAutoScroll);
-            expertSection.addEventListener('touchstart', stopAutoScroll, { passive: true });
-            expertSection.addEventListener('touchend', startAutoScroll, { passive: true });
-
-            // INITIALIZE
-            setTimeout(() => {
-                calculateWidth();
-                updateDots();
-                startAutoScroll(); // Start the auto-scrolling
-            }, 50); 
+      /* -- clones: one extra full set makes the wrap invisible ---------- */
+      const frag = document.createDocumentFragment();
+      cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.classList.add('expert-card-clone');
+        clone.querySelectorAll('img').forEach(img => {
+          img.loading  = 'lazy';
+          img.decoding = 'async';
+          img.removeAttribute('fetchpriority');
         });
+        clone.querySelectorAll('a, button').forEach(el => el.setAttribute('tabindex', '-1'));
+        frag.appendChild(clone);
+      });
+      track.appendChild(frag);
+
+      cards.forEach((card, i) => {
+        const img = card.querySelector('img');
+        if (!img) return;
+        img.decoding = 'async';
+        if (i < 2) { img.loading = 'eager'; img.setAttribute('fetchpriority', 'high'); }
+      });
+
+      /* -- state -------------------------------------------------------- */
+      let step = 0, loop = 0;
+      let pos = 0, drawn = NaN;
+      let mode = 'idle';            // idle | drift | drag | inertia | glide
+      let velocity = 0, resumeAt = 0;
+      let gFrom = 0, gTo = 0, gStart = 0;
+
+      const measure = () => {
+        const cs  = getComputedStyle(track);
+        const gap = parseFloat(cs.columnGap) || parseFloat(cs.gap) || 24;
+        const w   = cards[0].getBoundingClientRect().width;
+        if (!w) return false;                       // layout not ready yet
+        const old = loop;
+        step = w + gap;
+        loop = step * count;
+        if (old > 0) pos = (pos / old) * loop;      // keep relative place on resize
+        drawn = NaN;                                // force a repaint
+        return true;
+      };
+
+      const wrap = () => {
+        if (loop <= 0) return;
+        pos = ((pos % loop) + loop) % loop;
+      };
+
+      const render = () => {
+        wrap();
+        if (pos === drawn) return;                  // skip identical frames
+        drawn = pos;
+        track.style.transform = 'translate3d(' + (-pos).toFixed(2) + 'px,0,0)';
+      };
+
+      const row = {
+        viewport, track, dir, count, measure,
+        get ready() { return loop > 0; },
+        get index() {
+          return step > 0 ? ((Math.round(pos / step) % count) + count) % count : 0;
+        },
+
+        reset() { pos = 0; render(); },             // always lands on card 1
+
+        drift() { if (!reduceMotion && loop > 0) mode = 'drift'; },
+        pause() { mode = 'idle'; velocity = 0; resumeAt = 0; },
+
+        holdThenDrift(delay = RESUME_MS) {
+          mode = 'idle';
+          resumeAt = now() + delay;
+        },
+
+        nudge(steps) {
+          if (step <= 0) return;
+          gFrom  = pos;
+          gTo    = Math.round(pos / step) * step + steps * step;
+          if (reduceMotion) { pos = gTo; render(); return; }
+          gStart = now();
+          mode   = 'glide';
+        },
+
+        shove(dx) {                                 // trackpad / wheel
+          pos += dx;
+          render();
+          row.holdThenDrift();
+        },
+
+        update(t, dt) {
+          if (loop <= 0) return;
+          switch (mode) {
+            case 'drift':
+              pos += dir * SPEED * (dt / 1000);
+              render();
+              break;
+
+            case 'inertia':
+              pos -= velocity * dt;
+              velocity *= Math.pow(FRICTION, dt / 16.67);
+              render();
+              if (Math.abs(velocity) < 0.02) { velocity = 0; row.holdThenDrift(600); }
+              break;
+
+            case 'glide': {
+              const p = Math.min((t - gStart) / NUDGE_MS, 1);
+              pos = gFrom + (gTo - gFrom) * easeOutCubic(p);
+              render();
+              if (p >= 1) row.holdThenDrift();
+              break;
+            }
+
+            case 'idle':
+              if (resumeAt && t >= resumeAt) { resumeAt = 0; row.drift(); }
+              break;
+          }
+        }
+      };
+
+      /* -- drag: one code path for mouse, pen AND touch ------------------ */
+      /* `touch-action: pan-y` on the viewport lets the page still scroll
+         vertically while we own the horizontal axis, so touch and mouse now
+         feel identical instead of one being native and one simulated. */
+      let dragging = false, startX = 0, startPos = 0, moved = 0;
+      let lastX = 0, lastT = 0;
+
+      viewport.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        dragging = true;
+        moved    = 0;
+        startX   = lastX = e.clientX;
+        lastT    = now();
+        startPos = pos;
+        velocity = 0;
+        mode     = 'drag';
+        viewport.classList.add('is-grabbing');
+        try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
+      });
+
+      viewport.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        const dx = e.clientX - startX;
+        moved = Math.max(moved, Math.abs(dx));
+        if (e.pointerType === 'mouse') e.preventDefault();
+        pos = startPos - dx;
+        render();
+
+        const t  = now();
+        const dt = t - lastT;
+        if (dt > 0) velocity = (e.clientX - lastX) / dt;   // px per ms
+        lastX = e.clientX;
+        lastT = t;
+      });
+
+      const endDrag = (e) => {
+        if (!dragging) return;
+        dragging = false;
+        viewport.classList.remove('is-grabbing');
+        try { viewport.releasePointerCapture(e.pointerId); } catch (_) {}
+        if (Math.abs(velocity) > 0.05) mode = 'inertia';
+        else row.holdThenDrift();
+      };
+
+      viewport.addEventListener('pointerup', endDrag);
+      viewport.addEventListener('pointercancel', endDrag);
+      viewport.addEventListener('lostpointercapture', endDrag);
+      viewport.addEventListener('dragstart', e => e.preventDefault());
+
+      // a drag must never fire the link underneath it
+      viewport.addEventListener('click', (e) => {
+        if (moved > DRAG_SLOP) { e.preventDefault(); e.stopPropagation(); moved = 0; }
+      }, true);
+
+      // horizontal trackpad gestures, since there is no native scroller now
+      viewport.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;   // leave vertical alone
+        e.preventDefault();
+        row.shove(e.deltaX);
+      }, { passive: false });
+
+      measure();
+      return row;
+    };
+
+    const rows = viewports.map(createRow).filter(Boolean);
+    if (!rows.length) return;
+
+    /* ==================================================================
+       DOTS — tied to the first row
+       ================================================================== */
+    let dots = [], lastActive = -1;
+
+    if (dotsBox) {
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < rows[0].count; i++) {
+        const d = document.createElement('span');
+        d.className = 'expert-dot expert-dot-xsmall';
+        frag.appendChild(d);
+      }
+      dotsBox.textContent = '';
+      dotsBox.appendChild(frag);
+      dots = Array.from(dotsBox.children);
+    }
+
+    const paintDots = () => {
+      if (!dots.length) return;
+      const active = rows[0].index;
+      if (active === lastActive) return;
+      lastActive = active;
+      for (let i = 0; i < dots.length; i++) {
+        const d = Math.abs(i - active);
+        dots[i].className = 'expert-dot ' +
+          (d === 0 ? 'expert-dot-mid' : d === 1 ? 'expert-dot-small' : 'expert-dot-xsmall');
+      }
+    };
+
+    /* ==================================================================
+       ONE rAF LOOP FOR BOTH ROWS
+       ================================================================== */
+    let rafId = null, prevT = 0;
+
+    const frame = (t) => {
+      const dt = prevT ? Math.min(t - prevT, 50) : 16.7;   // clamp after a tab switch
+      prevT = t;
+      for (let i = 0; i < rows.length; i++) rows[i].update(t, dt);
+      paintDots();
+      rafId = requestAnimationFrame(frame);
+    };
+
+    const startLoop = () => { if (rafId === null) { prevT = 0; rafId = requestAnimationFrame(frame); } };
+    const stopLoop  = () => { if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; } };
+
+    /* ==================================================================
+       VISIBILITY — belt and braces
+       ================================================================== */
+    let hasEntered = false;
+    let active     = false;
+    let ioSays     = false;
+    let startTimer = null;
+
+    // Measurement can fail on the first pass (fonts, lazy CSS, hidden parent).
+    // Keep retrying on animation frames until the cards report a real width.
+    const ensureMeasured = (attempt = 0) => {
+      const ok = rows.every(r => r.measure() !== false && r.ready);
+      if (ok || attempt > 60) return ok;
+      requestAnimationFrame(() => ensureMeasured(attempt + 1));
+      return false;
+    };
+
+    const rectVisible = () => {
+      const r  = section.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      return r.bottom > vh * 0.12 && r.top < vh * 0.88;
+    };
+
+    const setActive = (on) => {
+      if (on === active) return;
+      active = on;
+
+      if (!on) {
+        clearTimeout(startTimer);
+        rows.forEach(r => r.pause());
+        stopLoop();
+        return;
+      }
+
+      if (!ensureMeasured()) {
+        // not measurable yet — try again next frame rather than giving up
+        requestAnimationFrame(() => { active = false; setActive(true); });
+        return;
+      }
+
+      if (!hasEntered) {
+        hasEntered = true;
+        rows.forEach(r => r.reset());          // arrive on card 1, every time
+      }
+
+      startLoop();
+      clearTimeout(startTimer);
+      startTimer = setTimeout(() => {
+        if (active) rows.forEach(r => r.drift());
+      }, hasEntered ? START_DELAY : 0);
+    };
+
+    const evaluate = () => setActive(ioSays || rectVisible());
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        for (const entry of entries) ioSays = entry.isIntersecting;
+        evaluate();
+      }, { threshold: [0, 0.01, 0.15] }).observe(section);
+    }
+
+    // Independent fallback. Cheap: one rect read per animation frame at most,
+    // and only while the user is actually scrolling.
+    let scrollTicking = false;
+    const onScroll = () => {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(() => { scrollTicking = false; evaluate(); });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('scroll', onScroll, { passive: true, capture: true });
+
+    /* ==================================================================
+       INPUT
+       ================================================================== */
+    if (nextBtn) nextBtn.addEventListener('click', () => rows.forEach(r => r.nudge(r.dir)));
+    if (prevBtn) prevBtn.addEventListener('click', () => rows.forEach(r => r.nudge(-r.dir)));
+
+    // NOTE: hovering the section no longer pauses the drift — removed on request.
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopLoop();
+      else if (active) startLoop();
+    });
+
+    const onMotionChange = () => {
+      reduceMotion = motionQuery.matches;
+      if (reduceMotion) rows.forEach(r => r.pause());
+      else if (active) rows.forEach(r => r.drift());
+    };
+    if (motionQuery.addEventListener) motionQuery.addEventListener('change', onMotionChange);
+    else if (motionQuery.addListener) motionQuery.addListener(onMotionChange);
+
+    let resizeTimer = null;
+    const remeasure = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { rows.forEach(r => r.measure()); lastActive = -1; evaluate(); }, 150);
+    };
+    window.addEventListener('resize', remeasure, { passive: true });
+    if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(viewports[0]);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+    window.addEventListener('load', () => { remeasure(); evaluate(); }, { once: true });
+
+    /* Late safety sweep: if something upstream delayed layout, this catches
+       the case where the section is plainly on screen but never started. */
+    [300, 1200, 3000].forEach(ms => setTimeout(evaluate, ms));
+
+    ensureMeasured();
+    evaluate();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+})();
+// speaker section ended
 
         // focus area 
 
