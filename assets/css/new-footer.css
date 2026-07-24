@@ -791,12 +791,10 @@
  /* =========================================================================
    FCRF SUMMIT — ESTEEMED SPEAKERS
    Two-row, full-bleed pocket-card marquee.
-   Rows run edge to edge; the header stays inside the 80rem container.
-   Motion is transform-based, so the rows are NOT scroll containers.
+   Cards are rendered by expert-showcase.js from its SPEAKERS array.
    ========================================================================= */
 
 .expert-showcase {
-    /* ---- palette ------------------------------------------------------ */
     --primary: #ffffff;
     --primary-hover: #000000;
     --border-light: rgba(255, 255, 255, 0.15);
@@ -804,15 +802,14 @@
     --text-gray: #a3a3a3;
     --bg-base: #000000;
 
-    /* Pocket planes, lifted well clear of the background so the card reads
-       as a solid object instead of blending into the page. Back is darker
-       than front, which is what gives the pocket its depth. */
+    /* Pocket planes, lifted clear of the background so the card reads as a
+       solid object. Back darker than front is what gives it depth. */
     --pocket-back:  #131313;
     --pocket-front: #1e1e1e;
     --pocket-edge:  rgba(255, 255, 255, 0.11);
 
-    /* The single accent, mirroring the reference's green arrow.
-       Set to #ffffff to keep the section strictly monochrome. */
+    /* Single accent, mirroring the reference's green arrow.
+       Set to #ffffff for a strictly monochrome section. */
     --accent: #34d399;
 
     --card-gap: 1.25rem;
@@ -821,7 +818,6 @@
 
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background-color: var(--bg-base);
-    /* pushed darker so the lifted cards separate cleanly */
     background: radial-gradient(circle at 50% 45%, #040404 0%, #000000 100%);
     color: var(--text-dark);
     -webkit-font-smoothing: antialiased;
@@ -968,13 +964,12 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-
     width: 100vw;
     margin-left:  calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
 }
 
-/* The viewport clips; it is NOT a scroll container any more. */
+/* The viewport clips; it is NOT a scroll container. */
 .expert-carousel {
     position: relative;
     overflow: hidden;
@@ -982,9 +977,9 @@
     cursor: grab;
     -webkit-user-select: none;
             user-select: none;
-    /* we own the horizontal axis, the page keeps the vertical one */
-    touch-action: pan-y;
+    touch-action: pan-y;    /* we own horizontal, the page keeps vertical */
     contain: layout paint style;
+    min-height: var(--card-h);
 }
 
 .expert-carousel.is-grabbing { cursor: grabbing; }
@@ -1009,7 +1004,7 @@
     height: var(--card-h);
     background: none;
     border: 0;
-    contain: layout paint style;   /* paint isolation without 40 GPU layers */
+    contain: layout paint style;
 }
 
 /* --- 1. pocket body ---------------------------------------------------- */
@@ -1050,6 +1045,23 @@
     user-select: none;
     pointer-events: none;
     transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Missing-file fallback: JS adds .no-photo and the speaker's initials, so a
+   card that has no image yet still looks deliberate rather than broken. */
+.expert-photo.no-photo img { display: none; }
+.expert-photo.no-photo::before {
+    content: attr(data-initials);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #262626 0%, #151515 100%);
+    color: #4a4a4a;
+    font-size: 3.25rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
 }
 
 /* Contact shadow where the lip crosses the photo — sells the tucked-in
@@ -1128,7 +1140,7 @@
     overflow: hidden;
 }
 
-/* designation — bolder and larger, sits directly under the name */
+/* designation — bold, sits directly under the name */
 .expert-role {
     margin-top: 0.18rem;
     font-size: 0.8125rem;
@@ -1182,8 +1194,7 @@
     outline-offset: 2px;
 }
 
-/* --- hover ------------------------------------------------------------- */
-/* Visual only. Hovering no longer pauses the drift. */
+/* --- hover: visual only, the drift never pauses ------------------------ */
 @media (hover: hover) {
     .expert-card:hover .expert-shell {
         transform: translateY(-6px);
@@ -1194,7 +1205,7 @@
 }
 
 /* =====================================================================
-   RESPONSIVE — two rows are kept at every width, the cards just shrink
+   RESPONSIVE — two rows at every width, the cards just shrink
    ===================================================================== */
 @media (max-width: 639.98px) {
     .expert-showcase { --card-h: 450px; --card-gap: 0.875rem; padding: 4rem 0.75rem; }
@@ -1205,6 +1216,7 @@
     .expert-role     { font-size: 0.78rem; }
     .expert-org      { font-size: 0.875rem; }
     .expert-header   { margin-bottom: 2rem; }
+    .expert-photo.no-photo::before { font-size: 2.75rem; }
 }
 
 @media (min-width: 640px) {
@@ -1225,9 +1237,6 @@
     .expert-showcase { padding-left: 2rem; padding-right: 2rem; }
 }
 
-/* =====================================================================
-   REDUCED MOTION — the drift is disabled in JS as well
-   ===================================================================== */
 @media (prefers-reduced-motion: reduce) {
     .expert-showcase *,
     .expert-showcase *::before,

@@ -189,28 +189,172 @@
 
 /* =========================================================================
    FCRF SUMMIT — ESTEEMED SPEAKERS
-   Two-row marquee engine, transform-driven.
+   Data-driven, two-row marquee.
    ========================================================================= */
 
 (() => {
   'use strict';
 
+  const IMG_BASE = "assets/img/speakers'26/";
+
+  /* ==================================================================
+     SPEAKERS
+     ================================================================== */
+  const SPEAKERS = [
+    {"row": 1, "name": "Air Marshal Jeetendra MIshra", "role": "SYSM, AVSM, VSM (R)", "org": "Former Air Officer Commanding-in-Chief, WAC, IAF", "img": "speaker'0.webp"},
+    {"row": 1, "name": "Daljit Singh Chaudhary", "role": "Former DG", "org": "BSF", "img": "speaker'1.webp"},
+    {"row": 1, "name": "Rajiv Jain", "role": "Former Director", "org": "Intelligence Bureau (IB)", "img": "speaker'2.webp"},
+    {"row": 1, "name": "Lt Gen (Dr) Rajesh Pant", "role": "Former National Cyber Security Coordinator & Chairman", "org": "Cyber Security Association of India", "img": "speaker'3.webp"},
+    {"row": 1, "name": "Dr. Gulshan Rai", "role": "Former National Cyber Security Coordinator & Former DG", "org": "Cert-In", "img": "speaker'4.webp"},
+    {"row": 1, "name": "Dr. Sanjay Bahl", "role": "Director General", "org": "Cert-In", "img": "speaker'5.webp"},
+    {"row": 1, "name": "Maj Gen (Dr) Bipin Bakshi", "role": "Distinguished Fellow", "org": "Centre for Land Warfare Studies (CLAWs)", "img": "speaker'6.webp"},
+    {"row": 1, "name": "Mini Rani Sharma", "role": "Head SeMT", "org": "MeiTY, GoI", "img": "Picture1.webp"},
+    {"row": 1, "name": "Lt. Col. Nishant Singh (Retd.)", "role": "Chief Operating Officer", "org": "Gramax Cybertech Limited", "img": "picture13.webp"},
+    {"row": 1, "name": "Alok Vijayant", "role": "Former Director, Cyber Security Operations, Govt of India", "org": "SciRoIT Technologies", "img": "Picture11.webp"},
+    {"row": 2, "name": "Somen Das", "role": "Associate Director", "org": "Accenture Cybersecurity", "img": "Picture8.webp"},
+    {"row": 2, "name": "Aman Bandvi", "role": "Founder Director", "org": "Bharat Responsible AI Forum", "img": "Picture2.webp"},
+    {"row": 2, "name": "Paakhhi Garg", "role": "Director", "org": "World Cyber Security Forum", "img": "Picture3.webp"},
+    {"row": 2, "name": "Megha Khetarpal", "role": "Senior Director, Fraud & Identity Global Products", "org": "TransUnion", "img": "Picture4.webp"},
+    {"row": 2, "name": "Dr Kulbhushan Upadhyay", "role": "Assistant General Manager", "org": "TCIL", "img": "Picture5.webp"},
+    {"row": 2, "name": "Dr. Ramkumar Iyer", "role": "CIO & AI Security Governance Director", "org": "Reliscale Consulting Pvt Ltd", "img": "Picture6.webp"},
+    {"row": 2, "name": "Bharat Jeswani", "role": "FCA, CFE, CFCS, CAMS — Founder", "org": "Bharat Jeswani Consulting, Global AML Consultants", "img": "Picture10.webp"},
+    {"row": 2, "name": "Garima Goswamy", "role": "Principal Risk Advisor", "org": "InQuest Global", "img": "Picture12.webp"},
+    {"row": 2, "name": "Suditi Tandon", "role": "Senior Officer, Global Data Privacy Office Specialist", "org": "Hella India Automotive Pvt Ltd", "img": "Picture9.webp"},
+    {"row": 1, "name": "Rakesh Maheshwari", "role": "Advisor, Cyber Laws & Tech Policy", "org": "Former Sr. Director & GC, MeitY", "img": "rakesh-maheshwari.webp"},
+    {"row": 1, "name": "AVM (Dr) Devesh Vatsa (Retd) VSM", "role": "Advisor", "org": "DSCI", "img": "devesh-vatsa.webp"},
+    {"row": 1, "name": "Ashutosh Bahuguna", "role": "Scientist & Lead - Cybersecurity Assurance", "org": "CERT-In", "img": "ashutosh-bahuguna.webp"},
+    {"row": 1, "name": "Dr. Rakshit Tandon", "role": "Cybersecurity Expert & Director - Training", "org": "Future Crime Research Foundation (FCRF)", "img": "rakshit-tandon.webp"},
+    {"row": 1, "name": "Bharat Panchal", "role": "Chief Risk & Regulatory Officer", "org": "Discover (Capital One)", "img": "bharat-panchal.webp"},
+    {"row": 1, "name": "Gyan Barah", "role": "Senior Advisor", "org": "Jio Financial Services", "img": "gyan-barah.webp"},
+    {"row": 2, "name": "Naveenathan M", "role": "Founder & Chairman", "org": "CXO Cywayz", "img": "naveenathan-m.webp"},
+    {"row": 2, "name": "Dinesh O Bareja", "role": "Cybersecurity Consultant", "org": "Independent Cybersecurity Consultant", "img": "dinesh-bareja.webp"},
+    {"row": 2, "name": "Balaji Kapsikar", "role": "Director, Cyber Security & Cyber Risk - DPO", "org": "CYNKEX Cybertech", "img": "balaji-kapsikar.webp"},
+    {"row": 2, "name": "Tanmayee Tilekar", "role": "Cybersecurity Expert", "org": "Cybersecurity Research & Consulting", "img": "tanmayee-tilekar.webp"},
+    {"row": 2, "name": "Gaurav Ranade", "role": "CTO", "org": "Technocentric Advisory", "img": "gaurav-ranade.webp"},
+    {"row": 2, "name": "CA (Dr.) Durgesh Pandey", "role": "Managing Partner", "org": "DKMS & Associates", "img": "durgesh-pandey.webp"},
+    {"row": 2, "name": "Piyush Kaushik", "role": "Product Manager, Forensics", "org": "Exterro", "img": "piyush-kaushik.webp"},
+    {"row": 2, "name": "Dr. Malvika Mehta", "role": "Founder", "org": "BLK Coral Intelligence", "img": "malvika-mehta.webp"},
+    {"row": 2, "name": "Himanshu Patel", "role": "Senior Manager - Cyber Defence, Investigation & DFIR", "org": "Protiviti India", "img": "himanshu-patel.webp"},
+    {"row": 2, "name": "Vijayant Gaur", "role": "Cybersecurity Expert", "org": "Cybersecurity Consultant", "img": "vijayant-gaur.webp"},
+    {"row": 2, "name": "Alok Gupta", "role": "CEO, Secure Operations & AI", "org": "Secure Operations & AI", "img": "alok-gupta.webp"},
+    {"row": 2, "name": "Dr. Akash Thakar", "role": "Assistant Professor", "org": "Rashtriya Raksha University", "img": "akash-thakar.webp"},
+    {"row": 2, "name": "Dr. Nishant Sawant", "role": "Director, Managed Security Services", "org": "Meta Infotech", "img": "nishant-sawant.webp"},
+    {"row": 2, "name": "Mimansa Ambastha", "role": "Founder & Data Privacy Lawyer", "org": "Starlex Consultants", "img": "mimansa-ambastha.webp"},
+  ];
+
+  /* ==================================================================
+     TUNING
+     ================================================================== */
   const SPEED       = 45;    // px per second of drift
-  const START_DELAY = 450;   // pause after arriving before the drift begins
+  const START_DELAY = 450;   // beat after arriving before the drift begins
   const RESUME_MS   = 1200;  // idle time after an interaction before it resumes
   const NUDGE_MS    = 620;   // prev/next glide duration
-  const FRICTION     = 0.94; // inertia decay per 16.7ms after a drag
+  const FRICTION    = 0.94;  // inertia decay per 16.7ms after a drag
   const DRAG_SLOP   = 6;     // px of travel before a drag suppresses a click
 
   const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
   const now = () => performance.now();
 
+  /* ==================================================================
+     CARD BUILDING
+     ================================================================== */
+  const ARROW_TPL = (() => {
+    const t = document.createElement('template');
+    t.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<line x1="7" y1="17" x2="17" y2="7"></line>' +
+      '<polyline points="8 7 17 7 17 16"></polyline></svg>';
+    return t.content.firstElementChild;
+  })();
+
+  const el = (tag, cls) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    return n;
+  };
+
+  const initialsOf = (name) => {
+    const skip = /^(air|marshal|lt|gen|maj|col|avm|dr|mr|ms|ca|retd|vsm|sysm|avsm)$/i;
+    const parts = name.replace(/[().,]/g, ' ').split(/\s+/)
+      .filter(p => p && !skip.test(p));
+    return parts.slice(0, 2).map(p => p[0]).join('').toUpperCase();
+  };
+
+  // Text is set with textContent, never innerHTML — names carry "&" and
+  // similar, and this sidesteps escaping bugs entirely.
+  const buildCard = (s, eager) => {
+    const card = el('article', 'expert-card');
+
+    const shell = el('div', 'expert-shell');
+    shell.setAttribute('aria-hidden', 'true');
+    card.appendChild(shell);
+
+    const photo = el('div', 'expert-photo');
+    const img = el('img');
+    img.src = IMG_BASE + s.img;
+    img.alt = s.name;
+    img.decoding = 'async';
+    img.draggable = false;
+    if (eager) { img.loading = 'eager'; img.setAttribute('fetchpriority', 'high'); }
+    else img.loading = 'lazy';
+
+    // If a file is missing the card still reads properly instead of
+    // showing a broken frame — useful while the images are being added.
+    img.addEventListener('error', () => {
+      photo.classList.add('no-photo');
+      photo.dataset.initials = initialsOf(s.name);
+    }, { once: true });
+
+    photo.appendChild(img);
+
+    const mark = el('span', 'expert-mark');
+    mark.setAttribute('aria-hidden', 'true');
+    mark.textContent = 'Speaker';
+    photo.appendChild(mark);
+    card.appendChild(photo);
+
+    const lip = el('div', 'expert-lip');
+    lip.setAttribute('aria-hidden', 'true');
+    card.appendChild(lip);
+
+    const content  = el('div', 'expert-content');
+    const headline = el('div', 'expert-headline');
+
+    const name = el('h3', 'expert-name');
+    name.textContent = s.name;
+    headline.appendChild(name);
+
+    const role = el('p', 'expert-role');
+    role.textContent = s.role;
+    headline.appendChild(role);
+    content.appendChild(headline);
+
+    const meta = el('div', 'expert-meta');
+    const org  = el('p', 'expert-org');
+    org.textContent = s.org;
+    meta.appendChild(org);
+
+    const link = el('a', 'expert-link');
+    link.href = s.url || '#';
+    link.setAttribute('aria-label', 'View profile of ' + s.name);
+    link.appendChild(ARROW_TPL.cloneNode(true));
+    meta.appendChild(link);
+
+    content.appendChild(meta);
+    card.appendChild(content);
+    return card;
+  };
+
+  /* ==================================================================
+     INIT
+     ================================================================== */
   const init = () => {
     const section = document.getElementById('isolated-expert-module');
     if (!section) return;
 
-    // Guard against this file being included twice, or running alongside the
-    // older build — double engines on one track look exactly like "broken".
+    // Guard against this file being included twice, or running alongside an
+    // older build — two engines on one track look exactly like "broken".
     if (section.dataset.marqueeReady === '1') return;
     section.dataset.marqueeReady = '1';
 
@@ -219,6 +363,18 @@
     const nextBtn   = section.querySelector('#expert-next-btn');
     const dotsBox   = section.querySelector('#expert-pagination-container');
     if (!viewports.length) return;
+
+    /* -- render the cards --------------------------------------------- */
+    viewports.forEach(vp => {
+      const track = vp.querySelector('.expert-track');
+      if (!track) return;
+      const which = vp.dataset.row === 'reverse' ? 2 : 1;
+      const list  = SPEAKERS.filter(s => (s.row || 1) === which);
+      const frag  = document.createDocumentFragment();
+      list.forEach((s, i) => frag.appendChild(buildCard(s, i < 2)));
+      track.textContent = '';
+      track.appendChild(frag);
+    });
 
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     let reduceMotion  = motionQuery.matches;
@@ -235,30 +391,21 @@
       if (!cards.length) return null;
       const count = cards.length;
 
-      /* -- clones: one extra full set makes the wrap invisible ---------- */
+      /* clones: one extra full set makes the wrap invisible */
       const frag = document.createDocumentFragment();
       cards.forEach(card => {
         const clone = card.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
         clone.classList.add('expert-card-clone');
         clone.querySelectorAll('img').forEach(img => {
-          img.loading  = 'lazy';
-          img.decoding = 'async';
+          img.loading = 'lazy';
           img.removeAttribute('fetchpriority');
         });
-        clone.querySelectorAll('a, button').forEach(el => el.setAttribute('tabindex', '-1'));
+        clone.querySelectorAll('a, button').forEach(e => e.setAttribute('tabindex', '-1'));
         frag.appendChild(clone);
       });
       track.appendChild(frag);
 
-      cards.forEach((card, i) => {
-        const img = card.querySelector('img');
-        if (!img) return;
-        img.decoding = 'async';
-        if (i < 2) { img.loading = 'eager'; img.setAttribute('fetchpriority', 'high'); }
-      });
-
-      /* -- state -------------------------------------------------------- */
       let step = 0, loop = 0;
       let pos = 0, drawn = NaN;
       let mode = 'idle';            // idle | drift | drag | inertia | glide
@@ -269,23 +416,18 @@
         const cs  = getComputedStyle(track);
         const gap = parseFloat(cs.columnGap) || parseFloat(cs.gap) || 24;
         const w   = cards[0].getBoundingClientRect().width;
-        if (!w) return false;                       // layout not ready yet
+        if (!w) return false;                     // layout not ready yet
         const old = loop;
         step = w + gap;
         loop = step * count;
-        if (old > 0) pos = (pos / old) * loop;      // keep relative place on resize
-        drawn = NaN;                                // force a repaint
+        if (old > 0) pos = (pos / old) * loop;    // keep place across resizes
+        drawn = NaN;
         return true;
       };
 
-      const wrap = () => {
-        if (loop <= 0) return;
-        pos = ((pos % loop) + loop) % loop;
-      };
-
       const render = () => {
-        wrap();
-        if (pos === drawn) return;                  // skip identical frames
+        if (loop > 0) pos = ((pos % loop) + loop) % loop;
+        if (pos === drawn) return;                // skip identical frames
         drawn = pos;
         track.style.transform = 'translate3d(' + (-pos).toFixed(2) + 'px,0,0)';
       };
@@ -297,30 +439,22 @@
           return step > 0 ? ((Math.round(pos / step) % count) + count) % count : 0;
         },
 
-        reset() { pos = 0; render(); },             // always lands on card 1
-
+        reset() { pos = 0; render(); },           // always lands on card 1
         drift() { if (!reduceMotion && loop > 0) mode = 'drift'; },
         pause() { mode = 'idle'; velocity = 0; resumeAt = 0; },
 
-        holdThenDrift(delay = RESUME_MS) {
-          mode = 'idle';
-          resumeAt = now() + delay;
-        },
+        holdThenDrift(delay = RESUME_MS) { mode = 'idle'; resumeAt = now() + delay; },
 
         nudge(steps) {
           if (step <= 0) return;
-          gFrom  = pos;
-          gTo    = Math.round(pos / step) * step + steps * step;
+          gFrom = pos;
+          gTo   = Math.round(pos / step) * step + steps * step;
           if (reduceMotion) { pos = gTo; render(); return; }
           gStart = now();
-          mode   = 'glide';
+          mode = 'glide';
         },
 
-        shove(dx) {                                 // trackpad / wheel
-          pos += dx;
-          render();
-          row.holdThenDrift();
-        },
+        shove(dx) { pos += dx; render(); row.holdThenDrift(); },
 
         update(t, dt) {
           if (loop <= 0) return;
@@ -352,22 +486,20 @@
         }
       };
 
-      /* -- drag: one code path for mouse, pen AND touch ------------------ */
-      /* `touch-action: pan-y` on the viewport lets the page still scroll
-         vertically while we own the horizontal axis, so touch and mouse now
-         feel identical instead of one being native and one simulated. */
+      /* drag: one code path for mouse, pen AND touch.
+         `touch-action: pan-y` leaves the vertical axis to the page. */
       let dragging = false, startX = 0, startPos = 0, moved = 0;
       let lastX = 0, lastT = 0;
 
       viewport.addEventListener('pointerdown', (e) => {
         if (e.pointerType === 'mouse' && e.button !== 0) return;
         dragging = true;
-        moved    = 0;
-        startX   = lastX = e.clientX;
-        lastT    = now();
+        moved = 0;
+        startX = lastX = e.clientX;
+        lastT = now();
         startPos = pos;
         velocity = 0;
-        mode     = 'drag';
+        mode = 'drag';
         viewport.classList.add('is-grabbing');
         try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
       });
@@ -379,9 +511,7 @@
         if (e.pointerType === 'mouse') e.preventDefault();
         pos = startPos - dx;
         render();
-
-        const t  = now();
-        const dt = t - lastT;
+        const t = now(), dt = t - lastT;
         if (dt > 0) velocity = (e.clientX - lastX) / dt;   // px per ms
         lastX = e.clientX;
         lastT = t;
@@ -401,12 +531,10 @@
       viewport.addEventListener('lostpointercapture', endDrag);
       viewport.addEventListener('dragstart', e => e.preventDefault());
 
-      // a drag must never fire the link underneath it
       viewport.addEventListener('click', (e) => {
         if (moved > DRAG_SLOP) { e.preventDefault(); e.stopPropagation(); moved = 0; }
       }, true);
 
-      // horizontal trackpad gestures, since there is no native scroller now
       viewport.addEventListener('wheel', (e) => {
         if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;   // leave vertical alone
         e.preventDefault();
@@ -468,13 +596,8 @@
     /* ==================================================================
        VISIBILITY — belt and braces
        ================================================================== */
-    let hasEntered = false;
-    let active     = false;
-    let ioSays     = false;
-    let startTimer = null;
+    let hasEntered = false, active = false, ioSays = false, startTimer = null;
 
-    // Measurement can fail on the first pass (fonts, lazy CSS, hidden parent).
-    // Keep retrying on animation frames until the cards report a real width.
     const ensureMeasured = (attempt = 0) => {
       const ok = rows.every(r => r.measure() !== false && r.ready);
       if (ok || attempt > 60) return ok;
@@ -500,21 +623,18 @@
       }
 
       if (!ensureMeasured()) {
-        // not measurable yet — try again next frame rather than giving up
         requestAnimationFrame(() => { active = false; setActive(true); });
         return;
       }
 
-      if (!hasEntered) {
-        hasEntered = true;
-        rows.forEach(r => r.reset());          // arrive on card 1, every time
-      }
+      const first = !hasEntered;
+      if (first) { hasEntered = true; rows.forEach(r => r.reset()); }
 
       startLoop();
       clearTimeout(startTimer);
       startTimer = setTimeout(() => {
         if (active) rows.forEach(r => r.drift());
-      }, hasEntered ? START_DELAY : 0);
+      }, first ? START_DELAY : 0);
     };
 
     const evaluate = () => setActive(ioSays || rectVisible());
@@ -526,8 +646,6 @@
       }, { threshold: [0, 0.01, 0.15] }).observe(section);
     }
 
-    // Independent fallback. Cheap: one rect read per animation frame at most,
-    // and only while the user is actually scrolling.
     let scrollTicking = false;
     const onScroll = () => {
       if (scrollTicking) return;
@@ -543,7 +661,7 @@
     if (nextBtn) nextBtn.addEventListener('click', () => rows.forEach(r => r.nudge(r.dir)));
     if (prevBtn) prevBtn.addEventListener('click', () => rows.forEach(r => r.nudge(-r.dir)));
 
-    // NOTE: hovering the section no longer pauses the drift — removed on request.
+    // Hovering deliberately does NOT pause the drift.
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) stopLoop();
@@ -568,8 +686,6 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
     window.addEventListener('load', () => { remeasure(); evaluate(); }, { once: true });
 
-    /* Late safety sweep: if something upstream delayed layout, this catches
-       the case where the section is plainly on screen but never started. */
     [300, 1200, 3000].forEach(ms => setTimeout(evaluate, ms));
 
     ensureMeasured();
