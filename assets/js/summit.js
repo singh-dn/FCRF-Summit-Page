@@ -981,7 +981,35 @@ const scheduleData = {
     logo: "assets/img/sponsors/cybersakti.jpeg",
     description: "Cyber Shakti Foundation is a community-driven organization working to advance cybersecurity awareness, education, research, knowledge sharing, and collaboration. Through training programs, internships, technical events, digital-forensics initiatives, and industry and academic engagement, the foundation aims to empower students, researchers, professionals, and cybersecurity enthusiasts while contributing to a safer and more resilient digital ecosystem.",
     website: "https://www.cybershaktifoundation.org/"
-}
+},
+{
+    tier: "Silver Sponsor",
+    name: "Esec Forte",
+    logo: "assets/img/sponsors/Esec.webp",
+    description: "Esec Forte Technologies is a leading cybersecurity company specializing in digital forensics, incident response, cyber investigations, security consulting, managed security services, cyber awareness programs, and advanced cybersecurity training. The company works with government agencies, law enforcement, enterprises, and critical infrastructure organizations to strengthen cyber resilience and digital trust.",
+    website: "https://www.esecforte.com/"
+},
+{
+    tier: "Silver Sponsor",
+    name: "Forensic Care",
+    logo: "assets/img/sponsors/aa-1.png",
+    description: "Forensic Care is a digital forensics and cybersecurity organization focused on cybercrime investigation, forensic analysis, incident response, cyber intelligence, and capacity building. It collaborates with law enforcement, government agencies, enterprises, and academic institutions to advance cybercrime investigation, digital evidence management, and cybersecurity awareness.",
+    website: "https://www.forensiccare.com/"
+},
+{
+    tier: "Silver Sponsor",
+    name: "Algoritha",
+    logo: "assets/img/sponsors/algoritha.png",
+    description: "Algoritha is an AI and technology company focused on delivering innovative solutions in artificial intelligence, machine learning, automation, data analytics, and intelligent software development. The company helps organizations accelerate digital transformation by building scalable AI-driven products, enterprise solutions, and next-generation technology platforms.",
+    website: "https://algoritha.com/"
+},
+{
+    tier: "Silver Sponsor",
+    name: "MSAB",
+    logo: "assets/img/sponsors/msab.png",
+    description: "MSAB (Micro Systemation AB) is a global leader in digital forensic technology, providing trusted solutions for the extraction, analysis, and management of data from mobile devices. Serving law enforcement, defense, government agencies, and enterprise investigators in more than 100 countries, MSAB empowers organizations with industry-leading mobile forensic tools, secure evidence management, and advanced investigative capabilities to accelerate digital investigations while maintaining forensic integrity.",
+    website: "https://www.msab.com/"
+},
         ];
 
         const overlay = document.getElementById('dss-modal-overlay');
