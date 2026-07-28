@@ -73,14 +73,34 @@ function fcs_fail(string $message, int $code = 400): never
     fcs_json_out(['ok' => false, 'error' => $message], $code);
 }
 
+/**
+ * The request payload.
+ *
+ * Reads three ways, in order of reliability. Some hosts — LiteSpeed with
+ * certain handler settings among them — hand back an empty php://input,
+ * which silently turns every posted field into nothing. So the browser now
+ * sends JSON inside an ordinary form field, which PHP always populates.
+ */
 function fcs_body(): array
 {
     static $cache = null;
     if ($cache !== null) return $cache;
-    $raw = file_get_contents('php://input') ?: '';
-    $decoded = json_decode($raw, true);
-    $cache = is_array($decoded) ? $decoded : $_POST;
-    return $cache;
+
+    // 1. JSON wrapped in a normal form field — works everywhere.
+    if (isset($_POST['payload']) && is_string($_POST['payload'])) {
+        $decoded = json_decode($_POST['payload'], true);
+        if (is_array($decoded)) return $cache = $decoded;
+    }
+
+    // 2. A raw JSON request body.
+    $raw = file_get_contents('php://input');
+    if (is_string($raw) && $raw !== '') {
+        $decoded = json_decode($raw, true);
+        if (is_array($decoded)) return $cache = $decoded;
+    }
+
+    // 3. A plain form post.
+    return $cache = $_POST;
 }
 
 function fcs_input(string $key, $default = null)

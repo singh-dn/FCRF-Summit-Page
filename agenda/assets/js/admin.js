@@ -27,8 +27,14 @@
     const init = { method: data ? 'POST' : 'GET', headers: {} };
     if (data) {
       init.headers['X-CSRF-Token'] = A.csrf;
-      if (isForm) init.body = data;
-      else { init.headers['Content-Type'] = 'application/json'; init.body = JSON.stringify(data); }
+      if (isForm) {
+        init.body = data;
+      } else {
+        // Sent as a form field rather than a raw JSON body: some hosts do not
+        // expose php://input, and a raw body would silently arrive empty.
+        init.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+        init.body = 'payload=' + encodeURIComponent(JSON.stringify(data));
+      }
     }
     const r = await fetch('api.php?action=' + action + (opts.qs ? '&' + opts.qs : ''), init);
     let d;
@@ -113,7 +119,7 @@
     if (b) go(b.dataset.panel);
   });
   $('#menu')?.addEventListener('click', () => $('#sidebar').classList.toggle('-translate-x-full'));
-  $('#logout').addEventListener('click', async () => {
+  /* sign-out is a plain link now */ document.getElementById('logout')?.addEventListener('click', async () => {
     await api('auth.logout', {});
     location.href = 'agenda.php';
   });
