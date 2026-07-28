@@ -44,26 +44,9 @@ function fcs_all(string $sql, array $params = []): array
 // ----------------------------------------------------------------- request
 function fcs_json_out($data, int $code = 200): never
 {
-    // Anything echoed before this point — a PHP notice, a leftover debug
-    // dump, a stray blank line after ?> in an edited file, a UTF-8 BOM added
-    // by a file manager — lands in front of the JSON and makes the browser
-    // fail with "Unexpected token '<'". Capture it, log it, drop it.
-    $stray = '';
-    while (ob_get_level() > 0) {
-        $stray .= (string)ob_get_clean();
-    }
-    if (trim($stray) !== '') {
-        error_log('[fcs] stray output before JSON: ' . mb_substr(trim($stray), 0, 500));
-        if (is_array($data) && (($_GET['debug'] ?? '') === '1')) {
-            $data['_stray_output'] = mb_substr(trim($stray), 0, 500);
-        }
-    }
-
-    if (!headers_sent()) {
-        http_response_code($code);
-        header('Content-Type: application/json; charset=utf-8');
-        header('X-Content-Type-Options: nosniff');
-    }
+    http_response_code($code);
+    header('Content-Type: application/json; charset=utf-8');
+    header('X-Content-Type-Options: nosniff');
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
@@ -88,20 +71,6 @@ function fcs_input(string $key, $default = null)
     $b = fcs_body();
     $v = $b[$key] ?? $_GET[$key] ?? $default;
     return is_string($v) ? trim($v) : $v;
-}
-
-/**
- * Same, but without trimming.
- *
- * Passwords must be read with this. Trimming one on the way in means a
- * password with a leading or trailing space — which password managers and
- * copy-paste produce constantly — is stored one way and checked another,
- * and the account can never be signed into.
- */
-function fcs_input_raw(string $key, $default = null)
-{
-    $b = fcs_body();
-    return $b[$key] ?? $_POST[$key] ?? $default;
 }
 
 function fcs_client_ip(): string
