@@ -23,6 +23,11 @@ function fcs_dummy_hash(): string
 
 function fcs_hash_password(string $plain): string
 {
+    // Trim consistently on both sides — this is what every large sign-in
+    // system does. Copy-paste from chat, email or a password manager
+    // routinely picks up invisible trailing whitespace, and treating "abc"
+    // and "abc " as different passwords is a footgun with no upside.
+    $plain = trim($plain);
     $opts = FCS_PASSWORD_ALGO === PASSWORD_DEFAULT
         ? ['cost' => 12]
         : ['memory_cost' => 65536, 'time_cost' => 4, 'threads' => 2];
@@ -52,6 +57,7 @@ function fcs_recent_failures(string $email): int
 function fcs_attempt_login(string $email, string $password): array
 {
     $email = mb_strtolower(trim($email));
+    $password = trim($password);
 
     if (fcs_recent_failures($email) >= FCS_LOGIN_MAX_ATTEMPTS) {
         return ['status' => 'error', 'message' => 'Too many attempts. Try again in 15 minutes.'];
