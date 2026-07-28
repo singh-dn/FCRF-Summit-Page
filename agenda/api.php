@@ -8,6 +8,11 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/lib/auth.php';
 
+// Buffer everything so that any accidental output — from this app, from a
+// stray edit, from a host-level prepend — can be stripped before the JSON
+// rather than corrupting it.
+ob_start();
+
 fcs_boot_session();
 fcs_touch_session();
 
@@ -156,7 +161,10 @@ function fcs_auth_state(): array
 
 function fcs_auth_login(): array
 {
-    $r = fcs_attempt_login((string)fcs_input('email', ''), (string)fcs_input('password', ''));
+    $r = fcs_attempt_login(
+        (string)fcs_input('email', ''),
+        (string)fcs_input_raw('password', '')   // never trimmed
+    );
     if ($r['status'] === 'error') fcs_fail($r['message'], 401);
     return ['ok' => true, 'status' => $r['status'], 'csrf' => fcs_csrf_token()];
 }
@@ -576,7 +584,7 @@ function fcs_user_save(): array
         fcs_fail('Only the Owner can appoint another Owner.', 403);
     }
 
-    $password = (string)fcs_input('password', '');
+    $password = (string)fcs_input_raw('password', '');
     $active   = (int)(bool)fcs_input('is_active', 1);
 
     if ($id) {

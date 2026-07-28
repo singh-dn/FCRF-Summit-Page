@@ -61,16 +61,12 @@ function fcs_attempt_login(string $email, string $password): array
                 FROM agenda_users u JOIN agenda_roles r ON r.id = u.role_id
                WHERE u.email = ? AND u.deleted_at IS NULL', [$email]);
 
-$verified = $u ? password_verify($password, $u['password_hash']) : false;
-
-echo "<pre>";
-var_dump([
-    'user_found' => (bool)$u,
-    'email' => $email,
-    'password_verify' => $verified,
-    'hash' => $u['password_hash'] ?? null,
-]);
-exit;
+    if (!$u || !password_verify($password, $u['password_hash'])) {
+        fcs_log_attempt($email, false);
+        // Constant-ish cost even when the account is absent.
+        if (!$u) password_verify($password, fcs_dummy_hash());
+        return ['status' => 'error', 'message' => 'Email or password is incorrect.'];
+    }
 
     if (!$u['is_active']) {
         fcs_log_attempt($email, false);
