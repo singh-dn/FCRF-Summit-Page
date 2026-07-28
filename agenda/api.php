@@ -21,12 +21,12 @@ $action = (string)($_GET['action'] ?? '');
 $isPost = $_SERVER['REQUEST_METHOD'] === 'POST';
 
 // Public reads need no session at all.
-const FCS_PUBLIC_ACTIONS = ['agenda.public', 'auth.login', 'auth.twofa', 'auth.state'];
+const FCS_PUBLIC_ACTIONS = ['agenda.public', 'auth.login', 'auth.state'];
 
 if (!in_array($action, FCS_PUBLIC_ACTIONS, true)) {
     fcs_require_login();
 }
-if ($isPost && !in_array($action, ['auth.login', 'auth.twofa'], true)) {
+if ($isPost && $action !== 'auth.login') {
     fcs_check_csrf();
 }
 
@@ -43,8 +43,7 @@ function fcs_route(string $action, bool $isPost): array
         'agenda.public'      => fcs_public_agenda(),
         'auth.state'         => fcs_auth_state(),
         'auth.login'         => fcs_auth_login(),
-        'auth.twofa'         => ['ok' => true] + fcs_complete_2fa((string)fcs_input('code', '')),
-        'auth.logout'        => (function () { fcs_logout(); return ['ok' => true]; })(),
+        'auth.logout'        => (function () { fcs_sign_out(); return ['ok' => true]; })(),
         'dash.stats'         => fcs_dash_stats(),
 
         'session.list'       => ['ok' => true, 'sessions' => fcs_admin_sessions()],
@@ -64,10 +63,6 @@ function fcs_route(string $action, bool $isPost): array
         'track.save'         => fcs_taxonomy_save('track'),
         'track.delete'       => fcs_taxonomy_delete('track'),
 
-        'user.list'          => fcs_user_list(),
-        'user.save'          => fcs_user_save(),
-        'user.delete'        => fcs_user_delete(),
-        'user.permissions'   => fcs_user_permissions(),
 
         'history.list'       => fcs_history_list(),
         'version.list'       => fcs_version_list(),
@@ -147,26 +142,22 @@ function fcs_public_agenda(): array
 // ===================================================================== auth
 function fcs_auth_state(): array
 {
-    $u = fcs_current_user();
-    if (!$u) return ['ok' => true, 'authenticated' => false, 'csrf' => fcs_csrf_token()];
+    if (!fcs_is_admin()) return ['ok' => true, 'authenticated' => false, 'csrf' => fcs_csrf_token()];
     return [
         'ok' => true, 'authenticated' => true, 'csrf' => fcs_csrf_token(),
-        'user' => [
-            'id' => (int)$u['id'], 'name' => $u['full_name'], 'email' => $u['email'],
-            'role' => $u['role_name'], 'role_slug' => $u['role_slug'],
-        ],
+        'user' => ['name' => 'Administrator', 'role' => 'Administrator'],
         'permissions' => fcs_permission_map(),
     ];
 }
 
 function fcs_auth_login(): array
 {
-    $r = fcs_attempt_login(
-        (string)fcs_input('email', ''),
-        (string)fcs_input_raw('password', '')   // never trimmed
-    );
-    if ($r['status'] === 'error') fcs_fail($r['message'], 401);
-    return ['ok' => true, 'status' => $r['status'], 'csrf' => fcs_csrf_token()];
+    if (!fcs_password_ok((string)fcs_input_raw('password', ''))) {
+        usleep(350000);                       // take the edge off guessing
+        fcs_fail('That password is not right.', 401);
+    }
+    fcs_sign_in();
+    return ['ok' => true, 'csrf' => fcs_csrf_token()];
 }
 
 // ================================================================ dashboard
@@ -179,8 +170,6 @@ function fcs_dash_stats(): array
     $published = fcs_one("SELECT COUNT(*) AS n FROM agenda_sessions WHERE deleted_at IS NULL AND status='published'");
     $speakers = fcs_one("SELECT COUNT(*) AS n FROM agenda_speakers WHERE deleted_at IS NULL");
     $confirmed = fcs_one("SELECT COUNT(*) AS n FROM agenda_speakers WHERE deleted_at IS NULL AND status='published'");
-    $online = fcs_one("SELECT COUNT(DISTINCT user_id) AS n FROM agenda_user_sessions
-                    WHERE revoked_at IS NULL AND last_seen_at > DATE_SUB(NOW(), INTERVAL 5 MINUTE)");
     $last = fcs_one("SELECT created_at, user_name, action, entity_type, entity_label
                    FROM agenda_audit_logs ORDER BY id DESC LIMIT 1");
     $trash = fcs_one("SELECT COUNT(*) AS n FROM agenda_deleted_items WHERE restored_at IS NULL");
@@ -196,7 +185,6 @@ function fcs_dash_stats(): array
             'sessions_live'     => (int)$published['n'],
             'speakers'          => (int)$speakers['n'],
             'speakers_live'     => (int)$confirmed['n'],
-            'editors_online'    => (int)$online['n'],
             'in_trash'          => (int)$trash['n'],
             'sessions_no_speaker' => (int)$unassigned['n'],
         ],
@@ -269,8 +257,7 @@ function fcs_session_save(): array
         if (!$old) fcs_fail('That session no longer exists.', 404);
         fcs_snapshot('session', $id);
         $set = implode(', ', array_map(fn($c) => "`$c` = ?", array_keys($fields)));
-        fcs_q("UPDATE agenda_sessions SET $set, updated_by = ? WHERE id = ?",
-          [...array_values($fields), $u['id'], $id]);
+        fcs_fcs_q("UPDATE agenda_sessions SET $set WHERE id = ?", [...array_values($fields), $id]);
         [$o, $n] = fcs_diff($old, $fields);
         fcs_audit('update', 'session', $id, $title, $o, $n);
     } else {
@@ -278,8 +265,7 @@ function fcs_session_save(): array
         $fields['sort_order'] = $maxOrder;
         $cols = implode('`,`', array_keys($fields));
         $ph   = implode(',', array_fill(0, count($fields), '?'));
-        fcs_q("INSERT INTO agenda_sessions (`$cols`, created_by, updated_by) VALUES ($ph, ?, ?)",
-          [...array_values($fields), $u['id'], $u['id']]);
+        fcs_q("INSERT INTO agenda_sessions (`$cols`) VALUES ($ph)", array_values($fields));
         $id = (int)fcs_db()->lastInsertId();
         fcs_audit('create', 'session', $id, $title, null, $fields);
     }
@@ -323,11 +309,11 @@ function fcs_session_duplicate(): array
     $u = fcs_current_user();
     fcs_q("INSERT INTO agenda_sessions
          (day_id, hall_id, track_id, title, subtitle, description, session_type,
-          start_time, end_time, is_parallel, is_featured, sort_order, status, created_by, updated_by)
-       VALUES (?,?,?,?,?,?,?,?,?,?,?,?, 'draft', ?, ?)",
+          start_time, end_time, is_parallel, is_featured, sort_order, status)
+       VALUES (?,?,?,?,?,?,?,?,?,?,?,?, 'draft')",
       [$s['day_id'], $s['hall_id'], $s['track_id'], $s['title'] . ' (copy)', $s['subtitle'],
        $s['description'], $s['session_type'], $s['start_time'], $s['end_time'],
-       $s['is_parallel'], 0, (int)$s['sort_order'] + 1, $u['id'], $u['id']]);
+       $s['is_parallel'], 0, (int)$s['sort_order'] + 1]);
     $new = (int)fcs_db()->lastInsertId();
 
     fcs_q('INSERT INTO agenda_session_speakers (session_id, speaker_id, speaker_role, sort_order)
@@ -408,16 +394,14 @@ function fcs_speaker_save(): array
         fcs_snapshot('speaker', $id);
         $fields['slug'] = fcs_unique_slug('agenda_speakers', fcs_slugify($name, 'speaker'), $id);
         $set = implode(', ', array_map(fn($c) => "`$c` = ?", array_keys($fields)));
-        fcs_q("UPDATE agenda_speakers SET $set, updated_by = ? WHERE id = ?",
-          [...array_values($fields), $u['id'], $id]);
+        fcs_q("UPDATE agenda_speakers SET $set WHERE id = ?", [...array_values($fields), $id]);
         [$o, $n] = fcs_diff($old, $fields);
         fcs_audit('update', 'speaker', $id, $name, $o, $n);
     } else {
         $fields['slug'] = fcs_unique_slug('agenda_speakers', fcs_slugify($name, 'speaker'));
         $cols = implode('`,`', array_keys($fields));
         $ph   = implode(',', array_fill(0, count($fields), '?'));
-        fcs_q("INSERT INTO agenda_speakers (`$cols`, created_by, updated_by) VALUES ($ph, ?, ?)",
-          [...array_values($fields), $u['id'], $u['id']]);
+        fcs_q("INSERT INTO agenda_speakers (`$cols`) VALUES ($ph)", array_values($fields));
         $id = (int)fcs_db()->lastInsertId();
         fcs_audit('create', 'speaker', $id, $name, null, $fields);
     }
@@ -549,122 +533,9 @@ function fcs_taxonomy_delete(string $type): array
 }
 
 // ==================================================================== users
-function fcs_user_list(): array
-{
-    fcs_require_perm('users.view');
-    $users = fcs_all("SELECT u.id, u.full_name, u.email, u.is_active, u.last_login_at,
-                         u.twofa_enabled, r.name AS role_name, r.slug AS role_slug, r.level AS role_level
-                    FROM agenda_users u JOIN agenda_roles r ON r.id = u.role_id
-                   WHERE u.deleted_at IS NULL ORDER BY r.level, u.full_name");
-    return [
-        'ok' => true, 'users' => $users,
-        'roles' => fcs_all('SELECT id, slug, name, level, description FROM agenda_roles ORDER BY level'),
-        'permissions' => fcs_all('SELECT id, slug, module, label FROM agenda_permissions ORDER BY sort_order'),
-    ];
-}
 
-function fcs_user_save(): array
-{
-    fcs_require_perm('users.manage');
-    $me = fcs_current_user();
-    $id = (int)fcs_input('id', 0);
 
-    $name  = (string)fcs_input('full_name', '');
-    $email = mb_strtolower((string)fcs_input('email', ''));
-    if ($name === '') fcs_fail('Give the person a name.');
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) fcs_fail('That email address is not valid.');
 
-    $roleId = (int)fcs_input('role_id', 0);
-    $role = fcs_one('SELECT * FROM agenda_roles WHERE id = ?', [$roleId]);
-    if (!$role) fcs_fail('Pick a role.');
-    if ($me['role_slug'] !== 'owner' && (int)$role['level'] <= (int)$me['role_level']) {
-        fcs_fail('You cannot grant a role at or above your own.', 403);
-    }
-    if ($role['slug'] === 'owner' && $me['role_slug'] !== 'owner') {
-        fcs_fail('Only the Owner can appoint another Owner.', 403);
-    }
-
-    $password = (string)fcs_input_raw('password', '');
-    $active   = (int)(bool)fcs_input('is_active', 1);
-
-    if ($id) {
-        $old = fcs_one('SELECT u.*, r.level AS role_level FROM agenda_users u
-                      JOIN agenda_roles r ON r.id = u.role_id WHERE u.id = ? AND u.deleted_at IS NULL', [$id]);
-        if (!$old) fcs_fail('That account no longer exists.', 404);
-        if ((int)$old['id'] !== (int)$me['id']) fcs_require_rank_over($old);
-        if ((int)$old['id'] === (int)$me['id'] && !$active) fcs_fail('You cannot switch off your own account.');
-
-        fcs_snapshot('user', $id);
-        fcs_q('UPDATE agenda_users SET full_name = ?, email = ?, role_id = ?, phone = ?, is_active = ? WHERE id = ?',
-          [$name, $email, $roleId, fcs_input('phone') ?: null, $active, $id]);
-        if ($password !== '') {
-            if (strlen($password) < 10) fcs_fail('Passwords need at least 10 characters.');
-            fcs_q('UPDATE agenda_users SET password_hash = ?, must_change_pwd = 0 WHERE id = ?',
-              [fcs_hash_password($password), $id]);
-            fcs_q('UPDATE agenda_user_sessions SET revoked_at = NOW() WHERE user_id = ? AND id <> ?',
-              [$id, hash('sha256', session_id())]);
-        }
-        fcs_audit('update', 'user', $id, $name,
-              ['role_id' => $old['role_id'], 'is_active' => $old['is_active'], 'email' => $old['email']],
-              ['role_id' => $roleId, 'is_active' => $active, 'email' => $email]);
-    } else {
-        if (strlen($password) < 10) fcs_fail('Passwords need at least 10 characters.');
-        if (fcs_one('SELECT id FROM agenda_users WHERE email = ?', [$email])) {
-            fcs_fail('An account already uses that email address.');
-        }
-        fcs_q('INSERT INTO agenda_users (role_id, full_name, email, password_hash, phone, is_active, must_change_pwd, created_by)
-           VALUES (?,?,?,?,?,?,1,?)',
-          [$roleId, $name, $email, fcs_hash_password($password), fcs_input('phone') ?: null, $active, $me['id']]);
-        $id = (int)fcs_db()->lastInsertId();
-        fcs_audit('create', 'user', $id, $name, null, ['email' => $email, 'role_id' => $roleId]);
-    }
-    return ['ok' => true, 'id' => $id];
-}
-
-function fcs_user_delete(): array
-{
-    fcs_require_perm('users.manage');
-    $id = (int)fcs_input('id', 0);
-    $me = fcs_current_user();
-    if ($id === (int)$me['id']) fcs_fail('You cannot delete your own account.');
-    $t = fcs_one('SELECT u.*, r.level AS role_level FROM agenda_users u
-                JOIN agenda_roles r ON r.id = u.role_id WHERE u.id = ?', [$id]);
-    if (!$t) fcs_fail('That account no longer exists.', 404);
-    fcs_require_rank_over($t);
-    fcs_q('UPDATE agenda_user_sessions SET revoked_at = NOW() WHERE user_id = ?', [$id]);
-    fcs_soft_delete('user', $id, $t['email']);
-    return ['ok' => true];
-}
-
-function fcs_user_permissions(): array
-{
-    $id = (int)fcs_input('id', 0);
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        fcs_require_perm('users.view');
-        return ['ok' => true, 'overrides' => fcs_all(
-            'SELECT p.slug, up.effect FROM agenda_user_permissions up
-               JOIN agenda_permissions p ON p.id = up.permission_id WHERE up.user_id = ?', [$id])];
-    }
-
-    fcs_require_perm('users.permissions');
-    $me = fcs_current_user();
-    $t = fcs_one('SELECT u.*, r.level AS role_level FROM agenda_users u
-                JOIN agenda_roles r ON r.id = u.role_id WHERE u.id = ?', [$id]);
-    if (!$t) fcs_fail('That account no longer exists.', 404);
-    fcs_require_rank_over($t);
-
-    $overrides = fcs_body()['overrides'] ?? [];
-    fcs_snapshot('user', $id);
-    fcs_q('DELETE FROM agenda_user_permissions WHERE user_id = ?', [$id]);
-    foreach ($overrides as $slug => $effect) {
-        if (!in_array($effect, ['allow', 'deny'], true)) continue;
-        fcs_q('INSERT IGNORE INTO agenda_user_permissions (user_id, permission_id, effect, granted_by)
-           SELECT ?, id, ?, ? FROM agenda_permissions WHERE slug = ?',
-          [$id, $effect, $me['id'], $slug]);
-    }
-    fcs_audit('permission_change', 'user', $id, $t['full_name'], null, ['overrides' => $overrides]);
-    return ['ok' => true];
-}
 
 // ============================================== history / versions / trash
 function fcs_history_list(): array

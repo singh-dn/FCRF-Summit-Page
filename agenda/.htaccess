@@ -23,7 +23,7 @@ RedirectMatch 404 /sql/
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "same-origin"
-  <FilesMatch "^(admin|setup)\.php$">
+  <FilesMatch "^(admin|setup|reset-login)\.php$">
     Header set X-Robots-Tag "noindex, nofollow"
   </FilesMatch>
 </IfModule>

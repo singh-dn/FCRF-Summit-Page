@@ -144,86 +144,11 @@ function fcs_check_csrf(): void
 }
 
 // -------------------------------------------------------------------- RBAC
-function fcs_current_user(): ?array
-{
-    static $u = null;
-    if ($u !== null) return $u ?: null;
-    if (empty($_SESSION['uid'])) { $u = false; return null; }
-    $row = fcs_one(
-        'SELECT u.*, r.slug AS role_slug, r.name AS role_name, r.level AS role_level
-           FROM agenda_users u JOIN agenda_roles r ON r.id = u.role_id
-          WHERE u.id = ? AND u.is_active = 1 AND u.deleted_at IS NULL',
-        [$_SESSION['uid']]
-    );
-    $u = $row ?: false;
-    return $row;
-}
 
-/** Effective permission: user-level deny beats role grant; user-level allow beats role silence. */
-function fcs_can(string $perm): bool
-{
-    $u = fcs_current_user();
-    if (!$u) return false;
 
-    static $cache = [];
-    if (isset($cache[$perm])) return $cache[$perm];
 
-    $row = fcs_one(
-        "SELECT up.effect AS override, rp.role_id AS role_grant
-           FROM agenda_permissions p
-           LEFT JOIN agenda_user_permissions up ON up.permission_id = p.id AND up.user_id = ?
-           LEFT JOIN agenda_role_permissions rp ON rp.permission_id = p.id AND rp.role_id = ?
-          WHERE p.slug = ?",
-        [$u['id'], $u['role_id'], $perm]
-    );
-    if (!$row) return $cache[$perm] = false;
-    if ($row['override'] === 'deny')  return $cache[$perm] = false;
-    if ($row['override'] === 'allow') return $cache[$perm] = true;
-    return $cache[$perm] = $row['role_grant'] !== null;
-}
 
-function fcs_require_login(): array
-{
-    $u = fcs_current_user();
-    if (!$u) fcs_fail('Sign in to continue.', 401);
-    return $u;
-}
 
-function fcs_require_perm(string $perm): array
-{
-    $u = fcs_require_login();
-    if (!fcs_can($perm)) fcs_fail("You don't have permission to do that.", 403);
-    return $u;
-}
-
-/** Nobody may act on a user at or above their own level, except the Owner. */
-function fcs_require_rank_over(array $target): void
-{
-    $u = fcs_require_login();
-    if ($u['role_slug'] === 'owner') return;
-    if ((int)$target['role_level'] <= (int)$u['role_level']) {
-        fcs_fail('That account outranks yours.', 403);
-    }
-}
-
-function fcs_permission_map(): array
-{
-    $u = fcs_current_user();
-    if (!$u) return [];
-    $rows = fcs_all(
-        "SELECT p.slug,
-                CASE WHEN up.effect = 'deny' THEN 0
-                     WHEN up.effect = 'allow' THEN 1
-                     WHEN rp.role_id IS NOT NULL THEN 1 ELSE 0 END AS granted
-           FROM agenda_permissions p
-           LEFT JOIN agenda_user_permissions up ON up.permission_id = p.id AND up.user_id = ?
-           LEFT JOIN agenda_role_permissions rp ON rp.permission_id = p.id AND rp.role_id = ?",
-        [$u['id'], $u['role_id']]
-    );
-    $out = [];
-    foreach ($rows as $r) $out[$r['slug']] = (bool)(int)$r['granted'];
-    return $out;
-}
 
 // ------------------------------------------------------------- audit trail
 function fcs_audit(string $action, string $entityType, ?int $entityId, ?string $label,
@@ -231,12 +156,11 @@ function fcs_audit(string $action, string $entityType, ?int $entityId, ?string $
 {
     $u = fcs_current_user();
     fcs_q('INSERT INTO agenda_audit_logs
-         (user_id, user_name, action, entity_type, entity_id, entity_label,
+         (user_name, action, entity_type, entity_id, entity_label,
           old_values, new_values, ip_address, user_agent)
-       VALUES (?,?,?,?,?,?,?,?,?,?)',
+       VALUES (?,?,?,?,?,?,?,?,?)',
       [
-          $u['id'] ?? null,
-          $u['full_name'] ?? null,
+          $u['full_name'] ?? 'Administrator',
           $action, $entityType, $entityId, $label !== null ? mb_substr($label, 0, 255) : null,
           $old !== null ? json_encode($old, JSON_UNESCAPED_UNICODE) : null,
           $new !== null ? json_encode($new, JSON_UNESCAPED_UNICODE) : null,
@@ -275,10 +199,6 @@ function fcs_entity_snapshot(string $type, int $id): ?array
             return $row;
         case 'hall':  return fcs_one('SELECT * FROM agenda_halls  WHERE id = ?', [$id]);
         case 'track': return fcs_one('SELECT * FROM agenda_tracks WHERE id = ?', [$id]);
-        case 'user':
-            $row = fcs_one('SELECT id, role_id, full_name, email, phone, is_active
-                          FROM agenda_users WHERE id = ?', [$id]);
-            return $row ?: null;
     }
     return null;
 }
@@ -293,10 +213,10 @@ function fcs_snapshot(string $type, int $id, ?string $note = null): void
                          FROM agenda_versions WHERE entity_type = ? AND entity_id = ?',
                       [$type, $id])['n'] ?? 1);
     fcs_q('INSERT INTO agenda_versions
-         (entity_type, entity_id, version_no, snapshot, note, created_by, created_by_name)
-       VALUES (?,?,?,?,?,?,?)',
+         (entity_type, entity_id, version_no, snapshot, note, created_by_name)
+       VALUES (?,?,?,?,?,?)',
       [$type, $id, $next, json_encode($data, JSON_UNESCAPED_UNICODE), $note,
-       $u['id'] ?? null, $u['full_name'] ?? null]);
+       $u['full_name'] ?? 'Administrator']);
 }
 
 const FCS_VERSION_TABLES = [
@@ -346,7 +266,6 @@ const FCS_TRASH_TABLES = [
     'speaker' => ['agenda_speakers', 'full_name'],
     'hall'    => ['agenda_halls', 'name'],
     'track'   => ['agenda_tracks', 'name'],
-    'user'    => ['agenda_users', 'full_name'],
 ];
 
 function fcs_soft_delete(string $type, int $id, ?string $summary = null): void
@@ -363,10 +282,10 @@ function fcs_soft_delete(string $type, int $id, ?string $summary = null): void
     $u = fcs_current_user();
     $retention = (int)(fcs_setting('trash_retention_days') ?? 30);
     fcs_q('INSERT INTO agenda_deleted_items
-         (entity_type, entity_id, entity_label, summary, deleted_by, deleted_by_name, purge_after)
-       VALUES (?,?,?,?,?,?, DATE_ADD(CURDATE(), INTERVAL ? DAY))',
+         (entity_type, entity_id, entity_label, summary, deleted_by_name, purge_after)
+       VALUES (?,?,?,?,?, DATE_ADD(CURDATE(), INTERVAL ? DAY))',
       [$type, $id, $row[$labelCol] ?? null, $summary,
-       $u['id'] ?? null, $u['full_name'] ?? null, $retention]);
+       $u['full_name'] ?? 'Administrator', $retention]);
 
     fcs_audit('delete', $type, $id, $row[$labelCol] ?? null, $row, null);
 }
@@ -419,13 +338,12 @@ function fcs_set_setting(string $key, $value, string $type = 'string', bool $isP
 {
     $u = fcs_current_user();
     $stored = $type === 'json' ? json_encode($value) : (is_bool($value) ? ($value ? '1' : '0') : (string)$value);
-    fcs_q('INSERT INTO agenda_settings (setting_key, setting_value, value_type, is_public, updated_by)
-       VALUES (?,?,?,?,?)
+    fcs_q('INSERT INTO agenda_settings (setting_key, setting_value, value_type, is_public)
+       VALUES (?,?,?,?)
        ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value),
                                value_type = VALUES(value_type),
-                               is_public = VALUES(is_public),
-                               updated_by = VALUES(updated_by)',
-      [$key, $stored, $type, (int)$isPublic, $u['id'] ?? null]);
+                               is_public = VALUES(is_public)',
+      [$key, $stored, $type, (int)$isPublic]);
 }
 
 // -------------------------------------------------------------------- misc

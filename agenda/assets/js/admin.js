@@ -8,7 +8,7 @@
   const A = window.FCS_ADMIN;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const can = (p) => !!A.perms[p];
+  const can = () => true;   // one password, full access
 
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -42,8 +42,8 @@
     const el = document.createElement('div');
     el.className = 'px-4 py-2.5 rounded-lg text-[13px] border shadow-lg';
     el.style.cssText = kind === 'ok'
-      ? 'background:#0E1626;border-color:rgba(0,212,200,.35);color:#8FF3EC'
-      : 'background:#1A1013;border-color:rgba(255,110,110,.35);color:#FF9B9B';
+      ? 'background:#fff;border-color:#bfe6e2;color:#0f6f68'
+      : 'background:#fdf6f5;border-color:#e8cdc8;color:#b3392a';
     el.textContent = msg;
     $('#toast').append(el);
     setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity .3s'; }, 2600);
@@ -72,7 +72,7 @@
   function confirmAction(message, detail, confirmLabel, onYes) {
     openModal('Are you sure?', `
       <p class="text-[14.5px] mb-1.5">${esc(message)}</p>
-      <p class="text-[13px] text-mist mb-6">${esc(detail)}</p>
+      <p class="text-[13px] text-soft mb-6">${esc(detail)}</p>
       <div class="flex gap-2.5 justify-end">
         <button class="btn btn-ghost" data-close>Keep it</button>
         <button class="btn btn-danger" id="yes">${esc(confirmLabel)}</button>
@@ -88,7 +88,6 @@
     speakers: ['Speakers', renderSpeakers],
     tracks: ['Tracks', () => renderTaxonomy('track')],
     venue: ['Venue', () => renderTaxonomy('hall')],
-    users: ['Users', renderUsers],
     history: ['History', renderHistory],
     trash: ['Trash', renderTrash],
     settings: ['Settings', renderSettings],
@@ -101,8 +100,8 @@
     $('#panel-title').textContent = PANELS[key][0];
     $$('.nav-item').forEach(b => {
       const on = b.dataset.panel === key;
-      b.style.background = on ? '#111C31' : '';
-      b.style.color = on ? '#E8EEF7' : '';
+      b.style.background = on ? '#fff' : '';
+      b.style.color = on ? '#16181d' : '';
     });
     if (window.innerWidth < 1024) $('#sidebar').classList.add('-translate-x-full');
     location.hash = key;
@@ -122,47 +121,46 @@
   // ------------------------------------------------------------- dashboard
   async function renderDashboard() {
     const host = $('#panel-dashboard');
-    host.innerHTML = `<p class="text-mist text-sm">Loading…</p>`;
+    host.innerHTML = `<p class="text-soft text-sm">Loading…</p>`;
     const d = await api('dash.stats');
     const s = d.stats;
 
     const tile = (label, value, note = '', accent = '#E8EEF7') => `
-      <div class="bg-slate2 border border-steel rounded-xl p-4">
-        <div class="font-mono text-[10.5px] tracking-[.13em] uppercase text-mist">${esc(label)}</div>
+      <div class="bg-white border border-rule rounded-xl p-4">
+        <div class="font-mono text-[10.5px] tracking-[.13em] uppercase text-soft">${esc(label)}</div>
         <div class="text-[28px] font-extrabold tracking-tight mt-1.5" style="color:${accent}">${value}</div>
-        ${note ? `<div class="text-[12px] text-mist mt-0.5">${esc(note)}</div>` : ''}
+        ${note ? `<div class="text-[12px] text-soft mt-0.5">${esc(note)}</div>` : ''}
       </div>`;
 
     host.innerHTML = `
       <div class="grid gap-3 mb-6" style="grid-template-columns:repeat(auto-fit,minmax(168px,1fr))">
-        ${tile('Updates today', s.updates_today, '', '#00D4C8')}
+        ${tile('Updates today', s.updates_today, '', '#0f9d94')}
         ${tile('Sessions', s.sessions, `${s.sessions_live} published`)}
         ${tile('Speakers', s.speakers, `${s.speakers_live} published`)}
-        ${tile('Editors online', s.editors_online, 'active in last 5 min')}
-      </div>
+        </div>
 
       ${(s.sessions_no_speaker || s.in_trash) ? `
       <div class="grid gap-3 mb-6" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
-        ${s.sessions_no_speaker ? `<div class="rounded-xl p-4 border" style="background:rgba(255,176,32,.06);border-color:rgba(255,176,32,.28)">
-          <div class="text-[13.5px] font-semibold" style="color:#FFB020">${s.sessions_no_speaker} sessions have no speaker yet</div>
+        ${s.sessions_no_speaker ? `<div class="rounded-xl p-4 border" style="background:#fdf9f0;border-color:#f0dfc0">
+          <div class="text-[13.5px] font-semibold" style="color:#a5640a">${s.sessions_no_speaker} sessions have no speaker yet</div>
           <button class="btn btn-ghost mt-2.5" data-goto="agenda">Open the agenda</button>
         </div>` : ''}
-        ${s.in_trash ? `<div class="rounded-xl p-4 border border-steel bg-slate2">
+        ${s.in_trash ? `<div class="rounded-xl p-4 border border-rule bg-white">
           <div class="text-[13.5px] font-semibold">${s.in_trash} items in the trash</div>
           <button class="btn btn-ghost mt-2.5" data-goto="trash">Review them</button>
         </div>` : ''}
       </div>` : ''}
 
-      <h3 class="font-mono text-[11px] tracking-[.14em] uppercase text-mist mb-3">Recent activity</h3>
-      <div class="bg-slate2 border border-steel rounded-xl divide-y divide-steel">
+      <h3 class="font-mono text-[11px] tracking-[.14em] uppercase text-soft mb-3">Recent activity</h3>
+      <div class="bg-white border border-rule rounded-xl divide-y divide-rule">
         ${d.feed.length ? d.feed.map(f => `
           <div class="px-4 py-3 flex items-center gap-3 text-[13px]">
             <span class="font-mono text-[10.5px] px-2 py-0.5 rounded"
-                  style="background:rgba(255,255,255,.05);color:#93A4C0">${esc(f.action)}</span>
+                  style="background:#f6f7f9;color:#6b7280">${esc(f.action)}</span>
             <span class="truncate"><b>${esc(f.entity_label || f.entity_type)}</b></span>
-            <span class="text-mist ml-auto shrink-0 text-[12px]">${esc(f.user_name || 'system')} · ${timeAgo(f.created_at)}</span>
+            <span class="text-soft ml-auto shrink-0 text-[12px]">${esc(f.user_name || 'system')} · ${timeAgo(f.created_at)}</span>
           </div>`).join('')
-        : `<p class="px-4 py-6 text-mist text-sm">Nothing has been changed yet.</p>`}
+        : `<p class="px-4 py-6 text-soft text-sm">Nothing has been changed yet.</p>`}
       </div>`;
 
     $$('[data-goto]', host).forEach(b => b.addEventListener('click', () => go(b.dataset.goto)));
@@ -187,7 +185,7 @@
 
   async function renderAgenda() {
     const host = $('#panel-agenda');
-    host.innerHTML = `<p class="text-mist text-sm">Loading…</p>`;
+    host.innerHTML = `<p class="text-soft text-sm">Loading…</p>`;
     SESSIONS = (await api('session.list')).sessions;
     if (!SPEAKERS.length) await loadSpeakers();
 
@@ -202,7 +200,7 @@
         </div>
         ${can('agenda.create') ? `<button class="btn btn-primary ml-auto" id="new-session">New session</button>` : ''}
       </div>
-      <p class="text-[12.5px] text-mist mb-3">
+      <p class="text-[12.5px] text-soft mb-3">
         ${can('agenda.reorder') ? 'Drag a row to reorder it within the day.' : ''}
       </p>
       <div id="session-list" class="grid gap-2"></div>`;
@@ -219,29 +217,29 @@
     const list = $('#session-list');
     const rows = SESSIONS.filter(s => +s.day_id === dayId);
     if (!rows.length) {
-      list.innerHTML = `<p class="text-mist text-sm py-8">No sessions on this day yet. Add the first one.</p>`;
+      list.innerHTML = `<p class="text-soft text-sm py-8">No sessions on this day yet. Add the first one.</p>`;
       return;
     }
 
     list.innerHTML = rows.map(s => `
-      <div class="session-row bg-slate2 border border-steel rounded-xl px-4 py-3 flex items-center gap-3.5"
+      <div class="session-row bg-white border border-rule rounded-xl px-4 py-3 flex items-center gap-3.5"
            draggable="${can('agenda.reorder')}" data-id="${s.id}">
         <div class="font-mono text-[12.5px] text-center shrink-0" style="width:52px">
           <div class="font-bold">${hhmm(s.start_time)}</div>
-          <div class="text-mist text-[10.5px]">${hhmm(s.end_time) || '—'}</div>
+          <div class="text-soft text-[10.5px]">${hhmm(s.end_time) || '—'}</div>
         </div>
         <div class="min-w-0 flex-1">
           <div class="text-[14px] font-semibold truncate">${esc(s.title)}</div>
-          <div class="text-[11.5px] text-mist mt-0.5 font-mono">
+          <div class="text-[11.5px] text-soft mt-0.5 font-mono">
             ${esc(hallName(s.hall_id))} · ${esc(s.session_type)}
             ${s.speakers.length ? ` · ${s.speakers.length} speaker${s.speakers.length > 1 ? 's' : ''}`
-                                : ` · <span style="color:#FFB020">no speakers</span>`}
+                                : ` · <span style="color:#a5640a">no speakers</span>`}
           </div>
         </div>
         <span class="font-mono text-[10px] px-2 py-1 rounded shrink-0"
               style="${s.status === 'published'
-                ? 'background:rgba(0,212,200,.12);color:#00D4C8'
-                : 'background:rgba(255,176,32,.12);color:#FFB020'}">${s.status}</span>
+                ? 'background:#e7f6f4;color:#0f7d76'
+                : 'background:#fdf3e3;color:#a5640a'}">${s.status}</span>
         <div class="flex gap-1.5 shrink-0">
           ${can('agenda.publish') ? `<button class="btn btn-ghost px-2.5 py-1.5 text-[12px]" data-act="publish" data-id="${s.id}">
             ${s.status === 'published' ? 'Unpublish' : 'Publish'}</button>` : ''}
@@ -372,14 +370,14 @@
       const drawPicks = () => {
         const box = $('#assigned', root);
         box.innerHTML = picks.length ? picks.map((p, i) => `
-          <div class="flex items-center gap-2 bg-ink border border-steel rounded-lg px-3 py-2">
+          <div class="flex items-center gap-2 bg-mist border border-rule rounded-lg px-3 py-2">
             <span class="text-[13px] truncate flex-1">${esc(p.name)}</span>
             <select data-i="${i}" class="w-auto text-[12px] py-1">
               ${ROLES.map(r => `<option value="${r}" ${r === p.speaker_role ? 'selected' : ''}>${r.replace('_', ' ')}</option>`).join('')}
             </select>
-            <button class="text-mist hover:text-paper px-1" data-rm="${i}" aria-label="Remove">&times;</button>
+            <button class="text-soft hover:text-ink px-1" data-rm="${i}" aria-label="Remove">&times;</button>
           </div>`).join('')
-          : `<p class="text-[12.5px] text-mist">Nobody assigned yet.</p>`;
+          : `<p class="text-[12.5px] text-soft">Nobody assigned yet.</p>`;
 
         $$('[data-rm]', box).forEach(b => b.addEventListener('click', () => {
           picks.splice(+b.dataset.rm, 1); drawPicks();
@@ -428,13 +426,13 @@
   // -------------------------------------------------------------- speakers
   async function renderSpeakers() {
     const host = $('#panel-speakers');
-    host.innerHTML = `<p class="text-mist text-sm">Loading…</p>`;
+    host.innerHTML = `<p class="text-soft text-sm">Loading…</p>`;
     await loadSpeakers();
 
     host.innerHTML = `
       <div class="flex items-center gap-2.5 mb-5 flex-wrap">
         <input id="sp-search" placeholder="Filter by name or organisation" style="max-width:320px">
-        <span class="text-[12.5px] text-mist" id="sp-count"></span>
+        <span class="text-[12.5px] text-soft" id="sp-count"></span>
         ${can('speakers.create') ? `<button class="btn btn-primary ml-auto" id="new-speaker">Add speaker</button>` : ''}
       </div>
       <div id="sp-grid" class="grid gap-2" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))"></div>`;
@@ -450,20 +448,20 @@
     $('#sp-count').textContent = `${rows.length} of ${SPEAKERS.length}`;
 
     $('#sp-grid').innerHTML = rows.map(s => `
-      <div class="bg-slate2 border border-steel rounded-xl p-3.5 flex gap-3 items-start">
+      <div class="bg-white border border-rule rounded-xl p-3.5 flex gap-3 items-start">
         ${s.photo_path
           ? `<img src="${esc(s.photo_path)}" alt="" class="w-11 h-11 rounded-full object-cover shrink-0">`
           : `<div class="w-11 h-11 rounded-full shrink-0 grid place-items-center font-mono text-[12px] font-bold"
-               style="background:#1B2740;color:#93A4C0">${esc(mono(s.full_name))}</div>`}
+               style="background:#f6f7f9;color:#6b7280">${esc(mono(s.full_name))}</div>`}
         <div class="min-w-0 flex-1">
           <div class="text-[13.5px] font-semibold truncate">${esc(s.full_name)}</div>
-          <div class="text-[11.5px] text-mist line-clamp-2">${esc([s.designation, s.organisation].filter(Boolean).join(', ')) || 'No organisation yet'}</div>
+          <div class="text-[11.5px] text-soft line-clamp-2">${esc([s.designation, s.organisation].filter(Boolean).join(', ')) || 'No organisation yet'}</div>
           <div class="flex items-center gap-1.5 mt-2 flex-wrap">
             <span class="font-mono text-[9.5px] px-1.5 py-0.5 rounded"
-                  style="${s.status === 'published' ? 'background:rgba(0,212,200,.12);color:#00D4C8'
-                                                    : 'background:rgba(255,176,32,.12);color:#FFB020'}">${s.status}</span>
-            <span class="font-mono text-[9.5px] text-mist">${s.session_count} session${+s.session_count === 1 ? '' : 's'}</span>
-            ${!s.photo_path ? `<span class="font-mono text-[9.5px] text-mist">no photo</span>` : ''}
+                  style="${s.status === 'published' ? 'background:#e7f6f4;color:#0f7d76'
+                                                    : 'background:#fdf3e3;color:#a5640a'}">${s.status}</span>
+            <span class="font-mono text-[9.5px] text-soft">${s.session_count} session${+s.session_count === 1 ? '' : 's'}</span>
+            ${!s.photo_path ? `<span class="font-mono text-[9.5px] text-soft">no photo</span>` : ''}
           </div>
           <div class="flex gap-1.5 mt-2.5">
             ${can('speakers.edit') ? `<button class="btn btn-ghost px-2 py-1 text-[11.5px]" data-sp-edit="${s.id}">Edit</button>` : ''}
@@ -545,11 +543,11 @@
       <div class="grid gap-4">
         <div class="grid place-items-center gap-3 py-3">
           <div id="preview" class="w-28 h-28 rounded-full overflow-hidden grid place-items-center
-                                    border border-steel" style="background:#1B2740">
+                                    border border-rule" style="background:#1B2740">
             ${s.photo_path ? `<img src="${esc(s.photo_path)}" class="w-full h-full object-cover" alt="">`
-                           : `<span class="font-mono text-2xl text-mist">${esc(mono(s.full_name))}</span>`}
+                           : `<span class="font-mono text-2xl text-soft">${esc(mono(s.full_name))}</span>`}
           </div>
-          <p class="text-[12.5px] text-mist text-center">
+          <p class="text-[12.5px] text-soft text-center">
             JPG, PNG or WebP, up to 3 MB.<br>Square crops work best — it is centre-cropped automatically.
           </p>
         </div>
@@ -588,7 +586,7 @@
 
     host.innerHTML = `
       <div class="flex mb-5">
-        <p class="text-[13px] text-mist max-w-[520px]">
+        <p class="text-[13px] text-soft max-w-[520px]">
           ${type === 'hall'
             ? 'Halls drive the colour coding and the wayfinding note attendees see on a session.'
             : 'Tracks become the filter pills on the public agenda.'}
@@ -597,20 +595,20 @@
       </div>
       <div class="grid gap-2" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
         ${rows.map(r => `
-          <div class="bg-slate2 border border-steel rounded-xl p-4">
+          <div class="bg-white border border-rule rounded-xl p-4">
             <div class="flex items-center gap-2.5">
               <span class="w-3 h-3 rounded" style="background:${esc(r.color_hex || '#1B2740')}"></span>
               <span class="text-[14px] font-semibold">${esc(r.name)}</span>
             </div>
-            <div class="text-[12px] text-mist mt-1.5">
+            <div class="text-[12px] text-soft mt-1.5">
               ${esc(r.venue || r.description || '')}${r.capacity ? ` · seats ${r.capacity}` : ''}
             </div>
-            ${r.map_note ? `<div class="text-[11.5px] font-mono text-mist mt-1">${esc(r.map_note)}</div>` : ''}
+            ${r.map_note ? `<div class="text-[11.5px] font-mono text-soft mt-1">${esc(r.map_note)}</div>` : ''}
             <div class="flex gap-1.5 mt-3">
               <button class="btn btn-ghost px-2.5 py-1 text-[12px]" data-tax-edit="${r.id}">Edit</button>
               <button class="btn btn-danger px-2.5 py-1 text-[12px]" data-tax-del="${r.id}">Delete</button>
             </div>
-          </div>`).join('') || `<p class="text-mist text-sm">Nothing here yet.</p>`}
+          </div>`).join('') || `<p class="text-soft text-sm">Nothing here yet.</p>`}
       </div>`;
 
     $('#new-tax', host).addEventListener('click', () => taxForm(type, null));
@@ -647,7 +645,7 @@
         `}
         <div class="grid grid-cols-2 gap-3">
           <div><label for="t-color">Colour</label>
-            <input id="t-color" type="color" value="${esc(r?.color_hex || '#00D4C8')}" style="height:40px;padding:4px"></div>
+            <input id="t-color" type="color" value="${esc(r?.color_hex || '#0f9d94')}" style="height:40px;padding:4px"></div>
           <div><label for="t-sort">Order</label>
             <input id="t-sort" type="number" value="${esc(r?.sort_order ?? 0)}"></div>
         </div>
@@ -677,153 +675,19 @@
     });
   }
 
-  // ----------------------------------------------------------------- users
-  let USERDATA = null;
 
-  async function renderUsers() {
-    const host = $('#panel-users');
-    host.innerHTML = `<p class="text-mist text-sm">Loading…</p>`;
-    USERDATA = await api('user.list');
-
-    host.innerHTML = `
-      <div class="flex items-center mb-5">
-        <p class="text-[13px] text-mist max-w-[560px]">
-          A role sets the baseline. Per-person overrides on top of it can grant one extra
-          permission or take one away.
-        </p>
-        ${can('users.manage') ? `<button class="btn btn-primary ml-auto" id="new-user">Add person</button>` : ''}
-      </div>
-      <div class="bg-slate2 border border-steel rounded-xl divide-y divide-steel">
-        ${USERDATA.users.map(u => `
-          <div class="px-4 py-3.5 flex items-center gap-3 flex-wrap">
-            <div class="min-w-0 flex-1">
-              <div class="text-[14px] font-semibold truncate">${esc(u.full_name)}
-                ${+u.id === A.user.id ? `<span class="font-mono text-[10px] text-mist ml-1">you</span>` : ''}</div>
-              <div class="text-[12px] text-mist truncate">${esc(u.email)}</div>
-            </div>
-            <span class="font-mono text-[10px] px-2 py-1 rounded shrink-0"
-                  style="background:rgba(0,212,200,.1);color:#00D4C8">${esc(u.role_name)}</span>
-            ${+u.is_active ? '' : `<span class="font-mono text-[10px] text-mist">switched off</span>`}
-            ${+u.twofa_enabled ? `<span class="font-mono text-[10px] text-mist">2FA</span>` : ''}
-            <span class="text-[11.5px] text-mist shrink-0 hidden sm:block">
-              ${u.last_login_at ? 'seen ' + timeAgo(u.last_login_at) : 'never signed in'}</span>
-            <div class="flex gap-1.5 shrink-0">
-              ${can('users.manage') ? `<button class="btn btn-ghost px-2.5 py-1 text-[12px]" data-u-edit="${u.id}">Edit</button>` : ''}
-              ${can('users.permissions') ? `<button class="btn btn-ghost px-2.5 py-1 text-[12px]" data-u-perm="${u.id}">Permissions</button>` : ''}
-              ${can('users.manage') && +u.id !== A.user.id ? `<button class="btn btn-danger px-2.5 py-1 text-[12px]" data-u-del="${u.id}">Delete</button>` : ''}
-            </div>
-          </div>`).join('')}
-      </div>`;
-
-    $('#new-user', host)?.addEventListener('click', () => userForm(null));
-    host.onclick = (e) => {
-      const ed = e.target.closest('[data-u-edit]');
-      const pm = e.target.closest('[data-u-perm]');
-      const dl = e.target.closest('[data-u-del]');
-      if (ed) return userForm(USERDATA.users.find(u => +u.id === +ed.dataset.uEdit));
-      if (pm) return permMatrix(USERDATA.users.find(u => +u.id === +pm.dataset.uPerm));
-      if (dl) {
-        const u = USERDATA.users.find(x => +x.id === +dl.dataset.uDel);
-        return confirmAction(`Remove ${u.full_name}?`,
-          'They are signed out everywhere and moved to the trash.', 'Remove', async () => {
-            try { await api('user.delete', { id: u.id }); toast('Account removed.'); renderUsers(); }
-            catch (err) { toast(err.message, 'err'); }
-          });
-      }
-    };
-  }
-
-  function userForm(u) {
-    openModal(u ? 'Edit person' : 'Add person', `
-      <div class="grid gap-4">
-        <div><label for="u-name">Full name</label><input id="u-name" value="${esc(u?.full_name || '')}"></div>
-        <div><label for="u-email">Email</label><input id="u-email" type="email" value="${esc(u?.email || '')}"></div>
-        <div><label for="u-role">Role</label><select id="u-role">
-          ${USERDATA.roles.map(r => `<option value="${r.id}" ${r.name === u?.role_name ? 'selected' : ''}>${esc(r.name)} — ${esc(r.description || '')}</option>`).join('')}
-        </select></div>
-        <div><label for="u-pass">${u ? 'New password (leave blank to keep the current one)' : 'Password'}</label>
-          <input id="u-pass" type="password" autocomplete="new-password" minlength="10">
-          <p class="text-[11.5px] text-mist mt-1.5">At least 10 characters. Changing it signs them out of other devices.</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <input type="checkbox" id="u-active" class="w-auto" ${(!u || +u.is_active) ? 'checked' : ''}>
-          <label for="u-active" class="mb-0">Account is active</label>
-        </div>
-        <div class="flex gap-2.5 justify-end pt-1">
-          <button class="btn btn-ghost" data-close>Cancel</button>
-          <button class="btn btn-primary" id="u-save">${u ? 'Save changes' : 'Create account'}</button>
-        </div>
-      </div>`, (root) => {
-      $('#u-save', root).addEventListener('click', async () => {
-        const btn = $('#u-save', root); btn.disabled = true;
-        try {
-          await api('user.save', {
-            id: u?.id || 0,
-            full_name: $('#u-name', root).value.trim(),
-            email: $('#u-email', root).value.trim(),
-            role_id: $('#u-role', root).value,
-            password: $('#u-pass', root).value,
-            is_active: $('#u-active', root).checked ? 1 : 0,
-          });
-          closeModal(); flashSaved(); renderUsers();
-        } catch (err) { toast(err.message, 'err'); btn.disabled = false; }
-      });
-    });
-  }
-
-  async function permMatrix(u) {
-    const { overrides } = await api('user.permissions', null, { qs: 'id=' + u.id });
-    const current = Object.fromEntries(overrides.map(o => [o.slug, o.effect]));
-
-    const modules = {};
-    USERDATA.permissions.forEach(p => (modules[p.module] ||= []).push(p));
-
-    openModal(`Permissions — ${u.full_name}`, `
-      <p class="text-[13px] text-mist mb-5">
-        Role <b class="text-paper">${esc(u.role_name)}</b> sets the defaults.
-        Switch a row to <b class="text-paper">Allow</b> or <b class="text-paper">Deny</b> to override it for this person only.
-      </p>
-      <div class="grid gap-5">
-        ${Object.entries(modules).map(([mod, list]) => `
-          <div>
-            <div class="font-mono text-[10.5px] tracking-[.14em] uppercase text-mist mb-2">${esc(mod)}</div>
-            <div class="bg-ink border border-steel rounded-xl divide-y divide-steel">
-              ${list.map(p => `
-                <div class="px-3.5 py-2.5 flex items-center gap-3">
-                  <span class="text-[13px] flex-1">${esc(p.label)}</span>
-                  <select data-perm="${esc(p.slug)}" class="w-auto text-[12px] py-1">
-                    <option value="" ${!current[p.slug] ? 'selected' : ''}>Role default</option>
-                    <option value="allow" ${current[p.slug] === 'allow' ? 'selected' : ''}>Allow</option>
-                    <option value="deny" ${current[p.slug] === 'deny' ? 'selected' : ''}>Deny</option>
-                  </select>
-                </div>`).join('')}
-            </div>
-          </div>`).join('')}
-      </div>
-      <div class="flex gap-2.5 justify-end pt-6">
-        <button class="btn btn-ghost" data-close>Cancel</button>
-        <button class="btn btn-primary" id="p-save">Save permissions</button>
-      </div>`, (root) => {
-      $('#p-save', root).addEventListener('click', async () => {
-        const out = {};
-        $$('[data-perm]', root).forEach(sel => { if (sel.value) out[sel.dataset.perm] = sel.value; });
-        try {
-          await api('user.permissions', { id: u.id, overrides: out });
-          closeModal(); flashSaved();
-        } catch (err) { toast(err.message, 'err'); }
-      });
-    });
-  }
-
+  
+  
+  
   // --------------------------------------------------------------- history
   async function renderHistory() {
     const host = $('#panel-history');
-    host.innerHTML = `<p class="text-mist text-sm">Loading…</p>`;
+    host.innerHTML = `<p class="text-soft text-sm">Loading…</p>`;
     const d = await api('history.list', null, { qs: 'limit=100' });
 
     host.innerHTML = `
-      <p class="text-[13px] text-mist mb-5">Every change, who made it and what it replaced. Nothing is removed from this log.</p>
-      <div class="bg-slate2 border border-steel rounded-xl divide-y divide-steel">
+      <p class="text-[13px] text-soft mb-5">Every change, who made it and what it replaced. Nothing is removed from this log.</p>
+      <div class="bg-white border border-rule rounded-xl divide-y divide-rule">
         ${d.entries.map(en => {
           const changes = en.new_values && typeof en.new_values === 'object'
             ? Object.keys(en.new_values).filter(k => !k.startsWith('_')).slice(0, 4) : [];
@@ -831,23 +695,23 @@
           <div class="px-4 py-3">
             <div class="flex items-center gap-2.5 flex-wrap">
               <span class="font-mono text-[10px] px-2 py-0.5 rounded"
-                    style="background:rgba(255,255,255,.05);color:#93A4C0">${esc(en.action)}</span>
-              <span class="font-mono text-[10px] text-mist">${esc(en.entity_type)}</span>
+                    style="background:#f6f7f9;color:#6b7280">${esc(en.action)}</span>
+              <span class="font-mono text-[10px] text-soft">${esc(en.entity_type)}</span>
               <span class="text-[13.5px] font-semibold truncate">${esc(en.entity_label || '—')}</span>
-              <span class="text-[11.5px] text-mist ml-auto shrink-0">
+              <span class="text-[11.5px] text-soft ml-auto shrink-0">
                 ${esc(en.user_name || 'system')} · ${timeAgo(en.created_at)}${en.ip ? ' · ' + esc(en.ip) : ''}</span>
             </div>
             ${changes.length ? `<div class="mt-2 grid gap-1">
               ${changes.map(k => `
                 <div class="font-mono text-[11.5px] flex gap-2 items-baseline flex-wrap">
-                  <span class="text-mist">${esc(k)}</span>
-                  <span style="color:#FF8B8B">${esc(trunc(en.old_values?.[k]))}</span>
-                  <span class="text-mist">→</span>
-                  <span style="color:#8FF3EC">${esc(trunc(en.new_values?.[k]))}</span>
+                  <span class="text-soft">${esc(k)}</span>
+                  <span style="color:#b3392a">${esc(trunc(en.old_values?.[k]))}</span>
+                  <span class="text-soft">→</span>
+                  <span style="color:#0f7d76">${esc(trunc(en.new_values?.[k]))}</span>
                 </div>`).join('')}
             </div>` : ''}
           </div>`;
-        }).join('') || `<p class="px-4 py-6 text-mist text-sm">The log is empty.</p>`}
+        }).join('') || `<p class="px-4 py-6 text-soft text-sm">The log is empty.</p>`}
       </div>`;
   }
 
@@ -861,18 +725,18 @@
     const { versions } = await api('version.list', null,
       { qs: `entity_type=${type}&entity_id=${id}` });
     openModal(`History — ${label}`, `
-      <p class="text-[13px] text-mist mb-4">A snapshot is taken before every save. Restoring one also snapshots what is there now, so you can undo the undo.</p>
-      <div class="bg-ink border border-steel rounded-xl divide-y divide-steel">
+      <p class="text-[13px] text-soft mb-4">A snapshot is taken before every save. Restoring one also snapshots what is there now, so you can undo the undo.</p>
+      <div class="bg-mist border border-rule rounded-xl divide-y divide-rule">
         ${versions.length ? versions.map(v => `
           <div class="px-4 py-3 flex items-center gap-3">
-            <span class="font-mono text-[12px] font-bold" style="color:#00D4C8">v${v.version_no}</span>
+            <span class="font-mono text-[12px] font-bold" style="color:#0f9d94">v${v.version_no}</span>
             <div class="min-w-0 flex-1">
               <div class="text-[12.5px] truncate">${esc(v.note || 'Saved change')}</div>
-              <div class="text-[11px] text-mist">${esc(v.created_by_name || 'system')} · ${timeAgo(v.created_at)}</div>
+              <div class="text-[11px] text-soft">${esc(v.created_by_name || 'system')} · ${timeAgo(v.created_at)}</div>
             </div>
             ${can('history.restore') ? `<button class="btn btn-ghost px-2.5 py-1 text-[12px]" data-restore="${v.id}">Restore</button>` : ''}
           </div>`).join('')
-        : `<p class="px-4 py-6 text-mist text-sm">No earlier versions yet.</p>`}
+        : `<p class="px-4 py-6 text-soft text-sm">No earlier versions yet.</p>`}
       </div>`, (root) => {
       $$('[data-restore]', root).forEach(b => b.addEventListener('click', () => {
         confirmAction('Restore this version?',
@@ -890,29 +754,29 @@
   // ----------------------------------------------------------------- trash
   async function renderTrash() {
     const host = $('#panel-trash');
-    host.innerHTML = `<p class="text-mist text-sm">Loading…</p>`;
+    host.innerHTML = `<p class="text-soft text-sm">Loading…</p>`;
     const { items } = await api('trash.list');
 
     host.innerHTML = `
-      <p class="text-[13px] text-mist mb-5">
+      <p class="text-[13px] text-soft mb-5">
         Deleted items wait here for ${A.settings.trash_retention_days} days before they can be cleared for good.
       </p>
-      <div class="bg-slate2 border border-steel rounded-xl divide-y divide-steel">
+      <div class="bg-white border border-rule rounded-xl divide-y divide-rule">
         ${items.length ? items.map(i => `
           <div class="px-4 py-3.5 flex items-center gap-3 flex-wrap">
             <span class="font-mono text-[10px] px-2 py-0.5 rounded shrink-0"
-                  style="background:rgba(255,255,255,.05);color:#93A4C0">${esc(i.entity_type)}</span>
+                  style="background:#f6f7f9;color:#6b7280">${esc(i.entity_type)}</span>
             <div class="min-w-0 flex-1">
               <div class="text-[13.5px] font-semibold truncate">${esc(i.entity_label || '—')}</div>
-              <div class="text-[11.5px] text-mist">${esc(i.summary || '')}</div>
+              <div class="text-[11.5px] text-soft">${esc(i.summary || '')}</div>
             </div>
-            <span class="text-[11.5px] text-mist shrink-0">${esc(i.deleted_by_name || '')} · ${timeAgo(i.deleted_at)}</span>
+            <span class="text-[11.5px] text-soft shrink-0">${esc(i.deleted_by_name || '')} · ${timeAgo(i.deleted_at)}</span>
             <div class="flex gap-1.5 shrink-0">
               ${can('trash.restore') ? `<button class="btn btn-ghost px-2.5 py-1 text-[12px]" data-t-restore="${i.id}">Restore</button>` : ''}
               ${can('trash.purge') ? `<button class="btn btn-danger px-2.5 py-1 text-[12px]" data-t-purge="${i.id}">Delete for good</button>` : ''}
             </div>
           </div>`).join('')
-        : `<p class="px-4 py-8 text-mist text-sm">The trash is empty.</p>`}
+        : `<p class="px-4 py-8 text-soft text-sm">The trash is empty.</p>`}
       </div>`;
 
     host.onclick = (e) => {
@@ -940,12 +804,12 @@
         <div><label for="s-ret">Days to keep items in the trash</label>
           <input id="s-ret" type="number" min="1" max="365" value="${esc(s.trash_retention_days)}"></div>
 
-        <div class="border border-steel rounded-xl p-4 mt-1">
+        <div class="border border-rule rounded-xl p-4 mt-1">
           <div class="flex items-start gap-3">
             <input type="checkbox" id="s-btn" class="w-auto mt-1" ${s.show_admin_button ? 'checked' : ''}>
             <div>
               <label for="s-btn" class="mb-0.5">Show the admin dot on the agenda page</label>
-              <p class="text-[12px] text-mist">
+              <p class="text-[12px] text-soft">
                 Switch this off before the agenda goes public. The admin page still works —
                 the shortcut just disappears from the public page.
               </p>

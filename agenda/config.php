@@ -49,6 +49,11 @@ if (!defined('FCS_BASE_PATH')) {
     define('FCS_BASE_PATH', rtrim($dir, '/') . '/');
 }
 
+// ---- The one password -----------------------------------------------------
+// Change this line and the old one stops working immediately. Plain text on
+// purpose: no hashing, no database, nothing that can get out of sync.
+defined('FCS_ADMIN_PASSWORD') || define('FCS_ADMIN_PASSWORD', 'summit2026');
+
 // ---- Security -------------------------------------------------------------
 // A distinct session name so the CMS login never collides with, or logs
 // anyone out of, whatever sessions the rest of the site uses.
