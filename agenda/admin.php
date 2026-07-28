@@ -9,6 +9,39 @@ require_once __DIR__ . '/lib/auth.php';
 
 fcs_boot_session();
 
+/* ---------------------------------------------------------------------
+   THE PASSWORD. Change the text on the next line and save — that is all.
+
+   It is checked right here, by a plain form post. No JavaScript, no JSON,
+   no api.php, no database, no hashing. If this file loads, sign-in works.
+   --------------------------------------------------------------------- */
+$THE_PASSWORD = 'summit2026';
+
+// config.php can override it, but only if it actually set one.
+if (defined('FCS_ADMIN_PASSWORD') && trim((string)FCS_ADMIN_PASSWORD) !== '') {
+    $THE_PASSWORD = FCS_ADMIN_PASSWORD;
+}
+
+$loginError = null;
+
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['fcs_pw'])) {
+    $typed = trim((string)$_POST['fcs_pw']);
+    if (hash_equals(trim($THE_PASSWORD), $typed)) {
+        session_regenerate_id(true);
+        $_SESSION['fcs_admin'] = true;
+        header('Location: admin.php');
+        exit;
+    }
+    // The lengths are shown deliberately: if they differ, the browser filled
+    // the box for you, or a character was lost in copy-paste.
+    $loginError = sprintf(
+        'That password is not right. You sent %d characters; this page expects %d.',
+        strlen($typed), strlen(trim($THE_PASSWORD))
+    );
+}
+
+if (isset($_GET['out'])) { fcs_sign_out(); header('Location: admin.php'); exit; }
+
 $in = fcs_is_admin();
 ?>
 <!DOCTYPE html>
@@ -68,53 +101,37 @@ tailwind.config = {
 <?php if (!$in): ?>
 <!-- ============================================================ sign in -->
 <body class="min-h-screen grid place-items-center p-5">
-  <main class="w-full max-w-[360px]">
+  <main class="w-full max-w-[380px]">
     <div class="mb-7">
       <div class="font-mono text-[11px] tracking-[.16em] text-signal uppercase mb-2">FutureCrime CMS</div>
       <h1 class="text-2xl font-extrabold tracking-tight text-ink">Sign in</h1>
       <p class="text-soft text-sm mt-1.5">Enter the shared password.</p>
     </div>
 
-    <div id="login-error" class="hidden mb-4 text-[13px] rounded-lg px-3.5 py-2.5"
-         style="background:#fdf6f5;border:1px solid #e8cdc8;color:#b3392a"></div>
-
-    <form id="login-form" class="grid gap-3.5" autocomplete="off">
-      <div>
-        <label for="password">Password</label>
-        <!-- name/id avoid the browser refilling an old saved password -->
-        <input id="password" name="fcs-access-code" type="password"
-               autocomplete="new-password" required autofocus>
+    <?php if ($loginError): ?>
+      <div class="mb-4 text-[13px] rounded-lg px-3.5 py-2.5"
+           style="background:#fdf6f5;border:1px solid #e8cdc8;color:#b3392a">
+        <?= fcs_e($loginError) ?>
       </div>
-      <button class="btn btn-primary w-full mt-1" type="submit">Sign in</button>
+    <?php endif; ?>
+
+    <!-- A plain form post. No JavaScript is involved in signing in. -->
+    <form method="post" action="admin.php" autocomplete="off">
+      <label for="fcs_pw">Password</label>
+      <!-- type=text on purpose: browsers refill saved passwords into
+           password boxes, which is invisible and looks like a wrong
+           password. Here you can always see what is really in the field. -->
+      <input id="fcs_pw" name="fcs_pw" type="text" required autofocus
+             autocapitalize="off" autocorrect="off" spellcheck="false"
+             autocomplete="off" data-lpignore="true"
+             style="font-family:'JetBrains Mono',monospace;letter-spacing:.04em">
+      <button class="btn btn-primary w-full mt-3" type="submit">Sign in</button>
     </form>
 
     <p class="text-center mt-7">
       <a href="index.php" class="text-[12.5px] text-soft hover:text-ink">&larr; Back to the agenda</a>
     </p>
   </main>
-
-<script>
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = e.target.querySelector('button');
-  const box = document.getElementById('login-error');
-  btn.disabled = true; btn.textContent = 'Checking…';
-  box.classList.add('hidden');
-  try {
-    const r = await fetch('api.php?action=auth.login', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: document.getElementById('password').value }),
-    });
-    const d = await r.json();
-    if (!d.ok) throw new Error(d.error || 'Sign-in failed.');
-    location.reload();
-  } catch (err) {
-    box.textContent = err.message;
-    box.classList.remove('hidden');
-    btn.disabled = false; btn.textContent = 'Sign in';
-  }
-});
-</script>
 </body>
 
 <?php else: ?>
@@ -141,7 +158,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     </nav>
 
     <div class="p-3 border-t border-rule">
-      <button id="logout" class="btn btn-ghost w-full">Sign out</button>
+      <a href="admin.php?out=1" class="btn btn-ghost w-full block text-center">Sign out</a>
     </div>
   </aside>
 
