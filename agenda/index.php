@@ -90,7 +90,7 @@ if ($days) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="agenda/assets/css/agenda.css">
+<link rel="stylesheet" href="assets/css/agenda.css">
 </head>
 <body>
 
@@ -173,6 +173,6 @@ if ($days) {
 </div>
 
 <script>window.FCS = <?= json_encode($data, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) ?>;</script>
-<script src="agenda/assets/js/agenda.js" defer></script>
+<script src="assets/js/agenda.js" defer></script>
 </body>
 </html>
