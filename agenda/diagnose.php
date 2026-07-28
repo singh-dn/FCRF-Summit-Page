@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-const FCS_DIAG_ENABLED = true;   // <-- change to true to use, then delete the file
+const FCS_DIAG_ENABLED = flase;   // <-- change to true to use, then delete the file
 
 if (PHP_VERSION_ID < 80100) {
     exit('Needs PHP 8.1+. hPanel: Advanced -> PHP Configuration -> 8.2');
