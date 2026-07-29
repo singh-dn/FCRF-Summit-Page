@@ -94,8 +94,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!preg_match("/^[a-zA-Z\s\.]+$/", $nominee_name)) {
             throw new Exception("Nominee name can only contain letters and spaces.");
         }
-        if (!preg_match("/^[0-9\+]+$/", $phone) || strlen($phone) < 12) {
-            throw new Exception("Invalid phone number format.");
+        // Normalize and validate phone number.
+        // Accepts Indian 10-digit numbers, 91XXXXXXXXXX and +91XXXXXXXXXX.
+        $phone = preg_replace('/[\s\-\(\)]+/', '', $phone);
+        if (!preg_match('/^(?:\+91|91)?[6-9][0-9]{9}$/', $phone)) {
+            throw new Exception("Invalid phone number format. Enter a valid 10-digit Indian mobile number, optionally with +91.");
         }
         if (!preg_match("/^[a-zA-Z0-9\s\.\-&]+$/", $organization)) {
             throw new Exception("Organization name contains disallowed special characters.");
@@ -120,8 +123,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!preg_match("/^[a-zA-Z0-9\s\.\-]+$/", $rep_designation)) {
                 throw new Exception("Representative designation contains disallowed special characters.");
             }
-            if (!preg_match("/^[0-9\+]+$/", $rep_phone) || strlen($rep_phone) < 10) {
-                throw new Exception("Invalid representative phone number format.");
+            // Normalize and validate representative phone number.
+            $rep_phone = preg_replace('/[\s\-\(\)]+/', '', $rep_phone);
+            if (!preg_match('/^(?:\+91|91)?[6-9][0-9]{9}$/', $rep_phone)) {
+                throw new Exception("Invalid representative phone number format. Enter a valid 10-digit Indian mobile number, optionally with +91.");
             }
             if (!filter_var($rep_email, FILTER_VALIDATE_EMAIL)) {
                 throw new Exception("Invalid representative email format.");
@@ -792,8 +797,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group">
                         <label>Phone Number *</label>
                         <div class="input-wrapper">
-                            <input type="tel" name="phone" required placeholder="Contact Number"
-                                   pattern="[\+0-9\s\-]+" oninput="this.value = this.value.replace(/[^0-9\+\-\s]/g, '')"
+                            <input type="tel" name="phone" required placeholder="9876543210 or +919876543210"
+                                   inputmode="tel" maxlength="13"
+                                   pattern="(?:\+91|91)?[6-9][0-9]{9}"
+                                   title="Enter a valid 10-digit Indian mobile number, optionally with +91"
+                                   oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(?!^)[+]/g, '')"
                                    value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>">
                             <i data-lucide="phone" size="18"></i>
                         </div>
@@ -879,8 +887,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="form-group">
                             <label>Representative Contact Number *</label>
-                            <input type="tel" name="rep_phone" id="rep_phone" placeholder="Phone Number"
-                                   pattern="[\+0-9\s\-]+" oninput="this.value = this.value.replace(/[^0-9\+\-\s]/g, '')"
+                            <input type="tel" name="rep_phone" id="rep_phone" placeholder="9876543210 or +919876543210"
+                                   inputmode="tel" maxlength="13"
+                                   pattern="(?:\+91|91)?[6-9][0-9]{9}"
+                                   title="Enter a valid 10-digit Indian mobile number, optionally with +91"
+                                   oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(?!^)[+]/g, '')"
                                    value="<?php echo isset($_POST['rep_phone']) ? htmlspecialchars($_POST['rep_phone']) : ''; ?>">
                         </div>
                     </div>
