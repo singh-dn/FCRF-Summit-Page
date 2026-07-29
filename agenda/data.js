@@ -44,8 +44,8 @@ const DAYS = [
 ];
 
 const HALLS = [
-  { name: "Main Hall",       colour: "#0f9d94", note: "" },
-  { name: "Innovation Hall", colour: "#6d4bb8", note: "" },
+  { name: "Main Hall",       colour: "#FF5455", note: "" },
+  { name: "Innovation Hall", colour: "#0ea5e9", note: "" },
 ];
 
 
@@ -384,7 +384,7 @@ const SESSIONS = [
   {
     day: 1, start: "13:00", end: "14:00",
     hall: null, type: "lunch",
-    title: "Lunch Break",
+    title: "Networking Lunch",
     speakers: [],
   },
   {
@@ -477,7 +477,7 @@ const SESSIONS = [
   {
     day: 2, start: "13:00", end: "14:00",
     hall: null, type: "lunch",
-    title: "Lunch Break",
+    title: "Networking Lunch",
     speakers: [],
   },
   {
