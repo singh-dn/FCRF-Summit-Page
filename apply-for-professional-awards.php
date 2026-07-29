@@ -19,16 +19,14 @@ $table_name = "fcrf_award_nominations";
 $recaptcha_site_key = "6LfkXYwsAAAAAO8Vwrhg7KdnocQzL-yQwl8zgTt4";
 $recaptcha_secret = "6LfkXYwsAAAAAOg_C4CYVgNlQOyG9X1RU4Pl576h"; 
 
-// --- SECURITY: Input Sanitization Function to prevent XSS ---
+// --- Normalize submitted values before validation/storage ---
+// Prepared statements protect the database. Escape values only when printing them into HTML.
 function sanitize_input($data) {
     if (is_array($data)) {
         return array_map('sanitize_input', $data);
     }
-    $data = trim($data);
-    $data = stripslashes($data);
-    // ENT_QUOTES converts both double and single quotes
-    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
-    return $data;
+
+    return trim(stripslashes($data));
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -91,8 +89,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // --- ADVANCED CHARACTER RESTRICTION (REGEX) ---
-        if (!preg_match("/^[a-zA-Z\s\.]+$/", $nominee_name)) {
-            throw new Exception("Nominee name can only contain letters and spaces.");
+        // The same field is used for either a person or an organisation/team,
+        // so validation depends on the selected nomination type.
+        if ($nomination_type === 'Nomination of an Organisation / Team') {
+            if (!preg_match("/^[\p{L}\p{N}\s.,&'()\/\-]+$/u", $nominee_name)) {
+                throw new Exception("Organisation or team name contains unsupported characters.");
+            }
+        } else {
+            if (!preg_match("/^[\p{L}\s.'\-]+$/u", $nominee_name)) {
+                throw new Exception("Nominee name may contain letters, spaces, dots, apostrophes and hyphens.");
+            }
         }
         // Normalize and validate phone number.
         // Accepts Indian 10-digit numbers, 91XXXXXXXXXX and +91XXXXXXXXXX.
@@ -100,8 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!preg_match('/^(?:\+91|91)?[6-9][0-9]{9}$/', $phone)) {
             throw new Exception("Invalid phone number format. Enter a valid 10-digit Indian mobile number, optionally with +91.");
         }
-        if (!preg_match("/^[a-zA-Z0-9\s\.\-&]+$/", $organization)) {
-            throw new Exception("Organization name contains disallowed special characters.");
+        if (!preg_match("/^[\p{L}\p{N}\s.,&'()\/\-]+$/u", $organization)) {
+            throw new Exception("Organisation name may contain letters, numbers, spaces, commas, dots, apostrophes, brackets, slashes, hyphens and ampersands.");
         }
         if (!preg_match("/^[a-zA-Z0-9\s\.\-]+$/", $designation)) {
             throw new Exception("Designation contains disallowed special characters.");
@@ -777,10 +783,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">
                     <label>Full Name / Organisation Name *</label>
                     <div class="input-wrapper">
-                        <!-- Strictly Letters, Spaces, Dots, and Hyphens in Frontend -->
-                        <input type="text" name="nominee_name" required placeholder="Enter the nominee name"
-                               pattern="[a-zA-Z\s\.\-']+" oninput="this.value = this.value.replace(/[^a-zA-Z\s\.\-']/g, '')"
-                               value="<?php echo isset($_POST['nominee_name']) ? htmlspecialchars($_POST['nominee_name']) : ''; ?>">
+                        <!-- Supports either an individual name or an organisation/team name -->
+                        <input type="text" name="nominee_name" required placeholder="Enter the nominee or organisation name"
+                               pattern="[a-zA-Z0-9\s.,&amp;'()\/\-]+"
+                               title="Use letters, numbers, spaces, commas, dots, apostrophes, brackets, slashes, hyphens or ampersands"
+                               oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,&'()\/\-]/g, '')"
+                               value="<?php echo isset($_POST['nominee_name']) ? htmlspecialchars($_POST['nominee_name'], ENT_QUOTES, 'UTF-8') : ''; ?>">
                         <i data-lucide="user-circle" size="18"></i>
                     </div>
                 </div>
@@ -812,10 +820,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group">
                         <label>Current Organisation *</label>
                         <div class="input-wrapper">
-                            <!-- Letters, Numbers, Spaces, Dots, Hyphens, Ampersand, parentheses -->
+                            <!-- Common organisation-name punctuation is supported -->
                             <input type="text" name="organization" required placeholder="Company or Institution"
-                                   pattern="[a-zA-Z0-9\s\.\-',&()]+" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s\.\-',&()]/g, '')"
-                                   value="<?php echo isset($_POST['organization']) ? htmlspecialchars($_POST['organization']) : ''; ?>">
+                                   pattern="[a-zA-Z0-9\s.,&amp;'()\/\-]+"
+                                   title="Use letters, numbers, spaces, commas, dots, apostrophes, brackets, slashes, hyphens or ampersands"
+                                   oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,&'()\/\-]/g, '')"
+                                   value="<?php echo isset($_POST['organization']) ? htmlspecialchars($_POST['organization'], ENT_QUOTES, 'UTF-8') : ''; ?>">
                             <i data-lucide="building-2" size="18"></i>
                         </div>
                     </div>
