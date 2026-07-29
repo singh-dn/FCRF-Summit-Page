@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agenda · FutureCrime Summit 2026</title>
+<meta name="description" content="Full two-day session schedule and speaker directory for the FutureCrime Summit 2026, 6–7 August 2026, Bharat Mandapam, New Delhi.">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/agenda.css">
+<link rel="shortcut icon" href="https://summit.futurecrime.org/assets/img/logo/favs.jpeg">
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <!-- Dates and venue. Also set in data.js under EVENT. -->
+    <p class="eyebrow">
+      <span class="dot" aria-hidden="true"></span>
+      6–7 August 2026 · Bharat Mandapam, Pragati Maidan, New Delhi
+    </p>
+
+    <div class="hero-top">
+      <h1 class="hero-title">
+        <span class="l1">FutureCrime</span>
+        <span class="l2">Summit <span class="year">2026</span></span>
+      </h1>
+      <div class="clock" aria-live="off">
+        <span id="clock-time">--:--</span>
+        <span class="clock-tz">IST</span>
+      </div>
+    </div>
+
+    <!-- Fills itself in: what is running now, and what is next. -->
+    <section class="live" id="live-strip" aria-live="polite" aria-label="Current session">
+      <div class="live-skeleton">Reading the schedule…</div>
+    </section>
+  </div>
+</header>
+
+<nav class="controls" id="controls" aria-label="Agenda filters">
+  <div class="wrap controls-inner">
+    <div class="days" id="day-tabs" role="tablist" aria-label="Event day"></div>
+    <div class="filters">
+      <div class="halls" id="hall-filters" role="group" aria-label="Filter by hall"></div>
+      <div class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" id="search" placeholder="Search sessions, speakers, organisations" aria-label="Search the agenda" autocomplete="off">
+        <button type="button" id="search-clear" class="clear" aria-label="Clear search" hidden>&times;</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section id="timeline" class="timeline" aria-label="Session timeline"></section>
+  <p class="empty" id="empty" hidden>
+    <strong>No sessions match that.</strong>
+    Clear the search or pick a different hall to see the full day.
+  </p>
+
+  <section class="directory" id="directory" aria-labelledby="dir-heading">
+    <div class="dir-head">
+      <h2 id="dir-heading">Speakers</h2>
+      <p class="dir-count" id="dir-count"></p>
+    </div>
+    <div class="dir-grid" id="dir-grid"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>FutureCrime Summit 2026 · Bharat Mandapam, Pragati Maidan, New Delhi</p>
+    <p class="foot-note">The programme is being finalised. Times and speakers may change.</p>
+  </div>
+</footer>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet-backdrop" data-close></div>
+  <div class="sheet-panel" role="document">
+    <button class="sheet-close" data-close aria-label="Close">&times;</button>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+</div>
+
+<!-- All content lives in data.js. It must load before agenda.js. -->
+<script src="data.js"></script>
+<script src="assets/js/agenda.js" defer></script>
+</body>
+</html>

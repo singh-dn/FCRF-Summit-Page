@@ -17,7 +17,7 @@
 
   // Deterministic hue per person, so a speaker's monogram colour never
   // shifts between the card, the session sheet and the directory.
-  const HUES = ['#00D4C8', '#5AA9FF', '#B48BFF', '#FF8FA3', '#FFB020', '#4ADE80', '#F0A6FF', '#7DD3FC'];
+  const HUES = ['#a9e3de', '#b6d4f5', '#cfc3f2', '#f5c3cc', '#f2d8a8', '#bce3c8', '#e6c9ee', '#bcdcee'];
   const hueFor = (str) => {
     let h = 0;
     for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
@@ -50,6 +50,7 @@
   const TYPE_LABEL = {
     panel: 'Panel', keynote: 'Keynote', fireside: 'Fireside', workshop: 'Workshop',
     plenary: 'Plenary', inauguration: 'Inaugural', valedictory: 'Valedictory',
+    sponsor: 'Sponsor',
     break: 'Break', lunch: 'Lunch', networking: 'Networking', award: 'Awards', other: 'Session'
   };
   const isBreak = (s) => ['break', 'lunch', 'networking'].includes(s.session_type);
