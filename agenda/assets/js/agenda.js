@@ -58,34 +58,34 @@
 
   const avatar = (sp, cls = '') => {
     const key = sp.name || sp.full_name || '';
-    if (sp.photo) return `<img class="av ${cls}" src="${esc(sp.photo)}" alt="" loading="lazy" width="34" height="34">`;
+    if (sp.photo) return `<img class="av ${cls}" src="${esc(sp.photo)}" alt="" loading="lazy">`;
     return `<span class="av ${cls}" style="--av:${hueFor(key)}" aria-hidden="true">${esc(initials(key))}</span>`;
   };
 
-  // Event time is IST regardless of what the device thinks — an attendee's
-  // phone on roaming should not shift the schedule.
-  const istNow = () => {
-    const now = new Date();
-    return new Date(now.getTime() + (now.getTimezoneOffset() + 330) * 60000);
-  };
+  // The real instant. Session times below are parsed with an explicit +05:30,
+  // so comparisons hold whatever timezone the phone is set to.
+  const istNow = () => new Date();
+
+  // Today's date in IST, as YYYY-MM-DD.
+  const istDate = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
 
   const dayOf = (s) => days.find(d => Number(d.id) === Number(s.day_id));
   const startsAt = (s) => {
     const d = dayOf(s);
     if (!d) return null;
-    return new Date(`${d.event_date}T${String(s.start_time).padStart(8, '0')}`);
+    return new Date(`${d.event_date}T${String(s.start_time).padStart(8, '0')}+05:30`);
   };
   const endsAt = (s) => {
     const d = dayOf(s);
     if (!d || !s.end_time) return null;
-    return new Date(`${d.event_date}T${String(s.end_time).padStart(8, '0')}`);
+    return new Date(`${d.event_date}T${String(s.end_time).padStart(8, '0')}+05:30`);
   };
 
   const state = { day: null, halls: new Set(), query: '' };
 
   // Open on the day that is actually happening, otherwise the first day.
   (() => {
-    const today = istNow().toISOString().slice(0, 10);
+    const today = istDate();
     const match = days.find(d => d.event_date === today);
     state.day = Number((match || days[0] || {}).id) || null;
   })();
@@ -111,7 +111,7 @@
     if (!running.length && !next) {
       const first = sessions.map(startsAt).filter(Boolean).sort((a, b) => a - b)[0];
       el.innerHTML = `<div class="live-card is-idle">
-        <div class="live-label"><span class="pulse"></span>Agenda Status</div>
+        <div class="live-label">Agenda Status</div>
         <p class="live-title">${first && first > now ? 'Awaiting commencement…' : 'Summit Concluded'}</p>
         <div class="live-meta"><span>${esc(D.event?.venue || '')}</span></div>
       </div>`;
@@ -120,7 +120,7 @@
 
     if (!running.length && next) {
       el.innerHTML = `<div class="live-card is-idle">
-        <div class="live-label"><span class="pulse"></span>Up Next</div>
+        <div class="live-label">Up Next</div>
         <p class="live-title">${esc(next.title)}</p>
         <div class="live-meta">
           <span><b>${pretty(next.start_time)}</b></span>
@@ -137,7 +137,7 @@
     const others = running.slice(1);
 
     el.innerHTML = `<div class="live-card">
-      <div class="live-label"><span class="pulse"></span>Happening Now</div>
+      <div class="live-label">Happening Now</div>
       <p class="live-title">${esc(s.title)}</p>
       <div class="live-meta">
         ${s.hall_id ? `<span><b>${esc(hallById[s.hall_id]?.name || '')}</b></span>` : ''}
@@ -160,9 +160,10 @@
   }
 
   function tickClock() {
-    const t = istNow();
     const el = $('#clock-time');
-    if (el) el.textContent = `${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}`;
+    if (el) el.textContent = new Date().toLocaleTimeString('en-GB', {
+      timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false,
+    });
   }
 
   // -------------------------------------------------------------- controls
@@ -186,7 +187,7 @@
     const hf = $('#hall-filters');
     hf.innerHTML = halls.map(h =>
       `<button class="hall-chip" data-hall="${h.id}" aria-pressed="false"
-        style="color:${hallColor(h.id)}"><i style="background:${hallColor(h.id)}"></i>${esc(h.name)}</button>`
+        style="color:${hallColor(h.id)}">${esc(h.name)}</button>`
     ).join('');
 
     hf.addEventListener('click', (e) => {
@@ -273,7 +274,7 @@
       html += `<button class="mesh-card ${running ? 'is-now' : ''} ${past ? 'is-past' : ''} reveal"
         data-session="${s.id}" ${running ? 'id="now-anchor"' : ''}>
         <div class="mc-col-1">
-          ${running ? '<div class="mc-live"><i></i>Live now</div>' : ''}
+          ${running ? '<div class="mc-live">Live now</div>' : ''}
           <h3>${esc(s.title)}</h3>
           <div class="mc-time">${pretty(s.start_time)}${s.end_time ? ' – ' + pretty(s.end_time) : ''}</div>
         </div>
@@ -348,25 +349,27 @@
     const d = dayOf(s);
     const people = s.speakers || [];
 
+    const dStr = d ? `${d.label} · ${new Date(d.event_date + 'T00:00:00')
+      .toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}` : '';
+
     openSheet(`
-      <div class="kv" style="margin-bottom:0">
-        <span style="color:var(--accent-cyan); font-weight:600">${esc(TYPE_LABEL[s.session_type] || 'Session')}</span>
-        ${d ? `<span><b>${esc(d.label)}</b> · ${esc(new Date(d.event_date + 'T00:00:00')
-          .toLocaleDateString('en-GB', { day: 'numeric', month: 'long' }))}</span>` : ''}
+      <div class="kv" style="margin-bottom:12px; font-weight:600">
+        <span style="color:var(--accent-cyan)">${esc(TYPE_LABEL[s.session_type] || 'Session')}</span>
+        ${dStr ? `<span style="color:var(--text-main)">${esc(dStr)}</span>` : ''}
       </div>
-      <h3 id="sheet-title">${esc(s.title)}</h3>
-      <div class="kv">
+      <h3 id="sheet-title" style="margin-top:0; font-size:28px; margin-bottom:12px">${esc(s.title)}</h3>
+      <div class="kv" style="margin-bottom:32px">
         <span><b>${pretty(s.start_time)}${s.end_time ? ' – ' + pretty(s.end_time) : ''}</b></span>
-        ${hall ? `<span style="color:${hallColor(s.hall_id)}">${esc(hall.name)}</span>` : ''}
+        ${hall ? `<span style="color:var(--accent-cyan); font-weight:500">${esc(hall.name)}</span>` : ''}
         ${hall?.map_note ? `<span>${esc(hall.map_note)}</span>` : ''}
       </div>
       ${s.subtitle ? `<div class="body"><p><strong>${esc(s.subtitle)}</strong></p></div>` : ''}
       ${s.description ? `<div class="body">${s.description}</div>` : ''}
       ${people.length ? `<h4>Featured Experts</h4>${people.map(p => `
         <button class="sp-row" data-speaker="${p.id}">
-          ${avatar(p, 'lg')}
+          ${avatar(p, 'xl')}
           <span>
-            <span class="sp-nm">${esc(p.honorific ? p.honorific + ' ' : '')}${esc(p.name)}</span>
+            <span class="sp-nm" style="font-size:20px; display:block; margin-bottom:4px">${esc(p.honorific ? p.honorific + ' ' : '')}${esc(p.name)}</span>
             <span class="sp-dg">${esc([p.designation, p.organisation].filter(Boolean).join(', ')) || '—'}</span>
           </span>
           ${p.role && p.role !== 'panelist' ? `<span class="role-tag">${esc(p.role.replace('_', ' '))}</span>` : ''}
@@ -381,12 +384,12 @@
     const appears = sessions.filter(s => (s.speakers || []).some(p => Number(p.id) === Number(id)));
 
     openSheet(`
-      <div class="profile">
+      <div class="profile" style="margin-bottom:32px; gap:20px">
         ${avatar({ name: sp.full_name, photo: sp.photo_path }, 'xl')}
-        <span>
-          <h3 id="sheet-title" style="margin:0">${esc(sp.honorific ? sp.honorific + ' ' : '')}${esc(sp.full_name)}</h3>
-          <p class="sp-dg" style="font-size:14px">${esc([sp.designation, sp.organisation].filter(Boolean).join(', '))}</p>
-        </span>
+        <div style="display:flex; flex-direction:column; justify-content:center">
+          <h3 id="sheet-title" style="margin:0; font-size:26px">${esc(sp.honorific ? sp.honorific + ' ' : '')}${esc(sp.full_name)}</h3>
+          <p class="sp-dg" style="font-size:15px; margin:4px 0 0 0; display:block">${esc([sp.designation, sp.organisation].filter(Boolean).join(', '))}</p>
+        </div>
       </div>
       ${sp.bio ? `<div class="body" style="margin-top:20px">${sp.bio}</div>` : ''}
       ${appears.length ? `<h4>Appearing In</h4>${appears.map(s => {
@@ -394,7 +397,7 @@
         return `<button class="sp-row" data-session="${s.id}">
           <span>
             <span class="sp-nm">${esc(s.title)}</span>
-            <span class="sp-dg">${esc(d?.label || '')} · ${pretty(s.start_time)}${
+            <span class="sp-meta">${esc(d?.label || '')} · ${pretty(s.start_time)}${
               s.hall_id ? ' · ' + esc(hallById[s.hall_id]?.name || '') : ''}</span>
           </span>
         </button>`;
@@ -406,7 +409,57 @@
     `);
   }
 
+  const VENUE_QUERY = 'Bharat Mandapam Gate No 7, Pragati Maidan, New Delhi';
+
+  function venueSheet() {
+    const q = encodeURIComponent(VENUE_QUERY);
+    openSheet(`
+      <h3 id="sheet-title" style="margin-top:0">Getting to the venue</h3>
+      <div class="kv" style="margin-bottom:20px">
+        <span>Bharat Mandapam, Pragati Maidan, New Delhi</span>
+      </div>
+
+      <div class="venue-gate">
+        <span class="num">7</span>
+        <span class="txt">
+          <b>Enter through Gate No. 7</b>
+          <span>Nearest metro: Supreme Court (Blue Line). Delegate entry and
+                registration are just inside this gate.</span>
+        </span>
+      </div>
+
+      <!-- To use your own venue map instead, replace this iframe with:
+           <img src="images/venue-map.jpg" alt="Venue map showing Gate No. 7"> -->
+      <div class="venue-map">
+        <iframe src="https://maps.google.com/maps?q=${q}&z=16&output=embed"
+                title="Map of Bharat Mandapam, Gate No. 7"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen></iframe>
+      </div>
+
+      <div class="venue-actions">
+        <a class="btn-directions" target="_blank" rel="noopener"
+           href="https://www.google.com/maps/dir/?api=1&destination=${q}">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+          </svg>
+          Get directions
+        </a>
+        <a class="btn-map" target="_blank" rel="noopener"
+           href="https://www.google.com/maps/search/?api=1&query=${q}">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          Open in Maps
+        </a>
+      </div>
+    `);
+  }
+
   document.addEventListener('click', (e) => {
+    const venue = e.target.closest('[data-sheet="venue"]');
+    if (venue) { e.preventDefault(); venueSheet(); return; }
     const sp = e.target.closest('[data-speaker]');
     if (sp) { speakerSheet(sp.dataset.speaker); return; }
     const se = e.target.closest('[data-session]');
@@ -447,84 +500,17 @@
     const anchor = $('#now-anchor');
     if (!anchor) return;
     const y = anchor.getBoundingClientRect().top + window.scrollY - 180;
-    window.scrollTo({ top: y, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: y, behavior: still ? 'auto' : 'smooth' });
   });
 })();
 
 
 /* ---------------------------------------------------------------------------
-   Bottom navigation: tilt, press ripple, and smooth scrolling to sections.
+   Bottom navigation: smooth scroll to a section, and the active state.
    --------------------------------------------------------------------------- */
 (() => {
   'use strict';
-
-  const nav = document.querySelector('.bottom-nav');
-  if (!nav) return;
-
-  const canvas = nav.querySelector('.bottom-nav__ripple');
-  const ctx = canvas ? canvas.getContext('2d') : null;
-  const ripples = [];
-
-  let targetTiltX = 0, targetTiltY = 0;
-  let currentTiltX = 0, currentTiltY = 0;
-
-  function resizeCanvas() {
-    if (!ctx) return;                 // canvas can be unavailable or blocked
-    const rect = nav.getBoundingClientRect();
-    const ratio = window.devicePixelRatio || 1;
-    canvas.width = Math.round(rect.width * ratio);
-    canvas.height = Math.round(rect.height * ratio);
-    canvas.style.width = `${rect.width}px`;
-    canvas.style.height = `${rect.height}px`;
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  }
-
-  function animateTilt() {
-    currentTiltX += (targetTiltX - currentTiltX) * 0.14;
-    currentTiltY += (targetTiltY - currentTiltY) * 0.14;
-    nav.style.setProperty('--tilt-x', `${currentTiltX.toFixed(2)}deg`);
-    nav.style.setProperty('--tilt-y', `${currentTiltY.toFixed(2)}deg`);
-    requestAnimationFrame(animateTilt);
-  }
-
-  function renderRipples() {
-    if (!ctx) return;
-    const rect = nav.getBoundingClientRect();
-    ctx.clearRect(0, 0, rect.width, rect.height);
-
-    for (let i = ripples.length - 1; i >= 0; i--) {
-      const r = ripples[i];
-      r.radius += 4;
-      r.alpha *= 0.90;
-      ctx.beginPath();
-      ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(81, 53, 255, ${r.alpha})`;
-      ctx.lineWidth = 2.2;
-      ctx.stroke();
-      if (r.alpha < 0.01) ripples.splice(i, 1);
-    }
-    requestAnimationFrame(renderRipples);
-  }
-
-  nav.addEventListener('pointermove', (e) => {
-    const rect = nav.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    nav.style.setProperty('--mouse-x', `${(x * 100).toFixed(1)}%`);
-    nav.style.setProperty('--mouse-y', `${(y * 100).toFixed(1)}%`);
-    targetTiltY = (x - 0.5) * 6;
-    targetTiltX = (0.5 - y) * 6;
-  });
-
-  nav.addEventListener('pointerleave', () => { targetTiltX = 0; targetTiltY = 0; });
-
-  nav.addEventListener('pointerdown', (e) => {
-    const rect = nav.getBoundingClientRect();
-    nav.style.setProperty('--nav-scale', '0.985');
-    ripples.push({ x: e.clientX - rect.left, y: e.clientY - rect.top, radius: 5, alpha: 0.5 });
-  });
-
-  window.addEventListener('pointerup', () => nav.style.setProperty('--nav-scale', '1'));
 
   document.querySelectorAll('.nav-item').forEach((item) => {
     item.addEventListener('click', (e) => {
@@ -543,9 +529,4 @@
       item.classList.add('active');
     });
   });
-
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-  animateTilt();
-  if (ctx) renderRipples();
 })();
