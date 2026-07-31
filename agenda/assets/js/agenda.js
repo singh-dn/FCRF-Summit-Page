@@ -16,6 +16,65 @@
 
   const hallById = Object.fromEntries(halls.map(h => [Number(h.id), h]));
 
+  /* ------------------------------------------------------------------------
+     Speaker order on a card.
+
+     Sorted by the seniority of the role, not by the order they appear in
+     data.js: government, defence and the judiciary sit at the top, then
+     industry bodies, then academia, then private sector, then anyone whose
+     designation is still blank.
+
+     Within a band a second pass ranks the title itself, so a Director
+     General appears above a Consultant at the same organisation.
+     ------------------------------------------------------------------------ */
+  const BANDS = [
+    [10, /(cert[- ]?in|meity|meit|ministry|govt|government|\bgoi\b|department of telecom|\bdot\b|semt|drdo|intelligence bureau|\bib\b|police|\bdgp\b|\bdg\b|\bips\b|\bias\b|\bcbi\b|\bnia\b|\bi4c\b|commissioner|secretary|justice|judge|high court|supreme court|lok sabha|\bmp\b|interpol|united nations|\bun\b|national cyber|advocate[- ]on[- ]record|claws|\brru\b|rashtriya raksha)/i],
+    [20, /(dsci|nasscom|association|federation|\bforum\b|council|foundation|chamber|\bicp\b|child protection)/i],
+    [30, /(professor|\bprof\b|university|institute|\biiit\b|\biit\b|academy|academic|assistant professor)/i],
+    [40, /(bank|\bltd\b|\bpvt\b|limited|consult|\bceo\b|\bcto\b|\bciso\b|\bcro\b|\bcoo\b|\bcio\b|founder|partner|advisor|adviser|manager|director|architect|counsel|analyst|specialist|expert|strategist)/i],
+  ];
+
+  const TITLE_WEIGHT = [
+    [0, /(chairman|director general|\bdgp\b|\bdg\b|secretary|national cyber security coordinator|justice|president|former director)/i],
+    [2, /(chief|\bceo\b|\bcto\b|\bciso\b|\bcro\b|\bcoo\b|\bcio\b|commissioner|head\b|founder)/i],
+    [4, /(director|vice president|senior|partner|professor|advocate)/i],
+    [6, /(advisor|adviser|associate|manager|consultant|counsel|scientist|lead\b)/i],
+  ];
+
+  // A rank in the name still counts when the designation is thin.
+  const NAME_RANK = /(lt\.? gen|lieutenant general|air marshal|air vice marshal|\bavm\b|maj gen|major general|brig\b|justice|\bdy sp\b|\bips\b)/i;
+
+  function seniority(p) {
+    const desig = (p.designation || '') + ' ' + (p.organisation || '');
+    const hay = (p.name || '') + ' ' + desig;
+
+    if (!desig.trim()) {
+      // No designation at all: keep them last, unless the name carries a rank.
+      return NAME_RANK.test(p.name || '') ? 15 : 90;
+    }
+
+    let band = 50;
+    for (const [score, re] of BANDS) {
+      if (re.test(hay)) { band = score; break; }
+    }
+    if (band > 10 && NAME_RANK.test(p.name || '')) band = 10;
+
+    let weight = 8;
+    for (const [w, re] of TITLE_WEIGHT) {
+      if (re.test(desig)) { weight = w; break; }
+    }
+    return band + weight;
+  }
+
+  // Stable sort: equal ranks keep the order they have in data.js.
+  sessions.forEach(s => {
+    if (!Array.isArray(s.speakers)) return;
+    s.speakers = s.speakers
+      .map((p, i) => [seniority(p), i, p])
+      .sort((a, b) => (a[0] - b[0]) || (a[1] - b[1]))
+      .map(x => x[2]);
+  });
+
   // Deterministic colour per person, so a monogram never changes shade
   // between the card, the session sheet and the directory.
   const HUES = ['#FF7171', '#FF9F43', '#10AC84', '#0ea5e9', '#5135FF', '#FF9FF3', '#00D2D3'];

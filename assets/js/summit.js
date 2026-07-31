@@ -1010,6 +1010,20 @@ const scheduleData = {
     description: "MSAB (Micro Systemation AB) is a global leader in digital forensic technology, providing trusted solutions for the extraction, analysis, and management of data from mobile devices. Serving law enforcement, defense, government agencies, and enterprise investigators in more than 100 countries, MSAB empowers organizations with industry-leading mobile forensic tools, secure evidence management, and advanced investigative capabilities to accelerate digital investigations while maintaining forensic integrity.",
     website: "https://www.msab.com/"
 },
+{
+    tier: "Knowledge Partner",
+    name: "National Forensic Sciences University (NFSU)",
+    logo: "https://www.nfsu.ac.in/assets/img/emblem.png",
+    description: "National Forensic Sciences University (NFSU) is India's premier institution dedicated to forensic science, cybersecurity, digital forensics, homeland security, behavioral sciences, and criminal justice. Established as an Institution of National Importance, NFSU collaborates with government agencies, law enforcement, academia, and industry to advance research, innovation, capacity building, and professional education in forensic and investigative sciences.",
+    website: "https://www.nfsu.ac.in/"
+},
+{
+    tier: "Silver Sponsor",
+    name: "Centre for Police Technology",
+    logo: "assets/img/sponsors/Center-For-Police-Technology-Thumbnail.webp",
+    description: "Centre for Police Technology is committed to strengthening modern policing through the adoption of advanced technologies, digital transformation, forensic innovation, and capacity building. The organization works closely with law enforcement agencies, industry partners, and technology experts to promote cutting-edge solutions that enhance investigative capabilities, public safety, cyber resilience, and operational excellence.",
+    website: "https://centreforpolicetechnology.org/"
+}
         ];
 
         const overlay = document.getElementById('dss-modal-overlay');
