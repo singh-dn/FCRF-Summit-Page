@@ -1,22 +1,67 @@
 <?php
+session_start();
+
 // Production Settings
 error_reporting(0);
 ini_set('display_errors', 0);
 
 $message = "";
 $messageType = "";
-$showSuccessModal = false;
 
 // ================= CONFIGURATION ================= //
-$db_host = "localhost";
-$db_user = "u545411682_summit"; // Replace with actual DB user
-$db_pass = "Summit2026";          // Replace with actual DB password
-$db_name = "u545411682_summit"; // Replace with actual DB name
-$table_name = "fcrf_document_downloads"; 
+$db_host    = "localhost";
+$db_user    = "u545411682_summit";
+$db_pass    = "Summit2026";
+$db_name    = "u545411682_summit";
+$table_name = "fcrf_document_downloads";
 
-// 📄 THE FILE TO BE DOWNLOADED
-// Notice the forward slash (/) instead of a backslash (\)
-$file_to_download = "resource/WHITE PAPER FCRF V1.pdf";
+// 📄 SERVER-SIDE path to the file (NOT a URL).
+// __DIR__ = the folder this PHP file lives in, so the path never depends
+// on how the page was reached. Keep the PDF inside a "resource" folder here.
+$FILE_PATH     = __DIR__ . '/resource/WHITE PAPER FCRF V1.pdf';
+$DOWNLOAD_NAME = 'WHITE_PAPER_FCRF_V1.pdf'; // clean name the user receives
+$LINK_LIFETIME = 300; // seconds the one-time download link stays valid
+$RESET_SECONDS = 8;   // seconds on the success screen before the form resets
+
+// ============================================================
+// 1. DOWNLOAD HANDLER — must run before ANY output is sent
+// ============================================================
+if (isset($_GET['download'])) {
+
+    $token = isset($_GET['token']) ? $_GET['token'] : '';
+
+    $tokenOk = !empty($_SESSION['dl_token'])
+            && is_string($token)
+            && hash_equals($_SESSION['dl_token'], $token)
+            && isset($_SESSION['dl_expires'])
+            && time() < $_SESSION['dl_expires'];
+
+    if (!$tokenOk) {
+        http_response_code(403);
+        exit('This download link has expired. Please fill the form again.');
+    }
+
+    if (!is_file($FILE_PATH) || !is_readable($FILE_PATH)) {
+        http_response_code(404);
+        exit('The document is temporarily unavailable. Please contact the summit team.');
+    }
+
+    // Clear any buffers so nothing corrupts the PDF bytes
+    while (ob_get_level() > 0) { ob_end_clean(); }
+
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/pdf');
+    header('Content-Disposition: attachment; filename="' . $DOWNLOAD_NAME . '"');
+    header('Content-Transfer-Encoding: binary');
+    header('Content-Length: ' . filesize($FILE_PATH));
+    header('Accept-Ranges: none');
+    header('Cache-Control: private, max-age=0, must-revalidate');
+    header('Pragma: public');
+    header('X-Content-Type-Options: nosniff');
+
+    readfile($FILE_PATH);
+    exit;
+}
 
 // --- SECURITY: Input Sanitization Function to prevent XSS ---
 function sanitize_input($data) {
@@ -29,22 +74,26 @@ function sanitize_input($data) {
     return $data;
 }
 
+// Current page URL without any query string (used for redirects)
+$selfUrl = strtok($_SERVER['REQUEST_URI'], '?');
+
+// ============================================================
+// 2. FORM SUBMISSION — Post / Redirect / Get
+// ============================================================
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
-        // Connect to DB
         $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
         if ($conn->connect_error) {
-            throw new Exception("Database Connection Failed.");
+            throw new Exception("Database connection failed. Please try again in a moment.");
         }
         $conn->set_charset("utf8mb4");
 
-        // Process & Validate Inputs Securely
-        $full_name   = sanitize_input($_POST['full_name'] ?? '');
-        $email       = sanitize_input($_POST['email'] ?? '');
-        $mobile      = sanitize_input($_POST['mobile'] ?? '');
-        $city        = sanitize_input($_POST['city'] ?? '');
-        $org         = sanitize_input($_POST['org'] ?? '');
+        $full_name   = sanitize_input($_POST['full_name']   ?? '');
+        $email       = sanitize_input($_POST['email']       ?? '');
+        $mobile      = sanitize_input($_POST['mobile']      ?? '');
+        $city        = sanitize_input($_POST['city']        ?? '');
+        $org         = sanitize_input($_POST['org']         ?? '');
         $designation = sanitize_input($_POST['designation'] ?? '');
 
         // --- STRICT VALIDATION LOGIC ---
@@ -57,37 +106,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (!preg_match("/^[0-9\+\-\s]+$/", $mobile) || strlen(preg_replace('/[^0-9]/', '', $mobile)) < 10) {
-            throw new Exception("Please enter a valid mobile number (digits only).");
+            throw new Exception("Enter a valid mobile number with at least 10 digits.");
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception("Invalid email format.");
+            throw new Exception("Enter a valid email address.");
         }
 
         // Insert into Database Securely
-        $sql = "INSERT INTO $table_name (full_name, email, mobile, city, organization, designation) VALUES (?, ?, ?, ?, ?, ?)";
-        
+        $sql  = "INSERT INTO $table_name (full_name, email, mobile, city, organization, designation) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        if (!$stmt) { throw new Exception("Database Error: " . $conn->error); }
+        if (!$stmt) { throw new Exception("Database error. Please try again."); }
 
         $stmt->bind_param("ssssss", $full_name, $email, $mobile, $city, $org, $designation);
-        
-        if ($stmt->execute()) {
-            // Set flag to true to trigger the JS download logic on page load
-            $showSuccessModal = true;
-            $_POST = array(); // Clear form values
-        } else {
-            throw new Exception("Failed to process your request. Please try again.");
+
+        if (!$stmt->execute()) {
+            throw new Exception("We couldn't process your request. Please try again.");
         }
-        
+
         $stmt->close();
         $conn->close();
 
+        // Issue a short-lived download token, then redirect (stops duplicate
+        // rows on refresh and gives us a clean URL for the success screen)
+        $_SESSION['dl_token']   = bin2hex(random_bytes(16));
+        $_SESSION['dl_expires'] = time() + $LINK_LIFETIME;
+
+        header('Location: ' . $selfUrl . '?status=ready');
+        exit;
+
     } catch (Exception $e) {
-        $message = $e->getMessage();
+        $message     = $e->getMessage();
         $messageType = "error";
     }
 }
+
+// ============================================================
+// 3. SUCCESS SCREEN STATE
+// ============================================================
+$showSuccess = isset($_GET['status'])
+            && $_GET['status'] === 'ready'
+            && !empty($_SESSION['dl_token'])
+            && isset($_SESSION['dl_expires'])
+            && time() < $_SESSION['dl_expires'];
+
+$downloadUrl  = $showSuccess
+    ? htmlspecialchars($selfUrl . '?download=1&token=' . $_SESSION['dl_token'], ENT_QUOTES, 'UTF-8')
+    : '';
+
+// Server-side sanity check, surfaced only on the success screen
+$fileMissing = !is_file($FILE_PATH);
 ?>
 
 <!DOCTYPE html>
@@ -118,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 body {
   margin: 0;
-  background-color: #a2c2e8; 
+  background-color: #a2c2e8;
   color: var(--text-main);
   font-family: var(--sans);
   font-size: 16px;
@@ -131,7 +199,6 @@ body {
   padding: 40px 20px;
 }
 
-/* Background matching the agenda */
 .ambient-bg {
   position: fixed;
   inset: 0;
@@ -150,7 +217,7 @@ body {
   width: 100%;
   max-width: 680px;
   border-radius: 32px;
-  box-shadow: 
+  box-shadow:
     0 40px 100px -20px rgba(0, 50, 150, 0.25),
     0 1px 3px rgba(0, 0, 0, 0.05),
     inset 0 1px 1px rgba(255, 255, 255, 0.8);
@@ -159,20 +226,10 @@ body {
   z-index: 1;
 }
 
-/* Top Branding Area */
-.branding {
-  padding: 32px 40px 20px;
-  background: #ffffff;
-}
+.branding { padding: 32px 40px 20px; background: #ffffff; }
 
-.logo-space {
-  display: block;
-  max-width: 200px;
-  height: auto;
-  margin-bottom: 24px;
-}
+.logo-space { display: block; max-width: 200px; height: auto; margin-bottom: 24px; }
 
-/* Fallback if real logo image is broken */
 .logo-placeholder {
   font-size: 24px;
   font-weight: 800;
@@ -193,9 +250,7 @@ body {
   background: #f1f5f9;
 }
 
-.form-body {
-  padding: 32px 40px 48px;
-}
+.form-body { padding: 32px 40px 48px; }
 
 .form-title {
   margin: 0 0 8px 0;
@@ -203,33 +258,13 @@ body {
   font-weight: 700;
   letter-spacing: -0.02em;
 }
-.form-desc {
-  margin: 0 0 32px 0;
-  color: var(--text-muted);
-  font-size: 15px;
-}
+.form-desc { margin: 0 0 32px 0; color: var(--text-muted); font-size: 15px; }
 
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-@media (max-width: 600px) {
-  .grid-2 { grid-template-columns: 1fr; }
-}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.field label {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-main);
-}
+.field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.field label { font-size: 14px; font-weight: 600; color: var(--text-main); }
 .field label span { color: var(--accent-magenta); margin-left: 2px; }
 
 .field input {
@@ -251,7 +286,6 @@ body {
 }
 .field input::placeholder { color: #94a3b8; }
 
-/* Error Message Box Styling */
 .error-msg {
   background-color: #fef2f2;
   border: 1px solid #fca5a5;
@@ -264,6 +298,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  text-align: left;
 }
 .error-msg svg { width: 20px; height: 20px; flex-shrink: 0; }
 
@@ -285,6 +320,7 @@ body {
   gap: 10px;
   transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
   box-shadow: 0 10px 20px -10px var(--accent-purple);
+  text-decoration: none;
 }
 
 .btn-submit:hover:not(:disabled) {
@@ -302,14 +338,7 @@ body {
 
 .btn-submit svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* Success State */
-.success-msg {
-  display: none;
-  text-align: center;
-  padding: 40px 20px;
-}
-.success-msg.active { display: block; animation: fadeIn 0.4s ease; }
-.form-content.hidden { display: none; }
+.success-msg { text-align: center; padding: 40px 20px; animation: fadeIn 0.4s ease; }
 
 .success-icon {
   width: 64px; height: 64px;
@@ -321,9 +350,26 @@ body {
 }
 .success-icon svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
+.reset-note {
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.manual-link {
+  color: var(--accent-purple);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+.hidden-frame { display: none; }
+
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
 </style>
 </head>
@@ -332,141 +378,164 @@ body {
 <div class="ambient-bg" aria-hidden="true"></div>
 
 <main class="form-container">
-  
+
   <!-- Branding Header -->
   <div class="branding">
-    <!-- Real logo image fallback -->
     <img src="../agenda/assets/summit.png" alt="FutureCrime Summit" class="logo-space" onerror="this.outerHTML='<div class=\'logo-placeholder\'>FUTURE<span class=\'red\'>CRIME</span></div>'">
-    
-    <!-- Banner Image provided by user -->
     <img src="../agenda/assets/1600x520.webp" alt="Summit Venue Banner" class="banner-space" onerror="this.src='https://placehold.co/1200x400/f1f5f9/64748b?text=Venue+Banner+Image'">
   </div>
 
   <div class="form-body">
-    
-    <div class="form-content" id="form-content">
-      <h1 class="form-title">Download Resources</h1>
-      <p class="form-desc">Please provide your details below to securely access the summit documentation.</p>
 
-      <?php if (!empty($message) && $messageType == "error"): ?>
-        <div class="error-msg">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-            <?php echo $message; ?>
-        </div>
-      <?php endif; ?>
+  <?php if ($showSuccess): ?>
 
-      <form id="download-form" action="" method="POST">
-        <div class="grid-2">
-          <div class="field">
-            <label for="name">Full Name <span>*</span></label>
-            <input type="text" id="name" name="full_name" required placeholder="e.g. Aman Bandvi"
-                   value="<?php echo isset($_POST['full_name']) ? htmlspecialchars($_POST['full_name']) : ''; ?>">
-          </div>
-          <div class="field">
-            <label for="email">Mail ID <span>*</span></label>
-            <input type="email" id="email" name="email" required placeholder="name@organization.com"
-                   value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="field">
-            <label for="mobile">Mobile Number <span>*</span></label>
-            <input type="tel" id="mobile" name="mobile" required placeholder="+91 98765 43210"
-                   pattern="[0-9\+\-\s]+" oninput="this.value = this.value.replace(/[^0-9\+\-\s]/g, '')"
-                   value="<?php echo isset($_POST['mobile']) ? htmlspecialchars($_POST['mobile']) : ''; ?>">
-          </div>
-          <div class="field">
-            <label for="city">City <span>*</span></label>
-            <input type="text" id="city" name="city" required placeholder="e.g. New Delhi"
-                   value="<?php echo isset($_POST['city']) ? htmlspecialchars($_POST['city']) : ''; ?>">
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="field">
-            <label for="org">Organisation <span>*</span></label>
-            <input type="text" id="org" name="org" required placeholder="Company or Agency Name"
-                   value="<?php echo isset($_POST['org']) ? htmlspecialchars($_POST['org']) : ''; ?>">
-          </div>
-          <div class="field">
-            <label for="designation">Designation <span>*</span></label>
-            <input type="text" id="designation" name="designation" required placeholder="Your Job Title"
-                   value="<?php echo isset($_POST['designation']) ? htmlspecialchars($_POST['designation']) : ''; ?>">
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit" id="submit-btn" disabled>
-          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          Unlock & Download
-        </button>
-      </form>
-    </div>
-
-    <!-- Success Message Container -->
+    <!-- ================= SUCCESS SCREEN ================= -->
     <div class="success-msg" id="success-msg">
       <div class="success-icon">
         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
       </div>
-      <h2 class="form-title">Download Started!</h2>
-      <p class="form-desc">Your document is being downloaded securely. Thank you for your interest in the FutureCrime Summit.</p>
-      <button type="button" class="btn-submit" style="background:var(--bg-base); color:var(--text-main); box-shadow:none; border:1px solid var(--border-light);" onclick="location.reload()">
-        Return
-      </button>
+
+      <?php if ($fileMissing): ?>
+        <h2 class="form-title">Details received</h2>
+        <p class="form-desc">The document isn't available right now. Please write to the summit team and we'll send it across.</p>
+        <a class="btn-submit" style="background:var(--bg-base); color:var(--text-main); box-shadow:none; border:1px solid var(--border-light);" href="<?php echo htmlspecialchars($selfUrl, ENT_QUOTES, 'UTF-8'); ?>">Back to form</a>
+      <?php else: ?>
+        <h2 class="form-title">Download started</h2>
+        <p class="form-desc">
+          Your copy of the white paper is on its way to your downloads folder.<br>
+          If nothing happened, <a class="manual-link" href="<?php echo $downloadUrl; ?>">download it here</a>.
+        </p>
+
+        <a class="btn-submit" style="background:var(--bg-base); color:var(--text-main); box-shadow:none; border:1px solid var(--border-light);"
+           href="<?php echo htmlspecialchars($selfUrl, ENT_QUOTES, 'UTF-8'); ?>">
+          Register another person
+        </a>
+
+        <p class="reset-note">Form resets in <span id="countdown"><?php echo (int)$RESET_SECONDS; ?></span>s for the next entry.</p>
+
+        <!-- The download is fetched in a hidden frame so the page stays put -->
+        <iframe class="hidden-frame" id="dl-frame" title="Download" src="about:blank"></iframe>
+      <?php endif; ?>
     </div>
+
+    <script>
+    (function () {
+      var frame = document.getElementById('dl-frame');
+      if (!frame) return;
+
+      var downloadUrl = <?php echo json_encode($selfUrl . '?download=1&token=' . $_SESSION['dl_token']); ?>;
+      var resetUrl    = <?php echo json_encode($selfUrl); ?>;
+      var seconds     = <?php echo (int)$RESET_SECONDS; ?>;
+
+      // Kick the download off after a short beat so the success state is seen
+      setTimeout(function () { frame.src = downloadUrl; }, 800);
+
+      var label = document.getElementById('countdown');
+      var timer = setInterval(function () {
+        seconds -= 1;
+        if (label) label.textContent = seconds > 0 ? seconds : 0;
+        if (seconds <= 0) {
+          clearInterval(timer);
+          // replace() keeps the success page out of the back-button history
+          window.location.replace(resetUrl);
+        }
+      }, 1000);
+    })();
+    </script>
+
+  <?php else: ?>
+
+    <!-- ================= FORM SCREEN ================= -->
+    <h1 class="form-title">Download resources</h1>
+    <p class="form-desc">Share your details below to access the summit documentation.</p>
+
+    <?php if (!empty($message) && $messageType === "error"): ?>
+      <div class="error-msg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <?php echo $message; ?>
+      </div>
+    <?php endif; ?>
+
+    <form id="download-form" action="<?php echo htmlspecialchars($selfUrl, ENT_QUOTES, 'UTF-8'); ?>" method="POST" autocomplete="on">
+      <div class="grid-2">
+        <div class="field">
+          <label for="name">Full name <span>*</span></label>
+          <input type="text" id="name" name="full_name" required placeholder="e.g. Aman Bandvi"
+                 value="<?php echo isset($_POST['full_name']) ? htmlspecialchars($_POST['full_name'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+        </div>
+        <div class="field">
+          <label for="email">Mail ID <span>*</span></label>
+          <input type="email" id="email" name="email" required placeholder="name@organization.com"
+                 value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="mobile">Mobile number <span>*</span></label>
+          <input type="tel" id="mobile" name="mobile" required placeholder="+91 98765 43210"
+                 pattern="[0-9\+\-\s]+" oninput="this.value = this.value.replace(/[^0-9\+\-\s]/g, '')"
+                 value="<?php echo isset($_POST['mobile']) ? htmlspecialchars($_POST['mobile'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+        </div>
+        <div class="field">
+          <label for="city">City <span>*</span></label>
+          <input type="text" id="city" name="city" required placeholder="e.g. New Delhi"
+                 value="<?php echo isset($_POST['city']) ? htmlspecialchars($_POST['city'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="org">Organisation <span>*</span></label>
+          <input type="text" id="org" name="org" required placeholder="Company or agency name"
+                 value="<?php echo isset($_POST['org']) ? htmlspecialchars($_POST['org'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+        </div>
+        <div class="field">
+          <label for="designation">Designation <span>*</span></label>
+          <input type="text" id="designation" name="designation" required placeholder="Your job title"
+                 value="<?php echo isset($_POST['designation']) ? htmlspecialchars($_POST['designation'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submit-btn" disabled>
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Unlock &amp; download
+      </button>
+    </form>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var form   = document.getElementById('download-form');
+      var btn    = document.getElementById('submit-btn');
+      if (!form || !btn) return;
+      var inputs = form.querySelectorAll('input[required]');
+
+      function checkValidity() {
+        var ok = true;
+        inputs.forEach(function (input) {
+          if (!input.value.trim()) ok = false;
+        });
+        btn.disabled = !ok;
+      }
+
+      checkValidity();
+      inputs.forEach(function (input) {
+        input.addEventListener('input', checkValidity);
+        input.addEventListener('change', checkValidity);
+      });
+
+      // Block accidental double submits
+      form.addEventListener('submit', function () {
+        btn.disabled = true;
+        btn.lastChild.textContent = ' Processing…';
+      });
+    });
+    </script>
+
+  <?php endif; ?>
 
   </div>
 </main>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('download-form');
-  const btn = document.getElementById('submit-btn');
-  const inputs = form.querySelectorAll('input[required]');
-
-  // Check if all mandatory fields have values
-  const checkValidity = () => {
-    let isValid = true;
-    inputs.forEach(input => {
-      if (!input.value.trim()) {
-        isValid = false;
-      }
-    });
-    btn.disabled = !isValid;
-  };
-
-  // Run validity check immediately (handles pre-filled PHP values)
-  checkValidity();
-
-  // Listen to input changes on all fields to enable/disable button
-  inputs.forEach(input => {
-    input.addEventListener('input', checkValidity);
-    input.addEventListener('change', checkValidity);
-  });
-
-  // If PHP sets $showSuccessModal, we switch UI and trigger the actual download
-  <?php if ($showSuccessModal): ?>
-      // 1. Swap UI to success message
-      document.getElementById('form-content').classList.add('hidden');
-      document.getElementById('success-msg').classList.add('active');
-
-      // 2. Trigger the actual secure download automatically
-      const link = document.createElement('a');
-      // We use rawurlencode in PHP to safely handle the spaces in the filename
-      // while preserving the forward slash in the folder path
-      link.href = '<?php 
-          $path_parts = explode("/", $file_to_download);
-          $encoded_parts = array_map('rawurlencode', $path_parts);
-          echo implode("/", $encoded_parts); 
-      ?>';
-      link.download = 'WHITE_PAPER_FCRF_V1.pdf'; // Forces download with a clean name
-      link.target = '_blank'; // Opens in new tab to ensure download starts
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-  <?php endif; ?>
-});
-</script>
 
 </body>
 </html>
