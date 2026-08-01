@@ -15,10 +15,8 @@ $db_pass    = "Summit2026";
 $db_name    = "u545411682_summit";
 $table_name = "fcrf_document_downloads";
 
-// 📄 SERVER-SIDE path to the file (NOT a URL).
-// __DIR__ = the folder this PHP file lives in, so the path never depends
-// on how the page was reached. Keep the PDF inside a "resource" folder here.
-$FILE_PATH     = __DIR__ . 'https://summit.futurecrime.org/resource/WHITE%20PAPER%20FCRF%20V1.pdf';
+// The document now lives in the database (uploaded via admin-upload.php)
+$DOC_SLUG      = 'white-paper-v1';
 $DOWNLOAD_NAME = 'WHITE_PAPER_FCRF_V1.pdf'; // clean name the user receives
 $LINK_LIFETIME = 300; // seconds the one-time download link stays valid
 $RESET_SECONDS = 8;   // seconds on the success screen before the form resets
@@ -41,25 +39,43 @@ if (isset($_GET['download'])) {
         exit('This download link has expired. Please fill the form again.');
     }
 
-    if (!is_file($FILE_PATH) || !is_readable($FILE_PATH)) {
-        http_response_code(404);
-        exit('The document is temporarily unavailable. Please contact the summit team.');
+    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+    if ($conn->connect_error) {
+        http_response_code(503);
+        exit('The document service is unavailable. Please try again shortly.');
     }
+
+    $stmt = $conn->prepare("SELECT mime_type, file_data FROM fcrf_documents WHERE slug = ? LIMIT 1");
+    $stmt->bind_param('s', $DOC_SLUG);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows === 0) {
+        $stmt->close();
+        $conn->close();
+        http_response_code(404);
+        exit('The document has not been published yet. Please contact the summit team.');
+    }
+
+    $stmt->bind_result($mimeType, $fileData);
+    $stmt->fetch();
+    $stmt->close();
+    $conn->close();
 
     // Clear any buffers so nothing corrupts the PDF bytes
     while (ob_get_level() > 0) { ob_end_clean(); }
 
     header('Content-Description: File Transfer');
-    header('Content-Type: application/pdf');
+    header('Content-Type: ' . ($mimeType ?: 'application/pdf'));
     header('Content-Disposition: attachment; filename="' . $DOWNLOAD_NAME . '"');
     header('Content-Transfer-Encoding: binary');
-    header('Content-Length: ' . filesize($FILE_PATH));
+    header('Content-Length: ' . strlen($fileData));
     header('Accept-Ranges: none');
     header('Cache-Control: private, max-age=0, must-revalidate');
     header('Pragma: public');
     header('X-Content-Type-Options: nosniff');
 
-    readfile($FILE_PATH);
+    echo $fileData;
     exit;
 }
 
@@ -128,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->close();
 
         // Issue a short-lived download token, then redirect (stops duplicate
-        // rows on refresh and gives us a clean URL for the success screen)
+        // rows on refresh and gives a clean URL for the success screen)
         $_SESSION['dl_token']   = bin2hex(random_bytes(16));
         $_SESSION['dl_expires'] = time() + $LINK_LIFETIME;
 
@@ -150,12 +166,26 @@ $showSuccess = isset($_GET['status'])
             && isset($_SESSION['dl_expires'])
             && time() < $_SESSION['dl_expires'];
 
-$downloadUrl  = $showSuccess
+$downloadUrl = $showSuccess
     ? htmlspecialchars($selfUrl . '?download=1&token=' . $_SESSION['dl_token'], ENT_QUOTES, 'UTF-8')
     : '';
 
-// Server-side sanity check, surfaced only on the success screen
-$fileMissing = !is_file($FILE_PATH);
+// Is a document actually published? (only checked for the success screen copy)
+$docMissing = false;
+if ($showSuccess) {
+    $checkConn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+    if ($checkConn->connect_error) {
+        $docMissing = true;
+    } else {
+        $checkStmt = $checkConn->prepare("SELECT id FROM fcrf_documents WHERE slug = ? LIMIT 1");
+        $checkStmt->bind_param('s', $DOC_SLUG);
+        $checkStmt->execute();
+        $checkStmt->store_result();
+        $docMissing = ($checkStmt->num_rows === 0);
+        $checkStmt->close();
+        $checkConn->close();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -350,17 +380,8 @@ body {
 }
 .success-icon svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-.reset-note {
-  margin-top: 20px;
-  font-size: 13px;
-  color: var(--text-muted);
-}
-.manual-link {
-  color: var(--accent-purple);
-  font-weight: 600;
-  text-decoration: none;
-  border-bottom: 1px solid currentColor;
-}
+.reset-note { margin-top: 20px; font-size: 13px; color: var(--text-muted); }
+.manual-link { color: var(--accent-purple); font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; }
 
 .hidden-frame { display: none; }
 
@@ -395,10 +416,11 @@ body {
         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
       </div>
 
-      <?php if ($fileMissing): ?>
+      <?php if ($docMissing): ?>
         <h2 class="form-title">Details received</h2>
-        <p class="form-desc">The document isn't available right now. Please write to the summit team and we'll send it across.</p>
-        <a class="btn-submit" style="background:var(--bg-base); color:var(--text-main); box-shadow:none; border:1px solid var(--border-light);" href="<?php echo htmlspecialchars($selfUrl, ENT_QUOTES, 'UTF-8'); ?>">Back to form</a>
+        <p class="form-desc">The document isn't published yet. Write to the summit team and we'll send it across.</p>
+        <a class="btn-submit" style="background:var(--bg-base); color:var(--text-main); box-shadow:none; border:1px solid var(--border-light);"
+           href="<?php echo htmlspecialchars($selfUrl, ENT_QUOTES, 'UTF-8'); ?>">Back to form</a>
       <?php else: ?>
         <h2 class="form-title">Download started</h2>
         <p class="form-desc">
@@ -505,8 +527,8 @@ body {
 
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-      var form   = document.getElementById('download-form');
-      var btn    = document.getElementById('submit-btn');
+      var form = document.getElementById('download-form');
+      var btn  = document.getElementById('submit-btn');
       if (!form || !btn) return;
       var inputs = form.querySelectorAll('input[required]');
 
@@ -524,7 +546,6 @@ body {
         input.addEventListener('change', checkValidity);
       });
 
-      // Block accidental double submits
       form.addEventListener('submit', function () {
         btn.disabled = true;
         btn.lastChild.textContent = ' Processing…';
