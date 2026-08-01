@@ -991,10 +991,10 @@ const scheduleData = {
 },
 {
     tier: "Silver Sponsor",
-    name: "Forensic Care",
-    logo: "assets/img/sponsors/aa-1.png",
-    description: "Forensic Care is a digital forensics and cybersecurity organization focused on cybercrime investigation, forensic analysis, incident response, cyber intelligence, and capacity building. It collaborates with law enforcement, government agencies, enterprises, and academic institutions to advance cybercrime investigation, digital evidence management, and cybersecurity awareness.",
-    website: "https://www.forensiccare.com/"
+    name: "4N6 Care Technologies Pvt. Ltd.",
+    logo: "assets/img/sponsors/4n6-care.webp",
+    description: "4N6 Care Technologies Pvt. Ltd. is a leading digital forensics and cyber intelligence company specializing in advanced forensic tools, cybersecurity solutions, mobile and computer forensics, data recovery, incident response, and cyber investigation technologies. Working closely with law enforcement agencies, government organizations, defense, and enterprise customers, 4N6 Care delivers cutting-edge forensic products, expert services, training, and technical support to strengthen digital investigations and cyber resilience.",
+    website: "https://www.4n6care.com/"
 },
 {
     tier: "Silver Sponsor",

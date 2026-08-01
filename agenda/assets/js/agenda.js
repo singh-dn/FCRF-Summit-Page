@@ -66,13 +66,17 @@
     return band + weight;
   }
 
-  // Stable sort: equal ranks keep the order they have in data.js.
+  // Moderators and chairs lead their panel regardless of rank; everyone
+  // else follows in seniority order. Stable within a tier, so equal ranks
+  // keep the order they have in data.js.
+  const LEADS = new Set(['moderator', 'chair', 'chief_guest', 'host']);
+
   sessions.forEach(s => {
     if (!Array.isArray(s.speakers)) return;
     s.speakers = s.speakers
-      .map((p, i) => [seniority(p), i, p])
-      .sort((a, b) => (a[0] - b[0]) || (a[1] - b[1]))
-      .map(x => x[2]);
+      .map((p, i) => [LEADS.has(p.role) ? 0 : 1, seniority(p), i, p])
+      .sort((a, b) => (a[0] - b[0]) || (a[1] - b[1]) || (a[2] - b[2]))
+      .map(x => x[3]);
   });
 
   // Deterministic colour per person, so a monogram never changes shade
