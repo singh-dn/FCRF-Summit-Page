@@ -18,7 +18,7 @@ $table_name = "fcrf_document_downloads";
 // 📄 SERVER-SIDE path to the file (NOT a URL).
 // __DIR__ = the folder this PHP file lives in, so the path never depends
 // on how the page was reached. Keep the PDF inside a "resource" folder here.
-$FILE_PATH     = __DIR__ . '/resource/WHITE PAPER FCRF V1.pdf';
+$FILE_PATH     = __DIR__ . 'https://summit.futurecrime.org/resource/WHITE%20PAPER%20FCRF%20V1.pdf';
 $DOWNLOAD_NAME = 'WHITE_PAPER_FCRF_V1.pdf'; // clean name the user receives
 $LINK_LIFETIME = 300; // seconds the one-time download link stays valid
 $RESET_SECONDS = 8;   // seconds on the success screen before the form resets
