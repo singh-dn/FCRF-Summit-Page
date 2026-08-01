@@ -15,8 +15,8 @@ $db_name = "u545411682_summit"; // Replace with actual DB name
 $table_name = "fcrf_document_downloads"; 
 
 // 📄 THE FILE TO BE DOWNLOADED
-// Replace this with the actual path to your brochure/agenda document
-$file_to_download = "resource\WHITE PAPER FCRF V1.pdf";
+// Notice the forward slash (/) instead of a backslash (\)
+$file_to_download = "resource/WHITE PAPER FCRF V1.pdf";
 
 // --- SECURITY: Input Sanitization Function to prevent XSS ---
 function sanitize_input($data) {
@@ -345,8 +345,8 @@ body {
   <div class="form-body">
     
     <div class="form-content" id="form-content">
-      <h1 class="form-title">Download the White Paper</h1>
-      <p class="form-desc">Fill in your details below to download “Vision of Future Smart Policing in the Era of Advanced Technology,” a joint white paper by the Future Crime Research Foundation (FCRF) and MH Service.</p>
+      <h1 class="form-title">Download Resources</h1>
+      <p class="form-desc">Please provide your details below to securely access the summit documentation.</p>
 
       <?php if (!empty($message) && $messageType == "error"): ?>
         <div class="error-msg">
@@ -452,8 +452,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 2. Trigger the actual secure download automatically
       const link = document.createElement('a');
-      link.href = '<?php echo $file_to_download; ?>';
-      link.download = ''; 
+      // We use rawurlencode in PHP to safely handle the spaces in the filename
+      // while preserving the forward slash in the folder path
+      link.href = '<?php 
+          $path_parts = explode("/", $file_to_download);
+          $encoded_parts = array_map('rawurlencode', $path_parts);
+          echo implode("/", $encoded_parts); 
+      ?>';
+      link.download = 'WHITE_PAPER_FCRF_V1.pdf'; // Forces download with a clean name
       link.target = '_blank'; // Opens in new tab to ensure download starts
       document.body.appendChild(link);
       link.click();
