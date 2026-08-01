@@ -17,67 +17,33 @@
   const hallById = Object.fromEntries(halls.map(h => [Number(h.id), h]));
 
   /* ------------------------------------------------------------------------
-     Speaker order on a card.
+     Speaker order on a card: alphabetical.
 
-     Sorted by the seniority of the role, not by the order they appear in
-     data.js: government, defence and the judiciary sit at the top, then
-     industry bodies, then academia, then private sector, then anyone whose
-     designation is still blank.
-
-     Within a band a second pass ranks the title itself, so a Director
-     General appears above a Consultant at the same organisation.
+     Sorted on the first real word of the name, so honorifics do not bunch
+     everyone together — "Dr. Rakshit Tandon" files under R, not D.
      ------------------------------------------------------------------------ */
-  const BANDS = [
-    [10, /(cert[- ]?in|meity|meit|ministry|govt|government|\bgoi\b|department of telecom|\bdot\b|semt|drdo|intelligence bureau|\bib\b|police|\bdgp\b|\bdg\b|\bips\b|\bias\b|\bcbi\b|\bnia\b|\bi4c\b|commissioner|secretary|justice|judge|high court|supreme court|lok sabha|\bmp\b|interpol|united nations|\bun\b|national cyber|advocate[- ]on[- ]record|claws|\brru\b|rashtriya raksha)/i],
-    [20, /(dsci|nasscom|association|federation|\bforum\b|council|foundation|chamber|\bicp\b|child protection)/i],
-    [30, /(professor|\bprof\b|university|institute|\biiit\b|\biit\b|academy|academic|assistant professor)/i],
-    [40, /(bank|\bltd\b|\bpvt\b|limited|consult|\bceo\b|\bcto\b|\bciso\b|\bcro\b|\bcoo\b|\bcio\b|founder|partner|advisor|adviser|manager|director|architect|counsel|analyst|specialist|expert|strategist)/i],
-  ];
+  const HONORIFICS = /^(dr|mr|mrs|ms|prof|adv|ca|cs|lt|col|maj|gen|brig|air|vice|marshal|shri|smt|sh|retd|avm|dy|sp|ips|its|justice|major|general|vsm|avsm|sysm|er|cdr|cmde)\.?$/i;
 
-  const TITLE_WEIGHT = [
-    [0, /(chairman|director general|\bdgp\b|\bdg\b|secretary|national cyber security coordinator|justice|president|former director)/i],
-    [2, /(chief|\bceo\b|\bcto\b|\bciso\b|\bcro\b|\bcoo\b|\bcio\b|commissioner|head\b|founder)/i],
-    [4, /(director|vice president|senior|partner|professor|advocate)/i],
-    [6, /(advisor|adviser|associate|manager|consultant|counsel|scientist|lead\b)/i],
-  ];
-
-  // A rank in the name still counts when the designation is thin.
-  const NAME_RANK = /(lt\.? gen|lieutenant general|air marshal|air vice marshal|\bavm\b|maj gen|major general|brig\b|justice|\bdy sp\b|\bips\b)/i;
-
-  function seniority(p) {
-    const desig = (p.designation || '') + ' ' + (p.organisation || '');
-    const hay = (p.name || '') + ' ' + desig;
-
-    if (!desig.trim()) {
-      // No designation at all: keep them last, unless the name carries a rank.
-      return NAME_RANK.test(p.name || '') ? 15 : 90;
-    }
-
-    let band = 50;
-    for (const [score, re] of BANDS) {
-      if (re.test(hay)) { band = score; break; }
-    }
-    if (band > 10 && NAME_RANK.test(p.name || '')) band = 10;
-
-    let weight = 8;
-    for (const [w, re] of TITLE_WEIGHT) {
-      if (re.test(desig)) { weight = w; break; }
-    }
-    return band + weight;
+  function sortName(p) {
+    const raw = String(p.name || p.full_name || '')
+      .replace(/\([^)]*\)/g, ' ')            // drop "(Retd.)", "(Dr)" and the like
+      .replace(/[^\p{L}\p{N} ]/gu, ' ');
+    const words = raw.split(/\s+/).filter(Boolean);
+    const real = words.filter(w => !HONORIFICS.test(w));
+    return (real.length ? real : words).join(' ').toLowerCase();
   }
 
-  // Moderators and chairs lead their panel regardless of rank; everyone
-  // else follows in seniority order. Stable within a tier, so equal ranks
-  // keep the order they have in data.js.
-  const LEADS = new Set(['moderator', 'chair', 'chief_guest', 'host']);
+  const byName = (a, b) =>
+    sortName(a).localeCompare(sortName(b), 'en', { sensitivity: 'base' });
 
+  // Straight A-Z, moderators included. Their role still shows as a tag on
+  // the session card, so the ordering does not hide who is chairing.
   sessions.forEach(s => {
-    if (!Array.isArray(s.speakers)) return;
-    s.speakers = s.speakers
-      .map((p, i) => [LEADS.has(p.role) ? 0 : 1, seniority(p), i, p])
-      .sort((a, b) => (a[0] - b[0]) || (a[1] - b[1]) || (a[2] - b[2]))
-      .map(x => x[3]);
+    if (Array.isArray(s.speakers)) s.speakers.sort(byName);
   });
+
+  // The directory uses the same basis.
+  speakers.sort(byName);
 
   // Deterministic colour per person, so a monogram never changes shade
   // between the card, the session sheet and the directory.
@@ -144,13 +110,19 @@
     return new Date(`${d.event_date}T${String(s.end_time).padStart(8, '0')}+05:30`);
   };
 
-  const state = { day: null, halls: new Set(), query: '' };
+  // hall: null = every hall, otherwise the id of the selected one.
+  const state = { day: null, hall: null, query: '' };
 
   // Open on the day that is actually happening, otherwise the first day.
   (() => {
     const today = istDate();
     const match = days.find(d => d.event_date === today);
     state.day = Number((match || days[0] || {}).id) || null;
+
+    // Land on the Main Hall: most attendees are there, and showing both
+    // tracks interleaved makes the day look busier than it is.
+    const main = halls.find(h => /main/i.test(h.name)) || halls[0];
+    state.hall = main ? Number(main.id) : null;
   })();
 
   // ------------------------------------------------------------ live strip
@@ -247,19 +219,28 @@
       renderTimeline();
     });
 
+    // With only one hall visible there is nothing to switch between, so the
+    // control hides itself rather than showing a lone dead button.
     const hf = $('#hall-filters');
+    if (halls.length < 2) {
+      hf.hidden = true;
+      return;
+    }
     hf.innerHTML = halls.map(h =>
-      `<button class="hall-chip" data-hall="${h.id}" aria-pressed="false"
-        style="color:${hallColor(h.id)}">${esc(h.name)}</button>`
+      `<button class="hall-tab" role="tab" data-hall="${h.id}"
+        aria-selected="${state.hall === Number(h.id)}">${esc(h.name)}</button>`
     ).join('');
 
+    // Tapping the selected hall again clears the filter and shows both.
     hf.addEventListener('click', (e) => {
-      const b = e.target.closest('.hall-chip');
+      const b = e.target.closest('.hall-tab');
       if (!b) return;
       const id = Number(b.dataset.hall);
-      state.halls.has(id) ? state.halls.delete(id) : state.halls.add(id);
-      b.setAttribute('aria-pressed', String(state.halls.has(id)));
+      state.hall = (state.hall === id) ? null : id;
+      $$('.hall-tab', hf).forEach(t =>
+        t.setAttribute('aria-selected', String(Number(t.dataset.hall) === state.hall)));
       renderTimeline();
+      renderDirectory();
     });
 
     const input = $('#search');
@@ -277,7 +258,8 @@
 
   // -------------------------------------------------------------- timeline
   function matches(s) {
-    if (state.halls.size && !(s.hall_id && state.halls.has(Number(s.hall_id)))) {
+    // Breaks are venue-wide, so they stay visible whichever hall is picked.
+    if (state.hall !== null && Number(s.hall_id) !== state.hall) {
       if (!isBreak(s)) return false;
     }
     if (!state.query) return true;
@@ -373,8 +355,19 @@
   // ------------------------------------------------------------- directory
   function renderDirectory() {
     const grid = $('#dir-grid');
-    $('#dir-count').textContent = `${speakers.length} confirmed experts`;
-    grid.innerHTML = speakers.map(sp => `
+
+    // Show only the people appearing in the hall currently selected.
+    let list = speakers;
+    if (state.hall !== null) {
+      const inHall = new Set();
+      sessions
+        .filter(s => Number(s.hall_id) === state.hall)
+        .forEach(s => (s.speakers || []).forEach(p => inHall.add(Number(p.id))));
+      list = speakers.filter(sp => inHall.has(Number(sp.id)));
+    }
+
+    $('#dir-count').textContent = `${list.length} confirmed experts`;
+    grid.innerHTML = list.map(sp => `
       <button class="dir-card reveal" data-speaker="${sp.id}">
         ${avatar({ name: sp.full_name, photo: sp.photo_path }, 'xl')}
         <div class="who">

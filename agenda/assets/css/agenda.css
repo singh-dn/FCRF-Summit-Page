@@ -237,24 +237,30 @@ body {
 .day-tab[aria-selected="true"] small { color: rgba(255, 255, 255, 0.7); }
 
 .filters {
-  display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
   flex: 1 1 auto; justify-content: flex-end;
 }
-.halls { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Hall switcher: same pill treatment as the day tabs, so the two read as
+   a matched pair of controls. */
+.halls {
+  display: flex; gap: 8px;
+  background: rgba(0, 0, 0, 0.03); padding: 6px; border-radius: 100px;
+  border: 1px solid var(--border-light);
+}
 
-.hall-chip {
+.hall-tab {
   appearance: none; cursor: pointer;
-  padding: 8px 16px; border-radius: 10px;
-  border: 1px solid var(--border-light); background: #ffffff;
-  color: var(--text-muted); font-family: var(--mono); font-size: 12px; font-weight: 600;
-  letter-spacing: .04em;
-  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 20px; border-radius: 100px;
+  border: none; background: transparent;
+  color: var(--text-muted); font-family: var(--sans); font-size: 14px; font-weight: 600;
+  white-space: nowrap;
   transition: all .2s var(--ease-out);
 }
-.hall-chip:hover { border-color: rgba(0, 0, 0, 0.2); color: var(--text-main); }
-.hall-chip[aria-pressed="true"] {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: rgba(0, 0, 0, 0.1);
+.hall-tab:hover { color: var(--text-main); background: rgba(0, 0, 0, 0.04); }
+.hall-tab[aria-selected="true"] {
+  background: #ffffff;
+  color: var(--accent-cyan);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
 }
 
 .search {
@@ -696,6 +702,8 @@ img.av { color: transparent; }
 
 @media (max-width: 720px) {
   :root { --gap: 16px; }
+  .halls { width: 100%; justify-content: center; }
+  .hall-tab { flex: 1; padding: 8px 12px; font-size: 13px; }
   .bottom-nav { bottom: 12px; min-height: 70px; padding: 6px 8px; border-radius: 20px; }
   .nav-item { gap: 4px; font-size: .75rem; }
   .nav-item svg { width: 22px; height: 22px; }
