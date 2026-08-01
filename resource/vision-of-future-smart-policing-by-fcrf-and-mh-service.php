@@ -468,8 +468,8 @@ body {
   <?php else: ?>
 
     <!-- ================= FORM SCREEN ================= -->
-    <h1 class="form-title">Download resources</h1>
-    <p class="form-desc">Share your details below to access the summit documentation.</p>
+    <h1 class="form-title">Download the White Paper</h1>
+    <p class="form-desc">Fill in your details below to download “Vision of Future Smart Policing in the Era of Advanced Technology,” a joint white paper by the Future Crime Research Foundation (FCRF) and MH Service.</p>
 
     <?php if (!empty($message) && $messageType === "error"): ?>
       <div class="error-msg">
