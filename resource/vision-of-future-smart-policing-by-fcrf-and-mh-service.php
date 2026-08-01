@@ -336,10 +336,10 @@ body {
   <!-- Branding Header -->
   <div class="branding">
     <!-- Real logo image fallback -->
-    <img src="agenda/assets/summit.png" alt="FutureCrime Summit" class="logo-space" onerror="this.outerHTML='<div class=\'logo-placeholder\'>FUTURE<span class=\'red\'>CRIME</span></div>'">
+    <img src="../agenda/assets/summit.png" alt="FutureCrime Summit" class="logo-space" onerror="this.outerHTML='<div class=\'logo-placeholder\'>FUTURE<span class=\'red\'>CRIME</span></div>'">
     
     <!-- Banner Image provided by user -->
-    <img src="agenda/assets/1600x520.webp" alt="Summit Venue Banner" class="banner-space" onerror="this.src='https://placehold.co/1200x400/f1f5f9/64748b?text=Venue+Banner+Image'">
+    <img src="../agenda/assets/1600x520.webp" alt="Summit Venue Banner" class="banner-space" onerror="this.src='https://placehold.co/1200x400/f1f5f9/64748b?text=Venue+Banner+Image'">
   </div>
 
   <div class="form-body">
