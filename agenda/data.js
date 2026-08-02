@@ -435,7 +435,6 @@ const SESSIONS = [
     speakers: [
       "rajesh-pant",
       "sanjay-bahl",
-      "arun-kumar",
       "ashok-kumar",
       "jeetendra-mishra",
       "rajiv-jain",
@@ -594,12 +593,12 @@ const SESSIONS = [
     speakers: [
       "rajan-kochhar",
       "alok-vijayant",
+      "arun-kumar",
       "sandeep-sharma",
       "pavan-duggal",
       "rakesh-maheshwari",
       "amit-sharma",
       "devesh-vatsa",
-      "deep-pal-singh",
     ],
   },
   {
@@ -696,6 +695,7 @@ const SESSIONS = [
     speakers: [
       "mimansa-ambastha",
       "ashok-tarachand-ukrani",
+      "deep-pal-singh",
       "arunabha-mukhopadhyay",
       "akhil-kumar-jha",
       "vibhav-mithal",
