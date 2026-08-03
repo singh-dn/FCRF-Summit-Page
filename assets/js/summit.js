@@ -1028,7 +1028,7 @@ const scheduleData = {
     tier: "Community Partner",
     name: "Trackbite",
     logo: "assets/img/sponsors/trackbite.webp",
-    description: "Algoritha is an AI and technology company focused on delivering innovative solutions in artificial intelligence, machine learning, automation, data analytics, and intelligent software development. The company helps organizations accelerate digital transformation by building scalable AI-driven products, enterprise solutions, and next-generation technology platforms.",
+    description: "TrackBite is a comprehensive cloud-based event management platform that simplifies the complete event lifecycle—from online registrations and ticketing to onsite check-ins, badge printing, delegate tracking, and post-event analytics. Designed for conferences, exhibitions, corporate events, and summits, TrackBite combines EventsHub for online event management and TrackerzHub for onsite operations, enabling organizers to deliver seamless, engaging, and data-driven event experiences. With customizable registration forms, secure payment integration, real-time reporting, QR/Barcode/NFC/RFID support, and enterprise-grade scalability, TrackBite empowers organizations to plan, manage, and execute successful events with ease. (⁠Trackbite).",
     website: "https://trackbite.in/"
 }
         ];
