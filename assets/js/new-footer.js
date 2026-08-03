@@ -211,6 +211,7 @@
     {"row": 1, "name": "Mini Rani Sharma", "role": "Head SeMT", "org": "MeiTY, GoI", "img": "Picture1.webp"},
     {"row": 1, "name": "Lt. Col. Nishant Singh (Retd.)", "role": "Chief Operating Officer", "org": "Gramax Cybertech Limited", "img": "picture13.webp"},
     {"row": 1, "name": "Alok Vijayant", "role": "Former Director, Cyber Security Operations, Govt of India", "org": "SciRoIT Technologies", "img": "Picture11.webp"},
+    {"row": 1, "name": "Deepak Vatsa", "role": "Sr VP - Fraud Control, Investigations, Legal, Risk Mitigation", "org": "HDFC ERGO", "img": "deepak-vatsa.webp"},
     {"row": 2, "name": "Somen Das", "role": "Associate Director", "org": "Accenture Cybersecurity", "img": "Picture8.webp"},
     {"row": 2, "name": "Aman Bandvi", "role": "Founder Director", "org": "Bharat Responsible AI Forum", "img": "Picture2.webp"},
     {"row": 2, "name": "Paakhhi Garg", "role": "Director", "org": "World Cyber Security Forum", "img": "Picture3.webp"},

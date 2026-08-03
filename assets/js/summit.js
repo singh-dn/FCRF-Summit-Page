@@ -1023,6 +1023,13 @@ const scheduleData = {
     logo: "assets/img/sponsors/Center-For-Police-Technology-Thumbnail.webp",
     description: "Centre for Police Technology is committed to strengthening modern policing through the adoption of advanced technologies, digital transformation, forensic innovation, and capacity building. The organization works closely with law enforcement agencies, industry partners, and technology experts to promote cutting-edge solutions that enhance investigative capabilities, public safety, cyber resilience, and operational excellence.",
     website: "https://centreforpolicetechnology.org/"
+},
+{
+    tier: "Community Partner",
+    name: "Trackbite",
+    logo: "assets/img/sponsors/trackbite.webp",
+    description: "Algoritha is an AI and technology company focused on delivering innovative solutions in artificial intelligence, machine learning, automation, data analytics, and intelligent software development. The company helps organizations accelerate digital transformation by building scalable AI-driven products, enterprise solutions, and next-generation technology platforms.",
+    website: "https://trackbite.in/"
 }
         ];
 
