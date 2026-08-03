@@ -128,6 +128,9 @@ const SPEAKERS = {
   "deepak-singh":                 { name: "Prof. (Dr.) Deepak Singh",
                                    designation: "Associate Professor, IIIT, Lucknow",
                                    photo: "" },
+  "aditya-varma":                 { name: "Cdr. Aditya Varma (Retd.)",
+                                   designation: "Leader - Public Sector, Security (India & SAARC), CISCO",
+                                   photo: "" },
   "rakshit-tandon":               { name: "Dr. Rakshit Tandon",
                                    designation: "Consultant - Cyber Crime HQ, UP Police; International Cyber Expert",
                                    photo: "" },
@@ -137,29 +140,26 @@ const SPEAKERS = {
   "shishir-sarkar":               { name: "Shishir Sarkar",
                                    designation: "Enterprise Architect, Vice President, Deutsche Bank",
                                    photo: "" },
-  "deepak-vatsa":                 { name: "Deepak Vatsa",
-                                   designation: "Senior VP, Fraud Control, HDFC ERGO",
+  "mehnaz-perveen":               { name: "Mehnaz Perveen",
+                                   designation: "Vice President of Trust & Safety, LERT at Paytm",
                                    photo: "" },
   "divyam-agarwal":               { name: "Divyam Agarwal",
                                    designation: "Associate Partner, JSA",
                                    photo: "" },
   "aarun-shankar-chandrasekaran": { name: "Aarun Shankar Chandrasekaran",
-                                   designation: "ABCD Aditya Birla Capital Digital",
+                                   designation: "Head - Risk & Compliance, Aditya Birla Capital Digital",
                                    photo: "" },
   "bharat-jeswani":               { name: "CA Bharat Jeswani",
                                    designation: "FCA, CFE, CFCS, CAMS - Founder, AML Consultancy",
                                    photo: "" },
-  "uday-kulkarni":                { name: "CA Uday Kulkarni",
-                                   designation: "Practising Chartered Accountant",
+  "bibhu-patnaik":                { name: "Bibhu Patnaik",
+                                   designation: "Editor & Writer - TheStreet, TechBullion, MSN, New York Post, Nonce Media",
                                    photo: "" },
   "gyan-barah":                   { name: "Gyan Barah",
                                    designation: "Senior Advisor, Jio Financial Services",
                                    photo: "" },
   "soham-shah":                   { name: "Soham Shah",
                                    designation: "Founder and CEO, Yellow Stone Solutions",
-                                   photo: "" },
-  "vishal-dubhashi":              { name: "Vishal Dubhashi",
-                                   designation: "Head of Risk & Loss Mitigation at HDFC ERGO",
                                    photo: "" },
   "aman-bandvi":                  { name: "Aman Bandvi",
                                    designation: "Founder, Director - Bharat Responsible AI Forum",
@@ -185,9 +185,6 @@ const SPEAKERS = {
   "ajay-kanth":                   { name: "Ajay Kanth",
                                    designation: "Head - Fraud Risk Management Unit, Aditya Birla Capital",
                                    photo: "" },
-  "navaneethan-m":                { name: "Navaneethan M",
-                                   designation: "Chairman, CXO Cywayz",
-                                   photo: "" },
   "sanjay-kaushik":               { name: "Sanjay Kaushik",
                                    designation: "CEO, Netrika Consultancy",
                                    photo: "" },
@@ -203,8 +200,8 @@ const SPEAKERS = {
   "alok-gupta":                   { name: "Alok Gupta",
                                    designation: "CEO, Secure Operations & AI",
                                    photo: "" },
-  "starlight":                    { name: "Starlight",
-                                   designation: "",
+  "shailesh-singh":               { name: "Shailesh Singh",
+                                   designation: "CEO & Director, Starlight Data Solutions",
                                    photo: "" },
   "tarun-wig":                    { name: "Tarun Wig",
                                    designation: "Co-Founder, Innefu",
@@ -216,7 +213,7 @@ const SPEAKERS = {
                                    designation: "Former Director, Cyber Security Operations, Govt of India, Founder - SciRoIT Technologies",
                                    photo: "" },
   "sandeep-sharma":               { name: "Maj. Gen. (Dr) Sandeep Sharma (Retd.)",
-                                   designation: "",
+                                   designation: "Senior Fellow CLAWS, ERF RRU, Ex Commander Army Cyber Group and Scientist H, Govt of India",
                                    photo: "" },
   "arun-kumar":                   { name: "Arun Kumar",
                                    designation: "Former DG, RPF",
@@ -299,8 +296,8 @@ const SPEAKERS = {
   "ranjeet-mishra":               { name: "Ranjeet Mishra",
                                    designation: "CEO, Centre of Excellence for Cybersecurity - Karnataka (CySecK)",
                                    photo: "" },
-  "aditya-varma":                 { name: "Cdr. Aditya Varma (Retd.)",
-                                   designation: "Leader - Public Sector, Security (India & SAARC), CISCO",
+  "deepak-vatsa":                 { name: "Deepak Vatsa",
+                                   designation: "Senior VP, Fraud Control, HDFC ERGO",
                                    photo: "" },
   "ankush-goyal":                 { name: "Col. Ankush Goyal",
                                    designation: "",
@@ -320,8 +317,8 @@ const SPEAKERS = {
   "arunabha-mukhopadhyay":        { name: "Prof. Arunabha Mukhopadhyay",
                                    designation: "Professor, IIM Lucknow",
                                    photo: "" },
-  "prashant-mali":                { name: "Adv (Dr.) Prashant Mali",
-                                   designation: "President & Founder, Cyber Law Consulting",
+  "navaneethan-m":                { name: "Navaneethan M",
+                                   designation: "Chairman, CXO Cywayz",
                                    photo: "" },
   "i4c-mha":                      { name: "I4C MHA",
                                    designation: "",
@@ -440,14 +437,15 @@ const SPEAKERS = {
 /* ---------------------------------------------------------------------
    SESSIONS
    type: inauguration | panel | keynote | workshop | fireside |
-         sponsor | valedictory | award | lunch | break | networking
+         sponsor | valedictory | award | announcement | lunch | break |
+         networking
    hall: "Main Hall", "Innovation Hall", or null for venue-wide
    --------------------------------------------------------------------- */
 const SESSIONS = [
 
   /* ================= DAY 1 ================= */
   {
-    day: 1, start: "09:30", end: "11:00",
+    day: 1, start: "09:30", end: "10:50",
     hall: "Main Hall", type: "inauguration",
     title: "Future Crime, National Security & Policy Roadmap: Building India's Resilient Digital Future",
     speakers: [
@@ -460,16 +458,22 @@ const SESSIONS = [
     ],
   },
   {
+    day: 1, start: "10:50", end: "11:00",
+    hall: "Main Hall", type: "announcement",
+    title: "India’s Largest Bug Bounty Program Announcement",
+    speakers: [],
+  },
+  {
     day: 1, start: "11:00", end: "11:40",
     hall: "Main Hall", type: "panel",
     title: "Crime at Machine Speed: AI-Powered Cybercrime and the New Threat Landscape",
     speakers: [
+      "megha-khetarpal",
       "mini-rani-sharma",
       "pavan-duggal",
       "somen-das",
       "anand-aggarwal",
       "bipin-bakshi",
-      "megha-khetarpal",
     ],
   },
   {
@@ -501,11 +505,12 @@ const SESSIONS = [
     hall: "Main Hall", type: "panel",
     title: "Defending the Digital Backbone: AI, Critical Infrastructure and Cyber Resilience",
     speakers: [
+      "nishant-singh",
       "naveen-jakhar",
       "dinesh-o-bareja",
       "ashutosh-bahuguna",
       "deepak-singh",
-      "nishant-singh",
+      "aditya-varma",
     ],
   },
   {
@@ -538,11 +543,11 @@ const SESSIONS = [
     title: "Beyond Secure BFSI: Cybersecurity, Digital Payments and the Future of Financial Fraud Prevention",
     speakers: [
       "rakshit-tandon",
+      "ramkumari-harisankar-iyer",
       "shishir-sarkar",
-      "deepak-vatsa",
+      "mehnaz-perveen",
       "divyam-agarwal",
       "aarun-shankar-chandrasekaran",
-      "ramkumari-harisankar-iyer",
     ],
   },
   {
@@ -568,13 +573,7 @@ const SESSIONS = [
     day: 1, start: "14:40", end: "15:20",
     hall: "Main Hall", type: "panel",
     title: "Follow the Money: Crypto Fraud, Financial Crime and AML/CFT Intelligence",
-    speakers: [
-      "bharat-jeswani",
-      "uday-kulkarni",
-      "gyan-barah",
-      "vishal-dubhashi",
-      "soham-shah",
-    ],
+    speakers: ["bharat-jeswani", "bibhu-patnaik", "gyan-barah", "soham-shah"],
   },
   {
     day: 1, start: "15:00", end: "15:30",
@@ -587,11 +586,11 @@ const SESSIONS = [
     hall: "Main Hall", type: "panel",
     title: "From Data to Action: Predictive Policing, OSINT, Dark Web and AI-Led Investigation",
     speakers: [
+      "aman-bandvi",
       "piyush-kaushik",
       "varun-grover",
       "aditya-ps",
       "yasir-arafat-shaikh",
-      "aman-bandvi",
     ],
   },
   {
@@ -599,19 +598,24 @@ const SESSIONS = [
     hall: "Main Hall", type: "panel",
     title: "The Cyber Compliance Mandate: Aligning Security Audits with RBI, SEBI and CERT-In Requirements",
     speakers: [
+      "kumar-aniket",
       "vinit-goenka",
       "ajay-kanth",
-      "navaneethan-m",
       "sanjay-kaushik",
       "bharat-panchal",
-      "kumar-aniket",
     ],
   },
   {
     day: 1, start: "16:40", end: "17:20",
     hall: "Main Hall", type: "panel",
     title: "AI-Powered Digital Forensics: Transforming Evidence Analysis and Criminal Investigation",
-    speakers: ["jignesh-suba", "abhinav-saurabh", "starlight", "tarun-wig", "alok-gupta"],
+    speakers: [
+      "jignesh-suba",
+      "abhinav-saurabh",
+      "alok-gupta",
+      "shailesh-singh",
+      "tarun-wig",
+    ],
   },
 
   /* ================= DAY 2 ================= */
@@ -636,9 +640,9 @@ const SESSIONS = [
       "balaji-kapsikar",
       "utsav-mittal",
       "amit-kumar-chauhan",
+      "amit-dubey",
       "talwant-singh",
       "pk-khosla",
-      "amit-dubey",
     ],
   },
   {
@@ -657,7 +661,7 @@ const SESSIONS = [
     day: 2, start: "11:40", end: "12:20",
     hall: "Main Hall", type: "panel",
     title: "The Future of Digital Peace: International Cooperation Against Emerging Cyber Threats",
-    speakers: ["suhel-daud", "himadrish-suwan", "pawan-anand", "smith-gonsalves"],
+    speakers: ["suhel-daud", "smith-gonsalves", "himadrish-suwan", "pawan-anand"],
   },
   {
     day: 2, start: "12:00", end: "12:30",
@@ -667,7 +671,7 @@ const SESSIONS = [
   },
   {
     day: 2, start: "12:20", end: "13:00",
-    hall: null, type: "sponsor",
+    hall: "Main Hall", type: "sponsor",
     title: "Company Sponsor Slot",
     speakers: [],
   },
@@ -691,9 +695,9 @@ const SESSIONS = [
       "paakhhi-garg",
       "garima-goswamy",
       "sampurna",
+      "tanmayee-tilekar",
       "smita-mitra",
       "shonal-d",
-      "tanmayee-tilekar",
     ],
   },
   {
@@ -719,12 +723,12 @@ const SESSIONS = [
     hall: "Main Hall", type: "panel",
     title: "From Privacy to Responsible AI: DPDP Act Compliance, Data Protection and AI Governance",
     speakers: [
+      "mimansa-ambastha",
       "deep-pal-singh",
       "ashok-tarachand-ukrani",
       "akhil-kumar-jha",
       "vibhav-mithal",
       "rakesh-maheshwari",
-      "mimansa-ambastha",
     ],
   },
   {
@@ -737,7 +741,7 @@ const SESSIONS = [
     day: 2, start: "15:20", end: "16:00",
     hall: "Main Hall", type: "panel",
     title: "The Next Evidence Frontier: Cloud, Drone, IoT, Vehicle and Location Forensics",
-    speakers: ["ranjeet-mishra", "aditya-varma", "ankush-goyal", "kulbhushan-upadhyay"],
+    speakers: ["kulbhushan-upadhyay", "ranjeet-mishra", "deepak-vatsa", "ankush-goyal"],
   },
   {
     day: 2, start: "15:30", end: "16:00",
@@ -759,9 +763,9 @@ const SESSIONS = [
       "raj-kumar-mishra",
       "satish-kumar-gupta",
       "sanjeev-bansal",
-      "arunabha-mukhopadhyay",
-      "prashant-mali",
       "rahul-sharma",
+      "arunabha-mukhopadhyay",
+      "navaneethan-m",
     ],
   },
 ];

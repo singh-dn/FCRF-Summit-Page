@@ -17,32 +17,25 @@
   const hallById = Object.fromEntries(halls.map(h => [Number(h.id), h]));
 
   /* ------------------------------------------------------------------------
-     Speaker order on a card: alphabetical.
-
-     Sorted on the first real word of the name, so honorifics do not bunch
-     everyone together — "Dr. Rakshit Tandon" files under R, not D.
+     Speaker order: alphabetical on the name exactly as written, first word
+     first. Titles count as part of the name, so "CA Uday Kulkarni" files
+     under C and "Dr. Rakshit Tandon" under D.
      ------------------------------------------------------------------------ */
-  const HONORIFICS = /^(dr|mr|mrs|ms|prof|adv|ca|cs|lt|col|maj|gen|brig|air|vice|marshal|shri|smt|sh|retd|avm|dy|sp|ips|its|justice|major|general|vsm|avsm|sysm|er|cdr|cmde)\.?$/i;
-
   function sortName(p) {
-    const raw = String(p.name || p.full_name || '')
-      .replace(/\([^)]*\)/g, ' ')            // drop "(Retd.)", "(Dr)" and the like
-      .replace(/[^\p{L}\p{N} ]/gu, ' ');
-    const words = raw.split(/\s+/).filter(Boolean);
-    const real = words.filter(w => !HONORIFICS.test(w));
-    return (real.length ? real : words).join(' ').toLowerCase();
+    return String(p.name || p.full_name || '')
+      .replace(/[^\p{L}\p{N} ]/gu, ' ')     // ignore dots, commas, brackets
+      .trim()
+      .replace(/\s+/g, ' ')
+      .toLowerCase();
   }
 
   const byName = (a, b) =>
     sortName(a).localeCompare(sortName(b), 'en', { sensitivity: 'base' });
 
-  // Straight A-Z, moderators included. Their role still shows as a tag on
-  // the session card, so the ordering does not hide who is chairing.
   sessions.forEach(s => {
     if (Array.isArray(s.speakers)) s.speakers.sort(byName);
   });
 
-  // The directory uses the same basis.
   speakers.sort(byName);
 
   // Deterministic colour per person, so a monogram never changes shade
@@ -81,7 +74,8 @@
     panel: 'Panel', keynote: 'Keynote', fireside: 'Fireside', workshop: 'Workshop',
     plenary: 'Plenary', inauguration: 'Inaugural', valedictory: 'Valedictory',
     sponsor: 'Sponsor', break: 'Break', lunch: 'Networking Lunch',
-    networking: 'Networking', award: 'Awards', other: 'Session'
+    networking: 'Networking', award: 'Awards', announcement: 'Announcement',
+    other: 'Session'
   };
   const isBreak = (s) => ['break', 'lunch', 'networking'].includes(s.session_type);
 
@@ -258,9 +252,11 @@
 
   // -------------------------------------------------------------- timeline
   function matches(s) {
-    // Breaks are venue-wide, so they stay visible whichever hall is picked.
-    if (state.hall !== null && Number(s.hall_id) !== state.hall) {
-      if (!isBreak(s)) return false;
+    // A session with no hall belongs to the whole venue — lunch, breaks, the
+    // sponsor slot — so it stays visible whichever hall is picked.
+    const venueWide = !s.hall_id;
+    if (state.hall !== null && !venueWide && Number(s.hall_id) !== state.hall) {
+      return false;
     }
     if (!state.query) return true;
     const hay = [
