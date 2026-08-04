@@ -376,10 +376,10 @@ const SPEAKERS = {
                                    designation: "SPECTRA",
                                    photo: "" },
   "dipanshu-parashar":            { name: "Dipanshu Parashar",
-                                   designation: "",
+                                   designation: "Please update as Cybersecurity Researcher & Crime Analyst",
                                    photo: "" },
   "nirmal-raj-m":                 { name: "Nirmal Raj M",
-                                   designation: "OnMeta",
+                                   designation: "Principal Officer & Head, Risk & Compliance, OnMeta",
                                    photo: "" },
   "mahak-rathee":                 { name: "Mahak Rathee",
                                    designation: "Advocate-on-Record, Supreme Court",
@@ -446,7 +446,7 @@ const SESSIONS = [
 
   /* ================= DAY 1 ================= */
   {
-    day: 1, start: "09:30", end: "10:50",
+    day: 1, start: "09:30", end: "11:00",
     hall: "Main Hall", type: "inauguration",
     title: "Future Crime, National Security & Policy Roadmap: Building India's Resilient Digital Future",
     speakers: [
@@ -458,12 +458,12 @@ const SESSIONS = [
       "gulshan-rai",
     ],
   },
-  {
-    day: 1, start: "10:50", end: "11:00",
-    hall: "Main Hall", type: "announcement",
-    title: "India’s Largest Bug Bounty Program Announcement",
-    speakers: [],
-  },
+  // {
+  //   day: 1, start: "10:50", end: "11:00",
+  //   hall: "Main Hall", type: "announcement",
+  //   title: "India’s Largest Bug Bounty Program Announcement",
+  //   speakers: [],
+  // },
   {
     day: 1, start: "11:00", end: "11:40",
     hall: "Main Hall", type: "panel",
