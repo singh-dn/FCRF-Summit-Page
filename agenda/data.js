@@ -560,7 +560,7 @@ const SESSIONS = [
   {
     day: 1, start: "14:00", end: "14:30",
     hall: "Innovation Hall", type: "Panel",
-    title: "Planning, Setting Up, and Managing a Cyber Cyber Forensic Laboratory",
+    title: "Planning, Setting Up, and Managing a  Cyber Forensic Laboratory",
     speakers: [
       "ajay-sariyal",
       "abhinav-saurabh",
