@@ -55,20 +55,6 @@ const HALLS = [
   { name: "Innovation Hall", colour: "#64748b", note: "" },
 ];
 
-/* ---------------------------------------------------------------------
-   HALLS TO HIDE FOR NOW
-
-   A hall listed here keeps all of its sessions and speakers in this file,
-   but does not appear on the page — no button, no cards, no speakers in
-   the directory. Nothing is lost.
-
-   To bring the Innovation Hall back, just empty the list:
-
-       const HIDDEN_HALLS = [];
-
-   --------------------------------------------------------------------- */
-const HIDDEN_HALLS = ["Innovation Hall"];
-
 
 /* ---------------------------------------------------------------------
    SPEAKERS
@@ -79,6 +65,9 @@ const SPEAKERS = {
   /* Speaking at a session */
   "rajesh-pant":                  { name: "Lt. Gen. Rajesh Pant",
                                    designation: "Chairman,CSAI & Former National Cybersecurity Coordinator",
+                                   photo: "" },
+  "rajan-pant":                  { name: "Rajan Pant",
+                                   designation: "Business Head, INDOPAC, Resecurity",
                                    photo: "" },
   "sanjay-bahl":                  { name: "Dr. Sanjay Bahl",
                                    designation: "Director General, CERT-In",
@@ -320,7 +309,7 @@ const SPEAKERS = {
   "navaneethan-m":                { name: "Navaneethan M",
                                    designation: "Chairman, CXO Cywayz",
                                    photo: "" },
-  "i4c-mha":                      { name: "I4C MHA",
+  "i4c-mha":                      { name: "I4C, MHA",
                                    designation: "",
                                    photo: "" },
   "akash-thakar":                 { name: "Dr Akash Thakar",
@@ -329,28 +318,28 @@ const SPEAKERS = {
   "himanshu-patel":               { name: "Himanshu Patel",
                                    designation: "Senior Manager - Cyber Defence, Incident Response and Forensics, Protiviti",
                                    photo: "" },
-  "malvika-mehta":                { name: "Malvika Mehta",
+  "malvika-mehta":                { name: "Dr. Malvika Mehta",
                                    designation: "Founder, BLK Coral Intelligence Pvt Ltd",
                                    photo: "" },
-  "nishant-sawant":               { name: "Nishant Sawant",
+  "nishant-sawant":               { name: "Dr. Nishant Sawant",
                                    designation: "Director, Managed Security Services",
                                    photo: "" },
   "preeti-singh":                 { name: "Preeti Singh",
-                                   designation: "Group CISO - Tiecem",
+                                   designation: "Group CISO at Teciem",
                                    photo: "" },
-  "somesh":                       { name: "Somesh",
+  "somesh-sawhney":               { name: "Somesh Sawhney",
                                    designation: "Founder & CEO, PaladinA",
                                    photo: "" },
-  "harpreet":                     { name: "Harpreet",
+  "harpreet-kaur":                { name: "Harpreet Kaur",
                                    designation: "",
                                    photo: "" },
-  "deepak":                       { name: "Deepak (D3)",
+  "deepak-d3-forensics":          { name: "Dr. Deepak D3 Forensics",
                                    designation: "Sr Cyber Intelligence and Digital Forensics Professional",
                                    photo: "" },
-  "sumit":                        { name: "Sumit (MH)",
+  "sumit":                        { name: "Sumit (mHService)",
                                    designation: "",
                                    photo: "" },
-  "tarun-sharma":                 { name: "Tarun Sharma (MH)",
+  "tarun-sharma":                 { name: "Tarun Sharma (mHService)",
                                    designation: "",
                                    photo: "" },
   "ajay-sariyal":                 { name: "Ajay Sariyal",
@@ -358,6 +347,15 @@ const SPEAKERS = {
                                    photo: "" },
   "saurabh-haritesh":             { name: "Saurabh Haritesh",
                                    designation: "SI, Delhi Police",
+                                   photo: "" },
+  "someone-from-tasl":            { name: "Someone from TASL (Maybe Ashutosh)",
+                                   designation: "",
+                                   photo: "" },
+  "starlight":                    { name: "Starlight Data Solutions",
+                                   designation: "",
+                                   photo: "" },
+  "swati":                        { name: "Swati",
+                                   designation: "",
                                    photo: "" },
   "aakash-verma":                 { name: "Aakash Verma",
                                    designation: "",
@@ -386,9 +384,6 @@ const SPEAKERS = {
   "mahak-rathee":                 { name: "Mahak Rathee",
                                    designation: "Advocate-on-Record, Supreme Court",
                                    photo: "" },
-  "digvijay-singh-rathore":       { name: "Digvijay Singh Rathore",
-                                   designation: "Assistant Professor, Veer Bahadur Singh Purvanchal University, Jaunpur, Uttar Pradesh",
-                                   photo: "" },
   "kritika":                      { name: "Er. Kritika",
                                    designation: "",
                                    photo: "" },
@@ -398,12 +393,18 @@ const SPEAKERS = {
   "ritwik-srivastava":            { name: "Ritwik Srivastava",
                                    designation: "SP City, Dhanbad",
                                    photo: "" },
+  "triveni-singh":                { name: "Prof. Triveni Singh",
+                                   designation: "",
+                                   photo: "" },
+  "vijayant-gaur":                { name: "Vijayant Gaur",
+                                   designation: "Cybersecurity Expert",
+                                   photo: "" },
+  "jitender-singh":               { name: "Jitender Singh",
+                                   designation: "Assistant Commissioner of Police, I4C, MHA",
+                                   photo: "" },
 
   /* Not yet allocated to a session — they do not appear on the
      page until you add their key to one of the sessions below */
-  "vijayant-gaur":                     { name: "Vijayant Gaur",
-                                        designation: "",
-                                        photo: "" },
   "rabindra-narayan-behra":            { name: "Dr. Rabindra Narayan Behra",
                                         designation: "MP, Lok Sabha",
                                         photo: "" },
@@ -479,7 +480,7 @@ const SESSIONS = [
   {
     day: 1, start: "11:00", end: "11:30",
     hall: "Innovation Hall", type: "workshop",
-    title: "AI Investigation Presentation",
+    title: "AI-Powered Policing and Investigation",
     speakers: ["i4c-mha"],
   },
   {
@@ -523,7 +524,13 @@ const SESSIONS = [
     day: 1, start: "12:30", end: "13:00",
     hall: "Innovation Hall", type: "panel",
     title: "Emerging Crimes in the AI Era: Investigation Challenges, Digital Forensics & Future-Ready Solutions",
-    speakers: ["somesh", "harpreet", "deepak", "sumit", "tarun-sharma"],
+    speakers: [
+      "somesh-sawhney",
+      "harpreet-kaur",
+      "deepak-d3-forensics",
+      "sumit",
+      "tarun-sharma",
+    ],
   },
   {
     day: 1, start: "12:40", end: "13:00",
@@ -552,34 +559,39 @@ const SESSIONS = [
   },
   {
     day: 1, start: "14:00", end: "14:30",
-    hall: "Innovation Hall", type: "workshop",
-    title: "How to Setup a Cyber Lab",
+    hall: "Innovation Hall", type: "Panel",
+    title: "Planning, Setting Up, and Managing a Cybersecurity Laboratory",
     speakers: [
       "ajay-sariyal",
       "abhinav-saurabh",
+      "tarun-sharma",
       "saurabh-haritesh",
-      "aakash-verma",
-      "utkarsh-jain",
-      "sanskriti-grover",
+      "someone-from-tasl",
     ],
   },
   {
     day: 1, start: "14:30", end: "15:00",
     hall: "Innovation Hall", type: "sponsor",
-    title: "Sponsor Innovation Showcase 2 — Product Demonstration / Technology Presentation",
+    title: "Sponsor Innovation Showcase — Product Demonstration / Technology Presentation",
     speakers: [],
   },
   {
     day: 1, start: "14:40", end: "15:20",
     hall: "Main Hall", type: "panel",
     title: "Follow the Money: Crypto Fraud, Financial Crime and AML/CFT Intelligence",
-    speakers: ["bharat-jeswani", "bibhu-patnaik", "gyan-barah", "soham-shah"],
+    speakers: [
+      "bharat-jeswani",
+      "bibhu-patnaik",
+      "gyan-barah",
+      "soham-shah",
+      "vijayant-gaur",
+    ],
   },
   {
     day: 1, start: "15:00", end: "15:30",
     hall: "Innovation Hall", type: "workshop",
-    title: "Consent Management Platform under the DPDP Act: Live Demonstration",
-    speakers: [],
+    title: "AI-Driven SOC Capabilities for Threat Detection and Response",
+    speakers: ["starlight", "alok-gupta"],
   },
   {
     day: 1, start: "15:20", end: "16:00",
@@ -649,13 +661,13 @@ const SESSIONS = [
     day: 2, start: "11:00", end: "11:30",
     hall: "Innovation Hall", type: "workshop",
     title: "Cyber Range for Cyber Commandos: Live Attack-and-Defence Simulation",
-    speakers: [],
+    speakers: ["swati", "aakash-verma", "utkarsh-jain"],
   },
   {
     day: 2, start: "11:30", end: "12:00",
     hall: "Innovation Hall", type: "sponsor",
-    title: "Sponsor Innovation Showcase 3 — Product Demonstration / Technology Presentation",
-    speakers: [],
+    title: "Resecurity - Threat Intelligence Workshop",
+    speakers: ["rajan-pant"],
   },
   {
     day: 2, start: "11:40", end: "12:20",
@@ -667,7 +679,7 @@ const SESSIONS = [
     day: 2, start: "12:00", end: "12:30",
     hall: "Innovation Hall", type: "workshop",
     title: "TTEX – Cyber Crisis Exercise: Command, Coordination and Response Drill",
-    speakers: [],
+    speakers: ["sanskriti-grover"],
   },
   {
     day: 2, start: "12:20", end: "13:00",
@@ -679,7 +691,7 @@ const SESSIONS = [
     day: 2, start: "12:30", end: "13:00",
     hall: "Innovation Hall", type: "workshop",
     title: "Mobile and Cyber Forensics: Live Extraction and Evidence Analysis Demo",
-    speakers: [],
+    speakers: ["ajay-sariyal"],
   },
   {
     day: 2, start: "13:00", end: "14:00",
@@ -703,7 +715,7 @@ const SESSIONS = [
   {
     day: 2, start: "14:00", end: "14:30",
     hall: "Innovation Hall", type: "sponsor",
-    title: "Sponsor Innovation Showcase 4 — Product Demonstration / Technology Presentation",
+    title: "Sponsor Innovation Showcase — Product Demonstration / Technology Presentation",
     speakers: [],
   },
   {
@@ -734,26 +746,26 @@ const SESSIONS = [
   {
     day: 2, start: "15:00", end: "15:30",
     hall: "Innovation Hall", type: "sponsor",
-    title: "Sponsor Innovation Showcase 5 — Product Demonstration / Technology Presentation",
+    title: "Sponsor Innovation Showcase — Product Demonstration / Technology Presentation",
     speakers: [],
   },
   {
     day: 2, start: "15:20", end: "16:00",
     hall: "Main Hall", type: "panel",
     title: "The Next Evidence Frontier: Cloud, Drone, IoT, Vehicle and Location Forensics",
-    speakers: ["kulbhushan-upadhyay", "ranjeet-mishra", "deepak-vatsa", "ankush-goyal"],
+    speakers: [
+      "kulbhushan-upadhyay",
+      "ranjeet-mishra",
+      "deepak-vatsa",
+      "ankush-goyal",
+      "jitender-singh",
+    ],
   },
   {
     day: 2, start: "15:30", end: "16:00",
     hall: "Innovation Hall", type: "workshop",
     title: "Emerging Cyber Crimes, New Laws and Best Practices in Investigation",
-    speakers: [
-      "mahak-rathee",
-      "digvijay-singh-rathore",
-      "kritika",
-      "vinny-sharma",
-      "ritwik-srivastava",
-    ],
+    speakers: ["mahak-rathee", "kritika", "vinny-sharma", "ritwik-srivastava"],
   },
   {
     day: 2, start: "16:00", end: "16:40",
@@ -768,6 +780,14 @@ const SESSIONS = [
       "navaneethan-m",
     ],
   },
+  {
+    day: 2, start: "16:00", end: "16:15",
+    hall: "Innovation Hall", type: "announcement",
+    title: "White Paper Release by FCRF & mH Service",
+    speakers: ["triveni-singh",
+              "jignesh-suba"
+    ],
+  },
 ];
 
 
@@ -776,18 +796,11 @@ const SESSIONS = [
    into the shape the page expects.
    ===================================================================== */
 (function () {
-  const allHalls = HALLS.map((h, i) => ({
+  const halls = HALLS.map((h, i) => ({
     id: i + 1, name: h.name, venue: EVENT.venue,
     floor_info: null, color_hex: h.colour, map_note: h.note || null,
   }));
-  const hallId = Object.fromEntries(allHalls.map(h => [h.name, h.id]));
-
-  // Ids the page should pretend do not exist, while the data stays put.
-  const hidden = new Set(
-    (typeof HIDDEN_HALLS !== "undefined" ? HIDDEN_HALLS : [])
-      .map(n => hallId[n]).filter(Boolean)
-  );
-  const halls = allHalls.filter(h => !hidden.has(h.id));
+  const hallId = Object.fromEntries(halls.map(h => [h.name, h.id]));
 
   const days = DAYS.map(d => ({
     id: d.day, day_number: d.day, event_date: d.date,
@@ -811,7 +824,6 @@ const SESSIONS = [
 
   const sessions = SESSIONS
     .filter(s => s.title)
-    .filter(s => !(s.hall && hidden.has(hallId[s.hall])))
     .sort((a, b) => (a.day - b.day) || String(a.start).localeCompare(String(b.start)))
     .map((s, i) => ({
       id: i + 1,

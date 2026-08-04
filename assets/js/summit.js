@@ -1030,6 +1030,20 @@ const scheduleData = {
     logo: "assets/img/sponsors/trackbite.webp",
     description: "TrackBite is a comprehensive cloud-based event management platform that simplifies the complete event lifecycle—from online registrations and ticketing to onsite check-ins, badge printing, delegate tracking, and post-event analytics. Designed for conferences, exhibitions, corporate events, and summits, TrackBite combines EventsHub for online event management and TrackerzHub for onsite operations, enabling organizers to deliver seamless, engaging, and data-driven event experiences. With customizable registration forms, secure payment integration, real-time reporting, QR/Barcode/NFC/RFID support, and enterprise-grade scalability, TrackBite empowers organizations to plan, manage, and execute successful events with ease. (⁠Trackbite).",
     website: "https://trackbite.in/"
+},
+{
+    tier: "Silver Sponsor",
+    name: "Xiarch Bharat Pvt. Ltd.",
+    logo: "assets/img/sponsors/xiarch.webp",
+    description: "Xiarch Bharat Pvt. Ltd. is a CERT-In empanelled and ISO 9001 & ISO 27001 certified cybersecurity, risk, and compliance company specializing in information security consulting, penetration testing, vulnerability assessments, digital forensics, incident response, red teaming, cloud security, and regulatory compliance. Trusted by government organizations, law enforcement agencies, financial institutions, and enterprises, Xiarch delivers end-to-end cybersecurity services, managed security solutions, and capacity-building programs to help organizations strengthen their cyber resilience and protect critical digital assets.",
+    website: "https://xiarch.com/"
+},
+{
+    tier: "Technology Partner",
+    name: "AI+ Smartphones",
+    logo: "assets/img/sponsors/ai.webp",
+    description: "AI+ Smartphones is an Indian smartphone brand developed by NxtQuantum Shift Technologies, delivering secure, transparent, and privacy-first mobile experiences powered by NxtQuantum OS—India's first sovereign mobile operating system. Built in India and designed with zero-trust security, end-to-end data governance, and MeitY-compliant cloud infrastructure, AI+ empowers consumers, enterprises, and government organizations with trusted, high-performance smartphones that prioritize digital sovereignty, privacy, and regulatory compliance.",
+    website: "https://aiplusstore.com/"
 }
         ];
 
