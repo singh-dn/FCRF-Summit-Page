@@ -348,7 +348,7 @@ const SPEAKERS = {
   "saurabh-haritesh":             { name: "Saurabh Haritesh",
                                    designation: "SI, Delhi Police",
                                    photo: "" },
-  "someone-from-tasl":            { name: "Someone from TASL (Maybe Ashutosh)",
+  "someone-from-tasl":            { name: " TASL ",
                                    designation: "",
                                    photo: "" },
   "starlight":                    { name: "Starlight Data Solutions",
