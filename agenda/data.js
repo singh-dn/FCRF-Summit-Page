@@ -262,7 +262,7 @@ const SPEAKERS = {
                                    designation: "Anti-Cybercrime Strategist, AI & Cyber Psychologist",
                                    photo: "" },
   "mimansa-ambastha":             { name: "Mimansa Ambastha",
-                                   designation: "Founder, Starlex Consultancy",
+                                   designation: "Advocate & Managing Partner, Starlex Consultants | CIPM, CIPP/E, CIPP/A - Privacy Specialist",
                                    photo: "" },
   "deep-pal-singh":               { name: "Deep Pal Singh",
                                    designation: "Chief Risk Officer, Aditya Birla Capital",
