@@ -214,7 +214,7 @@ const SPEAKERS = {
                                    designation: "Advisor, DSCI (NASSCOM)",
                                    photo: "" },
   "balaji-kapsikar":              { name: "Balaji Kapsikar",
-                                   designation: "Sr Manager Cyber Security & Cyber Risk, DPO",
+                                   designation: "Director of Cyber Security At Cynkex Cybertech pvt ltd",
                                    photo: "" },
   "utsav-mittal":                 { name: "Utsav Mittal",
                                    designation: "CEO, Xiarch Bharat",
@@ -560,7 +560,7 @@ const SESSIONS = [
   {
     day: 1, start: "14:00", end: "14:30",
     hall: "Innovation Hall", type: "Panel",
-    title: "Planning, Setting Up, and Managing a Cybersecurity Laboratory",
+    title: "Planning, Setting Up, and Managing a Cyber Cyber Forensic Laboratory",
     speakers: [
       "ajay-sariyal",
       "abhinav-saurabh",
