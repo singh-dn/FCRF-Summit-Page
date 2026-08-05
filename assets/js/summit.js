@@ -503,7 +503,7 @@ const scheduleData = {
         {
           videoUrl: "assets/video/summit-video.mp4",
           placeholderImg: "assets/img/banner/home-page-preloader.webp", // Image to load instantly
-          text: "The FutureCrime Summit 2026, organized by the Future Crime Research Foundation (FCRF), is India's largest conference focused on tackling technology-driven crime.",
+          text: "The event will be held at the Bharat Mandapam Convention Centre, with the Main Hall serving as a 600-capacity auditorium and the Innovation Hall located in Meeting Room 19 (MR-19).",
           overlayTint: "rgba(20, 83, 45, 0.3)" 
         }
       ];
@@ -1368,5 +1368,7 @@ const scheduleData = {
 
 
         // timeline 
+
+        
 
         

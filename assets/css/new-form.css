@@ -1986,3 +1986,227 @@
         .ds-register-btn:active {
             transform: translateY(0);
         }
+
+
+         /*
+   * Unique namespace:
+   * fcs26-action-dock
+   */
+
+  .fcs26-action-dock-module,
+  .fcs26-action-dock-module *,
+  .fcs26-action-dock-module *::before,
+  .fcs26-action-dock-module *::after {
+    box-sizing: border-box;
+  }
+
+  .fcs26-action-dock {
+    position: fixed;
+    left: 50%;
+    bottom: 0.9rem;
+    z-index: 999999;
+    width: calc(100% - 24px);
+    max-width: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.96);
+    box-shadow:
+      0 14px 35px rgba(0, 0, 0, 0.42),
+      0 4px 12px rgba(0, 0, 0, 0.26);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    transform: translateX(-50%);
+  }
+
+  .fcs26-action-dock__link {
+    min-width: 0;
+    flex: 1 1 0;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .fcs26-action-dock__button {
+    position: relative;
+    width: 100%;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    overflow: hidden;
+    padding: 11px 20px;
+    border: 0;
+    border-radius: 9999px;
+    color: #ffffff;
+    background:
+      linear-gradient(
+        93deg,
+        #5135ff 10.65%,
+        #ff5455 89.35%
+      );
+    box-shadow:
+      0 6px 16px rgba(81, 53, 255, 0.24),
+      0 4px 10px rgba(0, 0, 0, 0.18);
+    font-family:
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Arial,
+      sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .fcs26-action-dock__icon {
+    position: relative;
+    z-index: 2;
+    width: 19px;
+    height: 19px;
+    flex: 0 0 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .fcs26-action-dock__button > span {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Shine animation */
+  .fcs26-action-dock__button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -110%;
+    z-index: 1;
+    width: 48%;
+    height: 100%;
+    background:
+      linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.78) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+    transform: skewX(-25deg);
+    animation: fcs26-action-dock-shine 4s infinite;
+    pointer-events: none;
+  }
+
+  /*
+   * Add a small delay to the second button so both shine
+   * effects do not move at exactly the same time.
+   */
+  .fcs26-action-dock__link:nth-child(2)
+    .fcs26-action-dock__button::after {
+    animation-delay: 1.1s;
+  }
+
+  @keyframes fcs26-action-dock-shine {
+    0% {
+      left: -110%;
+    }
+
+    25% {
+      left: 210%;
+    }
+
+    100% {
+      left: 210%;
+    }
+  }
+
+  .fcs26-action-dock__link:hover
+    .fcs26-action-dock__button {
+    filter: brightness(1.06);
+    transform: translateY(-2px);
+    box-shadow:
+      0 10px 24px rgba(81, 53, 255, 0.32),
+      0 6px 14px rgba(0, 0, 0, 0.28);
+  }
+
+  .fcs26-action-dock__link:active
+    .fcs26-action-dock__button {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .fcs26-action-dock__link:focus-visible
+    .fcs26-action-dock__button {
+    outline: 3px solid rgba(255, 255, 255, 0.9);
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 640px) {
+    .fcs26-action-dock {
+      width: 560px;
+      max-width: calc(100% - 40px);
+      gap: 14px;
+      padding: 11px 14px;
+    }
+
+    .fcs26-action-dock__button {
+      min-height: 50px;
+      padding: 12px 28px;
+      font-size: 15px;
+    }
+
+    .fcs26-action-dock__icon {
+      width: 20px;
+      height: 20px;
+      flex-basis: 20px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .fcs26-action-dock {
+      bottom: 10px;
+      width: calc(100% - 16px);
+      gap: 8px;
+      padding: 8px;
+    }
+
+    .fcs26-action-dock__button {
+      min-height: 44px;
+      gap: 6px;
+      padding: 10px 11px;
+      font-size: 12px;
+    }
+
+    .fcs26-action-dock__icon {
+      width: 17px;
+      height: 17px;
+      flex-basis: 17px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fcs26-action-dock__button,
+    .fcs26-action-dock__button::after {
+      transition: none;
+      animation: none;
+    }
+  }
