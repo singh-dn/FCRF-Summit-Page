@@ -414,6 +414,9 @@ const SPEAKERS = {
   "jitender-singh":               { name: "Jitender Singh",
                                    designation: "Assistant Commissioner of Police, I4C, MHA",
                                    photo: "" },
+  "subodh-v-akulwar":               { name: "Subodh V. Akulwar",
+                                   designation: "Scientist 'F', CERT-In",
+                                   photo: "" },
 
   /* Not yet allocated to a session — they do not appear on the
      page until you add their key to one of the sessions below */
@@ -492,7 +495,7 @@ const SESSIONS = [
     day: 1, start: "11:00", end: "11:30",
     hall: "Innovation Hall", type: "workshop",
     title: "AI-Powered Policing and Investigation",
-    speakers: ["i4c-mha"],
+    speakers: ["subodh-v-akulwar"],
   },
   {
     day: 1, start: "11:30", end: "12:00",
@@ -539,7 +542,7 @@ const SESSIONS = [
       "somesh-sawhney",
       "harpreet-kaur",
       "deepak-d3-forensics",
-      "sumit",
+      "sumit-kumar",
       "tarun-sharma",
     ],
   },
@@ -726,8 +729,8 @@ const SESSIONS = [
   {
     day: 2, start: "14:00", end: "14:30",
     hall: "Innovation Hall", type: "sponsor",
-    title: "Sponsor Innovation Showcase — Product Demonstration / Technology Presentation",
-    speakers: [],
+    title: "Powering next-generation investigations",
+    speakers: ["jignesh-suba"],
   },
   {
     day: 2, start: "14:30", end: "15:00",
@@ -757,8 +760,8 @@ const SESSIONS = [
   {
     day: 2, start: "15:00", end: "15:30",
     hall: "Innovation Hall", type: "sponsor",
-    title: "Sponsor Innovation Showcase — Product Demonstration / Technology Presentation",
-    speakers: [],
+    title: "AI Powered SOC Operations Demo",
+    speakers: ["Alekh Mittal"],
   },
   {
     day: 2, start: "15:20", end: "16:00",
@@ -777,7 +780,7 @@ const SESSIONS = [
     day: 2, start: "15:30", end: "16:00",
     hall: "Innovation Hall", type: "workshop",
     title: "Emerging Cyber Crimes, New Laws and Best Practices in Investigation",
-    speakers: ["mahak-rathee", "kritika", "vinny-sharma", "ritwik-srivastava"],
+    speakers: ["mahak-rathee", "vinny-sharma", "ritwik-srivastava"],
   },
   {
     day: 2, start: "16:00", end: "16:40",
