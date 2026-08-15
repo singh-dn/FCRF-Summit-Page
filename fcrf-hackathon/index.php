@@ -50,7 +50,7 @@ if ($action === 'verify' || $action === 'download') {
           <p class="text-[12px] font-bold tracking-[.18em] uppercase text-[#9db0ef]">FutureCrime Summit 2026</p>
           <h1 class="mt-2">
             <img src="/assets/img/logo/FCRF%20Hackathon.png" alt="FCRF Hackathon"
-                 class="h-11 sm:h-12 w-auto max-w-full" style="max-height:52px;">
+                 class="w-auto" style="height:38px;max-width:100%;">
           </h1>
           <p class="text-[15px] text-[#b9c6f2] mt-2">Download your participation certificate</p>
         </div>
