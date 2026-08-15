@@ -16,8 +16,10 @@ if ($action === 'verify' || $action === 'download') {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hackathon Certificate — FutureCrime Summit</title>
+<title>Hackathon Certificate — FutureCrime Summit 2026</title>
 <meta name="robots" content="noindex">
+<link rel="icon" type="image/jpeg" href="/assets/img/logo/favs.jpeg">
+<link rel="apple-touch-icon" href="/assets/img/logo/favs.jpeg">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   html, body { font-family: Arial, Helvetica, sans-serif; }
@@ -44,9 +46,12 @@ if ($action === 'verify' || $action === 'download') {
     <div class="w-full max-w-[460px]">
 
       <header class="flex items-start justify-between mb-6 px-1">
-        <div>
-          <p class="text-[12px] font-bold tracking-[.18em] uppercase text-[#9db0ef]">FutureCrime Summit</p>
-          <h1 class="text-[30px] leading-[1.1] font-bold text-white mt-1">Hackathon<br>Certificate</h1>
+        <div class="min-w-0 pr-3">
+          <p class="text-[12px] font-bold tracking-[.18em] uppercase text-[#9db0ef]">FutureCrime Summit 2026</p>
+          <h1 class="mt-2">
+            <img src="/assets/img/logo/FCRF%20Hackathon.png" alt="FCRF Hackathon"
+                 class="h-11 sm:h-12 w-auto max-w-full" style="max-height:52px;">
+          </h1>
           <p class="text-[15px] text-[#b9c6f2] mt-2">Download your participation certificate</p>
         </div>
         <div class="shrink-0 mt-1">
