@@ -47,7 +47,6 @@ if ($action === 'verify' || $action === 'download') {
 
       <header class="flex items-start justify-between mb-6 px-1">
         <div class="min-w-0 pr-3">
-          <p class="text-[12px] font-bold tracking-[.18em] uppercase text-[#9db0ef]">FutureCrime Summit 2026</p>
           <h1 class="mt-2">
             <img src="/agenda/assets/summit.png" alt="FutureCrime Summit 2026"
                  class="w-auto" style="height:38px;max-width:100%;">
