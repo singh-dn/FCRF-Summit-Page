@@ -20,14 +20,14 @@ define('CERT_DOWNLOAD_NAME', 'FutureCrime-Summit-2026-Volunteer-Certificate.pdf'
 /* 3) NAME PLACEMENT — calibrated to your Sejda "name" field (mm)           */
 define('CERT_DEBUG', false);          // true -> ?action=download&grid=1 shows a ruler
 define('CERT_NAME_ALIGN', 'left');    // 'left' or 'center'
-define('CERT_NAME_LEFT_X', 28.2);     // mm from left  (ALIGN = left)
+define('CERT_NAME_LEFT_X', 28.9);    // mm from left  (ALIGN = left)
 define('CERT_NAME_CENTER_X', 83.0);   // mm centre     (ALIGN = center)
-define('CERT_NAME_Y', 97.5);         // mm baseline from top
+define('CERT_NAME_Y', 99.6);         // mm baseline from top
 define('CERT_NAME_FONT', 'Arial');
 define('CERT_NAME_STYLE', '');        // '' normal, 'B' bold, 'I' italic
 define('CERT_NAME_SIZE', 28);
 define('CERT_NAME_COLOR', '#212121');
-define('CERT_NAME_MAX_WIDTH', 109.0); // long names shrink to fit this width
+define('CERT_NAME_MAX_WIDTH', 119.0); // long names shrink to fit this width
 
 /* 4) IMPORT PROTECTION — secret required to run certificate-import.php      */
 define('IMPORT_TOKEN', 'change-this-long-random-string');
